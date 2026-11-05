@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시안 B 복도</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+:root {
+  --wall: #3e4c42;
+  --wall-dk: #2c372f;
+  --floor: #86654a;
+  --floor-ln: #6e523b;
+  --ceil: #e6e2d8;
+  --plaque: #eeece4;
+  --ink: #1b201c;
+  --soft: #5d655e;
+  --brass: #b4935a;
+  --serif: 'Gowun Batang', 'Batang', serif;
+  --sans: 'IBM Plex Sans KR', system-ui, sans-serif;
+  --toast-bg: var(--plaque);
+  --toast-fg: var(--ink);
+  --toast-font: var(--sans);
+  --toast-radius: 0;
+}
+* { box-sizing: border-box; }
+html { background: #1d241f; }
+body { margin: 0; color: var(--ink); font: 400 15px/1.55 var(--sans); background: #1d241f; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+
+/* ---------- 3D scene ---------- */
+.scene {
+  position: fixed; inset: 0; overflow: hidden;
+  perspective: var(--persp, 800px); perspective-origin: 50% 50%;
+  background: #1d241f;
+}
+.world { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; }
+.plane { position: absolute; backface-visibility: hidden; }
+.wall-l, .wall-r {
+  background-color: var(--wall);
+  background-image:
+    linear-gradient(to bottom, rgb(0 0 0 / .18), transparent 18%, transparent 88%, var(--wall-dk) 88.2%, var(--wall-dk) 92%, #241d17 92.2%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .14 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.floor {
+  background-color: var(--floor);
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 86px, var(--floor-ln) 86px 88px),
+    repeating-linear-gradient(0deg, transparent 0 520px, rgb(0 0 0 / .12) 520px 522px),
+    linear-gradient(90deg, rgb(0 0 0 / .25), transparent 22%, transparent 78%, rgb(0 0 0 / .25));
+}
+.ceil {
+  background-color: #6f726a;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 380px, #f6efdf 380px 390px, rgb(0 0 0 / .2) 390px 392px),
+    linear-gradient(90deg, rgb(0 0 0 / .35), transparent 30%, transparent 70%, rgb(0 0 0 / .35));
+}
+.endwall {
+  background: var(--wall);
+  display: grid; place-items: center; text-align: center; color: var(--plaque);
+}
+.endwall__inner { width: min(80%, 560px); }
+.endwall h2 { margin: 0 0 6px; font: 700 clamp(28px, 5vw, 46px)/1.2 var(--serif); }
+.endwall p { margin: 0 0 22px; opacity: .78; }
+.endwall a {
+  display: block; padding: 14px 18px; margin-top: 10px; text-decoration: none;
+  background: var(--plaque); color: var(--ink); font-weight: 500;
+}
+.endwall a span { display: block; font-size: 13px; color: var(--soft); font-weight: 400; }
+
+.pool {
+  position: absolute; pointer-events: none; backface-visibility: hidden;
+  background: radial-gradient(ellipse 46% 52% at 50% 36%, rgb(255 224 168 / .42), rgb(255 224 168 / .12) 55%, transparent 72%);
+  opacity: 0;
+}
+.work {
+  position: absolute; display: block; text-decoration: none; transform-style: preserve-3d;
+  transition: opacity .6s;
+}
+.work__frame {
+  position: absolute; inset: 0; padding: 6%; background: var(--plaque);
+  border: 7px solid #1a1814;
+  box-shadow: 0 20px 40px -10px rgb(0 0 0 / .55);
+}
+.work__frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.work__frame::after {
+  content: ""; position: absolute; inset: -7px; background: #0e120f; opacity: var(--dark, .6); pointer-events: none;
+}
+.work.is-off { opacity: 0; pointer-events: none; }
+.work.is-current .work__frame { border-color: #2b2620; box-shadow: 0 0 0 2px var(--brass), 0 20px 40px -10px rgb(0 0 0 / .55); }
+
+/* external works are doors that open as you walk up to them */
+.door__jamb { position: absolute; inset: 0; border: 10px solid #2a231c; border-bottom: 0; background: #f4ecd8; transform-style: preserve-3d; }
+.door__jamb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.door__leaf {
+  position: absolute; inset: 0; transform-origin: 0 50%;
+  background: linear-gradient(90deg, #7d8a7f, #8d998e);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / .25), inset 12px 0 18px rgb(0 0 0 / .18);
+  backface-visibility: visible;
+}
+.door__leaf::before { /* panels */
+  content: ""; position: absolute; inset: 9% 14%;
+  border: 2px solid rgb(0 0 0 / .14);
+  box-shadow: inset 0 0 0 2px rgb(255 255 255 / .06);
+}
+.door__leaf::after { /* handle */
+  content: ""; position: absolute; right: 9%; top: 52%; width: 7%; height: 2%; border-radius: 4px; background: var(--brass);
+}
+.door__sign {
+  position: absolute; left: 50%; bottom: calc(100% + 14px); transform: translateX(-50%);
+  white-space: nowrap; padding: 6px 12px; background: var(--plaque); color: var(--ink);
+  font: 500 13px/1.3 var(--sans); display: flex; gap: 6px; align-items: center;
+}
+.door__sign svg { width: 11px; height: 11px; }
+.door .work__frame::after, .door__jamb::after {
+  content: ""; position: absolute; inset: 0; background: #0e120f; opacity: var(--dark, .6); pointer-events: none;
+}
+
+.plaque {
+  position: absolute; width: 150px; padding: 8px 10px; background: var(--plaque);
+  font: 400 11px/1.4 var(--sans); color: var(--soft); backface-visibility: hidden;
+}
+.plaque b { display: block; color: var(--ink); font: 700 13px/1.3 var(--serif); }
+
+.fog {
+  position: fixed; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 22% 30% at 50% 50%, rgb(22 28 24 / .92), rgb(22 28 24 / .55) 45%, transparent 100%),
+    radial-gradient(ellipse 80% 80% at 50% 50%, transparent 60%, rgb(10 14 11 / .55));
+}
+
+/* ---------- HUD ---------- */
+.hud { position: fixed; z-index: 10; }
+.hud--top { top: 0; left: 0; right: 0; display: flex; align-items: flex-start; gap: 20px; padding: 18px 22px; pointer-events: none; }
+.hud--top > * { pointer-events: auto; }
+.brand { color: var(--plaque); text-decoration: none; font: 700 19px/1.2 var(--serif); }
+.brand small { display: block; font: 400 12px/1.4 var(--sans); opacity: .7; margin-top: 2px; }
+.rooms { margin-left: auto; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; max-width: 62vw; }
+.rooms button, .toggle {
+  border: 1px solid rgb(238 236 228 / .35); background: rgb(30 38 32 / .82); color: var(--plaque);
+  padding: 6px 12px; font-size: 13px; cursor: pointer; border-radius: 0;
+}
+.rooms button:hover, .toggle:hover { border-color: var(--plaque); }
+.rooms button[aria-pressed="true"] { background: var(--plaque); color: var(--ink); border-color: var(--plaque); }
+.toggle { display: inline-flex; align-items: center; gap: 6px; }
+
+.hud--bottom {
+  left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 260px 1fr auto; align-items: end; gap: 20px; padding: 18px 22px;
+  pointer-events: none;
+}
+.hud--bottom > * { pointer-events: auto; }
+.plan { background: rgb(30 38 32 / .86); padding: 10px 12px 8px; color: var(--plaque); cursor: pointer; }
+.plan svg { display: block; width: 100%; height: 64px; }
+.plan__meta { display: flex; justify-content: space-between; font-size: 11px; opacity: .75; margin-top: 4px; }
+.now {
+  justify-self: center; width: min(440px, 100%); background: var(--plaque); padding: 14px 16px 14px 18px;
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; align-items: center;
+  transition: opacity .25s, translate .25s;
+}
+.now.is-swapping { opacity: 0; translate: 0 6px; }
+.now h2 { margin: 0; font: 700 21px/1.25 var(--serif); }
+.now p { margin: 0; grid-column: 1; font-size: 13px; color: var(--soft); }
+.now a {
+  grid-row: 1 / span 2; grid-column: 2; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px;
+  background: var(--ink); color: var(--plaque); text-decoration: none; font-weight: 500; font-size: 14px;
+}
+.now a svg { width: 11px; height: 11px; }
+.contact { background: rgb(30 38 32 / .86); color: var(--plaque); padding: 10px 14px; font-size: 13px; display: grid; gap: 2px; }
+.contact span { opacity: .7; }
+.contact a { text-decoration: none; }
+.contact a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.hint {
+  position: fixed; left: 50%; top: 50%; transform: translate(-50%, 120px); z-index: 5; color: var(--plaque);
+  font-size: 13px; opacity: .8; pointer-events: none; transition: opacity .5s;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.hint i { width: 1px; height: 28px; background: var(--plaque); animation: drip 1.6s ease-in-out infinite; transform-origin: top; }
+@keyframes drip { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+.hint.is-gone { opacity: 0; }
+
+/* ---------- list view (also the reduced-motion default) ---------- */
+.list {
+  position: fixed; inset: 0; z-index: 30; overflow-y: auto; background: var(--plaque); padding: 88px 22px 40px;
+}
+.list[hidden] { display: none; }
+.list__grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 40px 28px; }
+.list__item { text-decoration: none; display: grid; gap: 10px; }
+.list__item img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; display: block; border: 6px solid #1a1814; padding: 4%; background: #fff; }
+.list__item b { font: 700 18px/1.3 var(--serif); }
+.list__item span { font-size: 13px; color: var(--soft); display: flex; gap: 6px; align-items: center; }
+.list__item span svg { width: 11px; height: 11px; }
+.list__item.is-off { display: none; }
+.list__foot { max-width: 1100px; margin: 56px auto 0; padding-top: 20px; border-top: 1px solid #cfccc2; display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 14px; }
+.list__foot span { color: var(--soft); width: 100%; }
+.list-open .hud--top .brand, .list-open .hud--top .rooms button:not([aria-pressed="true"]) { color: var(--ink); }
+.list-open .hud--top { background: var(--plaque); z-index: 40; border-bottom: 1px solid #cfccc2; }
+.list-open .rooms button { background: transparent; color: var(--ink); border-color: #b9b6ab; }
+.list-open .rooms button[aria-pressed="true"] { background: var(--ink); color: var(--plaque); border-color: var(--ink); }
+.list-open .toggle { background: var(--ink); color: var(--plaque); border-color: var(--ink); }
+.list-open .brand { color: var(--ink); }
+
+@media (max-width: 760px) {
+  .hud--top { flex-direction: column; gap: 10px; padding: 12px 14px; }
+  .rooms { margin-left: 0; max-width: none; flex-wrap: nowrap; overflow-x: auto; width: 100%; justify-content: flex-start; scrollbar-width: none; }
+  .rooms button, .toggle { flex: none; }
+  .hud--bottom { grid-template-columns: 1fr; padding: 12px 14px; gap: 8px; }
+  .plan { display: none; }
+  .contact { display: flex; flex-wrap: wrap; gap: 4px 14px; padding: 8px 12px; }
+  .contact span { width: 100%; }
+  .now h2 { font-size: 18px; }
+  .list { padding-top: 120px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="scene" id="scene" aria-hidden="false">
+  <div class="world" id="world"></div>
+</div>
+<div class="fog" aria-hidden="true"></div>
+<p class="hint" id="hint"><span>스크롤하면 복도를 따라 걸어갑니다</span><i></i></p>
+
+<header class="hud hud--top">
+  <a class="brand" href="./">zanviq gallery<small id="count"></small></a>
+  <nav class="rooms" id="rooms" aria-label="태그로 거르기"></nav>
+</header>
+
+<footer class="hud hud--bottom">
+  <div class="plan" id="plan" title="평면도: 눌러서 그 위치로 이동">
+    <svg id="plan-svg" viewBox="0 0 240 64" aria-hidden="true"></svg>
+    <div class="plan__meta"><span id="plan-pos">0m</span><span id="plan-len"></span></div>
+  </div>
+  <div class="now" id="now" aria-live="polite">
+    <h2 id="now-title"></h2>
+    <p id="now-meta"></p>
+    <a id="now-open" href="#"></a>
+  </div>
+  <div class="contact">
+    <span>홈페이지 제작 문의</span>
+    <a id="mail" href="#"></a>
+    <a id="kakao" href="#" data-contact="kakao" target="_blank" rel="noopener">카카오톡 오픈채팅</a>
+  </div>
+</footer>
+
+<section class="list" id="list" hidden aria-label="작품 목록">
+  <div class="list__grid" id="list-grid"></div>
+  <div class="list__foot" id="list-foot"></div>
+</section>
+
+<script src="../_shared/works.sample.js"></script>
+<script>
+(function () {
+  var G = window.GALLERY_SAMPLE;
+  var works = G.works;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var world = document.getElementById('world');
+  var scene = document.getElementById('scene');
+  var EXT = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4.5 2H2v8h8V7.5M7 2h3v3M10 2 5.5 6.5"/></svg>';
+  var active = 'all';
+  var D = {}; // dimensions
+  var STEP_SCROLL = 1.15; // scroll px per px walked
+
+  /* ---------- contact ---------- */
+  var mail = document.getElementById('mail');
+  mail.href = 'mailto:' + G.contact.email;
+  mail.textContent = G.contact.email;
+  document.getElementById('kakao').href = G.contact.kakao;
+
+  function el(tag, cls, html) { var e = document.createElement(tag); if (cls) e.className = cls; if (html) e.innerHTML = html; return e; }
+  function kindLabel(w) { return w.type === 'external' ? '외부 사이트' : (w.tags.indexOf('game') > -1 ? '게임' : '페이지'); }
+  function openLabel(w) { return w.type === 'external' ? '사이트 열기 ' + EXT : (w.tags.indexOf('game') > -1 ? '게임 하기' : '작품 보기'); }
+
+  /* ---------- build ---------- */
+  var planes = {
+    wl: el('div', 'plane wall-l'), wr: el('div', 'plane wall-r'),
+    fl: el('div', 'plane floor'), ce: el('div', 'plane ceil'),
+    end: el('div', 'plane endwall', '<div class="endwall__inner"><h2>홈페이지 제작 문의</h2><p>소개용 사이트, 랜딩 페이지, 작은 웹 게임을 만듭니다.</p>' +
+      '<a href="mailto:' + G.contact.email + '">이메일<span>' + G.contact.email + '</span></a>' +
+      '<a href="' + G.contact.kakao + '" data-contact="kakao" target="_blank" rel="noopener">카카오톡 오픈채팅<span>open.kakao.com</span></a></div>')
+  };
+  Object.keys(planes).forEach(function (k) { world.appendChild(planes[k]); });
+
+  var items = works.map(function (w, i) {
+    var door = w.type === 'external';
+    var a = el('a', 'work' + (door ? ' door' : ''));
+    a.href = G.href(w);
+    a.dataset.work = w.slug;
+    if (door) { a.target = '_blank'; a.rel = 'noopener'; }
+    a.setAttribute('aria-label', w.title + ', ' + w.year + ', ' + kindLabel(w));
+    if (door) {
+      a.innerHTML = '<span class="door__sign">' + EXT + '외부 사이트, ' + G.host(w) + '</span>' +
+        '<div class="door__jamb"><img src="' + G.thumb(w) + '" alt="" loading="lazy" decoding="async"><div class="door__leaf"></div></div>';
+    } else {
+      a.innerHTML = '<div class="work__frame"><img src="' + G.thumb(w) + '" alt="" loading="lazy" decoding="async" width="960" height="720"></div>';
+    }
+    var pool = el('div', 'pool');
+    var plaque = el('div', 'plaque', '<b>' + w.title + '</b>' + w.year + ', ' + w.tags.map(G.label).join(', '));
+    world.appendChild(pool);
+    world.appendChild(a);
+    if (!door) world.appendChild(plaque);
+    return { w: w, a: a, pool: pool, plaque: door ? null : plaque, door: door, leaf: a.querySelector('.door__leaf'),
+      side: i % 2 ? 1 : -1, z: 0, zt: 0, lit: 0, on: true };
+  });
+
+  /* ---------- layout ---------- */
+  function matches(w) { return active === 'all' || w.tags.indexOf(active) > -1; }
+
+  function measure() {
+    var vw = innerWidth, vh = innerHeight;
+    D.persp = Math.max(560, vw * 0.72);
+    D.W = Math.min(1250, Math.max(520, vw * 0.95));
+    D.H = Math.min(980, Math.max(560, vh * 1.05));
+    D.floorY = D.H * 0.42;
+    D.ceilY = -D.H * 0.58;
+    D.wallH = D.floorY - D.ceilY;
+    D.wallCY = (D.floorY + D.ceilY) / 2;
+    D.ww = Math.min(470, Math.max(250, D.W * 0.4));
+    D.wh = D.ww * 0.75;
+    D.gap = D.ww * 1.35;
+    D.start = 760;
+    scene.style.setProperty('--persp', D.persp + 'px');
+  }
+
+  function layout(keepZ) {
+    var shown = items.filter(function (it) { return matches(it.w); });
+    var n = 0;
+    items.forEach(function (it) {
+      it.on = matches(it.w);
+      it.a.classList.toggle('is-off', !it.on);
+      it.a.tabIndex = it.on ? 0 : -1;
+      if (it.plaque) it.plaque.style.opacity = it.on ? 1 : 0;
+      if (it.on) {
+        it.side = n % 2 ? 1 : -1;
+        it.zt = -(D.start + n * D.gap / 2 + D.ww);
+        n++;
+      }
+      if (!keepZ) it.z = it.zt;
+    });
+    D.L = D.start + Math.max(1, n) * D.gap / 2 + D.ww + 1100;
+    D.camMax = D.L - 760;
+    document.body.style.height = (innerHeight + D.camMax * STEP_SCROLL) + 'px';
+
+    var L = D.L, W = D.W;
+    place(planes.wl, L, D.wallH, 'translate3d(' + (-W / 2) + 'px,' + D.wallCY + 'px,' + (-L / 2) + 'px) rotateY(90deg)');
+    place(planes.wr, L, D.wallH, 'translate3d(' + (W / 2) + 'px,' + D.wallCY + 'px,' + (-L / 2) + 'px) rotateY(-90deg)');
+    place(planes.fl, W, L, 'translate3d(0,' + D.floorY + 'px,' + (-L / 2) + 'px) rotateX(90deg)');
+    place(planes.ce, W, L, 'translate3d(0,' + D.ceilY + 'px,' + (-L / 2) + 'px) rotateX(-90deg)');
+    place(planes.end, W, D.wallH, 'translate3d(0,' + D.wallCY + 'px,' + (-L) + 'px)');
+
+    document.getElementById('count').textContent = active === 'all' ? '작품 ' + n + '점' : G.label(active) + ' ' + n + '점';
+    drawPlan(shown);
+    renderList();
+  }
+  function place(e, w, h, t) {
+    e.style.width = w + 'px'; e.style.height = h + 'px';
+    e.style.left = (-w / 2) + 'px'; e.style.top = (-h / 2) + 'px';
+    e.style.transform = t;
+  }
+
+  /* ---------- per-frame ---------- */
+  var cam = 0, camT = 0, look = { x: 0, y: 0 }, lookT = { x: 0, y: 0 }, running = false, booted = 0;
+  function smooth(a, b, x) { var t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+
+  function frame() {
+    var k = reduce ? 1 : 0.11;
+    cam += (camT - cam) * k;
+    look.x += (lookT.x - look.x) * 0.08;
+    look.y += (lookT.y - look.y) * 0.08;
+    world.style.transform = 'rotateX(' + look.y.toFixed(3) + 'deg) rotateY(' + look.x.toFixed(3) + 'deg) translate3d(0,0,' + cam.toFixed(2) + 'px)';
+    var moving = Math.abs(camT - cam) > 0.3 || Math.abs(lookT.x - look.x) > 0.01 || Math.abs(lookT.y - look.y) > 0.01;
+
+    var best = null, bestScore = 1e9;
+    items.forEach(function (it) {
+      it.z += (it.zt - it.z) * (reduce ? 1 : 0.08);
+      if (Math.abs(it.zt - it.z) > 0.3) moving = true;
+      var ahead = -(it.z + cam) - D.ww / 2; // distance from eye plane to the work's centre
+      var near = it.on ? smooth(1500, 380, ahead) * (1 - smooth(60, -260, ahead)) : 0;
+      var x = it.side * (D.W / 2 - 2);
+      var yC = -D.wh * 0.08;
+      var w = it.door ? D.ww * 0.62 : D.ww;
+      var h = it.door ? D.floorY - (D.ceilY + D.wallH * 0.3) : D.wh;
+      var yTop = it.door ? D.floorY - h : yC - h / 2;
+      var turn = it.door ? 0 : (innerWidth < 760 ? 46 : 30) * near;
+      var rot = it.side < 0 ? 90 - turn : -(90 - turn);
+      it.a.style.width = w + 'px';
+      it.a.style.height = h + 'px';
+      // hinge on the edge nearest to you, so the far edge swings out and the face turns toward you
+      it.a.style.left = it.side < 0 ? '0px' : (-w) + 'px';
+      it.a.style.top = '0px';
+      it.a.style.transformOrigin = it.side < 0 ? '0 0' : '100% 0';
+      it.a.style.transform = 'translate3d(' + x + 'px,' + yTop + 'px,' + (it.z + w).toFixed(1) + 'px) rotateY(' + rot.toFixed(2) + 'deg)';
+      var light = Math.max(0, Math.min(1, it.lit)) * (0.25 + 0.75 * smooth(2600, 500, ahead));
+      it.a.style.setProperty('--dark', (0.78 - light * 0.74).toFixed(3));
+      if (it.leaf) it.leaf.style.transform = 'rotateY(' + (-80 * smooth(1300, 450, ahead) * (it.on ? 1 : 0)).toFixed(2) + 'deg)';
+      var pw = w * 1.9;
+      it.pool.style.width = pw + 'px';
+      it.pool.style.height = D.wallH + 'px';
+      it.pool.style.left = (-pw / 2) + 'px';
+      it.pool.style.top = (-D.wallH / 2) + 'px';
+      it.pool.style.transform = 'translate3d(' + (x - it.side * 1) + 'px,' + D.wallCY + 'px,' + (it.z + w / 2).toFixed(1) + 'px) rotateY(' + (it.side < 0 ? 90 : -90) + 'deg)';
+      it.pool.style.opacity = it.on ? light.toFixed(3) : 0;
+      if (it.plaque) {
+        it.plaque.style.transform = 'translate3d(' + (x - it.side * 1) + 'px,' + (yC + D.wh / 2 + 34) + 'px,' + (it.z + w - 75).toFixed(1) + 'px) rotateY(' + (it.side < 0 ? 90 : -90) + 'deg)';
+        it.plaque.style.left = '-75px'; it.plaque.style.top = '0px';
+      }
+      var score = Math.abs(ahead - 520);
+      if (it.on && ahead > -120 && score < bestScore) { bestScore = score; best = it; }
+    });
+    items.forEach(function (it) { it.a.classList.toggle('is-current', it === best); });
+    setNow(best);
+    syncPlan();
+    if (moving || booted < 1) requestAnimationFrame(frame); else running = false;
+  }
+  function kick() { if (!running) { running = true; requestAnimationFrame(frame); } }
+
+  /* ---------- "now viewing" plaque ---------- */
+  var nowEl = document.getElementById('now'), nowItem = undefined;
+  function setNow(it) {
+    if (it === nowItem) return;
+    nowItem = it;
+    var apply = function () {
+      if (!it) {
+        document.getElementById('now-title').textContent = '복도 끝';
+        document.getElementById('now-meta').textContent = '외주 문의는 오른쪽 아래 연락처로 받습니다.';
+        var o = document.getElementById('now-open');
+        o.style.display = 'none';
+      } else {
+        var w = it.w, o2 = document.getElementById('now-open');
+        document.getElementById('now-title').textContent = w.title;
+        document.getElementById('now-meta').textContent = w.year + ', ' + w.tags.map(G.label).join(', ') + (w.type === 'external' ? ', ' + G.host(w) : '');
+        o2.style.display = '';
+        o2.href = G.href(w);
+        o2.dataset.work = w.slug;
+        o2.innerHTML = openLabel(w);
+        if (w.type === 'external') { o2.target = '_blank'; o2.rel = 'noopener'; } else o2.removeAttribute('target');
+      }
+      nowEl.classList.remove('is-swapping');
+    };
+    if (reduce) return apply();
+    nowEl.classList.add('is-swapping');
+    clearTimeout(setNow.t);
+    setNow.t = setTimeout(apply, 180);
+  }
+
+  /* ---------- floor plan ---------- */
+  var planSvg = document.getElementById('plan-svg');
+  var planCam;
+  function drawPlan(shown) {
+    var L = D.L, sx = function (z) { return 8 + (-z / L) * 224; };
+    var s = '<rect x="8" y="18" width="224" height="28" fill="none" stroke="#eeece4" stroke-opacity=".55"/>';
+    s += '<rect x="230" y="18" width="2" height="28" fill="#b4935a"/>';
+    items.forEach(function (it) {
+      if (!it.on) return;
+      var x0 = sx(it.zt), x1 = sx(it.zt - (it.door ? D.ww * 0.62 : D.ww));
+      var y = it.side < 0 ? 16 : 45;
+      if (it.door) s += '<path d="M' + Math.min(x0, x1) + ' ' + (y + (it.side < 0 ? 2 : 1)) + ' h' + Math.abs(x1 - x0) + '" stroke="#b4935a" stroke-width="3"/>';
+      else s += '<rect x="' + Math.min(x0, x1) + '" y="' + y + '" width="' + Math.max(2, Math.abs(x1 - x0)) + '" height="3" fill="#eeece4"/>';
+    });
+    s += '<g id="plan-cam"><path d="M0 0 L22 -9 L22 9 Z" fill="#b4935a" fill-opacity=".35"/><circle r="3.2" fill="#b4935a"/></g>';
+    planSvg.innerHTML = s;
+    planCam = document.getElementById('plan-cam');
+    document.getElementById('plan-len').textContent = '복도 ' + (L / 100).toFixed(0) + 'm';
+  }
+  function syncPlan() {
+    if (!planCam) return;
+    var x = 8 + (cam / D.L) * 224;
+    planCam.setAttribute('transform', 'translate(' + x.toFixed(1) + ' 32) rotate(' + (-look.x * 2).toFixed(1) + ')');
+    document.getElementById('plan-pos').textContent = (cam / 100).toFixed(0) + 'm';
+  }
+  document.getElementById('plan').addEventListener('click', function (e) {
+    var r = planSvg.getBoundingClientRect();
+    var f = Math.min(1, Math.max(0, (e.clientX - r.left - 8 / 240 * r.width) / (224 / 240 * r.width)));
+    walkTo(f * D.L - 400);
+  });
+  function walkTo(z) {
+    var target = Math.min(D.camMax, Math.max(0, z)) * STEP_SCROLL;
+    scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
+  }
+
+  /* ---------- filters ---------- */
+  var rooms = document.getElementById('rooms');
+  ['all'].concat(G.tags()).forEach(function (t) {
+    var b = el('button');
+    b.type = 'button';
+    b.dataset.tag = t;
+    b.textContent = t === 'all' ? '전체' : G.label(t);
+    b.setAttribute('aria-pressed', t === 'all');
+    rooms.appendChild(b);
+  });
+  var toggle = el('button', 'toggle', '목록으로 보기');
+  toggle.type = 'button';
+  toggle.setAttribute('aria-pressed', 'false');
+  rooms.appendChild(toggle);
+  rooms.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-tag]');
+    if (!b) return;
+    active = b.dataset.tag;
+    rooms.querySelectorAll('button[data-tag]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+    layout(true);
+    if (!listEl.hidden) return;
+    walkTo(0);
+    kick();
+  });
+
+  /* ---------- list view ---------- */
+  var listEl = document.getElementById('list');
+  function renderList() {
+    var grid = document.getElementById('list-grid');
+    grid.innerHTML = works.filter(matches).map(function (w) {
+      return '<a class="list__item" href="' + G.href(w) + '" data-work="' + w.slug + '"' + (w.type === 'external' ? ' target="_blank" rel="noopener"' : '') + '>' +
+        '<img src="' + G.thumb(w) + '" alt="" loading="lazy" decoding="async" width="960" height="720">' +
+        '<b>' + w.title + '</b><span>' + w.year + ', ' + kindLabel(w) + (w.type === 'external' ? ' ' + EXT + G.host(w) : '') + '</span></a>';
+    }).join('');
+  }
+  document.getElementById('list-foot').innerHTML = '<span>홈페이지 제작 문의</span><a href="mailto:' + G.contact.email + '">' + G.contact.email +
+    '</a><a href="' + G.contact.kakao + '" data-contact="kakao" target="_blank" rel="noopener">카카오톡 오픈채팅</a>';
+  function setList(on) {
+    listEl.hidden = !on;
+    document.body.classList.toggle('list-open', on);
+    toggle.textContent = on ? '복도로 돌아가기' : '목록으로 보기';
+    toggle.setAttribute('aria-pressed', on);
+  }
+  toggle.addEventListener('click', function () { setList(listEl.hidden); });
+
+  /* ---------- input ---------- */
+  addEventListener('scroll', function () {
+    camT = scrollY / STEP_SCROLL;
+    if (scrollY > 40) document.getElementById('hint').classList.add('is-gone');
+    kick();
+  }, { passive: true });
+  addEventListener('pointermove', function (e) {
+    if (reduce || e.pointerType !== 'mouse') return;
+    lookT.x = (e.clientX / innerWidth - 0.5) * -7;
+    lookT.y = (e.clientY / innerHeight - 0.5) * 4;
+    kick();
+  });
+  addEventListener('keydown', function (e) {
+    if (!listEl.hidden) return;
+    if (e.key === 'Enter' && nowItem && document.activeElement === document.body) {
+      document.getElementById('now-open').click();
+    }
+  });
+  // keyboard focus on a work walks you to it
+  items.forEach(function (it) {
+    it.a.addEventListener('focus', function () { walkTo(-it.zt - 560 - D.ww / 2); });
+  });
+  addEventListener('resize', function () { measure(); layout(false); camT = scrollY / STEP_SCROLL; kick(); });
+
+  /* ---------- boot: lights come on down the corridor ---------- */
+  measure();
+  layout(false);
+  camT = cam = scrollY / STEP_SCROLL;
+  items.forEach(function (it, i) {
+    if (reduce) { it.lit = 1; return; }
+    setTimeout(function () {
+      var t0 = performance.now();
+      (function ramp(t) {
+        it.lit = Math.min(1, (t - t0) / 380);
+        kick();
+        if (it.lit < 1) requestAnimationFrame(ramp);
+      })(t0);
+    }, 300 + i * 140);
+  });
+  setTimeout(function () { booted = 1; }, 300 + items.length * 140 + 500);
+  if (reduce) setList(true);
+  kick();
+})();
+</script>
+</body>
+</html>

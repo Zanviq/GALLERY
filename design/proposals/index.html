@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>홈 시안 비교</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@700&display=swap">
+<style>
+:root { --paper: #f1f0f5; --sheet: #fbfbfd; --ink: #1d1b24; --soft: #5c5868; --line: #d2cfdd; --deep: #433d7a; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 15px/1.65 'IBM Plex Sans KR', system-ui, sans-serif; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--deep); outline-offset: 3px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 40px 28px 64px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px; padding-bottom: 20px; border-bottom: 2px solid var(--ink); }
+h1 { margin: 0; font: 700 34px/1.2 'Noto Serif KR', serif; letter-spacing: -.02em; }
+header p { margin: 0; color: var(--soft); font-size: 14px; }
+.item { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 32px; padding: 36px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.shot { position: relative; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid var(--line); background: var(--sheet); display: block; }
+.shot iframe { position: absolute; left: 0; top: 0; width: 1280px; height: 800px; border: 0; transform-origin: 0 0; transform: scale(var(--s, .5)); pointer-events: none; }
+.shot::after { content: ""; position: absolute; inset: 0; }
+.shot:hover { border-color: var(--deep); }
+.letter { font: 700 15px/1 'Noto Serif KR', serif; color: var(--deep); }
+.item h2 { margin: 6px 0 10px; font: 700 26px/1.25 'Noto Serif KR', serif; letter-spacing: -.01em; }
+.item p { margin: 0 0 14px; }
+.item dl { margin: 0 0 18px; display: grid; grid-template-columns: 84px 1fr; font-size: 14px; }
+.item dt, .item dd { margin: 0; padding: 7px 0; border-top: 1px solid var(--line); }
+.item dt { color: var(--soft); }
+.open { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; background: var(--deep); color: var(--sheet); text-decoration: none; border-radius: 3px; font-weight: 600; font-size: 14px; }
+.open:hover { background: #332e63; }
+.note { margin-top: 28px; font-size: 13px; color: var(--soft); }
+@media (max-width: 860px) {
+  .wrap { padding: 28px 16px 48px; }
+  h1 { font-size: 26px; }
+  .item { grid-template-columns: 1fr; gap: 18px; padding: 28px 0; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>홈 대시보드 시안</h1>
+    <p>4안. 각 시안은 단독 페이지로 열리고, 같은 더미 작품 12점을 씁니다.</p>
+  </header>
+
+  <article class="item">
+    <a class="shot" href="a/" aria-label="시안 A 열기"><iframe src="a/" title="시안 A 미리보기" loading="lazy" tabindex="-1"></iframe></a>
+    <div>
+      <span class="letter">A</span>
+      <h2>살롱 월</h2>
+      <p>작품을 긴 벽 하나에 크기를 섞어 걸었습니다. zanviq.dev의 종이 질감과 라벤더 톤, 라벨 스티커를 그대로 가져왔습니다.</p>
+      <dl>
+        <dt>탐색</dt><dd>가로로 긴 벽을 휠, 드래그, 하단 축소 지도로 이동</dd>
+        <dt>인터랙션</dt><dd>빠르게 밀면 액자가 못에 걸린 채 흔들림. 태그를 고르면 다른 작품은 벽에서 내려가고 자국만 남음</dd>
+      </dl>
+      <a class="open" href="a/">시안 A 열기</a>
+    </div>
+  </article>
+
+  <article class="item">
+    <a class="shot" href="b/" aria-label="시안 B 열기"><iframe src="b/" title="시안 B 미리보기" loading="lazy" tabindex="-1"></iframe></a>
+    <div>
+      <span class="letter">B</span>
+      <h2>복도</h2>
+      <p>CSS 3D로 만든 전시 복도를 스크롤로 걸어 들어갑니다. 짙은 녹색 벽과 조명의 미술관 톤입니다.</p>
+      <dl>
+        <dt>탐색</dt><dd>스크롤하면 앞으로 걸음. 왼쪽 아래 평면도를 눌러 원하는 위치로 이동. 목록 보기로 전환 가능</dd>
+        <dt>인터랙션</dt><dd>다가가면 조명이 켜지고 액자가 나를 향해 돌아섬. 외부 사이트는 문으로 걸려 있다가 가까이 가면 열림</dd>
+      </dl>
+      <a class="open" href="b/">시안 B 열기</a>
+    </div>
+  </article>
+
+  <article class="item">
+    <a class="shot" href="c/" aria-label="시안 C 열기"><iframe src="c/" title="시안 C 미리보기" loading="lazy" tabindex="-1"></iframe></a>
+    <div>
+      <span class="letter">C</span>
+      <h2>오락실</h2>
+      <p>오락기 한 대 안의 작품 선택 화면입니다. zanviq.dev 톤에서 일부러 벗어난 실험안입니다.</p>
+      <dl>
+        <dt>탐색</dt><dd>방향키나 조이스틱으로 칸 이동, Q E 또는 B 버튼으로 분류 전환</dd>
+        <dt>인터랙션</dt><dd>CRT 켜짐, 모자이크가 풀리는 미리보기, 선택 시 깜빡임, 동전을 넣으면 문의 화면. 가만히 두면 데모 모드</dd>
+      </dl>
+      <a class="open" href="c/">시안 C 열기</a>
+    </div>
+  </article>
+
+  <article class="item">
+    <a class="shot" href="d/" aria-label="시안 D 열기"><iframe src="d/" title="시안 D 미리보기" loading="lazy" tabindex="-1"></iframe></a>
+    <div>
+      <span class="letter">D</span>
+      <h2>출발 안내판</h2>
+      <p>작품 목록을 공항 플랩 안내판으로 보여 줍니다. 한 줄에 연도, 작품, 행선지(주소), 분류, 상태가 다 보이는 인덱스형입니다.</p>
+      <dl>
+        <dt>탐색</dt><dd>줄을 훑고 누르면 이동. 연도, 작품 이름으로 정렬</dd>
+        <dt>인터랙션</dt><dd>필터나 정렬을 바꾸면 글자판이 한 칸씩 넘어가며 새 목록으로 바뀜. 줄에 올리면 오른쪽 모니터에 썸네일</dd>
+      </dl>
+      <a class="open" href="d/">시안 D 열기</a>
+    </div>
+  </article>
+
+  <p class="note">작품 링크는 시안 단계라 실제로 이동하지 않고 어디로 갈지 안내만 띄웁니다. 카카오톡 오픈채팅 주소는 자리만 잡아 두었습니다.</p>
+</div>
+<script>
+  // fit the 1280×800 live previews into their boxes
+  var ro = new ResizeObserver(function (entries) {
+    entries.forEach(function (e) { e.target.style.setProperty('--s', e.contentRect.width / 1280); });
+  });
+  document.querySelectorAll('.shot').forEach(function (s) { ro.observe(s); });
+</script>
+</body>
+</html>

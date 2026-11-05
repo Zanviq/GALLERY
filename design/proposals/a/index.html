@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>시안 A 살롱 월</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Noto+Serif+KR:wght@700&display=swap">
+<style>
+:root {
+  --paper: #f1f0f5;
+  --sheet: #fbfbfd;
+  --ink: #1d1b24;
+  --soft: #5c5868;
+  --line: #d2cfdd;
+  --lav: #8580b8;
+  --deep: #433d7a;
+  --pale: #e4e2f1;
+  --board: #9e9ac0;
+  --board-dk: #837fab;
+  --serif: 'Noto Serif KR', 'Batang', serif;
+  --sans: 'IBM Plex Sans KR', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', 'IBM Plex Sans KR', monospace;
+  --bar-h: 64px;
+  --rail-h: 76px;
+  --noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .12 0 0 0 0 .11 0 0 0 0 .16 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --toast-bg: var(--deep);
+  --toast-font: var(--sans);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: var(--paper) var(--noise);
+  color: var(--ink);
+  font: 400 15px/1.6 var(--sans);
+  overflow: hidden;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--deep); outline-offset: 3px; }
+button { font: inherit; color: inherit; }
+
+/* ---------- top bar ---------- */
+.bar {
+  position: fixed; inset: 0 0 auto 0; height: var(--bar-h); z-index: 20;
+  display: flex; align-items: center; gap: 28px; padding: 0 28px;
+  background: rgb(241 240 245 / .9);
+  border-bottom: 1px solid var(--line);
+}
+.mark { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; letter-spacing: -.01em; flex: none; }
+.mark__z {
+  width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--ink);
+  display: grid; place-items: center; font: 600 15px/1 var(--sans);
+}
+.filters { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 4px 2px; margin: 0 auto 0 0; }
+.filters::-webkit-scrollbar { display: none; }
+.chip {
+  flex: none; border: 1px solid var(--line); background: var(--sheet);
+  padding: 5px 11px 6px; border-radius: 3px; font-size: 13px; line-height: 1.2; cursor: pointer;
+  box-shadow: 0 1px 0 rgb(29 27 36 / .05);
+  transition: background .15s, color .15s, border-color .15s, transform .15s;
+}
+.chip:hover { border-color: var(--lav); }
+.chip:active { transform: translateY(1px); }
+.chip[aria-pressed="true"] { background: var(--deep); border-color: var(--deep); color: var(--sheet); }
+.chip span { font: 500 11px/1 var(--mono); opacity: .6; margin-left: 5px; }
+.count { flex: none; margin: 0; font-size: 13px; color: var(--soft); }
+
+/* ---------- the wall ---------- */
+.room {
+  position: fixed; inset: var(--bar-h) 0 var(--rail-h) 0;
+  overflow-x: auto; overflow-y: hidden;
+  scrollbar-width: none; cursor: grab;
+  outline: none;
+}
+.room::-webkit-scrollbar { display: none; }
+.room.is-dragging { cursor: grabbing; }
+.room.is-dragging a { pointer-events: none; }
+.wall { position: relative; height: 100%; }
+.wall::before { /* light falling from the ceiling */
+  content: ""; position: absolute; inset: 0 0 28px 0; pointer-events: none;
+  background: linear-gradient(to bottom, rgb(255 255 255 / .55), rgb(255 255 255 / 0) 38%);
+}
+.skirting {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 28px;
+  background: var(--pale); border-top: 1px solid var(--line);
+  box-shadow: 0 -10px 18px -14px rgb(40 36 90 / .25);
+}
+
+.title-wall { position: absolute; }
+.title-wall h1 {
+  margin: 0; font: 700 clamp(44px, 7vh, 84px)/1.02 var(--serif); letter-spacing: -.02em;
+}
+.title-wall p { margin: 14px 0 0; color: var(--soft); font-size: 14px; max-width: 22em; }
+
+/* piece = one hung work */
+.piece { position: absolute; }
+.piece__swing { position: absolute; inset: 0; transform-origin: 50% calc(var(--hang, 0px) * -1); will-change: transform; }
+.piece__link { position: absolute; inset: 0; display: block; text-decoration: none; }
+.piece__link img { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--pale); }
+.piece__nail {
+  position: absolute; left: 50%; top: calc(var(--hang, 0px) * -1 - 4px); width: 8px; height: 8px; margin-left: -4px;
+  border-radius: 50%; background: radial-gradient(circle at 35% 35%, #b9b6c8, #5c5868 70%);
+  box-shadow: 0 1px 1px rgb(0 0 0 / .25); z-index: 2;
+}
+.piece__wire { position: absolute; left: 0; right: 0; top: calc(var(--hang, 0px) * -1); height: var(--hang, 0px); pointer-events: none; }
+.piece__wire svg { width: 100%; height: 100%; overflow: visible; }
+
+/* frame */
+.piece--frame .piece__link {
+  padding: 7%; background: var(--sheet);
+  border: 5px solid var(--ink);
+  box-shadow: 0 1px 1px rgb(29 27 36 / .08), 0 22px 30px -18px rgb(40 36 90 / .45), inset 0 0 0 1px rgb(29 27 36 / .08);
+}
+.piece--frame .piece__link img { box-shadow: inset 0 0 0 1px rgb(0 0 0 / .1); }
+.piece--external .piece__link { border-color: var(--deep); }
+/* poster, taped */
+.piece--poster .piece__link {
+  background: var(--sheet); padding: 0;
+  box-shadow: 0 1px 1px rgb(29 27 36 / .1), 0 16px 24px -16px rgb(40 36 90 / .45);
+}
+.tape {
+  position: absolute; top: -10px; width: 58px; height: 20px; z-index: 2; pointer-events: none;
+  background: rgb(200 196 228 / .72); box-shadow: 0 1px 1px rgb(0 0 0 / .06);
+}
+.tape--l { left: -14px; transform: rotate(-32deg); }
+.tape--r { right: -14px; transform: rotate(28deg); }
+/* board, pinned like a thick card */
+.piece--board .piece__link {
+  padding: 9% 9% 14%; background: var(--board); border-radius: 6px;
+  box-shadow: 0 6px 0 var(--board-dk), 0 26px 30px -16px rgb(40 36 90 / .5);
+}
+.piece--board .piece__link img { border-radius: 2px; }
+.piece--board .piece__link::after {
+  content: attr(data-sticker); position: absolute; left: 9%; bottom: 3.4%;
+  font: 500 11px/1 var(--mono); color: var(--sheet); opacity: .85;
+}
+.pin {
+  position: absolute; left: 50%; top: -6px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; z-index: 3;
+  background: radial-gradient(circle at 35% 30%, #f1f0f5, var(--deep) 60%);
+  box-shadow: 0 3px 4px rgb(0 0 0 / .25);
+}
+
+/* taken-down state: the frame leaves, a cleaner patch of wall stays */
+.ghost {
+  position: absolute; inset: 0; opacity: 0; pointer-events: none;
+  background: rgb(255 255 255 / .5);
+  box-shadow: inset 0 0 0 1px rgb(67 61 122 / .07), inset 0 0 22px rgb(133 128 184 / .2);
+  transition: opacity .6s .25s;
+}
+.piece__swing { transition: opacity .45s, translate .55s cubic-bezier(.3, .7, .2, 1); }
+.piece.is-off .piece__swing { opacity: 0; translate: 0 -22px; pointer-events: none; }
+.piece.is-off .ghost { opacity: 1; }
+
+.caption { position: absolute; font-size: 13px; line-height: 1.45; transition: opacity .4s; }
+.caption b { display: block; font: 700 15px/1.3 var(--serif); letter-spacing: -.01em; }
+.caption .meta { color: var(--soft); display: flex; gap: 8px; align-items: center; }
+.caption .ext { display: inline-flex; align-items: center; gap: 4px; color: var(--deep); font-weight: 500; }
+.caption .ext svg { width: 11px; height: 11px; }
+.caption.is-off { opacity: .28; }
+
+.end-card {
+  position: absolute; width: 300px; padding: 26px 26px 22px; border-radius: 6px;
+  background: var(--deep); color: var(--sheet);
+  box-shadow: 0 6px 0 #332e63, 0 30px 40px -20px rgb(40 36 90 / .6);
+  transform: rotate(-1.5deg);
+}
+.end-card h2 { margin: 0 0 4px; font: 700 22px/1.3 var(--serif); }
+.end-card p { margin: 0 0 18px; font-size: 13px; opacity: .8; }
+.end-card a { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid rgb(251 251 253 / .22); text-decoration: none; font-size: 14px; }
+.end-card a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.end-card a span:last-child { font: 400 12px/1.8 var(--mono); opacity: .75; }
+
+/* ---------- bottom rail: map + contact ---------- */
+.rail {
+  position: fixed; inset: auto 0 0 0; height: var(--rail-h); z-index: 20;
+  display: flex; align-items: center; gap: 32px; padding: 0 28px;
+  background: var(--sheet); border-top: 1px solid var(--line);
+}
+.map { position: relative; flex: 1 1 auto; max-width: 520px; height: 40px; margin-right: 64px; cursor: pointer; touch-action: none; }
+.map__ruler { position: absolute; left: 0; right: 0; bottom: 6px; height: 8px; border-bottom: 1px solid var(--ink); }
+.map__tick { position: absolute; background: var(--deep); border-radius: 1px; transition: background .3s; }
+.map__tick.is-off { background: var(--line); }
+.map__m { position: absolute; bottom: 0; width: 1px; height: 6px; background: var(--ink); }
+.map__view { position: absolute; top: 0; bottom: 4px; border: 1.5px solid var(--deep); border-radius: 2px; background: rgb(133 128 184 / .12); }
+.map__len { position: absolute; left: calc(100% + 12px); bottom: 2px; white-space: nowrap; font: 400 11px/1 var(--mono); color: var(--soft); }
+.contact { margin-left: auto; display: flex; align-items: center; gap: 18px; font-size: 14px; white-space: nowrap; }
+.contact > span { color: var(--soft); }
+.contact a { text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 1px; }
+.contact a:hover { border-color: var(--deep); color: var(--deep); }
+
+/* ---------- focus view ---------- */
+.focus {
+  position: fixed; inset: 0; z-index: 50; display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px; align-items: center; gap: 48px; padding: 48px 64px;
+  background: rgb(228 226 241 / .94) var(--noise);
+}
+.focus[hidden] { display: none; }
+.focus__stage { position: relative; height: min(70vh, 640px); }
+.focus__frame {
+  position: absolute; padding: 3.2%; background: var(--sheet); border: 6px solid var(--ink);
+  box-shadow: 0 40px 60px -30px rgb(40 36 90 / .55);
+  transform-origin: 0 0;
+}
+.focus__frame img { display: block; width: 100%; height: 100%; object-fit: contain; background: var(--pale); }
+.focus__frame.is-external { border-color: var(--deep); }
+.label {
+  background: var(--sheet); padding: 26px 26px 22px; border: 1px solid var(--line);
+  box-shadow: 0 1px 1px rgb(29 27 36 / .06), 0 18px 36px -26px rgb(40 36 90 / .35);
+  transition: opacity .35s .15s, translate .45s .1s cubic-bezier(.2, .7, .1, 1);
+}
+.focus:not(.is-open) .label { opacity: 0; translate: 24px 0; }
+.label__head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--ink); }
+.label h2 { margin: 0; font: 700 30px/1.15 var(--serif); letter-spacing: -.02em; }
+.label__year { font: 500 13px/1 var(--mono); color: var(--soft); }
+.label dl { margin: 0; display: grid; grid-template-columns: 48px 1fr; }
+.label dt, .label dd { margin: 0; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+.label dt { color: var(--soft); }
+.label dd { font-weight: 500; word-break: break-all; }
+.label dd.mono { font: 400 12px/1.6 var(--mono); }
+.label__code { display: block; width: 100%; height: 38px; margin: 16px 0 18px; }
+.label__actions { display: flex; gap: 8px; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 18px;
+  border: 1.5px solid var(--ink); background: var(--sheet); border-radius: 3px; text-decoration: none; font-weight: 600; font-size: 14px; cursor: pointer;
+}
+.btn--main { flex: 1; background: var(--deep); border-color: var(--deep); color: var(--sheet); }
+.btn--main:hover { background: #38326a; }
+.btn svg { width: 13px; height: 13px; }
+.btn--icon { width: 44px; padding: 0; }
+.focus__close { position: absolute; top: 18px; right: 22px; }
+
+/* ---------- small screens: the wall turns into a stairwell ---------- */
+/* phones, and tablets held upright: a long horizontal wall doesn't suit a tall narrow screen */
+@media (max-width: 760px), (max-width: 1024px) and (orientation: portrait) {
+  body { overflow: auto; }
+  .bar { position: sticky; top: 0; gap: 14px; padding: 0 16px; height: 56px; }
+  .count { display: none; }
+  .room { position: relative; inset: auto; overflow: visible; cursor: default; }
+  .wall { height: auto; }
+  .wall::before { display: none; }
+  .skirting { display: none; }
+  .rail { position: static; height: auto; display: block; padding: 22px 16px 28px; }
+  .map, .hint-h { display: none; }
+  .contact { flex-wrap: wrap; gap: 10px 16px; margin: 0; white-space: normal; }
+  .contact > span { width: 100%; }
+  .focus { grid-template-columns: 1fr; align-content: start; gap: 20px; padding: 64px 16px 24px; overflow-y: auto; }
+  .focus__stage { height: 46vh; }
+  .label { padding: 20px; }
+  .label h2 { font-size: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; transition-delay: 0s !important; animation-duration: .01ms !important; }
+  .room { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="mark" href="./"><span class="mark__z" aria-hidden="true">Z</span><span>gallery</span></a>
+  <nav class="filters" id="filters" aria-label="태그로 거르기"></nav>
+  <p class="count" id="count" aria-live="polite"></p>
+</header>
+
+<main class="room" id="room" tabindex="0" aria-label="작품이 걸린 벽. 가로로 스크롤해 둘러볼 수 있습니다.">
+  <div class="wall" id="wall"></div>
+</main>
+
+<footer class="rail">
+  <div class="map" id="map" aria-hidden="true"></div>
+  <div class="contact">
+    <span>홈페이지 제작 문의</span>
+    <a id="mail" href="#">이메일</a>
+    <a id="kakao" href="#" data-contact="kakao" target="_blank" rel="noopener">카카오톡 오픈채팅</a>
+  </div>
+</footer>
+
+<div class="focus" id="focus" role="dialog" aria-modal="true" aria-labelledby="f-title" hidden>
+  <div class="focus__stage" id="f-stage">
+    <div class="focus__frame" id="f-frame"><img id="f-img" alt=""></div>
+  </div>
+  <article class="label">
+    <div class="label__head"><h2 id="f-title"></h2><span class="label__year" id="f-year"></span></div>
+    <dl>
+      <dt>종류</dt><dd id="f-type"></dd>
+      <dt>태그</dt><dd id="f-tags"></dd>
+      <dt>주소</dt><dd class="mono" id="f-url"></dd>
+    </dl>
+    <svg class="label__code" id="f-code" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <div class="label__actions">
+      <button class="btn btn--icon" id="f-prev" aria-label="이전 작품"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 2 4 7l5 5"/></svg></button>
+      <a class="btn btn--main" id="f-open" href="#"></a>
+      <button class="btn btn--icon" id="f-next" aria-label="다음 작품"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m5 2 5 5-5 5"/></svg></button>
+    </div>
+  </article>
+  <button class="btn btn--icon focus__close" id="f-close" aria-label="닫기"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m2 2 10 10M12 2 2 12"/></svg></button>
+</div>
+
+<script src="../_shared/works.sample.js"></script>
+<script>
+(function () {
+  var G = window.GALLERY_SAMPLE;
+  var works = G.works;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  var narrow = matchMedia('(max-width: 760px), (max-width: 1024px) and (orientation: portrait)');
+  var room = document.getElementById('room');
+  var wall = document.getElementById('wall');
+  var map = document.getElementById('map');
+  var EXT_ICON = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4.5 2H2v8h8V7.5M7 2h3v3M10 2 5.5 6.5"/></svg>';
+  var PX_PER_M = 140;
+  var active = 'all';
+
+  /* ---------- contact ---------- */
+  var mail = document.getElementById('mail');
+  mail.href = 'mailto:' + G.contact.email;
+  mail.textContent = G.contact.email;
+  document.getElementById('kakao').href = G.contact.kakao;
+
+  /* ---------- filters ---------- */
+  var filters = document.getElementById('filters');
+  ['all'].concat(G.tags()).forEach(function (t) {
+    var b = document.createElement('button');
+    b.className = 'chip';
+    b.type = 'button';
+    b.dataset.tag = t;
+    var n = t === 'all' ? works.length : works.filter(function (w) { return w.tags.indexOf(t) > -1; }).length;
+    b.innerHTML = (t === 'all' ? '전체' : G.label(t)) + '<span>' + n + '</span>';
+    b.setAttribute('aria-pressed', t === 'all');
+    filters.appendChild(b);
+  });
+  filters.addEventListener('click', function (e) {
+    var b = e.target.closest('.chip');
+    if (!b) return;
+    active = b.dataset.tag;
+    filters.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', c === b); });
+    applyFilter(true);
+  });
+
+  /* ---------- build pieces ---------- */
+  function kind(w) {
+    if (w.type === 'external') return 'frame piece--external';
+    if (w.tags.indexOf('game') > -1) return 'board';
+    if (w.tags.indexOf('landing') > -1) return 'poster';
+    return 'frame';
+  }
+  function typeLabel(w) {
+    if (w.type === 'external') return '외부 사이트';
+    if (w.tags.indexOf('game') > -1) return '게임';
+    return '페이지';
+  }
+
+  var titleWall = document.createElement('div');
+  titleWall.className = 'title-wall';
+  titleWall.innerHTML = '<h1>zanviq<br>gallery</h1><p>만든 페이지와 게임, 직접 배포한 사이트를 한 벽에 걸어 두었습니다.<span class="hint-h"> 끌거나 스크롤해서 옆으로 걸어가세요.</span></p>';
+  wall.appendChild(titleWall);
+
+  var pieces = works.map(function (w, i) {
+    var el = document.createElement('figure');
+    var k = kind(w);
+    el.className = 'piece piece--' + k;
+    el.style.margin = 0;
+    var hangs = k.indexOf('frame') === 0;
+    el.innerHTML =
+      '<div class="ghost"></div>' +
+      (hangs ? '<span class="piece__nail"></span>' : '') +
+      '<div class="piece__swing">' +
+        (hangs ? '<div class="piece__wire"><svg preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M8 100 L50 0 L92 100" fill="none" stroke="#5c5868" stroke-width="1" vector-effect="non-scaling-stroke"/></svg></div>' : '') +
+        (k === 'poster' ? '<span class="tape tape--l"></span><span class="tape tape--r"></span>' : '') +
+        (k === 'board' ? '<span class="pin"></span>' : '') +
+        '<a class="piece__link" href="' + G.href(w) + '" data-work="' + w.slug + '"' +
+          (w.type === 'external' ? ' target="_blank" rel="noopener"' : '') +
+          (k === 'board' ? ' data-sticker="' + w.slug + '"' : '') +
+          ' aria-label="' + w.title + ', ' + w.year + ', ' + typeLabel(w) + '">' +
+          '<img src="' + G.thumb(w) + '" alt="" loading="lazy" decoding="async" width="960" height="720">' +
+        '</a>' +
+      '</div>';
+    var cap = document.createElement('div');
+    cap.className = 'caption';
+    cap.innerHTML = '<b>' + w.title + '</b><div class="meta"><span>' + w.year + '</span><span>' +
+      w.tags.map(G.label).join(', ') + '</span>' + (w.type === 'external' ? '<span class="ext">' + EXT_ICON + '외부</span>' : '') + '</div>';
+    wall.appendChild(el);
+    wall.appendChild(cap);
+    return {
+      w: w, el: el, cap: cap, swing: el.querySelector('.piece__swing'), link: el.querySelector('.piece__link'),
+      hangs: hangs, theta: 0, omega: 0,
+      k: hangs ? 58 : 140, c: hangs ? 1.5 : 6, drive: hangs ? 1 : 0.35
+    };
+  });
+
+  var endCard = document.createElement('div');
+  endCard.className = 'end-card';
+  endCard.innerHTML = '<h2>홈페이지 제작 문의</h2><p>소개용 사이트, 랜딩 페이지, 작은 웹 게임을 만듭니다.</p>' +
+    '<a href="mailto:' + G.contact.email + '"><span>이메일</span><span>' + G.contact.email + '</span></a>' +
+    '<a href="' + G.contact.kakao + '" data-contact="kakao" target="_blank" rel="noopener"><span>카카오톡 오픈채팅</span><span>open.kakao.com</span></a>';
+  wall.appendChild(endCard);
+
+  /* ---------- salon-hang layout ---------- */
+  // column recipes: L = one large, P = one portrait, M2 = two stacked, MS = medium over small
+  var RECIPES = ['L', 'M2', 'P', 'MS', 'L', 'M2', 'P', 'L'];
+  var CAP_H = 58;
+  var wallW = 0;
+
+  function place(p, x, y, w, h) {
+    p.el.style.cssText += ';left:' + x + 'px;top:' + y + 'px;width:' + w + 'px;height:' + h + 'px';
+    p.el.style.setProperty('--hang', p.hangs ? Math.round(h * 0.16) + 'px' : '0px');
+    p.cap.style.left = x + 'px';
+    p.cap.style.top = (y + h + (p.w.tags.indexOf('game') > -1 ? 18 : 12)) + 'px';
+    p.cap.style.width = Math.max(w, 190) + 'px';
+    p.x = x; p.wd = w; p.y = y; p.ht = h;
+  }
+
+  function layoutWall() {
+    var H = room.clientHeight - 28;
+    var eye = H * 0.47;
+    var x = Math.max(72, innerWidth * 0.06);
+    var tw = Math.min(440, Math.max(320, innerWidth * 0.3));
+    titleWall.style.cssText = 'left:' + x + 'px;top:' + Math.round(eye - 90) + 'px;width:' + (tw - 56) + 'px';
+    x += tw;
+    var i = 0, r = 0;
+    while (i < pieces.length) {
+      var rec = RECIPES[r++ % RECIPES.length];
+      var gap = 84 + ((r * 37) % 46);
+      if (rec === 'L' || rec === 'P') {
+        var h = rec === 'L' ? H * 0.5 : H * 0.56;
+        var w = rec === 'L' ? h * 4 / 3 : h * 3 / 4;
+        place(pieces[i++], x, Math.round(eye - (h + CAP_H) / 2 + 10), Math.round(w), Math.round(h));
+        x += w + gap;
+      } else {
+        var h1 = H * (rec === 'M2' ? 0.26 : 0.29), h2 = H * (rec === 'M2' ? 0.26 : 0.2);
+        var w1 = h1 * 4 / 3, w2 = rec === 'M2' ? h2 * 4 / 3 : h2;
+        var colW = Math.max(w1, w2);
+        var total = h1 + h2 + CAP_H * 2 + 34;
+        var top = Math.max(18 + h1 * 0.16, eye - total / 2 + 8);
+        place(pieces[i++], Math.round(x + (colW - w1) / 2), Math.round(top), Math.round(w1), Math.round(h1));
+        if (i < pieces.length) place(pieces[i++], Math.round(x + (colW - w2) / 2), Math.round(top + h1 + CAP_H + 34 + h2 * 0.1), Math.round(w2), Math.round(h2));
+        x += colW + gap;
+      }
+    }
+    x += 40;
+    endCard.style.left = x + 'px';
+    endCard.style.top = Math.round(eye - 120) + 'px';
+    wallW = x + 300 + Math.max(120, innerWidth * 0.12);
+    wall.style.width = wallW + 'px';
+    if (!wall.querySelector('.skirting')) {
+      var sk = document.createElement('div');
+      sk.className = 'skirting';
+      wall.appendChild(sk);
+    }
+  }
+
+  function layoutStack() {
+    var cw = Math.min(innerWidth, 720) - 32;
+    var ox = Math.max(16, Math.round((innerWidth - cw) / 2));
+    var y = 28;
+    titleWall.style.cssText = 'left:' + ox + 'px;top:' + y + 'px;width:' + cw + 'px';
+    y += titleWall.offsetHeight + 56;
+    var widths = [0.86, 0.64, 0.78, 0.58, 0.92, 0.7];
+    pieces.forEach(function (p, i) {
+      var f = widths[i % widths.length];
+      var w = Math.round(cw * f);
+      var portrait = i % 5 === 2;
+      var h = Math.round(portrait ? w * 1.2 : w * 0.75);
+      var x = ox + (i % 2 ? cw - w : 0);
+      if (p.hangs) y += Math.round(h * 0.16);
+      place(p, x, y, w, h);
+      y += h + CAP_H + 44;
+    });
+    endCard.style.left = ox + 'px';
+    endCard.style.top = y + 'px';
+    endCard.style.width = Math.min(cw, 340) + 'px';
+    wall.style.width = '';
+    wall.style.height = (y + 300) + 'px';
+  }
+
+  function layout() {
+    if (narrow.matches) layoutStack(); else { wall.style.height = ''; endCard.style.width = ''; layoutWall(); }
+    buildMap();
+    applyFilter(false);
+  }
+
+  /* ---------- minimap ---------- */
+  var viewBox;
+  function buildMap() {
+    map.innerHTML = '';
+    if (narrow.matches) return;
+    var ruler = document.createElement('div');
+    ruler.className = 'map__ruler';
+    map.appendChild(ruler);
+    var mw = map.clientWidth;
+    var meters = wallW / PX_PER_M;
+    for (var m = 0; m <= meters; m++) {
+      var t = document.createElement('span');
+      t.className = 'map__m';
+      t.style.left = (m * PX_PER_M / wallW * mw) + 'px';
+      map.appendChild(t);
+    }
+    pieces.forEach(function (p) {
+      var t = document.createElement('span');
+      t.className = 'map__tick';
+      t.style.left = (p.x / wallW * mw) + 'px';
+      t.style.width = Math.max(3, p.wd / wallW * mw) + 'px';
+      // the map is a scaled elevation of the wall: stacked works stay stacked
+      var H = room.clientHeight;
+      t.style.top = (p.y / H * 24) + 'px';
+      t.style.height = Math.max(3, p.ht / H * 24) + 'px';
+      t.style.bottom = 'auto';
+      p.tick = t;
+      map.appendChild(t);
+    });
+    var len = document.createElement('span');
+    len.className = 'map__len';
+    len.textContent = '벽 ' + meters.toFixed(1) + 'm';
+    map.appendChild(len);
+    viewBox = document.createElement('span');
+    viewBox.className = 'map__view';
+    map.appendChild(viewBox);
+    syncMap();
+  }
+  function syncMap() {
+    if (!viewBox) return;
+    var mw = map.clientWidth;
+    viewBox.style.left = (room.scrollLeft / wallW * mw) + 'px';
+    viewBox.style.width = (room.clientWidth / wallW * mw) + 'px';
+  }
+  function mapSeek(e) {
+    var r = map.getBoundingClientRect();
+    var f = (e.clientX - r.left) / r.width;
+    room.scrollLeft = f * wallW - room.clientWidth / 2;
+  }
+  map.addEventListener('pointerdown', function (e) {
+    map.setPointerCapture(e.pointerId);
+    mapSeek(e);
+    map.onpointermove = mapSeek;
+  });
+  map.addEventListener('pointerup', function () { map.onpointermove = null; });
+
+  /* ---------- filtering: frames come down, the clean patch stays ---------- */
+  function matches(w) { return active === 'all' || w.tags.indexOf(active) > -1; }
+  function applyFilter(fromUser) {
+    var n = 0, first = null;
+    pieces.forEach(function (p) {
+      var on = matches(p.w);
+      if (on) { n++; if (!first) first = p; }
+      p.el.classList.toggle('is-off', !on);
+      p.cap.classList.toggle('is-off', !on);
+      p.link.tabIndex = on ? 0 : -1;
+      p.link.setAttribute('aria-hidden', !on);
+      if (p.tick) p.tick.classList.toggle('is-off', !on);
+      if (!on && fromUser) p.omega += 2.2;
+    });
+    document.getElementById('count').textContent = active === 'all' ? '작품 ' + n + '점' : works.length + '점 중 ' + n + '점';
+    if (fromUser && first && !narrow.matches) {
+      var visible = pieces.some(function (p) {
+        return matches(p.w) && p.x > room.scrollLeft && p.x + p.wd < room.scrollLeft + room.clientWidth;
+      });
+      if (!visible) room.scrollTo({ left: first.x - 120, behavior: reduce.matches ? 'auto' : 'smooth' });
+    }
+    kick();
+  }
+
+  /* ---------- panning: wheel, drag, keys (native) ---------- */
+  room.addEventListener('wheel', function (e) {
+    if (narrow.matches || e.ctrlKey) return;
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      room.scrollLeft += e.deltaMode === 1 ? e.deltaY * 32 : e.deltaY;
+    }
+  }, { passive: false });
+
+  var drag = null, suppressClick = false;
+  room.addEventListener('pointerdown', function (e) {
+    if (narrow.matches || e.pointerType !== 'mouse' || e.button !== 0) return;
+    drag = { x: e.clientX, left: room.scrollLeft, moved: false, id: e.pointerId };
+  });
+  addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var dx = e.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) > 6) { drag.moved = true; room.classList.add('is-dragging'); }
+    if (drag.moved) room.scrollLeft = drag.left - dx;
+  });
+  addEventListener('pointerup', function () {
+    if (drag && drag.moved) { suppressClick = true; setTimeout(function () { suppressClick = false; }, 0); }
+    drag = null;
+    room.classList.remove('is-dragging');
+  });
+
+  /* ---------- swing physics ---------- */
+  var lastPos = 0, lastVel = 0, running = false, lastT = 0;
+  function scrollPos() { return narrow.matches ? scrollY : room.scrollLeft; }
+  function kick() { if (!running && !reduce.matches) { running = true; lastT = performance.now(); requestAnimationFrame(tick); } }
+  function tick(t) {
+    var dt = Math.min(0.033, (t - lastT) / 1000);
+    lastT = t;
+    var pos = scrollPos();
+    var vel = pos - lastPos;
+    var acc = vel - lastVel;
+    lastPos = pos; lastVel = vel;
+    var busy = Math.abs(vel) > 0.2;
+    pieces.forEach(function (p) {
+      p.omega += (-p.k * p.theta - p.c * p.omega) * dt - acc * 0.03 * p.drive - vel * 0.0016 * p.drive;
+      p.theta += p.omega * dt;
+      if (p.theta > 0.17) { p.theta = 0.17; p.omega *= -0.4; }
+      if (p.theta < -0.17) { p.theta = -0.17; p.omega *= -0.4; }
+      if (Math.abs(p.theta) > 0.0005 || Math.abs(p.omega) > 0.002) busy = true;
+      p.swing.style.transform = 'rotate(' + p.theta.toFixed(4) + 'rad)';
+    });
+    syncMap();
+    if (busy) requestAnimationFrame(tick);
+    else running = false;
+  }
+  room.addEventListener('scroll', function () { syncMap(); kick(); }, { passive: true });
+  addEventListener('scroll', kick, { passive: true });
+  pieces.forEach(function (p) {
+    p.el.addEventListener('pointerenter', function (e) {
+      if (reduce.matches || p.el.classList.contains('is-off')) return;
+      var r = p.el.getBoundingClientRect();
+      var side = (e.clientX - (r.left + r.width / 2)) / r.width;
+      p.omega += (side > 0 ? -1 : 1) * 0.9 * p.drive;
+      kick();
+    });
+  });
+
+  /* ---------- focus view ---------- */
+  var focus = document.getElementById('focus');
+  var fFrame = document.getElementById('f-frame');
+  var fImg = document.getElementById('f-img');
+  var fStage = document.getElementById('f-stage');
+  var current = null, opener = null;
+
+  function barcode(str) {
+    var x = 0, out = '';
+    for (var i = 0; i < str.length; i++) {
+      var bits = str.charCodeAt(i).toString(2).padStart(8, '0');
+      for (var j = 0; j < bits.length; j++) {
+        var bw = bits[j] === '1' ? 3 : 1.4;
+        if ((i + j) % 2 === 0) out += '<rect x="' + x.toFixed(1) + '" y="0" width="' + bw + '" height="40" fill="#1d1b24"/>';
+        x += bw + 1.2;
+      }
+    }
+    var svg = document.getElementById('f-code');
+    svg.setAttribute('viewBox', '0 0 ' + x.toFixed(1) + ' 40');
+    svg.innerHTML = out;
+  }
+
+  function fill(p) {
+    var w = p.w;
+    current = p;
+    fImg.src = G.thumb(w);
+    fImg.alt = w.title + ' 미리보기';
+    fFrame.classList.toggle('is-external', w.type === 'external');
+    document.getElementById('f-title').textContent = w.title;
+    document.getElementById('f-year').textContent = w.year;
+    document.getElementById('f-type').textContent = typeLabel(w) + (w.type === 'external' ? ', 새 탭으로 열림' : '');
+    document.getElementById('f-tags').textContent = w.tags.map(G.label).join(', ');
+    document.getElementById('f-url').textContent = w.type === 'external' ? G.host(w) : w.url;
+    var open = document.getElementById('f-open');
+    open.href = G.href(w);
+    open.dataset.work = w.slug;
+    if (w.type === 'external') { open.target = '_blank'; open.rel = 'noopener'; open.innerHTML = '사이트 열기 ' + EXT_ICON; }
+    else { open.removeAttribute('target'); open.textContent = w.tags.indexOf('game') > -1 ? '게임 하기' : '작품 보기'; }
+    barcode(w.slug);
+  }
+
+  function frameTarget() {
+    var s = fStage.getBoundingClientRect();
+    var ar = 4 / 3;
+    var w = Math.min(s.width, s.height * ar);
+    var h = w / ar;
+    return { left: s.left + (s.width - w) / 2, top: s.top + (s.height - h) / 2, width: w, height: h };
+  }
+  function setFrame(r) {
+    var s = fStage.getBoundingClientRect();
+    fFrame.style.left = (r.left - s.left) + 'px';
+    fFrame.style.top = (r.top - s.top) + 'px';
+    fFrame.style.width = r.width + 'px';
+    fFrame.style.height = r.height + 'px';
+  }
+  function flip(from, to, done) {
+    setFrame(to);
+    if (reduce.matches || !from) { done && done(); return; }
+    var sx = from.width / to.width, sy = from.height / to.height;
+    var a = fFrame.animate([
+      { transform: 'translate(' + (from.left - to.left) + 'px,' + (from.top - to.top) + 'px) scale(' + sx + ',' + sy + ')' },
+      { transform: 'none' }
+    ], { duration: 520, easing: 'cubic-bezier(.2,.7,.1,1)' });
+    a.onfinish = done || null;
+  }
+
+  function openFocus(p) {
+    opener = p.link;
+    fill(p);
+    focus.hidden = false;
+    var from = p.swing.getBoundingClientRect();
+    p.swing.style.visibility = 'hidden';
+    requestAnimationFrame(function () {
+      flip(from, frameTarget());
+      focus.classList.add('is-open');
+      document.getElementById('f-open').focus({ preventScroll: true });
+    });
+  }
+  function closeFocus() {
+    if (focus.hidden) return;
+    var p = current;
+    focus.classList.remove('is-open');
+    var to = p.swing.getBoundingClientRect();
+    var fromR = fFrame.getBoundingClientRect();
+    var done = function () {
+      focus.hidden = true;
+      pieces.forEach(function (q) { q.swing.style.visibility = ''; });
+      if (opener) opener.focus({ preventScroll: true });
+    };
+    if (reduce.matches || narrow.matches) return done();
+    var s = fStage.getBoundingClientRect();
+    var a = fFrame.animate([
+      { transform: 'none', opacity: 1 },
+      { transform: 'translate(' + (to.left - fromR.left) + 'px,' + (to.top - fromR.top) + 'px) scale(' + (to.width / fromR.width) + ',' + (to.height / fromR.height) + ')', opacity: 1 }
+    ], { duration: 420, easing: 'cubic-bezier(.4,0,.2,1)' });
+    focus.animate([{ backgroundColor: 'rgb(228 226 241 / .94)' }, { backgroundColor: 'rgb(228 226 241 / 0)' }], { duration: 420 });
+    a.onfinish = done;
+  }
+  function step(dir) {
+    var list = pieces.filter(function (p) { return matches(p.w); });
+    var i = list.indexOf(current);
+    var next = list[(i + dir + list.length) % list.length];
+    pieces.forEach(function (q) { q.swing.style.visibility = ''; });
+    next.swing.style.visibility = 'hidden';
+    opener = next.link;
+    fill(next);
+    if (!reduce.matches) fFrame.animate([{ opacity: 0, transform: 'translateX(' + (dir * 30) + 'px)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: 'ease-out' });
+    if (!narrow.matches) room.scrollLeft = next.x - room.clientWidth / 2 + next.wd / 2;
+  }
+
+  wall.addEventListener('click', function (e) {
+    var a = e.target.closest('.piece__link');
+    if (!a) return;
+    e.preventDefault();
+    if (suppressClick) return;
+    var p = pieces.find(function (q) { return q.link === a; });
+    openFocus(p);
+  });
+  document.getElementById('f-close').addEventListener('click', closeFocus);
+  document.getElementById('f-prev').addEventListener('click', function () { step(-1); });
+  document.getElementById('f-next').addEventListener('click', function () { step(1); });
+  focus.addEventListener('click', function (e) { if (e.target === focus) closeFocus(); });
+  addEventListener('keydown', function (e) {
+    if (focus.hidden) return;
+    if (e.key === 'Escape') closeFocus();
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'Tab') { // keep focus inside the dialog
+      var f = focus.querySelectorAll('a[href], button');
+      var firstEl = f[0], lastEl = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === firstEl) { e.preventDefault(); lastEl.focus(); }
+      else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); firstEl.focus(); }
+    }
+  });
+  addEventListener('resize', function () {
+    layout();
+    if (!focus.hidden) setFrame(frameTarget());
+  });
+  narrow.addEventListener('change', layout);
+
+  layout();
+  if (document.fonts) document.fonts.ready.then(layout);
+})();
+</script>
+</body>
+</html>
