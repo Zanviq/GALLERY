@@ -1,0 +1,12 @@
+.git
+.github
+.claude
+.env
+.env.*
+design
+README.md
+CLAUDE.md
+**/.gitkeep
+**/node_modules
+**/.DS_Store
+**/Thumbs.db
