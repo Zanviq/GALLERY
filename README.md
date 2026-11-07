@@ -34,9 +34,15 @@ Dockerfile          배포 이미지
 
    - `internal`: 레포 안 `works/<slug>/`. `url`은 `works/<slug>/`
    - `external`: 배포된 외부 주소를 `url`에 적는다. 홈에서 새 탭으로 열리고 외부 링크 표시가 붙는다
-3. **썸네일 추가** — `thumbnails/<slug>.webp` (4:3, 가로 1200px 이하 권장). 공유 이미지가 따로 필요하면 `og/<slug>.png` (1200×630).
+3. **썸네일 추가** — `thumbnails/<slug>.webp` (4:3, 가로 1200px 이하 권장). 홈의 선택 칸은 가운데 정사각형을 픽셀로 줄여 보여 주고, 미리보기 화면은 4:3 전체를 보여 준다. 썸네일이 없으면 slug로 만든 픽셀 무늬가 대신 나온다. 공유 이미지가 따로 필요하면 `og/<slug>.png` (1200×630).
 
-로컬 확인: 레포 루트에서 `python -m http.server 8000` → http://localhost:8000
+로컬 확인: 레포 루트에서 `python -m http.server 8000` → http://127.0.0.1:8000
+
+## 홈 설정
+
+- 태그 표시 이름: `assets/js/home.js` 맨 위 `TAG_LABELS`. 없는 태그는 works.json에 적은 그대로 보인다.
+- 카카오톡 오픈채팅: `index.html` 아래쪽 footer의 카카오톡 링크에 주소를 넣고 `hidden`을 지우면 footer와 문의 화면(동전 투입구)에 같이 나온다.
+- 폰트: Galmuri11(OFL)을 `assets/fonts/`에 잘라 넣었다. 자주 쓰는 한글 2,350자와 영문은 처음에 받고, 나머지 한글은 그 글자가 나올 때만 받는다.
 
 ## 배포
 

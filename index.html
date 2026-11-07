@@ -1,13 +1,110 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>gallery.zanviq.dev</title>
-  <meta name="description" content="Zanviq가 만든 웹페이지, 게임, 배포작 목록">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>zanviq gallery</title>
+<meta name="description" content="Zanviq가 만든 웹페이지, 미니 게임, 직접 배포한 사이트를 오락기 선택 화면에서 골라 보는 곳. 홈페이지 제작 문의도 받습니다.">
+<meta name="theme-color" content="#ff6a1a">
+<link rel="canonical" href="https://gallery.zanviq.dev/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="zanviq gallery">
+<meta property="og:title" content="zanviq gallery">
+<meta property="og:description" content="만든 웹페이지, 미니 게임, 배포한 사이트 모음">
+<meta property="og:url" content="https://gallery.zanviq.dev/">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/gallery.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/galmuri11-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/galmuri11-bold-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/home.css">
+<script src="assets/js/home.js" defer></script>
 </head>
 <body>
-  <!-- 홈 대시보드 placeholder. 시안 선택 후 data/works.json 을 읽어 카드를 렌더링한다. -->
-  <main></main>
+<div class="cabinet">
+  <header class="marquee is-booting" id="marquee">
+    <div class="marquee__glass">
+      <h1>ZANVIQ GALLERY</h1>
+      <p id="marquee-sub"></p>
+    </div>
+  </header>
+
+  <div class="bezel">
+    <main class="screen is-booting" id="screen">
+      <div>
+        <div class="hud">
+          <span class="hud__credit" id="credit">CREDIT 00</span>
+          <span class="hud__msg">작품을 고르세요</span>
+          <button class="sound" id="sound" type="button" aria-pressed="false">소리 끔</button>
+        </div>
+        <nav class="modes" id="modes" aria-label="태그로 거르기"></nav>
+      </div>
+
+      <div class="main">
+        <section class="preview" aria-live="polite" aria-label="고른 작품">
+          <div class="preview__monitor">
+            <span class="preview__tag" id="p-ext" hidden>외부 사이트</span>
+            <canvas id="p-canvas" width="480" height="360" role="img" aria-label=""></canvas>
+          </div>
+          <h2 id="p-title">LOADING</h2>
+          <div id="p-body">
+            <dl class="stats" id="p-stats" hidden>
+              <dt>종류</dt><dd id="p-kind"></dd>
+              <dt>연도</dt><dd id="p-year"></dd>
+              <dt>태그</dt><dd id="p-tags"></dd>
+            </dl>
+            <p class="prompt" id="p-prompt"></p>
+          </div>
+        </section>
+        <ul class="grid" id="grid" aria-label="작품 선택. 방향키로 이동, Enter로 열기"></ul>
+      </div>
+
+      <div class="help">
+        <span><b>방향키</b> 이동</span><span><b>ENTER</b> 입장</span><span><b>Q E</b> 분류 바꾸기</span><span><b>C</b> 문의</span>
+        <button class="coin-btn" id="coin-text" type="button">INSERT COIN 홈페이지 제작 문의</button>
+      </div>
+
+      <p class="demo" id="demo" hidden>DEMO</p>
+
+      <div class="overlay" id="ready" hidden><div><div class="overlay__big" id="ready-big">READY</div><div class="overlay__small" id="ready-small"></div></div></div>
+      <div class="overlay" id="contact" hidden role="dialog" aria-modal="true" aria-labelledby="c-title">
+        <div class="contact">
+          <h2 id="c-title">CONTINUE?</h2>
+          <p>홈페이지 제작 문의를 받습니다. 소개용 사이트, 랜딩 페이지, 작은 웹 게임.</p>
+          <div id="c-links"></div>
+          <small>ESC 또는 B 버튼으로 닫기</small>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="panel" role="group" aria-label="조작판">
+    <div class="stick">
+      <div class="stick__base"></div>
+      <div class="stick__ball" id="ball"></div>
+      <button class="u" type="button" data-dir="up" aria-label="위"></button>
+      <button class="d" type="button" data-dir="down" aria-label="아래"></button>
+      <button class="l" type="button" data-dir="left" aria-label="왼쪽"></button>
+      <button class="r" type="button" data-dir="right" aria-label="오른쪽"></button>
+    </div>
+    <div class="btns">
+      <button class="pbtn" id="btn-a" type="button"><i></i>A 입장</button>
+      <button class="pbtn pbtn--b" id="btn-b" type="button"><i></i>B 분류</button>
+    </div>
+    <button class="slot" id="slot" type="button"><span class="coin" id="coin"></span><span class="slot__plate"><span></span></span>문의</button>
+  </div>
+
+  <footer class="foot" id="foot">
+    <span>홈페이지 제작 문의</span>
+    <a href="mailto:zanviq.dev@gmail.com"><span class="sr-only">이메일 </span>zanviq.dev@gmail.com</a>
+    <!-- 카카오톡 오픈채팅: href 에 주소를 넣고 hidden 을 지우면 여기와 문의 화면에 같이 나온다 -->
+    <a href="" target="_blank" rel="noopener" data-label="카카오톡 오픈채팅" hidden>카카오톡 오픈채팅</a>
+  </footer>
+</div>
+<noscript><p style="margin:0;padding:16px;background:#1a1714;color:#ffd23f;text-align:center">작품 목록은 자바스크립트를 켜야 보입니다.</p></noscript>
 </body>
 </html>
