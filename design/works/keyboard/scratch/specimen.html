@@ -1,0 +1,12 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbit&family=Gothic+A1:wght@400;600;800&family=Sunflower:wght@300;500;700&family=Archivo:wdth,wght@62..125,400..800&family=Do+Hyeon&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css">
+<style>body{background:#E6E7E3;color:#1E1F22;margin:24px;font-size:16px}
+.row{display:grid;grid-template-columns:160px 1fr;gap:16px;border-top:1px solid #bbb;padding:14px 0;align-items:baseline}
+.h{font-size:64px;line-height:1;letter-spacing:-.02em}.b{font-size:17px;line-height:1.7;max-width:60ch}
+</style></head><body>
+<script>
+const fams=[["Orbit","Orbit",400],["Gothic A1","Gothic A1",800],["Sunflower","Sunflower",700],["Wanted Sans","Wanted Sans Variable",800],["Wanted 600","Wanted Sans Variable",600],["SUIT","SUIT Variable",800],["Do Hyeon","Do Hyeon",400],["Archivo exp","Archivo",800]];
+for(const [n,f,w] of fams){document.write(`<div class=row><div>${n}</div><div><div class=h style="font-family:'${f}';font-weight:${w};${n.includes('exp')?'font-stretch:125%':''}">손가락이 내는 가락. GARAK 65</div><div class=b style="font-family:'${f}';font-weight:400">알루미늄 덩어리를 깎아 만든 65% 키보드. 바닥을 칠 때 낮고 둥근 소리가 납니다. 0123456789 ₩398,000 6.5° 1.86kg</div></div></div>`)}
+</script></body></html>

@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>물길 | 바다 쓰레기를 해변에 닿기 전에 줍습니다</title>
+<meta name="description" content="물길은 조류와 바람으로 쓰레기가 모일 바다 위 자리를 미리 계산하고, 무인 수거선 누비를 그 자리로 보냅니다. 통영 앞바다에서 일하는 가상 회사입니다.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="zanviq gallery">
+<meta property="og:title" content="물길 | 바다 쓰레기를 해변에 닿기 전에 줍습니다">
+<meta property="og:description" content="쓰레기는 바다 위에서 먼저 한 줄로 모입니다. 물길은 그 자리를 미리 계산하고 무인 수거선을 보냅니다.">
+<meta property="og:url" content="https://gallery.zanviq.dev/startup/">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/startup.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="해도 위에서 주황색 무인 수거선들이 자홍색 수렴선을 따라 쓰레기를 줍는 장면">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+<link rel="preload" href="./fonts/hahmlet.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/plex-kr-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/fonts.css">
+<link rel="stylesheet" href="./css/site.css">
+<script type="module" src="./js/main.js"></script>
+<script src="/shared/back.js" data-position="bottom-left" data-theme="dark" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="#top" aria-label="물길 처음으로">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <path d="M3 8.5c5.5 0 9 1.6 13 5.4 2.7 2.5 6 2.6 13 2.1" />
+        <path d="M3 16c6.5 0 12.5 0 26 0" />
+        <path d="M3 23.5c5.5 0 9-1.6 13-5.4 2.7-2.5 6-2.6 13-2.1" />
+        <circle cx="25.5" cy="16" r="2.6" class="brand__dot" />
+      </svg>
+      <span class="brand__name">물길</span>
+    </a>
+    <nav class="site-nav" id="site-nav" aria-label="주 메뉴">
+      <ul>
+        <li><a href="#how">작동 방식</a></li>
+        <li><a href="#boat">누비</a></li>
+        <li><a href="#field">현장 기록</a></li>
+        <li><a href="#team">팀</a></li>
+        <li><a href="#careers">채용</a></li>
+      </ul>
+      <a class="btn btn--primary btn--sm site-nav__cta" href="#contact">도입 문의</a>
+    </nav>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="l1" d="M4 8h16"/><path class="l2" d="M4 16h16"/></svg>
+      <span class="menu-btn__label">메뉴</span>
+    </button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <span id="top" class="anchor-top"></span>
+
+  <!-- ========= 이야기: 고정된 해도 위로 단계가 지나간다 ========= -->
+  <section class="story" aria-labelledby="hero-title">
+    <div class="steps">
+
+      <div class="step step--hero" data-step="hero">
+        <div class="hero">
+          <h1 class="hero__title" id="hero-title">바다 쓰레기를<br>해변에 닿기 전에<br>줍습니다</h1>
+          <p class="hero__lead">쓰레기는 바다 위에서 먼저 한 줄로 모입니다. 물길은 조류와 바람으로 그 자리를 미리 계산하고, 무인 수거선 누비를 보냅니다.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="#contact">도입 문의하기</a>
+            <a class="link-quiet" href="#problem">어떻게 줍는지 보기
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+            </a>
+          </div>
+          <p class="hero__note">지금 통영과 거제 앞바다에서 누비 9척이 일합니다.</p>
+        </div>
+      </div>
+
+      <section class="step" id="problem" data-step="problem" aria-labelledby="problem-title">
+        <div class="panel">
+          <h2 class="panel__title" id="problem-title">해변에 닿으면 이미 늦습니다</h2>
+          <p>양식장 부표, 끊어진 그물, 페트병. 바다에서는 한데 모여 떠다니던 쓰레기가 해안에 닿으면 몇 킬로미터에 걸쳐 흩어집니다.</p>
+          <p>바위 틈에 낀 스티로폼은 사람이 하나씩 줍는 수밖에 없고, 줍기 전에 잘게 부서집니다.</p>
+          <p class="panel__key"><span class="key key--beach" aria-hidden="true"></span>해안선의 짙은 점이 해변에 닿은 쓰레기입니다. 지금은 보트가 모두 기지에 있습니다.</p>
+        </div>
+      </section>
+
+      <section class="step" id="approach" data-step="approach" aria-labelledby="approach-title">
+        <div class="panel">
+          <h2 class="panel__title" id="approach-title">바다 위에는 쓰레기가 모이는 선이 있습니다</h2>
+          <p>성질이 다른 두 물이 만나는 곳에서는 떠 있는 것들이 한 줄로 모입니다. 어민들이 거품 띠를 보고 알아보는 이 선을 수렴선이라고 부릅니다.</p>
+          <p>수렴선은 조류와 바람을 따라 움직이지만, 어디로 움직일지는 계산할 수 있습니다.</p>
+          <p class="panel__key"><span class="key key--front" aria-hidden="true"></span>자홍색 점선이 지금 계산한 수렴선입니다.</p>
+        </div>
+      </section>
+
+      <section class="how" id="how" aria-labelledby="how-title">
+        <nav class="rail" aria-label="작동 단계">
+          <ol>
+            <li><a href="#how-1" data-rail="how-1"><span class="rail__n">1</span><span class="rail__t">예보</span></a></li>
+            <li><a href="#how-2" data-rail="how-2"><span class="rail__n">2</span><span class="rail__t">출항</span></a></li>
+            <li><a href="#how-3" data-rail="how-3"><span class="rail__n">3</span><span class="rail__t">수거</span></a></li>
+            <li><a href="#how-4" data-rail="how-4"><span class="rail__n">4</span><span class="rail__t">하역</span></a></li>
+          </ol>
+        </nav>
+
+        <div class="step" id="how-1" data-step="how-1">
+          <div class="panel">
+            <h2 class="panel__kicker" id="how-title">하루는 네 단계로 돌아갑니다</h2>
+            <h3 class="panel__title"><span class="panel__n" aria-hidden="true">1</span>예보</h3>
+            <p>매시간 조류, 바람, 강물 유입 자료를 합쳐 48시간 앞까지 쓰레기의 흐름을 계산합니다. 수렴선이 언제 어디에 생길지가 나옵니다.</p>
+            <p class="panel__key"><span class="key key--arrow" aria-hidden="true"></span>화살표는 지금 물이 흐르는 방향, 옅은 점선은 2시간, 4시간, 6시간 뒤의 수렴선입니다.</p>
+            <dl class="facts">
+              <div><dt>갱신</dt><dd>1시간마다</dd></div>
+              <div><dt>예보 범위</dt><dd>48시간</dd></div>
+              <div><dt>격자</dt><dd>100 m</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="step" id="how-2" data-step="how-2">
+          <div class="panel">
+            <h3 class="panel__title"><span class="panel__n" aria-hidden="true">2</span>출항</h3>
+            <p>예보를 받은 보트가 기지에서 스스로 출발합니다. 양식장과 항로를 피해 경로를 짜고, 관제사 한 명이 최대 여덟 척을 지켜봅니다.</p>
+            <p class="panel__key"><span class="key key--route" aria-hidden="true"></span>점선이 보트마다 짠 경로입니다.</p>
+          </div>
+        </div>
+
+        <div class="step" id="how-3" data-step="how-3">
+          <div class="panel">
+            <h3 class="panel__title"><span class="panel__n" aria-hidden="true">3</span>수거</h3>
+            <p>수렴선을 따라 4노트로 천천히 지나가며 폭 1.6미터 입구로 떠 있는 것을 걷어 올립니다. 그물이나 밧줄이 걸리면 멈추고 관제사에게 사진을 보냅니다.</p>
+            <p class="panel__key"><span class="key key--boat" aria-hidden="true"></span>보트 옆 막대가 적재함이 찬 정도입니다.</p>
+          </div>
+        </div>
+
+        <div class="step" id="how-4" data-step="how-4">
+          <div class="panel">
+            <h3 class="panel__title"><span class="panel__n" aria-hidden="true">4</span>하역</h3>
+            <p>적재함이 차면 기지로 돌아옵니다. 스티로폼, 그물, 플라스틱을 나눠 무게를 재고 재활용 업체로 보냅니다. 배터리를 바꿔 끼우면 20분 뒤 다시 나갑니다.</p>
+            <figure class="unload">
+              <figcaption class="unload__cap">오늘 기지에서 내린 양 <b data-unload="total">347 kg</b></figcaption>
+              <div class="unload__bar" aria-hidden="true">
+                <span class="mix__seg mix__seg--1" data-unload-bar="0" style="width:calc(61% - 2px)"></span><span class="mix__seg mix__seg--2" data-unload-bar="1" style="width:calc(18% - 2px)"></span><span class="mix__seg mix__seg--3" data-unload-bar="2" style="width:calc(12% - 2px)"></span><span class="mix__seg mix__seg--4" data-unload-bar="3" style="width:calc(9% - 2px)"></span>
+              </div>
+              <ul class="unload__legend">
+                <li><span class="sw sw--1" aria-hidden="true"></span>스티로폼 <b data-unload="0">61%</b></li>
+                <li><span class="sw sw--2" aria-hidden="true"></span>그물·밧줄 <b data-unload="1">18%</b></li>
+                <li><span class="sw sw--3" aria-hidden="true"></span>플라스틱 <b data-unload="2">12%</b></li>
+                <li><span class="sw sw--4" aria-hidden="true"></span>기타 <b data-unload="3">9%</b></li>
+              </ul>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="step step--try" id="try" data-step="try" aria-labelledby="try-title">
+        <div class="panel panel--try">
+          <h2 class="panel__title" id="try-title">바람을 바꿔 보세요</h2>
+          <p>바람이 바뀌면 수렴선이 움직이고, 보트는 경로를 다시 짭니다. 해도의 바다를 누르면 그 자리에 쓰레기가 생깁니다.</p>
+
+          <div class="controls">
+            <div class="control control--dial">
+              <span class="control__label" id="wind-dir-label">바람 방향</span>
+              <div class="dial" id="wind-dial" role="slider" tabindex="0"
+                   aria-labelledby="wind-dir-label" aria-valuemin="0" aria-valuemax="7" aria-valuenow="7" aria-valuetext="북서풍">
+                <svg viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+                  <circle class="dial__ring" cx="48" cy="48" r="44"/>
+                  <g class="dial__ticks"></g>
+                  <text class="dial__n" x="48" y="17">북</text>
+                  <g class="dial__needle"><path d="M48 18 L54 52 L48 47 L42 52 Z"/><circle cx="48" cy="48" r="3.5"/></g>
+                </svg>
+              </div>
+              <output class="control__value" id="wind-dir-out" for="wind-dial">북서풍</output>
+            </div>
+
+            <div class="control control--range">
+              <label class="control__label" for="wind-speed">풍속</label>
+              <input type="range" id="wind-speed" min="1" max="12" step="1" value="4" aria-describedby="wind-speed-out">
+              <output class="control__value" id="wind-speed-out" for="wind-speed">4 m/s</output>
+            </div>
+
+            <div class="control control--switch">
+              <span class="control__label" id="boats-label">보트 운항</span>
+              <button type="button" class="switch" id="boats-switch" role="switch" aria-checked="true" aria-labelledby="boats-label">
+                <span class="switch__track"><span class="switch__thumb"></span></span>
+                <span class="switch__text" aria-hidden="true">켜짐</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="try-actions">
+            <button type="button" class="btn btn--secondary btn--sm" id="spill-btn">쓰레기 흘려보내기</button>
+            <button type="button" class="btn btn--quiet btn--sm" id="reset-btn">처음 상태로</button>
+          </div>
+          <p class="try-hint">보트 운항을 끄고 30초쯤 지켜보세요. 위쪽 ‘해변 도착’ 수가 늘어납니다.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="stage" data-mode="loading">
+      <img class="stage__fallback" data-src="./img/chart-still.webp" width="1600" height="1000"
+           alt="남포만 일대 해도. 섬 사이 바다에 자홍색 점선으로 표시한 수렴선을 따라 주황색 수거선들이 쓰레기를 모으고 있다.">
+      <noscript><img class="stage__fallback" src="./img/chart-still.webp" width="1600" height="1000"
+           alt="남포만 일대 해도. 섬 사이 바다에 자홍색 점선으로 표시한 수렴선을 따라 주황색 수거선들이 쓰레기를 모으고 있다."></noscript>
+      <canvas class="stage__canvas" role="img"
+              aria-label="남포만 일대를 단순화한 해도. 쓰레기 입자가 조류와 바람을 따라 움직이고, 수거선 누비가 수렴선을 따라 쓰레기를 줍는 모습을 단계별로 보여 줍니다."></canvas>
+      <div class="hud" aria-hidden="true">
+        <p class="hud__title">남포만 일대 <span>예시 해역</span></p>
+        <dl>
+          <div><dt>시각</dt><dd data-hud="clock">06:40</dd></div>
+          <div><dt>물때</dt><dd data-hud="tide">밀물 2시간째</dd></div>
+          <div><dt>바람</dt><dd data-hud="wind">북서 4 m/s</dd></div>
+          <div class="hud__wide"><dt>운항</dt><dd data-hud="boats">6척</dd></div>
+          <div><dt>오늘 수거</dt><dd data-hud="collected">1,184 kg</dd></div>
+          <div><dt>해변 도착</dt><dd data-hud="beached">시간당 12개</dd></div>
+        </dl>
+        <p class="hud__warn" data-hud="warn" hidden>보트 운용 한계에 가까운 바람</p>
+      </div>
+      <p class="stage__note">지형은 설명을 위해 단순화했습니다.</p>
+      <p class="visually-hidden" aria-live="polite" id="chart-live"></p>
+    </div>
+  </section>
+
+  <!-- ========= 누비 ========= -->
+  <section class="section section--boat" id="boat" aria-labelledby="boat-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" id="boat-title">수거선 누비</h2>
+        <p class="sec-lead">사람이 타지 않는 4.2미터 쌍동선입니다. 물 위를 천천히 지나가며 떠 있는 것만 걷어 올리고, 물고기와 해초는 그물망 사이로 빠져나갑니다.</p>
+      </div>
+
+      <div class="boat">
+        <figure class="boat__drawing">
+          <div class="drawing" data-drawing tabindex="0" role="region" aria-label="누비 도면. 좁은 화면에서는 옆으로 밀어 볼 수 있습니다.">
+            <!-- 측면도 -->
+            <svg class="drawing__svg" viewBox="0 0 780 590" role="img" aria-labelledby="drawing-title">
+              <title id="drawing-title">누비 4.2 측면도와 평면도. 번호 1부터 6은 오른쪽 목록의 부품을 가리킨다.</title>
+              <defs>
+                <pattern id="mesh" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                  <path d="M0 0h7M0 0v7" class="mesh-line"/>
+                </pattern>
+                <pattern id="cells" width="23" height="17" patternUnits="userSpaceOnUse" x="206" y="34">
+                  <rect x="1.5" y="1.5" width="20" height="14" class="cell"/>
+                </pattern>
+                <pattern id="ribs" width="14" height="10" patternUnits="userSpaceOnUse" x="230">
+                  <path d="M7 0v10" class="rib"/>
+                </pattern>
+                <clipPath id="hull-clip"><path d="M40 140 H596 C612 140 626 146 636 156 L641 161 C622 183 588 196 540 196 H76 C56 196 44 190 40 180 Z"/></clipPath>
+                <marker id="arr" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 1 10 5 0 9" class="arr"/>
+                </marker>
+              </defs>
+
+              <!-- side elevation -->
+              <g class="view view--side" transform="translate(70 46)">
+                <text class="view-label" x="-40" y="-14">측면도</text>
+                <!-- part 6: ducted thruster under the stern -->
+                <g class="part" data-part="6">
+                  <path class="part__shape" d="M60 194 v8 h34 v-8"/>
+                  <rect class="part__shape" x="44" y="200" width="54" height="16" rx="8"/>
+                  <ellipse class="part__shape" cx="46" cy="208" rx="5" ry="11"/>
+                </g>
+                <!-- hull: orange topsides, dark antifouling below the waterline -->
+                <path class="hull-side" d="M40 140 H596 C612 140 626 146 636 156 L641 161 C622 183 588 196 540 196 H76 C56 196 44 190 40 180 Z"/>
+                <rect class="antifouling" x="30" y="170" width="620" height="40" clip-path="url(#hull-clip)"/>
+                <path class="hull-edge" d="M40 140 H596 C612 140 626 146 636 156 L641 161 C622 183 588 196 540 196 H76 C56 196 44 190 40 180 Z"/>
+                <path class="rub-rail" d="M41 148 H600"/>
+                <!-- waterline -->
+                <path class="waterline" d="M-20 170 H690"/>
+                <text class="wl-label" x="690" y="164">흘수선</text>
+                <!-- part 4: battery, hidden inside the hull -->
+                <g class="part" data-part="4">
+                  <rect class="part__shape hidden-line" x="286" y="150" width="138" height="30" rx="3"/>
+                  <path class="part__shape thin hidden-line" d="M332 150v30M378 150v30"/>
+                </g>
+                <!-- bollards -->
+                <path class="fitting" d="M62 140v-8h8v8M572 140v-8h8v8"/>
+                <!-- part 2: bin -->
+                <g class="part" data-part="2">
+                  <rect class="part__shape" x="230" y="76" width="232" height="64"/>
+                  <rect x="230" y="76" width="232" height="64" fill="url(#ribs)" class="part__fill"/>
+                  <path class="part__shape thin" d="M230 86 H462"/>
+                </g>
+                <!-- part 3: solar roof on two posts -->
+                <g class="part" data-part="3">
+                  <path class="part__shape" d="M204 56 H488 L484 64 H208 Z"/>
+                  <path class="part__shape thin" d="M234 64 V76 M458 64 V76"/>
+                </g>
+                <!-- part 1: intake conveyor from the waterline to the bin -->
+                <g class="part" data-part="1">
+                  <path class="part__shape" d="M603 176 L472 92 L465 103 L596 187 Z"/>
+                  <path d="M603 176 L472 92 L465 103 L596 187 Z" fill="url(#mesh)" class="part__fill"/>
+                  <circle class="part__shape" cx="469" cy="97" r="7.5"/>
+                  <circle class="part__shape" cx="599" cy="181" r="7.5"/>
+                  <circle class="axle" cx="469" cy="97" r="2"/>
+                  <circle class="axle" cx="599" cy="181" r="2"/>
+                </g>
+                <!-- part 5: sensor mast -->
+                <g class="part" data-part="5">
+                  <path class="part__shape thin" d="M147 140 L148.5 30 M153 140 L151.5 30"/>
+                  <rect class="part__shape" x="124" y="16" width="52" height="13" rx="6.5"/>
+                  <rect class="part__shape" x="131" y="50" width="12" height="9" rx="2"/>
+                  <rect class="part__shape" x="157" y="50" width="12" height="9" rx="2"/>
+                  <circle class="part__shape" cx="150" cy="9" r="3.5"/>
+                  <path class="part__shape thin" d="M168 16 L174 -12"/>
+                </g>
+                <!-- dimension: overall length -->
+                <g class="dim">
+                  <path class="ext" d="M40 184 V262 M641 166 V262"/>
+                  <path d="M40 254 H641" marker-start="url(#arr)" marker-end="url(#arr)"/>
+                  <text x="340" y="274">4.2 m</text>
+                </g>
+                <!-- callouts -->
+                <g class="callouts">
+                  <g class="callout" data-part="1"><path d="M548 142 L640 100"/><circle cx="652" cy="94" r="13"/><text x="652" y="99">1</text></g>
+                  <g class="callout" data-part="2"><path d="M230 112 H209"/><circle cx="196" cy="112" r="13"/><text x="196" y="117">2</text></g>
+                  <g class="callout" data-part="3"><path d="M330 56 V27"/><circle cx="330" cy="14" r="13"/><text x="330" y="19">3</text></g>
+                  <g class="callout" data-part="4"><path d="M355 180 V219"/><circle cx="355" cy="232" r="13"/><text x="355" y="237">4</text></g>
+                  <g class="callout" data-part="5"><path d="M124 22 H101"/><circle cx="88" cy="22" r="13"/><text x="88" y="27">5</text></g>
+                  <g class="callout" data-part="6"><path d="M44 214 L12 230"/><circle cx="0" cy="236" r="13"/><text x="0" y="241">6</text></g>
+                </g>
+              </g>
+
+              <!-- plan view -->
+              <g class="view view--plan" transform="translate(70 352)">
+                <text class="view-label" x="-40" y="-6">평면도</text>
+                <g transform="translate(0 12)">
+                  <path class="hull-top" d="M40 8 H566 C604 8 628 18 640 30 C628 42 604 52 566 52 H66 C50 52 40 44 40 30 Z"/>
+                  <path class="hull-top" d="M40 118 H566 C604 118 628 128 640 140 C628 152 604 162 566 162 H66 C50 162 40 154 40 140 Z"/>
+                  <path class="rub-rail" d="M44 30 H620 M44 140 H620"/>
+                  <rect class="deck" x="58" y="52" width="464" height="66"/>
+                  <path class="fitting" d="M62 22h8M62 38h8M572 22h8M572 38h8M62 132h8M62 148h8M572 132h8M572 148h8"/>
+                  <g class="part" data-part="4">
+                    <rect class="part__shape hidden-line" x="286" y="17" width="138" height="26" rx="3"/>
+                    <rect class="part__shape hidden-line" x="286" y="127" width="138" height="26" rx="3"/>
+                  </g>
+                  <g class="part" data-part="1">
+                    <rect class="part__shape" x="522" y="58" width="112" height="54"/>
+                    <rect x="522" y="58" width="112" height="54" fill="url(#mesh)" class="part__fill"/>
+                  </g>
+                  <g class="part" data-part="3">
+                    <rect class="part__shape" x="206" y="34" width="276" height="102"/>
+                    <rect x="206" y="34" width="276" height="102" fill="url(#cells)" class="part__fill"/>
+                  </g>
+                  <g class="part" data-part="5">
+                    <circle class="part__shape" cx="150" cy="85" r="9"/>
+                    <path class="part__shape thin" d="M150 70 V100 M135 85 H165"/>
+                  </g>
+                  <g class="part" data-part="6">
+                    <rect class="part__shape" x="16" y="22" width="26" height="16" rx="8"/>
+                    <rect class="part__shape" x="16" y="132" width="26" height="16" rx="8"/>
+                  </g>
+                  <g class="dim">
+                    <path class="ext" d="M646 8 H694 M646 162 H694"/>
+                    <path d="M686 8 V162" marker-start="url(#arr)" marker-end="url(#arr)"/>
+                    <text x="696" y="90" class="dim__v">2.1 m</text>
+                  </g>
+                </g>
+              </g>
+
+              <!-- title block -->
+              <g class="title-block" transform="translate(468 540)">
+                <rect x="0" y="0" width="306" height="44"/>
+                <path d="M0 22 H306 M196 0 V44"/>
+                <text x="10" y="15">누비 4.2 일반 배치도</text>
+                <text x="10" y="37" class="tb-sub">물길 선체팀</text>
+                <text x="206" y="15" class="tb-sub">NB42-GA-03</text>
+                <text x="206" y="37" class="tb-sub">축척 없음</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption class="drawing__cap">도면의 번호와 오른쪽 목록의 번호는 같은 부품입니다. 번호를 누르면 도면에 표시됩니다.</figcaption>
+        </figure>
+
+        <ol class="parts" aria-label="주요 부품">
+          <li data-part="1"><button type="button" class="parts__btn" aria-pressed="false"><span class="parts__n">1</span><span class="parts__name">수거 입구</span><span class="parts__desc">폭 1.6 m. 그물망 컨베이어가 떠 있는 것을 적재함으로 올려 보냅니다.</span></button></li>
+          <li data-part="2"><button type="button" class="parts__btn" aria-pressed="false"><span class="parts__n">2</span><span class="parts__name">적재함</span><span class="parts__desc">1.8 m³, 최대 350 kg. 가득 차면 스스로 기지로 돌아옵니다.</span></button></li>
+          <li data-part="3"><button type="button" class="parts__btn" aria-pressed="false"><span class="parts__n">3</span><span class="parts__name">태양광 지붕</span><span class="parts__desc">1.1 kW. 맑은 날 작업 시간을 두 시간쯤 늘립니다.</span></button></li>
+          <li data-part="4"><button type="button" class="parts__btn" aria-pressed="false"><span class="parts__n">4</span><span class="parts__name">배터리</span><span class="parts__desc">LFP 32 kWh. 기지에서 20분 만에 통째로 바꿉니다.</span></button></li>
+          <li data-part="5"><button type="button" class="parts__btn" aria-pressed="false"><span class="parts__n">5</span><span class="parts__name">센서 마스트</span><span class="parts__desc">레이더, 카메라 4대, AIS. 밤에도 부표와 어선을 구분합니다.</span></button></li>
+          <li data-part="6"><button type="button" class="parts__btn" aria-pressed="false"><span class="parts__n">6</span><span class="parts__name">추진기</span><span class="parts__desc">전기 추진기 2기. 그물이 감기지 않게 덮개 안에서 돕니다.</span></button></li>
+        </ol>
+      </div>
+
+      <div class="boat-specs">
+        <table class="table table--specs">
+          <caption>누비 4.2 기본 제원</caption>
+          <tbody>
+            <tr><th scope="row">길이 × 폭</th><td>4.2 × 2.1 m</td></tr>
+            <tr><th scope="row">무게</th><td>680 kg (빈 상태)</td></tr>
+            <tr><th scope="row">속도</th><td>작업 4노트, 이동 7노트</td></tr>
+            <tr><th scope="row">작업 시간</th><td>한 번 충전에 12시간</td></tr>
+            <tr><th scope="row">운용 한계</th><td>파고 1.5 m, 풍속 14 m/s</td></tr>
+            <tr><th scope="row">통신</th><td>LTE, 위성 백업</td></tr>
+            <tr><th scope="row">관제</th><td>관제사 1명이 최대 8척</td></tr>
+          </tbody>
+        </table>
+
+        <div class="offer">
+          <h3 class="offer__title">함께 일하는 방식은 두 가지입니다</h3>
+          <div class="offer__item">
+            <h4>운용 계약</h4>
+            <p>보트와 기지, 관제를 물길이 맡습니다. 4월부터 11월까지 시즌 단위로 계약하고, 매주 해역별 수거 기록을 보내 드립니다.</p>
+          </div>
+          <div class="offer__item">
+            <h4>표류 예보</h4>
+            <p>보트 없이 예보만 받습니다. 매일 아침 7시, 그날 쓰레기가 닿을 해변과 시각을 보내 드립니다. 해변 청소 인력을 어디로 보낼지 정할 때 씁니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= 현장 기록 ========= -->
+  <section class="section section--field" id="field" aria-labelledby="field-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" id="field-title">2025년 시즌 기록</h2>
+        <p class="sec-lead">지난해 4월부터 11월까지 남해안 세 해역에서 누비 9척이 일했습니다. 무게는 기지 저울로 잰 값이고, 해변 도착은 조사 해변에서 직접 센 개수입니다.</p>
+      </div>
+
+      <div class="field">
+        <div class="table-scroll" tabindex="0" role="region" aria-labelledby="field-cap">
+          <table class="table table--field table--stack">
+            <caption id="field-cap">해역별 기록, 2025년 4–11월</caption>
+            <thead>
+              <tr>
+                <th scope="col">해역</th>
+                <th scope="col">운항 기간</th>
+                <th scope="col" class="num">출항한 날</th>
+                <th scope="col" class="num">수거량</th>
+                <th scope="col" class="num">해변 도착<span class="th-sub">전년 같은 기간 대비</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">통영 한산만 일대</th><td data-label="운항 기간">4월 7일 – 11월 20일</td><td class="num" data-label="출항한 날">142일</td><td class="num" data-label="수거량">31.4 t</td><td class="num" data-label="해변 도착(전년 대비)">−41%</td></tr>
+              <tr><th scope="row">거제 남부 연안</th><td data-label="운항 기간">6월 2일 – 11월 20일</td><td class="num" data-label="출항한 날">98일</td><td class="num" data-label="수거량">18.9 t</td><td class="num" data-label="해변 도착(전년 대비)">−33%</td></tr>
+              <tr><th scope="row">여수 금오도 북쪽</th><td data-label="운항 기간">8월 18일 – 11월 20일</td><td class="num" data-label="출항한 날">51일</td><td class="num" data-label="수거량">6.2 t</td><td class="num" data-label="해변 도착(전년 대비)">−19%<sup>*</sup></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="footnote"><sup>*</sup> 운항 기간이 짧아 참고용입니다. 해변 도착은 해역마다 조사 해변 네 곳에서 2024년 같은 기간과 비교했고, 태풍이 지나간 9월 둘째 주는 두 해 모두 뺐습니다.</p>
+
+        <figure class="mix">
+          <figcaption class="mix__cap">주운 것의 절반 넘게가 양식장 스티로폼이었습니다 <span>무게 기준, 합계 56.5 t</span></figcaption>
+          <div class="mix__bar" role="img" aria-label="스티로폼 부표 54%, 그물과 밧줄 19%, 플라스틱 병과 용기 15%, 기타 12%">
+            <span style="--w:54" class="mix__seg mix__seg--1"></span>
+            <span style="--w:19" class="mix__seg mix__seg--2"></span>
+            <span style="--w:15" class="mix__seg mix__seg--3"></span>
+            <span style="--w:12" class="mix__seg mix__seg--4"></span>
+          </div>
+          <ul class="mix__legend" aria-hidden="true">
+            <li><span class="sw sw--1"></span>스티로폼 부표 <b>54%</b></li>
+            <li><span class="sw sw--2"></span>그물·밧줄 <b>19%</b></li>
+            <li><span class="sw sw--3"></span>플라스틱 병·용기 <b>15%</b></li>
+            <li><span class="sw sw--4"></span>기타 <b>12%</b></li>
+          </ul>
+        </figure>
+
+        <div class="limits">
+          <h3 class="limits__title">잘 안 된 점</h3>
+          <ul>
+            <li>수심 2미터보다 얕은 곳과 양식장 안쪽에는 들어가지 못합니다. 이곳 쓰레기는 여전히 사람이 줍습니다.</li>
+            <li>8월 큰비 뒤 사흘 동안은 강에서 내려온 나뭇가지 때문에 입구가 자주 막혔습니다. 거름망을 새로 만들고 있습니다.</li>
+            <li>통영에서 예보가 크게 빗나간 날은 142일 중 23일이었습니다. 대부분 바람이 예보와 다르게 분 날입니다.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= 팀 ========= -->
+  <section class="section section--team" id="team" aria-labelledby="team-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" id="team-title">만드는 사람들</h2>
+        <p class="sec-lead">조선소, 해양 연구소, 양식장에서 온 열여섯 명이 통영 기지와 서울 사무실에서 일합니다.</p>
+      </div>
+
+      <ul class="founders">
+        <li class="person person--lg">
+          <img src="./img/team/han-doyun.webp" width="480" height="560" loading="lazy" decoding="async" alt="가로선을 겹쳐 그린 한도윤의 초상. 짧은 머리, 안경.">
+          <div class="person__text">
+            <h3 class="person__name">한도윤</h3>
+            <p class="person__role">공동창업자, 대표</p>
+            <p>해양 연구소에서 연안 표류 모델을 8년 연구했습니다. 해변 청소를 나갈 때마다 쓰레기가 같은 해변에 닿는 걸 보고, 바다에서 먼저 줍자고 회사를 시작했습니다.</p>
+          </div>
+        </li>
+        <li class="person person--lg">
+          <img src="./img/team/seo-jimin.webp" width="480" height="560" loading="lazy" decoding="async" alt="가로선을 겹쳐 그린 서지민의 초상. 어깨까지 오는 머리.">
+          <div class="person__text">
+            <h3 class="person__name">서지민</h3>
+            <p class="person__role">공동창업자, 자율운항 총괄</p>
+            <p>농업용 무인 트랙터의 경로 계획을 6년 만들었습니다. 누비가 어디로, 어떤 순서로 움직일지 정하는 소프트웨어를 맡습니다.</p>
+          </div>
+        </li>
+      </ul>
+
+      <ul class="crew">
+        <li class="person">
+          <img src="./img/team/park-gyeongsu.webp" width="480" height="560" loading="lazy" decoding="async" alt="가로선을 겹쳐 그린 박경수의 초상. 아주 짧은 머리.">
+          <div class="person__text">
+            <h3 class="person__name">박경수</h3>
+            <p class="person__role">선체·기구 책임</p>
+            <p>거제 조선소에서 소형선을 14년 설계했습니다.</p>
+          </div>
+        </li>
+        <li class="person">
+          <img src="./img/team/kim-haneul.webp" width="480" height="560" loading="lazy" decoding="async" alt="가로선을 겹쳐 그린 김하늘의 초상. 뒤로 묶은 머리.">
+          <div class="person__text">
+            <h3 class="person__name">김하늘</h3>
+            <p class="person__role">통영 기지 운영</p>
+            <p>산양읍 굴 양식 집안에서 자랐습니다. 출항 일정과 어촌 연락을 맡습니다.</p>
+          </div>
+        </li>
+        <li class="person">
+          <img src="./img/team/lee-roun.webp" width="480" height="560" loading="lazy" decoding="async" alt="가로선을 겹쳐 그린 이로운의 초상. 곱슬한 머리.">
+          <div class="person__text">
+            <h3 class="person__name">이로운</h3>
+            <p class="person__role">표류 예측</p>
+            <p>조류 관측 자료를 정리하고, 예보가 빗나간 날의 이유를 찾습니다.</p>
+          </div>
+        </li>
+        <li class="person">
+          <img src="./img/team/jung-yunseo.webp" width="480" height="560" loading="lazy" decoding="async" alt="가로선을 겹쳐 그린 정윤서의 초상. 단발머리.">
+          <div class="person__text">
+            <h3 class="person__name">정윤서</h3>
+            <p class="person__role">관제 소프트웨어</p>
+            <p>관제사 한 명이 여덟 척을 볼 수 있는 화면을 만듭니다.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ========= 함께하는 곳 ========= -->
+  <section class="section section--backers" id="backers" aria-labelledby="backers-title">
+    <div class="wrap backers">
+      <div class="sec-head sec-head--tight">
+        <h2 class="sec-title" id="backers-title">함께하는 곳</h2>
+      </div>
+      <div class="backers__body">
+        <div class="table-scroll" tabindex="0" role="region" aria-labelledby="rounds-cap">
+          <table class="table table--rounds table--stack">
+            <caption id="rounds-cap">투자</caption>
+            <thead>
+              <tr><th scope="col">시기</th><th scope="col">단계</th><th scope="col" class="num">금액</th><th scope="col">참여</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-label="시기">2023년 3월</td><th scope="row">시드</th><td class="num" data-label="금액">12억 원</td><td data-label="참여">물마루파트너스(주도), 개인 투자자 2명</td></tr>
+              <tr><td data-label="시기">2025년 6월</td><th scope="row">시리즈 A</th><td class="num" data-label="금액">68억 원</td><td data-label="참여">고래섬캐피털(주도), 물마루파트너스, 남녘기술투자</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="partners">
+          <h3 class="partners__title">현장에서 함께하는 곳</h3>
+          <dl>
+            <div><dt>통영·거제 굴 양식 어가 23곳</dt><dd>다 쓴 부표를 바다에 버리지 않고 회수하는 시험을 함께 합니다.</dd></div>
+            <div><dt>재활용 업체 2곳</dt><dd>분류한 스티로폼과 그물을 받아 갑니다.</dd></div>
+            <div><dt>남해안 지자체 2곳</dt><dd>2026년 시범 운용 계약을 맺었습니다.</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========= 채용 ========= -->
+  <section class="section section--careers" id="careers" aria-labelledby="careers-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 class="sec-title" id="careers-title">같이 일할 사람을 찾습니다</h2>
+        <p class="sec-lead">통영 기지와 서울 성수 사무실에서 일합니다. 바다에 자주 나가는 자리도, 거의 나가지 않는 자리도 있습니다.</p>
+      </div>
+
+      <ul class="roles" id="roles">
+        <li class="role" data-role="자율운항 소프트웨어 엔지니어">
+          <h3 class="role__head">
+            <button type="button" class="role__toggle" aria-expanded="false" aria-controls="role-1">
+              <span class="role__title">자율운항 소프트웨어 엔지니어</span>
+              <span class="role__meta"><span>서울</span><span>정규직, 통영 출장 월 2회</span></span>
+              <svg class="role__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg>
+            </button>
+          </h3>
+          <div class="role__body" id="role-1" hidden>
+            <dl class="role__dl">
+              <div><dt>하는 일</dt><dd>누비의 경로 계획과 장애물 회피를 만듭니다. 양식장 부표와 어선 사이를 안전하게 지나가는 것이 핵심입니다.</dd></div>
+              <div><dt>필요한 것</dt><dd>C++ 또는 Rust로 로봇 제어 소프트웨어를 3년 이상 만든 경험.</dd></div>
+              <div><dt>있으면 좋은 것</dt><dd>레이더나 카메라로 움직이는 물체를 추적해 본 경험.</dd></div>
+            </dl>
+            <button type="button" class="btn btn--primary btn--sm role__apply">이 자리에 지원하기</button>
+          </div>
+        </li>
+        <li class="role" data-role="현장 운영 매니저">
+          <h3 class="role__head">
+            <button type="button" class="role__toggle" aria-expanded="false" aria-controls="role-2">
+              <span class="role__title">현장 운영 매니저</span>
+              <span class="role__meta"><span>통영</span><span>정규직</span></span>
+              <svg class="role__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg>
+            </button>
+          </h3>
+          <div class="role__body" id="role-2" hidden>
+            <dl class="role__dl">
+              <div><dt>하는 일</dt><dd>기지에서 출항, 하역, 정비 일정을 짜고 어촌계와 지자체에 연락합니다.</dd></div>
+              <div><dt>필요한 것</dt><dd>소형선박 조종면허. 바다에서 일한 경험.</dd></div>
+              <div><dt>있으면 좋은 것</dt><dd>양식업이나 수산업 현장 경험.</dd></div>
+            </dl>
+            <button type="button" class="btn btn--primary btn--sm role__apply">이 자리에 지원하기</button>
+          </div>
+        </li>
+        <li class="role" data-role="표류 예측 연구원">
+          <h3 class="role__head">
+            <button type="button" class="role__toggle" aria-expanded="false" aria-controls="role-3">
+              <span class="role__title">표류 예측 연구원</span>
+              <span class="role__meta"><span>서울 또는 원격</span><span>정규직</span></span>
+              <svg class="role__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg>
+            </button>
+          </h3>
+          <div class="role__body" id="role-3" hidden>
+            <dl class="role__dl">
+              <div><dt>하는 일</dt><dd>조류, 바람, 강물 자료로 예보 모델을 고칩니다. 예보가 빗나간 날의 이유를 찾는 일이 절반입니다.</dd></div>
+              <div><dt>필요한 것</dt><dd>해양물리나 유체역학을 공부했거나 그에 맞는 경험. Python.</dd></div>
+              <div><dt>있으면 좋은 것</dt><dd>입자 추적 모델을 직접 돌려 본 경험.</dd></div>
+            </dl>
+            <button type="button" class="btn btn--primary btn--sm role__apply">이 자리에 지원하기</button>
+          </div>
+        </li>
+        <li class="role" data-role="기구 설계 엔지니어 (수거 장치)">
+          <h3 class="role__head">
+            <button type="button" class="role__toggle" aria-expanded="false" aria-controls="role-4">
+              <span class="role__title">기구 설계 엔지니어 (수거 장치)</span>
+              <span class="role__meta"><span>통영</span><span>정규직</span></span>
+              <svg class="role__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path class="v" d="M12 5v14"/></svg>
+            </button>
+          </h3>
+          <div class="role__body" id="role-4" hidden>
+            <dl class="role__dl">
+              <div><dt>하는 일</dt><dd>수거 입구와 컨베이어를 설계하고 바다에서 직접 시험합니다. 지금 가장 큰 과제는 그물이 걸리지 않는 구조입니다.</dd></div>
+              <div><dt>필요한 것</dt><dd>3D CAD. 시제품을 손으로 만들어 본 경험.</dd></div>
+              <div><dt>있으면 좋은 것</dt><dd>바닷물과 부식을 견디는 장비를 다뤄 본 경험.</dd></div>
+            </dl>
+            <button type="button" class="btn btn--primary btn--sm role__apply">이 자리에 지원하기</button>
+          </div>
+        </li>
+      </ul>
+      <p class="careers__note">맞는 자리가 없어도 연락 주세요. <a href="#contact" data-topic="기타">문의 양식</a>에서 ‘기타’를 고르면 됩니다.</p>
+
+      <template id="apply-template">
+        <form class="apply" novalidate>
+          <h4 class="apply__title">지원서</h4>
+          <div class="field-row">
+            <div class="fld">
+              <label for="ap-name">이름</label>
+              <input id="ap-name" name="name" type="text" autocomplete="name" required>
+              <p class="fld__err" id="ap-name-err" hidden></p>
+            </div>
+            <div class="fld">
+              <label for="ap-email">이메일</label>
+              <input id="ap-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+              <p class="fld__err" id="ap-email-err" hidden></p>
+            </div>
+          </div>
+          <div class="fld">
+            <label for="ap-link">이력서나 포트폴리오 링크 <span class="opt">선택</span></label>
+            <input id="ap-link" name="link" type="url" inputmode="url" placeholder="https://">
+            <p class="fld__err" id="ap-link-err" hidden></p>
+          </div>
+          <div class="fld">
+            <label for="ap-note">하고 싶은 말 <span class="opt">선택</span></label>
+            <textarea id="ap-note" name="note" rows="3"></textarea>
+          </div>
+          <div class="apply__actions">
+            <button type="submit" class="btn btn--primary btn--sm">지원서 보내기</button>
+            <button type="button" class="btn btn--quiet btn--sm" data-close>닫기</button>
+          </div>
+        </form>
+      </template>
+    </div>
+  </section>
+
+  <!-- ========= 문의 ========= -->
+  <section class="section section--contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap contact">
+      <div class="contact__intro">
+        <h2 class="sec-title" id="contact-title">도입 문의</h2>
+        <p class="sec-lead">해역과 시기를 알려 주시면, 그 바다의 지난 3년 표류 자료로 운용안을 만들어 보내 드립니다.</p>
+        <dl class="contact__info">
+          <div><dt>통영 기지</dt><dd>경남 통영시 도남동<br>보트 정비와 하역</dd></div>
+          <div><dt>서울 사무실</dt><dd>서울 성동구 성수동</dd></div>
+          <div><dt>답장</dt><dd>영업일 2일 안에</dd></div>
+        </dl>
+      </div>
+
+      <div class="contact__form" id="contact-form-wrap">
+        <form class="inquiry" id="inquiry" novalidate>
+          <fieldset class="topics">
+            <legend>문의 종류</legend>
+            <div class="topics__list">
+              <label class="topic"><input type="radio" name="topic" value="보트 운용 계약" checked><span>보트 운용 계약</span></label>
+              <label class="topic"><input type="radio" name="topic" value="표류 예보"><span>표류 예보</span></label>
+              <label class="topic"><input type="radio" name="topic" value="협력·연구"><span>협력·연구</span></label>
+              <label class="topic"><input type="radio" name="topic" value="기타"><span>기타</span></label>
+            </div>
+          </fieldset>
+          <div class="field-row">
+            <div class="fld">
+              <label for="ct-name">이름</label>
+              <input id="ct-name" name="name" type="text" autocomplete="name" required>
+              <p class="fld__err" id="ct-name-err" hidden></p>
+            </div>
+            <div class="fld">
+              <label for="ct-org">소속 <span class="opt">선택</span></label>
+              <input id="ct-org" name="org" type="text" autocomplete="organization">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="fld">
+              <label for="ct-email">이메일</label>
+              <input id="ct-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+              <p class="fld__err" id="ct-email-err" hidden></p>
+            </div>
+            <div class="fld">
+              <label for="ct-area">해역 <span class="opt">선택</span></label>
+              <input id="ct-area" name="area" type="text" placeholder="예: 통영시 산양읍 앞바다">
+            </div>
+          </div>
+          <div class="fld">
+            <label for="ct-msg">내용</label>
+            <textarea id="ct-msg" name="message" rows="5" required></textarea>
+            <p class="fld__err" id="ct-msg-err" hidden></p>
+          </div>
+          <div class="inquiry__actions">
+            <button type="submit" class="btn btn--light">문의 보내기</button>
+            <p class="inquiry__fine">이 양식은 실제로 아무 데도 전송되지 않습니다.</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <a class="brand brand--footer" href="#top" aria-label="물길 처음으로">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <path d="M3 8.5c5.5 0 9 1.6 13 5.4 2.7 2.5 6 2.6 13 2.1" />
+        <path d="M3 16c6.5 0 12.5 0 26 0" />
+        <path d="M3 23.5c5.5 0 9-1.6 13-5.4 2.7-2.5 6-2.6 13-2.1" />
+        <circle cx="25.5" cy="16" r="2.6" class="brand__dot" />
+      </svg>
+      <span class="brand__name">물길</span>
+    </a>
+    <nav aria-label="바닥 메뉴">
+      <ul class="footer-links">
+        <li><a href="#how">작동 방식</a></li>
+        <li><a href="#boat">누비</a></li>
+        <li><a href="#field">현장 기록</a></li>
+        <li><a href="#team">팀</a></li>
+        <li><a href="#careers">채용</a></li>
+        <li><a href="#contact">문의</a></li>
+      </ul>
+    </nav>
+    <p class="site-footer__fine">가상 회사입니다. zanviq gallery 작품.</p>
+  </div>
+</footer>
+</body>
+</html>

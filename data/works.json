@@ -1,1 +1,38 @@
-[]
+[
+  {
+    "slug": "keyboard",
+    "title": "가락 65",
+    "type": "internal",
+    "url": "keyboard/",
+    "tags": ["landing", "webgl", "3d", "audio", "brand"],
+    "thumbnail": "thumbnails/keyboard.webp",
+    "year": 2026
+  },
+  {
+    "slug": "festival",
+    "title": "너울 2027",
+    "type": "internal",
+    "url": "festival/",
+    "tags": ["landing", "typography", "audio", "animation", "brand"],
+    "thumbnail": "thumbnails/festival.webp",
+    "year": 2026
+  },
+  {
+    "slug": "perfume",
+    "title": "담금 DAMGEUM",
+    "type": "internal",
+    "url": "perfume/",
+    "tags": ["landing", "webgl", "3d", "animation", "brand"],
+    "thumbnail": "thumbnails/perfume.webp",
+    "year": 2026
+  },
+  {
+    "slug": "startup",
+    "title": "물길",
+    "type": "internal",
+    "url": "startup/",
+    "tags": ["landing", "canvas", "animation", "brand"],
+    "thumbnail": "thumbnails/startup.webp",
+    "year": 2026
+  }
+]

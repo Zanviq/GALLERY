@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="ko" class="no-js" data-day="fri">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>너울 2027 | 서해 소금곶 음악 축제</title>
+<meta name="description" content="2027년 9월 3일부터 5일까지, 서해 소금곶 옛 염전에서 열리는 음악 축제 너울. 세 무대, 서른 팀의 라인업과 시간표, 티켓, 오시는 길.">
+<meta name="theme-color" content="#EE4A26">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="zanviq gallery">
+<meta property="og:title" content="너울 2027 | 서해 소금곶 음악 축제">
+<meta property="og:description" content="9월 3일부터 5일까지, 소금곶 옛 염전에서 세 무대, 서른 팀. 라인업이 소리에 맞춰 움직이는 가상 페스티벌 홈페이지.">
+<meta property="og:url" content="https://gallery.zanviq.dev/festival/">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/festival.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+<link rel="preload" href="./fonts/anybody.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/hahmlet.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/site.css">
+<link rel="modulepreload" href="./js/main.js">
+<link rel="modulepreload" href="./js/data.js">
+<link rel="modulepreload" href="./js/kinetic.js">
+<link rel="modulepreload" href="./js/sea.js">
+<link rel="modulepreload" href="./js/audio.js">
+<link rel="modulepreload" href="./js/dock.js">
+<link rel="modulepreload" href="./js/timetable.js">
+<link rel="modulepreload" href="./js/tickets.js">
+<script>
+(function () {
+  var d = document.documentElement, q = location.search, v = null, m = /[?&]day=(fri|sat|sun)/.exec(q);
+  try { v = JSON.parse(localStorage.getItem('neoul27:day')); } catch (e) {}
+  if (m) v = m[1]; else if (/[?&]capture/.test(q)) v = 'fri';
+  d.className = 'js';
+  d.setAttribute('data-day', /^(fri|sat|sun)$/.test(v) ? v : 'fri');
+})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header class="top">
+  <a class="top__brand" href="#lineup" aria-label="너울 2027 처음으로">너울<span>2027</span></a>
+  <nav class="top__nav" aria-label="주요 메뉴">
+    <ul>
+      <li><a href="#lineup">라인업</a></li>
+      <li><a href="#timetable">시간표</a></li>
+      <li><a href="#tickets">티켓</a></li>
+      <li><a href="#directions">오시는 길</a></li>
+      <li><a href="#faq">묻고 답하기</a></li>
+    </ul>
+  </nav>
+  <a class="btn btn--ink top__cta" href="#tickets">티켓 예약</a>
+  <button class="top__menu" type="button" aria-expanded="false" aria-controls="menu">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+    <span>메뉴</span>
+  </button>
+</header>
+
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="메뉴" hidden>
+  <div class="menu__head">
+    <span class="menu__brand">너울 2027</span>
+    <button class="menu__close" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      <span>닫기</span>
+    </button>
+  </div>
+  <nav aria-label="전체 메뉴">
+    <ul>
+      <li><a href="#lineup">라인업</a></li>
+      <li><a href="#timetable">시간표</a></li>
+      <li><a href="#tickets">티켓</a></li>
+      <li><a href="#directions">오시는 길</a></li>
+      <li><a href="#faq">묻고 답하기</a></li>
+    </ul>
+  </nav>
+  <p class="menu__foot">2027.9.3–9.5<br>서해 소금곶 옛 염전</p>
+</div>
+
+<main id="main">
+  <section class="hero" id="lineup" aria-labelledby="hero-title">
+    <canvas class="hero__bg" aria-hidden="true"></canvas>
+    <div class="hero__wipe" aria-hidden="true"></div>
+    <div class="hero__in">
+      <div class="mast">
+        <h1 class="mast__mark" id="hero-title"><span class="mast__ko" aria-hidden="true">너울</span><span class="sr-only">너울 2027, 서해 소금곶 음악 축제</span></h1>
+        <p class="mast__when"><span class="mast__year" aria-hidden="true">2027</span><span class="mast__range" aria-hidden="true">9.3–9.5</span><span class="sr-only">2027년 9월 3일 금요일부터 5일 일요일까지</span></p>
+        <p class="mast__where">서해 소금곶 옛 염전<br>세 무대, 서른 팀</p>
+      </div>
+
+      <div class="days" role="tablist" aria-label="공연 날짜" data-days="hero">
+        <button class="days__tab" role="tab" type="button" id="tab-fri" data-day="fri" aria-selected="true" aria-controls="lineup-panel"><span class="days__md">9.3</span><span class="days__dow">금요일 <em>들물</em></span></button>
+        <button class="days__tab" role="tab" type="button" id="tab-sat" data-day="sat" aria-selected="false" aria-controls="lineup-panel" tabindex="-1"><span class="days__md">9.4</span><span class="days__dow">토요일 <em>만조</em></span></button>
+        <button class="days__tab" role="tab" type="button" id="tab-sun" data-day="sun" aria-selected="false" aria-controls="lineup-panel" tabindex="-1"><span class="days__md">9.5</span><span class="days__dow">일요일 <em>썰물</em></span></button>
+      </div>
+
+      <div class="poster" id="lineup-panel" role="tabpanel" aria-labelledby="tab-fri" tabindex="0">
+        <div class="poster__type" aria-hidden="true"></div>
+        <div class="poster__plain">
+<!-- lineup:start -->
+<div class="plain" data-day="fri">
+  <h2 class="plain__day">9월 3일 금요일 <span>들물</span></h2>
+  <ol class="plain__list">
+    <li><span class="plain__name" lang="en">GLASS MACKEREL</span> <span class="plain__ko">글래스 매커럴</span> <span class="plain__meta">인디 록, 물마루 21:40–23:10</span></li>
+    <li><span class="plain__name" lang="en">MINT FOGHORN</span> <span class="plain__ko">민트 포그혼</span> <span class="plain__meta">신스팝 듀오, 물마루 19:40–20:50</span></li>
+    <li><span class="plain__name">고무장화</span> <span class="plain__meta">포크 록 트리오, 물마루 17:50–18:40</span></li>
+    <li><span class="plain__name" lang="en">SALT MAHJONG</span> <span class="plain__ko">솔트 마작</span> <span class="plain__meta">일렉트로닉 라이브, 모래톱 21:00–22:30</span></li>
+    <li><span class="plain__name" lang="en">YEOBO ORCHESTRA</span> <span class="plain__ko">여보 오케스트라</span> <span class="plain__meta">9인조 브라스, 물마루 16:00–16:50</span></li>
+    <li><span class="plain__name" lang="en">BORA TELEFAX</span> <span class="plain__ko">보라 텔레팩스</span> <span class="plain__meta">알앤비, 소금창고 18:50–19:40</span></li>
+    <li><span class="plain__name" lang="en">KITE ARCHIVE</span> <span class="plain__ko">카이트 아카이브</span> <span class="plain__meta">포스트록, 소금창고 17:00–17:50</span></li>
+    <li><span class="plain__name">새벽수영부</span> <span class="plain__meta">인디 팝, 소금창고 15:00–15:50</span></li>
+    <li><span class="plain__name" lang="en">OKCHUN STEREO</span> <span class="plain__ko">옥천 스테레오</span> <span class="plain__meta">디스코 디제이, 모래톱 23:10–01:00</span></li>
+    <li><span class="plain__name" lang="en">PALE KELP</span> <span class="plain__ko">페일 켈프</span> <span class="plain__meta">앰비언트, 모래톱 14:00–15:30</span></li>
+  </ol>
+</div>
+<div class="plain" data-day="sat">
+  <h2 class="plain__day">9월 4일 토요일 <span>만조</span></h2>
+  <ol class="plain__list">
+    <li><span class="plain__name" lang="en">ULTRA HAENYEO</span> <span class="plain__ko">울트라 해녀</span> <span class="plain__meta">일렉트로닉 밴드, 물마루 21:50–23:20</span></li>
+    <li><span class="plain__name" lang="en">TANGERINE PARLIAMENT</span> <span class="plain__ko">탠저린 팔러먼트</span> <span class="plain__meta">훵크 밴드, 물마루 19:50–21:00</span></li>
+    <li><span class="plain__name">소금쟁이</span> <span class="plain__meta">사이키델릭 록, 물마루 18:00–18:50</span></li>
+    <li><span class="plain__name" lang="en">DAL &amp; THE BAGGAGE</span> <span class="plain__ko">달 앤 더 배기지</span> <span class="plain__meta">소울, 물마루 16:10–17:00</span></li>
+    <li><span class="plain__name" lang="en">SEAGULL EXPO</span> <span class="plain__ko">시걸 엑스포</span> <span class="plain__meta">개러지 펑크, 소금창고 20:40–21:30</span></li>
+    <li><span class="plain__name" lang="en">TWO-LANE ANTENNA</span> <span class="plain__ko">투레인 안테나</span> <span class="plain__meta">슈게이즈, 소금창고 18:50–19:40</span></li>
+    <li><span class="plain__name" lang="en">JIWOO VAPOR</span> <span class="plain__ko">지우 베이퍼</span> <span class="plain__meta">하이퍼팝, 소금창고 17:10–17:55</span></li>
+    <li><span class="plain__name" lang="en">COPPER JINDO</span> <span class="plain__ko">코퍼 진도</span> <span class="plain__meta">힙합 크루, 모래톱 14:30–15:30</span></li>
+    <li><span class="plain__name">물수제비</span> <span class="plain__meta">어쿠스틱 듀오, 소금창고 15:10–15:55</span></li>
+    <li><span class="plain__name" lang="en">MARU 86</span> <span class="plain__ko">마루 86</span> <span class="plain__meta">테크노 디제이, 모래톱 23:30–01:00</span></li>
+  </ol>
+</div>
+<div class="plain" data-day="sun">
+  <h2 class="plain__day">9월 5일 일요일 <span>썰물</span></h2>
+  <ol class="plain__list">
+    <li><span class="plain__name" lang="en">MIDNIGHT PERSIMMON</span> <span class="plain__ko">미드나잇 퍼시먼</span> <span class="plain__meta">오케스트럴 팝, 물마루 20:50–22:20</span></li>
+    <li><span class="plain__name" lang="en">PINE NEEDLE CLUB</span> <span class="plain__ko">파인 니들 클럽</span> <span class="plain__meta">재즈 퀸텟, 물마루 19:00–20:00</span></li>
+    <li><span class="plain__name" lang="en">SIROO</span> <span class="plain__ko">시루</span> <span class="plain__meta">국악 앙상블, 물마루 15:30–16:20</span></li>
+    <li><span class="plain__name" lang="en">SOLAR CHAMOE</span> <span class="plain__ko">솔라 참외</span> <span class="plain__meta">쿰비아, 모래톱 19:20–20:30</span></li>
+    <li><span class="plain__name">늦은 갈매기</span> <span class="plain__meta">싱어송라이터, 소금창고 14:30–15:15</span></li>
+    <li><span class="plain__name" lang="en">FERRY DE LUXE</span> <span class="plain__ko">페리 디럭스</span> <span class="plain__meta">시티팝, 물마루 17:20–18:10</span></li>
+    <li><span class="plain__name" lang="en">SUNDAY BOILER</span> <span class="plain__ko">선데이 보일러</span> <span class="plain__meta">매스 록, 소금창고 16:30–17:20</span></li>
+    <li><span class="plain__name" lang="en">YUNA BLUEPRINT</span> <span class="plain__ko">유나 블루프린트</span> <span class="plain__meta">일렉트로닉 팝, 소금창고 18:20–19:10</span></li>
+    <li><span class="plain__name" lang="en">NOON ANCHOR</span> <span class="plain__ko">눈 앵커</span> <span class="plain__meta">서프 록, 모래톱 13:30–14:30</span></li>
+    <li><span class="plain__name" lang="en">OZ DONGNE</span> <span class="plain__ko">오즈 동네</span> <span class="plain__meta">발레아릭 디제이, 모래톱 20:50–22:30</span></li>
+  </ol>
+</div>
+<!-- lineup:end -->
+        </div>
+      </div>
+
+      <div class="hero__sea" aria-hidden="true"></div>
+
+      <div class="hero__foot">
+        <dl class="facts">
+          <div><dt>문 여는 시간</dt><dd data-fact="gates">13:00</dd></div>
+          <div><dt>공연</dt><dd data-fact="hours">14:00–01:00</dd></div>
+          <div><dt>무대</dt><dd>물마루, 소금창고, 모래톱</dd></div>
+        </dl>
+        <p class="hero__hint"><span class="hint-motion">라인업에 커서를 대거나 손가락으로 쓸어 보세요. 오른쪽 아래 ‘소리 켜기’를 누르면 박자에 맞춰 움직여요.</span><span class="hint-still">동작 줄이기 설정에 맞춰 라인업을 멈춰 두었어요. 소리는 오른쪽 아래에서 켤 수 있어요.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="lead" aria-label="축제 소개">
+    <p class="lead__text">너울은 해마다 9월 첫 주말, 서해 소금곶 옛 염전에서 여는 음악 축제예요. 올해로 네 번째고, 바다 쪽 큰 무대 <b>물마루</b>, 나무로 지은 <b>소금창고</b>, 물가의 <b>모래톱</b>에서 사흘 동안 서른 팀이 공연해요.</p>
+    <p class="lead__note">이 페이지의 소리는 브라우저가 그 자리에서 만들어요. 녹음해 둔 음원은 쓰지 않아요.</p>
+  </section>
+
+  <section class="tt" id="timetable" aria-labelledby="tt-title">
+    <div class="sec-head">
+      <h2 class="sec-title" id="tt-title">시간표</h2>
+      <p class="sec-desc">공연을 누르면 내 선택에 담겨요. 고른 공연끼리 시간이 겹치면 표시해 드려요. 선택은 이 브라우저에만 남아요.</p>
+    </div>
+
+    <div class="tt__bar">
+      <div class="days days--small" role="tablist" aria-label="시간표 날짜" data-days="tt">
+        <button class="days__tab" role="tab" type="button" id="tt-tab-fri" data-day="fri" aria-selected="true" aria-controls="tt-panel"><span class="days__md">9.3</span><span class="days__dow">금</span></button>
+        <button class="days__tab" role="tab" type="button" id="tt-tab-sat" data-day="sat" aria-selected="false" aria-controls="tt-panel" tabindex="-1"><span class="days__md">9.4</span><span class="days__dow">토</span></button>
+        <button class="days__tab" role="tab" type="button" id="tt-tab-sun" data-day="sun" aria-selected="false" aria-controls="tt-panel" tabindex="-1"><span class="days__md">9.5</span><span class="days__dow">일</span></button>
+      </div>
+      <fieldset class="seg" data-filter="stage">
+        <legend class="sr-only">무대</legend>
+        <label><input type="radio" name="stage" value="all" checked><span>전체</span></label>
+        <label><input type="radio" name="stage" value="mulmaru"><span>물마루</span></label>
+        <label><input type="radio" name="stage" value="shed"><span>소금창고</span></label>
+        <label><input type="radio" name="stage" value="sandbar"><span>모래톱</span></label>
+      </fieldset>
+      <button class="toggle" type="button" aria-pressed="false" data-picks-only>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        <span>내 선택만</span><span class="toggle__count" data-picks-count>0</span>
+      </button>
+    </div>
+
+    <div class="tt__panel" id="tt-panel" role="tabpanel" aria-labelledby="tt-tab-fri">
+      <p class="tt__empty" hidden>아직 고른 공연이 없어요. 공연 이름을 눌러 담아 보세요. <button class="link" type="button" data-show-all>전체 보기</button></p>
+      <div class="tt__grid"></div>
+    </div>
+    <noscript><p class="tt__noscript">내 선택을 쓰려면 자바스크립트가 필요해요. 무대와 시간은 위 라인업 목록에 함께 적혀 있어요.</p></noscript>
+  </section>
+
+  <section class="tix" id="tickets" aria-labelledby="tix-title">
+    <div class="sec-head">
+      <h2 class="sec-title" id="tix-title">티켓</h2>
+      <p class="sec-desc">손목밴드는 축제 날 정문에서 바꿔 드려요. 이 페이지의 예약은 가상이라 결제도 개인정보 입력도 없어요.</p>
+    </div>
+    <ol class="stubs" data-tickets></ol>
+    <noscript><p class="tix__foot">예약 표시를 남기려면 자바스크립트가 필요해요. 하루권 99,000원, 사흘권 209,000원, 사흘권 + 캠핑 289,000원.</p></noscript>
+  </section>
+
+  <section class="way" id="directions" aria-labelledby="way-title">
+    <div class="sec-head">
+      <h2 class="sec-title" id="way-title">오시는 길</h2>
+      <p class="sec-desc">서해 소금곶길 1, 옛 소금곶 염전. 둑길이 좁아서 열차와 셔틀을 권해요.</p>
+    </div>
+    <div class="way__body">
+      <div class="way__text">
+        <ol class="steps">
+          <li>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="14" rx="0"/><path d="M5 11h14M8 21l2-4M16 21l-2-4"/><circle cx="9" cy="14" r=".6"/><circle cx="15" cy="14" r=".6"/></svg>
+            <h3>열차로 소금곶역까지</h3>
+            <p>용산역에서 1시간 50분. 축제 사흘 동안은 하루 여섯 번 더 다녀요.</p>
+          </li>
+          <li>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="11"/><path d="M3 11h18M7 16v3M17 16v3"/><circle cx="7" cy="13.5" r=".6"/><circle cx="17" cy="13.5" r=".6"/></svg>
+            <h3>역 앞에서 셔틀로 12분</h3>
+            <p>2번 출구 앞 정류장에서 10분마다 떠나요. 요금은 없어요.</p>
+          </li>
+          <li>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h6l2-3 2 6 2-3h4"/><rect x="2.5" y="7" width="19" height="10"/></svg>
+            <h3>정문에서 손목밴드로</h3>
+            <p>예약 화면을 보여 주면 손목밴드로 바꿔 드려요.</p>
+          </li>
+        </ol>
+        <dl class="ways">
+          <div><dt>서울 직행버스</dt><dd>합정역, 사당역, 잠실역에서 오전 10시와 11시에 출발. 왕복 28,000원, 티켓과 함께 예약해요.</dd></div>
+          <div><dt>자가용</dt><dd>축제 주차장 1,200대, 하루 12,000원. 오후 3시 앞뒤로 둑길이 막혀요.</dd></div>
+          <div><dt>마지막 셔틀</dt><dd>금요일과 토요일은 새벽 1시 30분, 일요일은 밤 11시 30분.</dd></div>
+        </dl>
+      </div>
+      <figure class="map">
+        <svg class="map__svg" viewBox="0 0 640 560" role="img" aria-labelledby="map-title map-desc">
+          <title id="map-title">소금곶 축제장 약도</title>
+          <desc id="map-desc">소금곶역에서 동쪽 둑길을 따라 셔틀이 축제장 정문까지 갑니다. 정문 안쪽에 소금창고 무대, 바다 쪽 서쪽 끝에 물마루 무대, 남서쪽 물가에 모래톱 무대가 있고, 캠핑장은 북쪽, 주차장은 정문 동쪽에 있습니다.</desc>
+          <defs>
+            <mask id="route-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="640" height="560">
+              <path class="map__mask-path" d="M560 96H520C470 96 450 120 440 150L420 214C410 246 390 262 356 262H306" pathLength="1"/>
+            </mask>
+          </defs>
+          <g class="map__sea">
+            <path d="M0 0H138C126 52 150 96 128 150 108 200 132 246 118 300 104 352 130 402 112 460 102 500 116 532 108 560H0Z"/>
+          </g>
+          <g class="map__waves" aria-hidden="true">
+            <path d="M18 70q10-6 20 0t20 0 20 0"/><path d="M30 190q10-6 20 0t20 0 20 0"/><path d="M14 330q10-6 20 0t20 0 20 0"/><path d="M26 470q10-6 20 0t20 0 20 0"/>
+          </g>
+          <g class="map__pans" aria-hidden="true"></g>
+          <path class="map__road" d="M640 96H520C470 96 450 120 440 150L420 214C410 246 390 262 356 262H300"/>
+          <path class="map__route" mask="url(#route-mask)" d="M560 96H520C470 96 450 120 440 150L420 214C410 246 390 262 356 262H306"/>
+          <g class="map__poi">
+            <g transform="translate(560 96)"><rect x="-14" y="-14" width="28" height="28"/><path class="map__ico" d="M-6-6h12v9h-12zM-6 0h12M-4 7l2-4M4 7l-2-4"/></g>
+            <text x="560" y="72" text-anchor="middle">소금곶역</text>
+            <g class="map__gate" transform="translate(300 262)"><path d="M-10 -14v28M10 -14v28M-14 -14h28"/></g>
+            <text x="300" y="300" text-anchor="middle">정문</text>
+          </g>
+          <g class="map__stages">
+            <g transform="translate(188 236)"><circle r="26"/><text y="5" text-anchor="middle">1</text></g>
+            <text class="map__label" x="188" y="190" text-anchor="middle">물마루</text>
+            <g transform="translate(262 372)"><circle r="20"/><text y="5" text-anchor="middle">2</text></g>
+            <text class="map__label" x="262" y="412" text-anchor="middle">소금창고</text>
+            <g transform="translate(160 470)"><circle r="20"/><text y="5" text-anchor="middle">3</text></g>
+            <text class="map__label" x="160" y="510" text-anchor="middle">모래톱</text>
+          </g>
+          <g class="map__areas">
+            <rect class="map__camp" x="200" y="60" width="150" height="86"/>
+            <text x="275" y="110" text-anchor="middle">캠핑장</text>
+            <rect class="map__park" x="470" y="300" width="120" height="76"/>
+            <text x="530" y="343" text-anchor="middle">주차장</text>
+          </g>
+          <g class="map__marks" aria-hidden="true">
+            <text class="map__sealabel" x="40" y="280">서해</text>
+            <text class="map__small" x="585" y="512" text-anchor="middle">염전</text>
+            <g transform="translate(606 214)"><path d="M0 18V-14M-8-4L0-16 8-4"/><text y="38" text-anchor="middle">N</text></g>
+            <g transform="translate(420 540)"><path d="M0 0h120M0-5v10M120-5v10"/><text x="60" y="-10" text-anchor="middle">500m</text></g>
+          </g>
+        </svg>
+        <figcaption>
+          <span><i class="key key--route"></i>셔틀 길</span>
+          <span><i class="key key--stage"></i>무대</span>
+          <span><i class="key key--area"></i>캠핑장, 주차장</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="faq" id="faq" aria-labelledby="faq-title">
+    <div class="sec-head">
+      <h2 class="sec-title" id="faq-title">묻고 답하기</h2>
+      <p class="sec-desc">여기 없는 질문은 정문 옆 안내소에서 받아요.</p>
+    </div>
+    <div class="faq__list">
+      <details>
+        <summary>다시 들어올 수 있나요?</summary>
+        <p>네. 손목밴드를 차고 있으면 그날은 몇 번이든 드나들 수 있어요. 밴드를 자르거나 잃어버리면 다시 드리지 않아요.</p>
+      </details>
+      <details>
+        <summary>몇 살부터 들어갈 수 있나요?</summary>
+        <p>만 13세부터 티켓이 필요해요. 만 12세 이하는 보호자와 함께 오면 무료이고, 정문에서 나이를 확인해요.</p>
+      </details>
+      <details>
+        <summary>비가 오면요?</summary>
+        <p>공연은 그대로 해요. 우산은 뒷사람 시야를 가려서 우비를 권해요. 번개가 치면 안내 방송을 한 뒤 잠시 멈춰요.</p>
+      </details>
+      <details>
+        <summary>먹을 것이나 물을 가져가도 되나요?</summary>
+        <p>빈 개인 물병은 가져와도 돼요. 급수대가 여섯 곳 있어요. 유리병, 캔, 술은 들고 들어올 수 없어요.</p>
+      </details>
+      <details>
+        <summary>휠체어로 볼 수 있나요?</summary>
+        <p>물마루와 소금창고에 휠체어석이 있고, 둑길을 따라 단단한 바닥을 깔았어요. 동반 1인은 무료예요. 정문 옆 안내소에서 밴드를 받으세요.</p>
+      </details>
+      <details>
+        <summary>짐을 맡길 수 있나요?</summary>
+        <p>정문 옆 보관소에서 한 개에 5,000원이에요. 캠핑장을 쓰는 분은 무료예요.</p>
+      </details>
+      <details>
+        <summary>반려동물과 함께 가도 되나요?</summary>
+        <p>보조견만 들어올 수 있어요.</p>
+      </details>
+      <details>
+        <summary>환불은 어떻게 하나요?</summary>
+        <p>축제 7일 전인 8월 27일까지는 전액 환불해 드려요. 그 뒤로는 양도만 할 수 있어요.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p class="foot__mark" aria-hidden="true">너울</p>
+  <div class="foot__row">
+    <p class="foot__when">2027.9.3–9.5<br>서해 소금곶 옛 염전</p>
+    <nav class="foot__nav" aria-label="바닥 메뉴">
+      <a href="#lineup">라인업</a>
+      <a href="#timetable">시간표</a>
+      <a href="#tickets">티켓</a>
+      <a href="#directions">오시는 길</a>
+      <a href="#faq">묻고 답하기</a>
+    </nav>
+  </div>
+  <p class="foot__note">가상 페스티벌입니다. zanviq gallery 작품.</p>
+</footer>
+
+<aside class="dock" aria-label="소리">
+  <div class="dock__panel" id="seq-panel" hidden>
+    <div class="dock__panel-head">
+      <p class="dock__panel-title">패턴 고치기 <span data-seq-day>9.3 들물</span></p>
+      <button class="link" type="button" data-seq-reset>원래 패턴</button>
+    </div>
+    <div class="seq" role="group" aria-label="16칸 패턴. 화살표 키로 칸을 옮기고 스페이스로 켜고 끕니다." data-seq></div>
+    <p class="dock__panel-note">칸을 누르면 다음 박부터 바뀌어요. 고친 패턴은 날마다 따로 남고, 새로고침하면 처음으로 돌아가요.</p>
+  </div>
+  <div class="dock__bar">
+    <button class="dock__play" type="button" data-sound>
+      <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>
+      <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z"/></svg>
+      <span class="dock__label">소리 켜기</span>
+    </button>
+    <div class="dock__meta" aria-hidden="true">
+      <span class="dock__steps" data-steps></span>
+      <span class="dock__bpm" data-bpm>120 BPM</span>
+    </div>
+    <button class="dock__edit" type="button" aria-expanded="false" aria-controls="seq-panel" data-seq-toggle>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+      <span class="sr-only">패턴 고치기</span>
+    </button>
+  </div>
+  <p class="dock__err" hidden>이 브라우저에서는 소리를 낼 수 없어요. 다른 브라우저에서 열면 들을 수 있어요.</p>
+</aside>
+
+<div class="sr-only" aria-live="polite" data-live></div>
+
+<script type="module" src="./js/main.js"></script>
+<script src="/shared/back.js" data-position="bottom-left" defer></script>
+</body>
+</html>

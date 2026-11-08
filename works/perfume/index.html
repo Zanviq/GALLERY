@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="ko" data-scent="jocheong">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>담금 DAMGEUM — 마흔 날을 담가 둔 향</title>
+<meta name="description" content="서울 원서동의 작은 향수 작업실 담금. 원료를 알코올에 담가 마흔 날을 기다렸다가 한 병씩 손으로 채우는 네 가지 향, 유월·조청·오미·먹.">
+<meta name="theme-color" content="#231206">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="zanviq gallery">
+<meta property="og:title" content="담금 DAMGEUM — 마흔 날을 담가 둔 향">
+<meta property="og:description" content="원료를 알코올에 담가 마흔 날을 기다렸다가 한 병씩 손으로 채우는 서울의 향수 작업실. 가상 브랜드 작품입니다.">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/perfume.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://gallery.zanviq.dev/perfume/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+<link rel="preload" href="./fonts/hahmlet.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/site.css">
+<link rel="modulepreload" href="./js/main.js">
+<script>
+  // scent from the link or this tab, before first paint, so the page never flashes the wrong colours
+  (function () {
+    var ids = ['yuwol', 'jocheong', 'omi', 'meok'], m = /scent=([a-z]+)/.exec(location.hash), s = m && m[1];
+    if (ids.indexOf(s) < 0) { try { s = sessionStorage.getItem('damgeum-scent'); } catch (e) { s = null; } }
+    if (ids.indexOf(s) >= 0) document.documentElement.setAttribute('data-scent', s);
+    document.documentElement.classList.add('js');
+    if (/[?&]capture/.test(location.search)) document.documentElement.classList.add('capture');
+    if (/[?&]capture=(bare|bottle)/.test(location.search)) document.documentElement.classList.add('capture-bare');
+    if (/[?&]capture=og/.test(location.search)) document.documentElement.classList.add('capture-og');
+  })();
+</script>
+<script type="module" src="./js/main.js"></script>
+<script src="/shared/back.js" data-position="bottom-right" data-theme="dark" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header class="bar" data-bar>
+  <a class="brand" href="#top" aria-label="담금 DAMGEUM, 맨 위로">
+    <svg class="brand__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path class="brand__liquid" d="M18.2 13.3 18.2 15.3 18.1 16.7 18.0 17.7 17.8 18.5 17.5 19.2 17.2 19.7 16.8 20.2 16.4 20.6 15.8 20.8 15.2 21.0 14.2 21.2 12.0 21.2 9.8 21.2 8.8 21.0 8.2 20.8 7.6 20.6 7.2 20.2 6.8 19.7 6.5 19.2 6.2 18.5 6.0 17.7 5.9 16.7 5.8 15.3 5.8 13.3Z"/>
+      <path class="brand__glass" d="M20.0 12.0 20.0 16.0 19.9 17.6 19.7 18.8 19.4 19.8 19.1 20.6 18.7 21.2 18.2 21.8 17.7 22.2 16.9 22.6 16.1 22.8 14.9 23.0 12.0 23.0 9.1 23.0 7.9 22.8 7.1 22.6 6.3 22.2 5.8 21.8 5.3 21.2 4.9 20.6 4.6 19.8 4.3 18.8 4.1 17.6 4.0 16.0 4.0 12.0 4.0 8.0 4.1 6.4 4.3 5.2 4.6 4.2 4.9 3.4 5.3 2.8 5.8 2.2 6.3 1.8 7.1 1.4 7.9 1.2 9.1 1.0 12.0 1.0 14.9 1.0 16.1 1.2 16.9 1.4 17.7 1.8 18.2 2.2 18.7 2.8 19.1 3.4 19.4 4.2 19.7 5.2 19.9 6.4 20.0 8.0Z"/>
+    </svg>
+    <span class="brand__ko">담금</span>
+    <span class="brand__en">DAMGEUM</span>
+  </a>
+  <nav class="bar__nav" aria-label="주요 메뉴">
+    <ul>
+      <li><a href="#notes">노트</a></li>
+      <li><a href="#collection">향</a></li>
+      <li><a href="#atelier">작업실</a></li>
+      <li><a href="#finder">향 찾기</a></li>
+      <li><a href="#visit">방문 예약</a></li>
+    </ul>
+  </nav>
+  <button class="bar__menu" type="button" aria-expanded="false" aria-controls="sheet" data-menu>
+    <span class="bar__menu-open">메뉴</span><span class="bar__menu-close">닫기</span>
+  </button>
+</header>
+
+<div class="sheet" id="sheet" data-sheet hidden>
+  <nav aria-label="메뉴">
+    <ul>
+      <li><a href="#notes">노트</a></li>
+      <li><a href="#collection">향</a></li>
+      <li><a href="#atelier">작업실</a></li>
+      <li><a href="#finder">향 찾기</a></li>
+      <li><a href="#visit">방문 예약</a></li>
+    </ul>
+  </nav>
+  <p class="sheet__addr">서울 종로구 원서동 장독길 9<br>화요일부터 토요일, 12시부터 7시</p>
+</div>
+
+<main id="main" tabindex="-1">
+
+  <!-- 1. Hero: the pool and the bottle -->
+  <section class="hero" id="top" aria-labelledby="hero-title" data-ground="night">
+    <div class="hero__media">
+      <picture class="hero__still" data-still>
+        <source media="(max-aspect-ratio: 4/5)" srcset="./img/still-jocheong-tall.webp" data-still-tall>
+        <img src="./img/still-jocheong.webp" alt="" width="1600" height="1000" fetchpriority="high" decoding="async" data-still-img>
+      </picture>
+      <canvas class="hero__gl" data-gl role="img" aria-label="호박색 조청이 담긴 유리병이 같은 색 액체 위에 떠 있습니다. 포인터를 움직이면 액체 표면에 물결이 입니다."></canvas>
+      <div class="hero__scrim" aria-hidden="true"></div>
+    </div>
+
+    <div class="hero__inner">
+      <h1 class="hero__title" id="hero-title"><span>마흔 날을</span> <span>담가 둔 향</span></h1>
+      <p class="hero__lede">담금은 서울 원서동의 작은 작업실에서 네 가지 향만 만듭니다. 원료를 알코올에 담가 마흔 날을 기다렸다가, 한 병씩 손으로 채웁니다.</p>
+
+      <fieldset class="picker" data-picker>
+        <legend class="sr-only">향 고르기. 고르면 화면의 액체와 병이 그 향으로 바뀝니다.</legend>
+        <label class="picker__item"><input type="radio" name="scent-hero" value="yuwol"><span class="picker__no">No.01</span> <span class="picker__name">유월</span><span class="picker__dot" data-dot="yuwol" aria-hidden="true"></span></label>
+        <label class="picker__item"><input type="radio" name="scent-hero" value="jocheong" checked><span class="picker__no">No.02</span> <span class="picker__name">조청</span><span class="picker__dot" data-dot="jocheong" aria-hidden="true"></span></label>
+        <label class="picker__item"><input type="radio" name="scent-hero" value="omi"><span class="picker__no">No.03</span> <span class="picker__name">오미</span><span class="picker__dot" data-dot="omi" aria-hidden="true"></span></label>
+        <label class="picker__item"><input type="radio" name="scent-hero" value="meok"><span class="picker__no">No.04</span> <span class="picker__name">먹</span><span class="picker__dot" data-dot="meok" aria-hidden="true"></span></label>
+      </fieldset>
+      <p class="hero__line" data-scent-line>갓 볶은 보리와 오래 고은 조청. 손목에 꿀처럼 붙어 있습니다.</p>
+      <p class="hero__hint" data-hint aria-hidden="true">
+        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M2 11c2.2-2.4 4.4-2.4 6.6 0s4.4 2.4 6.6 0M5 15c1.6-1.6 3.2-1.6 4.8 0s3.2 1.6 4.8 0" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>
+        <span>표면을 손끝으로 저어 보세요</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. Notes: three layers settling -->
+  <section class="notes" id="notes" aria-labelledby="notes-title" data-ground="night" data-notes>
+    <div class="notes__stage">
+      <div class="notes__head">
+        <h2 class="notes__title" id="notes-title"><span data-name-eun>조청은</span> 세&nbsp;층으로 남습니다</h2>
+        <p class="notes__lede">향수는 처음 맡는 향, 몸에 머무는 향, 끝까지 남는 향이 차례로 드러납니다. 가벼운 것은 위에 뜨고, 무거운 것은 가라앉아 가장 오래 남습니다.</p>
+        <fieldset class="switch" data-switch>
+          <legend class="sr-only">다른 향의 노트 보기</legend>
+          <label><input type="radio" name="scent-notes" value="yuwol"><span>유월</span></label>
+          <label><input type="radio" name="scent-notes" value="jocheong" checked><span>조청</span></label>
+          <label><input type="radio" name="scent-notes" value="omi"><span>오미</span></label>
+          <label><input type="radio" name="scent-notes" value="meok"><span>먹</span></label>
+        </fieldset>
+      </div>
+
+      <div class="vessel" aria-hidden="true">
+        <canvas class="vessel__gl" data-vessel></canvas>
+        <div class="vessel__css">
+          <span class="vessel__layer" data-css-layer="0"></span>
+          <span class="vessel__layer" data-css-layer="1"></span>
+          <span class="vessel__layer" data-css-layer="2"></span>
+        </div>
+        <ol class="vessel__scale">
+          <li style="bottom:74%">50</li><li style="bottom:60.4%">40</li><li style="bottom:46.8%">30</li><li style="bottom:33.2%">20</li><li style="bottom:19.6%">10</li>
+        </ol>
+        <span class="vessel__unit">ml</span>
+      </div>
+
+      <ol class="layers" data-layers>
+        <li class="layer is-active" data-layer="0">
+          <h3 class="layer__head"><span class="layer__label">첫 향</span> <span class="layer__items" data-note-items="0">볶은 보리, 생강</span></h3>
+          <p class="layer__when" data-note-when="0">뿌리고 15분 동안</p>
+          <p class="layer__text" data-note-text="0">뚜껑을 열면 갓 볶은 보리차 냄새가 먼저 올라옵니다. 생강이 끝을 살짝 맵게 세웁니다.</p>
+        </li>
+        <li class="layer" data-layer="1">
+          <h3 class="layer__head"><span class="layer__label">가운데 향</span> <span class="layer__items" data-note-items="1">조청, 말린 대추</span></h3>
+          <p class="layer__when" data-note-when="1">30분부터 세 시간까지</p>
+          <p class="layer__text" data-note-text="1">가마솥에서 오래 고은 조청의 끈적한 단내. 말린 대추가 단맛을 붉게 눌러 줍니다.</p>
+        </li>
+        <li class="layer" data-layer="2">
+          <h3 class="layer__head"><span class="layer__label">잔향</span> <span class="layer__items" data-note-items="2">안식향, 송진</span></h3>
+          <p class="layer__when" data-note-when="2">세 시간 뒤부터</p>
+          <p class="layer__text" data-note-text="2">바닐라처럼 따뜻한 안식향과 소나무 송진. 저녁이 되어도 손목에 단내가 남습니다.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 3. Collection -->
+  <section class="collection" id="collection" aria-labelledby="collection-title" data-ground="paper">
+    <div class="collection__intro">
+      <h2 id="collection-title">네 가지 향, 하나의 병</h2>
+      <p>새 향을 늘리지 않습니다. 해마다 가을에 네 가지를 한 번씩 담그고, 다 팔리면 다음 해를 기다립니다. 병과 리필은 작업실에서만 팝니다.</p>
+    </div>
+
+    <div class="collection__body">
+      <figure class="preview" aria-hidden="true">
+        <img data-preview src="./img/bottle-jocheong.webp" alt="" width="900" height="1125" loading="lazy" decoding="async">
+        <figcaption class="preview__cap"><span data-preview-no>No.02</span> <span data-preview-name>조청</span></figcaption>
+      </figure>
+
+      <ul class="shelf" data-shelf>
+        <li class="item" data-item="yuwol">
+          <img class="item__img" src="./img/bottle-yuwol.webp" alt="연둣빛 유월이 담긴 네모난 유리병" width="900" height="1125" loading="lazy" decoding="async">
+          <div class="item__text">
+            <p class="item__no">No.01</p>
+            <h3 class="item__name">유월 <span lang="en">Yuwol</span></h3>
+            <p class="item__line">덜 익은 유자 껍질과 손으로 비빈 쑥잎. 비가 그친 유월 아침의 마당.</p>
+          </div>
+          <dl class="item__facts">
+            <div><dt>노트</dt><dd>풋유자, 초피, 쑥, 무화과잎, 편백, 젖은 이끼</dd></div>
+            <div><dt>농도</dt><dd>오 드 퍼퓸 16%</dd></div>
+            <div><dt>50 ml</dt><dd>168,000원</dd></div>
+            <div><dt>15 ml</dt><dd>58,000원</dd></div>
+          </dl>
+          <button class="quiet" type="button" data-goto-notes="yuwol">유월 노트 보기</button>
+        </li>
+        <li class="item" data-item="jocheong">
+          <img class="item__img" src="./img/bottle-jocheong.webp" alt="호박색 조청이 담긴 네모난 유리병" width="900" height="1125" loading="lazy" decoding="async">
+          <div class="item__text">
+            <p class="item__no">No.02</p>
+            <h3 class="item__name">조청 <span lang="en">Jocheong</span></h3>
+            <p class="item__line">갓 볶은 보리와 오래 고은 조청. 손목에 꿀처럼 붙어 있습니다.</p>
+          </div>
+          <dl class="item__facts">
+            <div><dt>노트</dt><dd>볶은 보리, 생강, 조청, 말린 대추, 안식향, 송진</dd></div>
+            <div><dt>농도</dt><dd>오 드 퍼퓸 20%</dd></div>
+            <div><dt>50 ml</dt><dd>168,000원</dd></div>
+            <div><dt>15 ml</dt><dd>58,000원</dd></div>
+          </dl>
+          <button class="quiet" type="button" data-goto-notes="jocheong">조청 노트 보기</button>
+        </li>
+        <li class="item" data-item="omi">
+          <img class="item__img" src="./img/bottle-omi.webp" alt="짙은 석류빛 오미가 담긴 네모난 유리병" width="900" height="1125" loading="lazy" decoding="async">
+          <div class="item__text">
+            <p class="item__no">No.03</p>
+            <h3 class="item__name">오미 <span lang="en">Omi</span></h3>
+            <p class="item__line">술에 담근 오미자와 말린 장미. 끝은 오래 낀 스웨이드 장갑처럼 부드럽습니다.</p>
+          </div>
+          <dl class="item__facts">
+            <div><dt>노트</dt><dd>오미자, 핑크 페퍼, 말린 장미, 산딸기, 스웨이드, 머스크</dd></div>
+            <div><dt>농도</dt><dd>오 드 퍼퓸 18%</dd></div>
+            <div><dt>50 ml</dt><dd>168,000원</dd></div>
+            <div><dt>15 ml</dt><dd>58,000원</dd></div>
+          </dl>
+          <button class="quiet" type="button" data-goto-notes="omi">오미 노트 보기</button>
+        </li>
+        <li class="item" data-item="meok">
+          <img class="item__img" src="./img/bottle-meok.webp" alt="먹물처럼 검은 먹이 담긴 네모난 유리병" width="900" height="1125" loading="lazy" decoding="async">
+          <div class="item__text">
+            <p class="item__no">No.04</p>
+            <h3 class="item__name">먹 <span lang="en">Meok</span></h3>
+            <p class="item__line">벼루에 간 먹과 소나기 지난 마당의 돌. 방 안에 낮게 깔립니다.</p>
+          </div>
+          <dl class="item__facts">
+            <div><dt>노트</dt><dd>젖은 돌, 흑후추, 먹, 한지, 침향, 백단</dd></div>
+            <div><dt>농도</dt><dd>엑스트레 24%</dd></div>
+            <div><dt>50 ml</dt><dd>186,000원</dd></div>
+            <div><dt>15 ml</dt><dd>64,000원</dd></div>
+          </dl>
+          <button class="quiet" type="button" data-goto-notes="meok">먹 노트 보기</button>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. Atelier -->
+  <section class="atelier" id="atelier" aria-labelledby="atelier-title" data-ground="paper">
+    <div class="atelier__intro">
+      <h2 id="atelier-title">담그고, 기다리고, 거릅니다</h2>
+      <div class="atelier__story">
+        <p>조향사 윤소담은 할머니가 매실과 오미자로 술을 담그던 부엌 찬장 앞에서 향을 처음 배웠습니다. 병마다 날짜를 적어 두고, 한 달이 지나서야 열어 보던 그 찬장이 지금 작업실의 방식이 되었습니다.</p>
+        <p>2019년 원서동 골목의 한옥 한 칸을 빌렸고, 지금도 원료를 고르는 일부터 라벨에 날짜를 적는 일까지 혼자 합니다. 한 해에 담그는 양은 향마다 사백 병 남짓입니다.</p>
+      </div>
+    </div>
+
+    <ol class="steps">
+      <li class="step">
+        <p class="step__day"><span class="step__num">1</span>일째</p>
+        <div>
+          <h3 class="step__title">원료를 고릅니다</h3>
+          <p>고흥의 유자, 문경의 오미자처럼 산지를 정해 두고, 그해 거둔 것의 상태를 보고 양을 정합니다.</p>
+        </div>
+      </li>
+      <li class="step">
+        <p class="step__day"><span class="step__num">2</span>일째</p>
+        <div>
+          <h3 class="step__title">알코올에 담급니다</h3>
+          <p>향료를 저울로 달아 섞고 알코올에 담가, 빛이 들지 않는 옹기 선반에 올립니다.</p>
+        </div>
+      </li>
+      <li class="step">
+        <p class="step__day"><span class="step__num">3–40</span>일째</p>
+        <div>
+          <h3 class="step__title">기다립니다</h3>
+          <p>매일 같은 시각에 병을 한 번 돌리고, 색과 가라앉은 것을 공책에 적습니다.</p>
+        </div>
+      </li>
+      <li class="step">
+        <p class="step__day"><span class="step__num">41</span>일째</p>
+        <div>
+          <h3 class="step__title">차갑게 식혀 거릅니다</h3>
+          <p>영하 가까이 식혀 탁한 것을 가라앉힌 뒤, 종이 필터로 두 번 거릅니다.</p>
+        </div>
+      </li>
+      <li class="step">
+        <p class="step__day"><span class="step__num">42</span>일째</p>
+        <div>
+          <h3 class="step__title">한 병씩 채웁니다</h3>
+          <p>손으로 병을 채우고, 라벨에 담근 날과 거른 날을 적어 붙입니다.</p>
+        </div>
+      </li>
+    </ol>
+
+    <figure class="plate">
+      <div class="plate__frame">
+        <canvas data-plate role="img" aria-label="네 가지 향을 담근 날부터 거른 날까지 하루에 한 병씩 그린 기록. 날이 갈수록 색이 짙어지고, 떠 있던 찌꺼기가 바닥으로 가라앉습니다. 41일째 거른 병은 맑습니다."></canvas>
+      </div>
+      <figcaption>2026년 가을에 담근 네 향의 마흔 날. 날마다 병 하나씩, 색과 가라앉은 것을 그대로 옮겼습니다.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 5. Finder -->
+  <section class="finder" id="finder" aria-labelledby="finder-title" data-ground="paper">
+    <div class="finder__intro">
+      <h2 id="finder-title">고르기 어렵다면</h2>
+      <p>세 가지만 물어볼게요. 답에 맞춰 네 향 가운데 하나를 골라 드립니다.</p>
+    </div>
+
+    <div class="finder__panel">
+      <form class="finder__form" data-finder novalidate>
+        <p class="finder__progress" data-progress><span>질문 <span data-progress-n>1</span> / 3</span></p>
+
+        <fieldset class="q" data-step="0">
+          <legend class="q__title" tabindex="-1">하루 중 가장 좋아하는 때는 언제인가요?</legend>
+          <div class="q__choices">
+            <label class="choice"><input type="radio" name="q1" value="yuwol"><span>창문을 막 연 이른 아침</span></label>
+            <label class="choice"><input type="radio" name="q1" value="jocheong"><span>볕이 길게 드는 오후</span></label>
+            <label class="choice"><input type="radio" name="q1" value="omi"><span>하늘이 붉어지는 해 질 녘</span></label>
+            <label class="choice"><input type="radio" name="q1" value="meok"><span>모두 잠든 늦은 밤</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="q" data-step="1" hidden>
+          <legend class="q__title" tabindex="-1">먼저 손이 가는 것은요?</legend>
+          <div class="q__choices">
+            <label class="choice"><input type="radio" name="q2" value="yuwol"><span>풋과일과 갓 뜯은 나물</span></label>
+            <label class="choice"><input type="radio" name="q2" value="jocheong"><span>갓 볶은 곡식과 꿀</span></label>
+            <label class="choice"><input type="radio" name="q2" value="omi"><span>붉은 과일과 말린 꽃</span></label>
+            <label class="choice"><input type="radio" name="q2" value="meok"><span>나무 도마와 종이, 붓</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="q" data-step="2" hidden>
+          <legend class="q__title" tabindex="-1">향이 어떻게 남았으면 하나요?</legend>
+          <div class="q__choices">
+            <label class="choice"><input type="radio" name="q3" value="yuwol"><span>지나가며 스치듯 가볍게</span></label>
+            <label class="choice"><input type="radio" name="q3" value="jocheong"><span>가까이 다가와야 맡을 만큼</span></label>
+            <label class="choice"><input type="radio" name="q3" value="omi"><span>하루 종일 은은하게</span></label>
+            <label class="choice"><input type="radio" name="q3" value="meok"><span>옷에 배어 다음 날까지</span></label>
+          </div>
+        </fieldset>
+
+        <div class="finder__nav">
+          <button class="quiet" type="button" data-back hidden>이전 질문</button>
+          <button class="btn" type="submit" data-next disabled>다음 질문</button>
+        </div>
+      </form>
+
+      <div class="finder__result" data-result hidden>
+        <p class="result__kicker">고른 답으로 보면</p>
+        <h3 class="result__title" tabindex="-1" data-result-title>조청이 맞겠습니다</h3>
+        <p class="result__why" data-result-why></p>
+        <p class="result__line" data-result-line></p>
+        <div class="result__actions">
+          <button class="btn" type="button" data-result-go>조청으로 바꿔 보기</button>
+          <a class="quiet" href="#visit">작업실에서 맡아 보기</a>
+          <button class="quiet" type="button" data-result-reset>처음부터 다시</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Visit -->
+  <section class="visit" id="visit" aria-labelledby="visit-title" data-ground="night">
+    <div class="visit__info">
+      <h2 id="visit-title">작업실에서 맡아 보세요</h2>
+      <p class="visit__lede">담금은 온라인으로 팔지 않습니다. 네 가지를 시향지와 손목에 차례로 올려 보고 고르시면 됩니다. 한 번에 두 분까지, 30분씩 예약을 받습니다.</p>
+
+      <dl class="visit__facts">
+        <div><dt>주소</dt><dd>서울 종로구 원서동 장독길 9, 1층</dd></div>
+        <div><dt>찾아오는 길</dt><dd>안국역 3번 출구에서 창덕궁 돌담을 따라 걸어서 12분</dd></div>
+        <div><dt>여는 시간</dt><dd>화요일부터 토요일, 낮 12시부터 저녁 7시<br>일요일과 월요일은 쉽니다</dd></div>
+      </dl>
+
+      <figure class="map">
+        <svg viewBox="0 0 560 340" role="img" aria-labelledby="map-title">
+          <title id="map-title">약도. 안국역 3번 출구에서 북쪽 골목으로 올라가다가, 창덕궁 돌담이 보이는 빨래터 앞 골목에서 오른쪽으로 들어가면 담금 작업실입니다.</title>
+          <path class="map__palace" d="M352 318 V160 C352 132 364 112 390 104 L560 74 V318 Z"/>
+          <g class="map__alleys" fill="none" stroke-linecap="round">
+            <path d="M86 300 V36"/>
+            <path d="M86 214 H160"/>
+            <path d="M176 170 H300"/>
+            <path d="M232 300 V176"/>
+            <path d="M196 44 H330"/>
+            <path d="M120 120 L190 128"/>
+            <path d="M288 300 V176"/>
+          </g>
+          <path class="map__main" d="M20 300 H540" fill="none"/>
+          <path class="map__wall" d="M352 300 V160 C352 132 364 112 390 104 L540 78" fill="none"/>
+          <path class="map__route" d="M150 300 C150 246 160 206 176 170 S194 112 200 96 L300 96" fill="none"/>
+          <path class="map__alleys" d="M150 300 C150 246 160 206 176 170 S194 112 200 96 L208 36" fill="none" stroke-linecap="round" opacity=".9"/>
+          <circle class="map__start" cx="150" cy="300" r="4.5"/>
+          <g class="map__here" transform="translate(300 96)">
+            <path d="M8 0 8 3.4 7.8 5.4 7.2 6.8 6.2 7.7 4.6 8 0 8 -4.6 8 -6.2 7.7 -7.2 6.8 -7.8 5.4 -8 3.4 -8 0 -8 -3.4 -7.8 -5.4 -7.2 -6.8 -6.2 -7.7 -4.6 -8 0 -8 4.6 -8 6.2 -7.7 7.2 -6.8 7.8 -5.4 8 -3.4Z"/>
+          </g>
+          <g class="map__labels">
+            <text x="314" y="88" class="map__name">담금</text>
+            <text x="314" y="116">빨래터 앞 골목</text>
+            <text x="160" y="324">안국역 3번 출구</text>
+            <text x="24" y="290" class="map__road-name">율곡로</text>
+            <text x="420" y="214" class="map__palace-name">창덕궁</text>
+            <text x="362" y="292">돌담</text>
+          </g>
+        </svg>
+        <figcaption>약도는 걸어오는 길만 간추려 그렸습니다.</figcaption>
+      </figure>
+    </div>
+
+    <div class="visit__book">
+      <form class="book" data-book novalidate>
+        <h3 class="book__title">방문 예약</h3>
+        <fieldset class="book__group" data-group="day">
+          <legend>날짜</legend>
+          <div class="book__days" data-days></div>
+        </fieldset>
+        <fieldset class="book__group" data-group="time">
+          <legend>시간 <span class="book__hint">한 번에 30분</span></legend>
+          <div class="book__times" data-times></div>
+        </fieldset>
+        <fieldset class="book__group" data-group="people">
+          <legend>인원</legend>
+          <div class="book__people">
+            <label class="chip"><input type="radio" name="people" value="1" checked><span>1명</span></label>
+            <label class="chip"><input type="radio" name="people" value="2"><span>2명</span></label>
+          </div>
+        </fieldset>
+        <fieldset class="book__group">
+          <legend>먼저 맡아 볼 향 <span class="book__hint">고르지 않아도 됩니다</span></legend>
+          <div class="book__scents">
+            <label class="chip"><input type="checkbox" name="try" value="유월"><span>유월</span></label>
+            <label class="chip"><input type="checkbox" name="try" value="조청"><span>조청</span></label>
+            <label class="chip"><input type="checkbox" name="try" value="오미"><span>오미</span></label>
+            <label class="chip"><input type="checkbox" name="try" value="먹"><span>먹</span></label>
+          </div>
+        </fieldset>
+        <p class="book__error" data-book-error role="alert" hidden></p>
+        <button class="btn btn--light" type="submit">이 시간으로 예약하기</button>
+        <p class="book__note">가상 브랜드라 예약 내용은 어디에도 보내거나 저장하지 않습니다.</p>
+      </form>
+
+      <div class="book__done" data-book-done hidden>
+        <svg class="book__check" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M8 21.5 16.5 30 32 11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h3 class="book__done-title" tabindex="-1" data-done-title>예약을 잡아 두었습니다</h3>
+        <p class="book__done-when" data-done-when></p>
+        <p class="book__done-try" data-done-try hidden></p>
+        <p class="book__done-note">시간에 맞춰 오시면 문 앞에서 기다리겠습니다. 가상 브랜드의 예시 화면이라 실제 예약은 되지 않았습니다.</p>
+        <button class="quiet quiet--light" type="button" data-book-again>다른 시간 고르기</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot" data-ground="night">
+  <div class="foot__brand">
+    <svg class="brand__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path class="brand__liquid" d="M18.2 13.3 18.2 15.3 18.1 16.7 18.0 17.7 17.8 18.5 17.5 19.2 17.2 19.7 16.8 20.2 16.4 20.6 15.8 20.8 15.2 21.0 14.2 21.2 12.0 21.2 9.8 21.2 8.8 21.0 8.2 20.8 7.6 20.6 7.2 20.2 6.8 19.7 6.5 19.2 6.2 18.5 6.0 17.7 5.9 16.7 5.8 15.3 5.8 13.3Z"/>
+      <path class="brand__glass" d="M20.0 12.0 20.0 16.0 19.9 17.6 19.7 18.8 19.4 19.8 19.1 20.6 18.7 21.2 18.2 21.8 17.7 22.2 16.9 22.6 16.1 22.8 14.9 23.0 12.0 23.0 9.1 23.0 7.9 22.8 7.1 22.6 6.3 22.2 5.8 21.8 5.3 21.2 4.9 20.6 4.6 19.8 4.3 18.8 4.1 17.6 4.0 16.0 4.0 12.0 4.0 8.0 4.1 6.4 4.3 5.2 4.6 4.2 4.9 3.4 5.3 2.8 5.8 2.2 6.3 1.8 7.1 1.4 7.9 1.2 9.1 1.0 12.0 1.0 14.9 1.0 16.1 1.2 16.9 1.4 17.7 1.8 18.2 2.2 18.7 2.8 19.1 3.4 19.4 4.2 19.7 5.2 19.9 6.4 20.0 8.0Z"/>
+    </svg>
+    <p class="foot__name"><span class="brand__ko">담금</span> <span class="brand__en">DAMGEUM</span></p>
+    <p class="foot__addr">서울 종로구 원서동 장독길 9</p>
+  </div>
+  <nav class="foot__nav" aria-label="바닥글 메뉴">
+    <ul>
+      <li><a href="#top">처음으로</a></li>
+      <li><a href="#notes">노트</a></li>
+      <li><a href="#collection">향</a></li>
+      <li><a href="#atelier">작업실</a></li>
+      <li><a href="#finder">향 찾기</a></li>
+      <li><a href="#visit">방문 예약</a></li>
+    </ul>
+  </nav>
+  <p class="foot__note">가상 브랜드입니다. zanviq gallery 작품.</p>
+</footer>
+
+<p class="sr-only" aria-live="polite" data-announce></p>
+</body>
+</html>

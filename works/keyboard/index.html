@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>가락 65 — 알루미늄 65% 키보드 | 가락 GARAK</title>
+<meta name="description" content="가락 65는 알루미늄을 깎아 만든 65% 기계식 키보드입니다. 지금 쓰는 키보드로 화면 속 3D 키보드를 직접 쳐 보고, 스위치와 색을 고른 뒤 1차 예약을 하세요.">
+<meta name="theme-color" content="#E6E7E3">
+<meta property="og:type" content="website">
+<meta property="og:title" content="가락 65 — 손가락이 내는 가락">
+<meta property="og:description" content="알루미늄 65% 키보드. 내 키보드로 화면 속 키보드를 쳐 보세요.">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/keyboard.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://gallery.zanviq.dev/keyboard/">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+<link rel="preload" href="./fonts/wanted-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/site.css">
+<script>
+  (function () {
+    var d = document.documentElement, q = location.search;
+    d.classList.add('js');
+    var rm = /[?&]rm\b/.test(q) || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var gl = false;
+    if (!/[?&]nogl\b/.test(q)) {
+      try { var c = document.createElement('canvas'); gl = !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) {}
+    }
+    if (gl) d.classList.add('gl');
+    if (rm) d.classList.add('rm');
+    if (gl && !rm) d.classList.add('motion');
+    if (/[?&]capture\b/.test(q)) d.classList.add('capture');
+    if (/[?&]still=/.test(q)) d.classList.add('capture', 'still');
+  })();
+</script>
+<script type="importmap">
+  { "imports": { "three": "./vendor/three/three.module.min.js" } }
+</script>
+<script>
+  // 3D 를 그릴 수 있을 때만 미리 받는다 (import map 뒤에 있어야 한다)
+  if (document.documentElement.classList.contains('gl')) {
+    ['./js/scene.js', './js/model.js', './vendor/three/three.module.min.js', './vendor/three/three.core.min.js'].forEach(function (h) {
+      var l = document.createElement('link'); l.rel = 'modulepreload'; l.href = h; document.head.appendChild(l);
+    });
+  }
+</script>
+<script type="module" src="./js/main.js"></script>
+<script src="/shared/back.js" data-position="bottom-left" data-theme="dark" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-mark" viewBox="0 0 34 20">
+      <rect x="0" y="3" width="10" height="10" rx="2.4"/>
+      <rect x="12" y="7" width="10" height="10" rx="2.4"/>
+      <rect x="24" y="3" width="10" height="10" rx="2.4"/>
+    </symbol>
+    <symbol id="i-sound-off" viewBox="0 0 20 20">
+      <path d="M3.5 7.5h3l4-3.5v12l-4-3.5h-3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M13.5 8l4 4m0-4l-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-sound-on" viewBox="0 0 20 20">
+      <path d="M3.5 7.5h3l4-3.5v12l-4-3.5h-3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M13.4 7.2a4 4 0 010 5.6M15.6 5a7 7 0 010 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-prev" viewBox="0 0 20 20"><path d="M12 4.5L6.5 10 12 15.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-next" viewBox="0 0 20 20"><path d="M8 4.5l5.5 5.5L8 15.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 20 20"><path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 20 20"><path d="M6.5 4.8v10.4L15 10z" fill="currentColor"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 20 20"><rect x="5.5" y="5.5" width="9" height="9" rx="1.5" fill="currentColor"/></symbol>
+    <symbol id="i-drag" viewBox="0 0 20 20"><path d="M3 10h14M3 10l3-3M3 10l3 3M17 10l-3-3M17 10l-3 3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="site-header" data-header>
+  <div class="site-header__inner">
+    <a class="brand" href="#top" aria-label="가락 GARAK, 맨 위로">
+      <svg class="brand__mark" aria-hidden="true"><use href="#i-mark"/></svg>
+      <span class="brand__word" aria-hidden="true">GARAK</span>
+    </a>
+    <nav class="site-nav" aria-label="페이지 안 이동">
+      <ul>
+        <li><a href="#structure">구조</a></li>
+        <li><a href="#switches">스위치</a></li>
+        <li><a href="#color">색</a></li>
+        <li><a href="#typing">타건</a></li>
+        <li><a href="#spec">사양</a></li>
+        <li><a href="#faq">묻는 것</a></li>
+      </ul>
+    </nav>
+    <div class="site-header__tools">
+      <button class="sound" type="button" aria-pressed="false" data-sound>
+        <svg class="sound__off" aria-hidden="true"><use href="#i-sound-off"/></svg>
+        <svg class="sound__on" aria-hidden="true"><use href="#i-sound-on"/></svg>
+        <span class="sound__label">소리</span><span class="sound__state" aria-hidden="true" data-sound-label>꺼짐</span>
+      </button>
+      <a class="key key--sm" href="#reserve"><span>예약</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="intro" id="top" aria-labelledby="hero-title" data-intro>
+    <span class="anchor anchor--structure" id="structure" aria-hidden="true"></span>
+    <div class="intro__stage" data-stage>
+      <div class="slot slot--main" data-slot="main" role="img" aria-label="가락 65 키보드 3D 모형. 내 키보드의 키를 누르면 같은 자리의 키가 눌립니다.">
+        <img class="fallback" src="./img/fallback.webp" alt="" width="1480" height="720" loading="lazy" decoding="async">
+      </div>
+
+      <div class="hero" data-hero>
+        <div class="hero__copy">
+          <p class="hero__product"><span class="latin">GARAK 65</span> 알루미늄 65% 키보드</p>
+          <h1 class="hero__title" id="hero-title">손가락이<br>내는 가락.</h1>
+          <p class="hero__lead" data-hero-lead>지금 쓰는 키보드로 화면 속 키보드를 쳐 보세요. 같은 자리의 키가 함께 눌립니다.</p>
+          <div class="hero__cta">
+            <a class="key" href="#reserve"><span>1차 예약하기</span></a>
+            <p class="hero__price">완성품 <span class="num">398,000</span>원, 11월 30일까지</p>
+          </div>
+        </div>
+        <div class="hint" data-hint aria-live="polite">
+          <span class="hint__cap" aria-hidden="true" data-hint-cap>G</span>
+          <span class="hint__text" data-hint-text>아무 키나 눌러 보세요</span>
+          <button class="hint__sound" type="button" data-hint-sound hidden>소리 켜기</button>
+        </div>
+      </div>
+
+      <div class="explode" aria-labelledby="structure-title" data-explode>
+        <div class="explode__panel">
+          <h2 class="explode__title" id="structure-title">여덟 겹으로 쌓았습니다</h2>
+          <p class="explode__lead" data-explode-lead>스크롤하면 위에서부터 한 겹씩 떼어 보여 드립니다.</p>
+          <ol class="layers" data-layers>
+            <li class="layer" data-layer="caps">
+              <h3 class="layer__name"><button class="layer__btn" type="button" aria-expanded="false"><span class="layer__no num">1</span>키캡</button></h3>
+              <p>두께 1.5mm PBT에 염료승화로 글자를 입혔습니다. 영문 옆에 두벌식 자모도 넣었고, 오래 써도 번들거리지 않습니다.</p>
+              <p class="layer__spec">행마다 높이와 기울기가 다른 원통형 키캡</p>
+            </li>
+            <li class="layer" data-layer="top">
+              <h3 class="layer__name"><button class="layer__btn" type="button" aria-expanded="false"><span class="layer__no num">2</span>상판</button></h3>
+              <p>6063 알루미늄 덩어리를 깎아 만든 테두리입니다. 앞 베젤 오른쪽에 황동 명판을 박았습니다.</p>
+              <p class="layer__spec">베젤 7mm, 비드블라스트 후 아노다이징</p>
+            </li>
+            <li class="layer" data-layer="switches">
+              <h3 class="layer__name"><button class="layer__btn" type="button" aria-expanded="false"><span class="layer__no num">3</span>스위치</button></h3>
+              <p>5핀 핫스왑 소켓이라 납땜 없이 뽑고 꽂습니다. 고요, 마루, 또각 가운데 하나를 고릅니다.</p>
+              <p class="layer__spec">긴 키 4개에는 스태빌라이저, 철사에 윤활</p>
+            </li>
+            <li class="layer" data-layer="plate">
+              <h3 class="layer__name"><button class="layer__btn" type="button" aria-expanded="false"><span class="layer__no num">4</span>보강판</button></h3>
+              <p>1.5mm 알루미늄 판을 실리콘 가스켓 12개가 케이스에서 띄워 둡니다. 바닥을 칠 때 충격이 손끝으로 덜 돌아옵니다.</p>
+              <p class="layer__spec">가스켓 마운트, 판과 케이스 사이 금속 접점 없음</p>
+            </li>
+            <li class="layer" data-layer="pcb">
+              <h3 class="layer__name"><button class="layer__btn" type="button" aria-expanded="false"><span class="layer__no num">5</span>기판</button></h3>
+              <p>1.6mm 핫스왑 기판입니다. QMK와 VIA로 키 배치를 바꿀 수 있고, 입력은 1초에 1000번 보냅니다.</p>
+              <p class="layer__spec">USB-C, 1000Hz</p>
+            </li>
+            <li class="layer" data-layer="foam">
+              <h3 class="layer__name"><button class="layer__btn" type="button" aria-expanded="false"><span class="layer__no num">6</span>흡음재</button></h3>
+              <p>3.4mm 폴리우레탄 폼이 케이스 속 빈 공간을 채워 통울림을 줄입니다.</p>
+              <p class="layer__spec">기판 아래 한 장, 떼어 낼 수 있음</p>
+            </li>
+            <li class="layer" data-layer="weight">
+              <h3 class="layer__name"><button class="layer__btn" type="button" aria-expanded="false"><span class="layer__no num">7</span>황동 무게추</button></h3>
+              <p>420g 황동 판을 하판 안쪽에 눕혔습니다. 책상 위에서 밀리지 않고, 소리가 낮게 가라앉습니다.</p>
+              <p class="layer__spec">헤어라인 마감, 각인 포함</p>
+            </li>
+            <li class="layer" data-layer="bottom">
+              <h3 class="layer__name"><button class="layer__btn" type="button" aria-expanded="false"><span class="layer__no num">8</span>하판</button></h3>
+              <p>6.5° 기울기를 케이스에 깎아 넣었습니다. 접는 다리 없이도 손목이 편한 각도입니다.</p>
+              <p class="layer__spec">앞 높이 22mm, 바닥 고무발 4개</p>
+            </li>
+          </ol>
+          <div class="stepper" data-stepper>
+            <button class="stepper__btn" type="button" data-step="-1" aria-label="이전 층">
+              <svg aria-hidden="true"><use href="#i-prev"/></svg>
+            </button>
+            <p class="stepper__count num" data-step-count aria-live="polite">1 / 8</p>
+            <button class="stepper__btn" type="button" data-step="1" aria-label="다음 층">
+              <svg aria-hidden="true"><use href="#i-next"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="slot slot--layers" data-slot="layers" role="img" aria-label="가락 65를 여덟 겹으로 분해한 모습">
+          <img class="fallback" src="./img/fallback-exploded.webp" alt="" width="1600" height="1200" loading="lazy" decoding="async">
+        </div>
+        <p class="explode__end" data-explode-end>다시 한 덩어리. 전부 합쳐 <span class="num">1.9</span>kg입니다.</p>
+      </div>
+
+      <div class="callouts" aria-hidden="true" data-callouts>
+        <svg class="callouts__lines" data-callout-lines></svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="section switches" id="switches" aria-labelledby="switches-title">
+    <div class="wrap switches__grid">
+      <div class="switches__intro">
+        <h2 class="h2" id="switches-title">스위치는 세 가지</h2>
+        <p class="lead">누르는 느낌과 소리가 다릅니다. 하나를 고르면 이 페이지의 키보드도 그 스위치로 바뀝니다.</p>
+        <fieldset class="choice choice--switch" data-switch-group>
+          <legend class="sr">스위치 고르기</legend>
+          <label class="choice__item">
+            <input type="radio" name="switch" value="goyo" checked aria-labelledby="sw-goyo-name" aria-describedby="sw-goyo-desc">
+            <span class="choice__body">
+              <span class="choice__name" id="sw-goyo-name">고요 <span class="choice__kind">리니어</span></span>
+              <span class="choice__desc">걸림 없이 바닥까지 곧게 내려갑니다. 소리는 낮고 둥급니다.</span>
+            </span>
+            <svg class="choice__check" aria-hidden="true"><use href="#i-check"/></svg>
+          </label>
+          <label class="choice__item">
+            <input type="radio" name="switch" value="maru" aria-labelledby="sw-maru-name" aria-describedby="sw-maru-desc">
+            <span class="choice__body">
+              <span class="choice__name" id="sw-maru-name">마루 <span class="choice__kind">택타일</span></span>
+              <span class="choice__desc">누르자마자 작은 턱을 넘습니다. 글자가 들어간 순간을 손끝이 압니다.</span>
+            </span>
+            <svg class="choice__check" aria-hidden="true"><use href="#i-check"/></svg>
+          </label>
+          <label class="choice__item">
+            <input type="radio" name="switch" value="ttogak" aria-labelledby="sw-ttogak-name" aria-describedby="sw-ttogak-desc">
+            <span class="choice__body">
+              <span class="choice__name" id="sw-ttogak-name">또각 <span class="choice__kind">클릭</span></span>
+              <span class="choice__desc">작동하는 순간 또렷하게 딸깍합니다. 혼자 쓰는 방에 권합니다.</span>
+            </span>
+            <svg class="choice__check" aria-hidden="true"><use href="#i-check"/></svg>
+          </label>
+        </fieldset>
+      </div>
+
+      <figure class="curve" data-curve>
+        <figcaption class="curve__head">
+          <span class="curve__title"><span data-curve-name>고요</span>의 힘-거리 곡선</span>
+          <span class="curve__legend">
+            <span class="curve__key curve__key--press">누를 때</span>
+            <span class="curve__key curve__key--release">놓을 때</span>
+          </span>
+        </figcaption>
+        <svg class="curve__svg" viewBox="0 0 640 400" role="img" aria-labelledby="curve-desc" data-curve-svg>
+          <title id="curve-desc">누른 깊이에 따른 힘</title>
+          <g class="curve__grid" data-curve-grid></g>
+          <path class="curve__release" data-curve-release d=""/>
+          <path class="curve__press" data-curve-press d=""/>
+          <g class="curve__marks" data-curve-marks></g>
+          <circle class="curve__dot" r="7" cx="-20" cy="-20" data-curve-dot/>
+        </svg>
+        <dl class="curve__spec" data-curve-spec>
+          <div><dt>작동 압력</dt><dd><span class="num" data-v="actForce">45</span>gf</dd></div>
+          <div><dt>작동 지점</dt><dd><span class="num" data-v="actuation">2.0</span>mm</dd></div>
+          <div><dt>바닥 압력</dt><dd><span class="num" data-v="bottomForce">58</span>gf</dd></div>
+          <div><dt>전체 이동</dt><dd><span class="num" data-v="travel">4.0</span>mm</dd></div>
+        </dl>
+        <div class="curve__actions">
+          <button class="key key--quiet" type="button" data-listen>
+            <svg class="key__icon" aria-hidden="true" data-listen-icon><use href="#i-play"/></svg>
+            <span data-listen-label>소리 들어 보기</span>
+          </button>
+          <p class="note">소리는 브라우저에서 합성합니다. 실제 녹음과는 조금 다릅니다.</p>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section color" id="color" aria-labelledby="color-title">
+    <div class="wrap color__grid">
+      <div class="color__stage">
+        <div class="slot slot--color" data-slot="color" role="img" aria-label="고른 색의 가락 65. 끌어서 돌려 볼 수 있습니다." data-color-slot>
+          <img class="fallback" src="./img/fallback.webp" alt="" width="1480" height="720" loading="lazy" decoding="async">
+        </div>
+        <p class="color__drag" aria-hidden="true"><svg><use href="#i-drag"/></svg>끌어서 돌려 보세요</p>
+      </div>
+      <div class="color__side">
+        <h2 class="h2" id="color-title">네 가지 색</h2>
+        <p class="lead">케이스는 아노다이징으로, 키캡은 케이스에 맞춰 따로 염색했습니다.</p>
+        <fieldset class="swatches" data-color-group>
+          <legend class="sr">색 고르기</legend>
+          <label class="swatch">
+            <input type="radio" name="colorway" value="meok" checked aria-labelledby="cw-meok-name" aria-describedby="cw-meok-desc">
+            <span class="swatch__chip" style="--chip:#2a2c30;--chip-key:#2f3136;--chip-acc:#e3a92f" aria-hidden="true"></span>
+            <span class="swatch__text"><span class="swatch__name" id="cw-meok-name">먹</span><span class="swatch__desc" id="cw-meok-desc">그을린 흑연색 케이스에 먹색 키캡. Esc와 Enter만 치자색입니다.</span></span>
+          </label>
+          <label class="swatch">
+            <input type="radio" name="colorway" value="baekja" aria-labelledby="cw-baekja-name" aria-describedby="cw-baekja-desc">
+            <span class="swatch__chip" style="--chip:#c9cbcc;--chip-key:#ecebe5;--chip-acc:#2c4a8c" aria-hidden="true"></span>
+            <span class="swatch__text"><span class="swatch__name" id="cw-baekja-name">백자</span><span class="swatch__desc" id="cw-baekja-desc">은백 케이스에 흰 키캡. 글자는 청화 안료의 파랑입니다.</span></span>
+          </label>
+          <label class="swatch">
+            <input type="radio" name="colorway" value="bisaek" aria-labelledby="cw-bisaek-name" aria-describedby="cw-bisaek-desc">
+            <span class="swatch__chip" style="--chip:#8fa597;--chip-key:#dfe5dc;--chip-acc:#2d5f50" aria-hidden="true"></span>
+            <span class="swatch__text"><span class="swatch__name" id="cw-bisaek-name">비색</span><span class="swatch__desc" id="cw-bisaek-desc">청자에서 가져온 회록색. 빛을 받으면 초록이 짙어집니다.</span></span>
+          </label>
+          <label class="swatch">
+            <input type="radio" name="colorway" value="juchil" aria-labelledby="cw-juchil-name" aria-describedby="cw-juchil-desc">
+            <span class="swatch__chip" style="--chip:#7a2419;--chip-key:#26272a;--chip-acc:#b3361f" aria-hidden="true"></span>
+            <span class="swatch__text"><span class="swatch__name" id="cw-juchil-name">주칠</span><span class="swatch__desc" id="cw-juchil-desc">옻칠 그릇의 붉은색 케이스에 흑칠 키캡을 얹었습니다.</span></span>
+          </label>
+        </fieldset>
+      </div>
+    </div>
+  </section>
+
+  <section class="section typing" id="typing" aria-labelledby="typing-title">
+    <div class="wrap">
+      <div class="typing__head">
+        <h2 class="h2" id="typing-title">직접 쳐 보기</h2>
+        <p class="lead">문장을 따라 치면 속도와 정확도를 잽니다. 아래 키보드도 같이 눌립니다.</p>
+      </div>
+      <div class="typer" data-typer>
+        <div class="typer__bar">
+          <div class="seg" role="radiogroup" aria-label="문장 언어" data-lang>
+            <button type="button" role="radio" aria-checked="true" data-lang-btn="ko">한글</button>
+            <button type="button" role="radio" aria-checked="false" data-lang-btn="en" lang="en">English</button>
+          </div>
+          <dl class="typer__stats">
+            <div><dt data-speed-label>타/분</dt><dd class="num" data-stat="speed">0</dd></div>
+            <div><dt>정확도</dt><dd><span class="num" data-stat="acc">100</span>%</dd></div>
+            <div><dt>시간</dt><dd><span class="num" data-stat="time">0.0</span>초</dd></div>
+          </dl>
+        </div>
+        <p class="typer__passage" data-passage aria-hidden="true"></p>
+        <p class="sr" data-passage-sr></p>
+        <label class="typer__label" for="typer-input" data-typer-label>위 문장을 따라 입력하세요</label>
+        <input class="typer__input" id="typer-input" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" data-typer-input>
+        <p class="typer__status" data-typer-status aria-live="polite">입력을 시작하면 시간이 갑니다.</p>
+        <div class="typer__result" data-result hidden>
+          <div class="rhythm">
+            <p class="rhythm__title">내 가락 <span class="rhythm__sub">키를 누른 간격</span></p>
+            <svg class="rhythm__svg" data-rhythm preserveAspectRatio="none" aria-hidden="true"></svg>
+          </div>
+          <div class="typer__again">
+            <button class="key key--quiet" type="button" data-retry><span>다시</span></button>
+            <button class="key key--quiet" type="button" data-next><span>다른 문장</span></button>
+          </div>
+        </div>
+      </div>
+      <div class="slot slot--typing" data-slot="typing" role="img" aria-label="위에서 내려다본 가락 65. 입력하는 키가 함께 눌립니다.">
+        <img class="fallback" src="./img/fallback.webp" alt="" width="1480" height="720" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <section class="section spec" id="spec" aria-labelledby="spec-title">
+    <div class="wrap">
+      <h2 class="h2" id="spec-title">사양</h2>
+      <div class="spec__grid">
+        <figure class="layoutmap">
+          <svg class="layoutmap__svg" data-layoutmap role="img" aria-labelledby="layoutmap-cap"></svg>
+          <figcaption id="layoutmap-cap">65% 배열, 68키. 폭이 다른 키에는 크기(u)를 적었습니다. 지금 누르는 키도 여기에 표시됩니다.</figcaption>
+        </figure>
+        <table class="spec__table">
+          <caption class="sr">가락 65 사양</caption>
+          <tbody>
+            <tr><th scope="row">배열</th><td>65%, 68키. 영문과 두벌식 한글 각인</td></tr>
+            <tr><th scope="row">크기</th><td><span class="num">319 × 112</span>mm, 높이 앞 <span class="num">22</span>mm, 뒤 <span class="num">35</span>mm</td></tr>
+            <tr><th scope="row">무게</th><td>완성품 약 <span class="num">1.9</span>kg (황동 무게추 <span class="num">420</span>g 포함)</td></tr>
+            <tr><th scope="row">타건 각도</th><td><span class="num">6.5</span>°</td></tr>
+            <tr><th scope="row">케이스</th><td>6063 알루미늄 CNC 가공, 아노다이징</td></tr>
+            <tr><th scope="row">마운트</th><td>가스켓 마운트, 실리콘 가스켓 12개</td></tr>
+            <tr><th scope="row">보강판</th><td>알루미늄 <span class="num">1.5</span>mm</td></tr>
+            <tr><th scope="row">기판</th><td><span class="num">1.6</span>mm 핫스왑(5핀), QMK와 VIA 지원</td></tr>
+            <tr><th scope="row">연결</th><td>USB-C 유선, <span class="num">1000</span>Hz</td></tr>
+            <tr><th scope="row">키캡</th><td>PBT <span class="num">1.5</span>mm, 염료승화 각인</td></tr>
+            <tr><th scope="row">스위치</th><td>고요(리니어), 마루(택타일), 또각(클릭) 중 하나. 완성품만</td></tr>
+            <tr><th scope="row">상자 구성</th><td>키보드, USB-C 케이블 <span class="num">1.5</span>m, 키캡 리무버, 스위치 리무버, 여분 가스켓 4개</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reserve" id="reserve" aria-labelledby="reserve-title">
+    <div class="wrap reserve__grid">
+      <div class="reserve__info">
+        <h2 class="h2" id="reserve-title">1차 예약</h2>
+        <p class="lead">1차 생산은 300대입니다. 예약할 때는 돈을 내지 않고, 결제는 출고 2주 전에 메일로 안내합니다.</p>
+        <ol class="timeline">
+          <li class="is-done"><span class="timeline__date num">11.03</span><span class="timeline__what">예약 시작</span></li>
+          <li class="is-now"><span class="timeline__date num">11.30</span><span class="timeline__what">예약 마감<span class="timeline__tag">지금 예약을 받고 있습니다</span></span></li>
+          <li><span class="timeline__date num">2027.01</span><span class="timeline__what">생산</span></li>
+          <li><span class="timeline__date num">2027.02</span><span class="timeline__what">2월 말부터 차례로 출고</span></li>
+        </ol>
+      </div>
+
+      <div class="reserve__panel" data-reserve>
+        <form class="form" novalidate data-form>
+          <fieldset class="form__group">
+            <legend class="form__legend">구성</legend>
+            <div class="opts opts--stack">
+              <label class="opt">
+                <input type="radio" name="kit" value="full" checked>
+                <span class="opt__body"><span class="opt__name">완성품</span><span class="opt__desc">스위치와 키캡까지 끼워서 보냅니다</span></span>
+                <span class="opt__price num">398,000원</span>
+              </label>
+              <label class="opt">
+                <input type="radio" name="kit" value="barebone">
+                <span class="opt__body"><span class="opt__name">베어본</span><span class="opt__desc">케이스, 보강판, 기판만. 스위치와 키캡은 직접</span></span>
+                <span class="opt__price num">298,000원</span>
+              </label>
+            </div>
+          </fieldset>
+          <fieldset class="form__group">
+            <legend class="form__legend">색</legend>
+            <div class="opts opts--row">
+              <label class="opt opt--chip"><input type="radio" name="fcolor" value="meok" checked><span class="opt__dot" style="--chip:#2a2c30" aria-hidden="true"></span><span>먹</span></label>
+              <label class="opt opt--chip"><input type="radio" name="fcolor" value="baekja"><span class="opt__dot" style="--chip:#c9cbcc" aria-hidden="true"></span><span>백자</span></label>
+              <label class="opt opt--chip"><input type="radio" name="fcolor" value="bisaek"><span class="opt__dot" style="--chip:#8fa597" aria-hidden="true"></span><span>비색</span></label>
+              <label class="opt opt--chip"><input type="radio" name="fcolor" value="juchil"><span class="opt__dot" style="--chip:#7a2419" aria-hidden="true"></span><span>주칠</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="form__group" data-fswitch-group>
+            <legend class="form__legend">스위치</legend>
+            <div class="opts opts--row">
+              <label class="opt opt--chip"><input type="radio" name="fswitch" value="goyo" checked><span>고요</span></label>
+              <label class="opt opt--chip"><input type="radio" name="fswitch" value="maru"><span>마루</span></label>
+              <label class="opt opt--chip"><input type="radio" name="fswitch" value="ttogak"><span>또각</span></label>
+            </div>
+            <p class="form__hint" data-barebone-hint hidden>베어본에는 스위치와 키캡이 들어가지 않습니다.</p>
+          </fieldset>
+          <div class="form__group">
+            <label class="form__legend" for="email">출고 안내를 받을 이메일</label>
+            <input class="input" id="email" name="email" type="email" inputmode="email" autocomplete="email" aria-describedby="email-err" required data-email>
+            <p class="form__error" id="email-err" data-email-err hidden></p>
+          </div>
+          <div class="form__foot">
+            <p class="form__total">합계 <span class="num" data-total>398,000</span>원</p>
+            <button class="key key--wide" type="submit"><span>예약하기</span></button>
+          </div>
+          <p class="note">가상 브랜드의 데모라 실제로 접수되거나 어디로 보내지지 않습니다.</p>
+        </form>
+
+        <div class="slip" data-slip hidden tabindex="-1" aria-labelledby="slip-title">
+          <div class="slip__top">
+            <svg class="slip__check" aria-hidden="true"><use href="#i-check"/></svg>
+            <h3 class="slip__title" id="slip-title">예약했습니다</h3>
+          </div>
+          <p class="slip__no"><span class="slip__label">예약 번호</span><span class="num" data-slip-no>GR65-1-0000</span></p>
+          <dl class="slip__rows">
+            <div><dt>구성</dt><dd data-slip-kit></dd></div>
+            <div><dt>색</dt><dd data-slip-color></dd></div>
+            <div><dt>스위치</dt><dd data-slip-switch></dd></div>
+            <div><dt>합계</dt><dd><span class="num" data-slip-total></span>원, 출고 2주 전 결제</dd></div>
+          </dl>
+          <p class="slip__mail" data-slip-mail></p>
+          <p class="note">데모라서 아무 정보도 전송되지 않았습니다. 이 화면은 이 브라우저에만 남습니다.</p>
+          <button class="key key--quiet" type="button" data-slip-reset><span>다시 고르기</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section faq" id="faq" aria-labelledby="faq-title">
+    <div class="wrap faq__grid">
+      <h2 class="h2" id="faq-title">자주 묻는 것</h2>
+      <div class="faq__list">
+        <details class="qa">
+          <summary><span>맥에서도 쓸 수 있나요?</span><svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>네. 꽂으면 바로 됩니다. 맥용 키 배치는 VIA에서 바꾸면 되고, 같은 자리에 끼울 Cmd, Opt 키캡을 상자에 함께 넣어 드립니다.</p>
+        </details>
+        <details class="qa">
+          <summary><span>한글 각인 없는 키캡도 있나요?</span><svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>1차에는 한글 각인 키캡만 만듭니다. 가진 키캡을 쓰고 싶다면 베어본을 고르세요.</p>
+        </details>
+        <details class="qa">
+          <summary><span>스위치를 나중에 바꿀 수 있나요?</span><svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>핫스왑 소켓이라 상자에 든 리무버로 뽑고 꽂으면 됩니다. MX 규격 3핀, 5핀 스위치가 모두 맞습니다.</p>
+        </details>
+        <details class="qa">
+          <summary><span>무선은 안 되나요?</span><svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>가락 65는 유선만 지원합니다. 배터리 자리에 황동 무게추를 넣는 쪽을 골랐습니다.</p>
+        </details>
+        <details class="qa">
+          <summary><span>예약을 취소할 수 있나요?</span><svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>결제 안내 메일을 받기 전까지 언제든 취소할 수 있습니다. 예약할 때 돈을 내지 않으니 돌려받을 금액도 없습니다.</p>
+        </details>
+        <details class="qa">
+          <summary><span>고장 나면 어떻게 하나요?</span><svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>받은 날부터 1년 동안 기판과 케이스 결함은 무상으로 고쳐 드립니다. 키캡과 스위치는 닳는 부품이라 빠집니다.</p>
+        </details>
+        <details class="qa">
+          <summary><span>페이지에서 나는 소리가 실제 소리인가요?</span><svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>아닙니다. 브라우저에서 잡음과 짧은 음을 섞어 만든 소리입니다. 실제 소리는 책상과 방에 따라서도 달라집니다.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div class="site-footer__brand">
+      <svg class="brand__mark" aria-hidden="true"><use href="#i-mark"/></svg>
+      <p><span class="latin">GARAK</span> 가락</p>
+    </div>
+    <nav aria-label="바닥글 이동">
+      <ul class="site-footer__links">
+        <li><a href="#structure">구조</a></li>
+        <li><a href="#switches">스위치</a></li>
+        <li><a href="#color">색</a></li>
+        <li><a href="#typing">타건</a></li>
+        <li><a href="#spec">사양</a></li>
+        <li><a href="#reserve">예약</a></li>
+        <li><a href="#faq">묻는 것</a></li>
+      </ul>
+    </nav>
+    <p class="site-footer__note">가상 브랜드입니다. zanviq gallery 작품.</p>
+    <p class="site-footer__fonts">글꼴 Wanted Sans, Archivo (SIL OFL). 3D Three.js (MIT).</p>
+  </div>
+</footer>
+</body>
+</html>
