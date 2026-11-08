@@ -6,37 +6,43 @@
 index.html          홈(대시보드)
 assets/             홈 전용 css, js, font, 이미지
 data/works.json     작품 목록 (단일 소스)
-works/<slug>/       작품 하나 = 독립 폴더 (자체 index.html)
+works/<slug>/       작품 하나 = 독립 폴더 (자체 index.html). 주소는 /<slug>/
 thumbnails/         홈 카드용 썸네일 (webp)
 og/                 공유용 OG 이미지
-shared/             작품 페이지 공통 스니펫
-design/proposals/   홈 시안 (배포 제외)
+shared/back.js      작품 페이지에 붙이는 '갤러리로 돌아가기' 배지
+design/             홈 시안, 작품별 디자인 노트 (배포 제외)
+tools/serve.py      로컬 개발 서버 (배포 제외)
 deploy/nginx.conf   컨테이너 nginx 설정
 Dockerfile          배포 이미지
 ```
 
 ## 작품 추가
 
-1. **폴더 만들기** — `works/<slug>/index.html`. 빌드가 필요한 작품(React/Vite 등)은 빌드 결과물만 넣는다. 경로는 상대 경로로 (`vite build --base=./`). 외부에 배포한 작품(external)은 폴더가 필요 없다.
+1. **폴더 만들기** — `works/<slug>/index.html`. 주소는 `gallery.zanviq.dev/<slug>/`가 된다(nginx가 `works/<slug>/`로 연결).
+   - slug는 영문 소문자·숫자·`-`. 사이트 폴더 이름(`assets`, `data`, `og`, `shared`, `thumbnails`, `works`, `design`)은 쓸 수 없다.
+   - 작품 안의 경로는 전부 상대 경로(`./js/main.js`). 그래야 `/<slug>/`와 `/works/<slug>/` 양쪽에서 열린다.
+   - 빌드가 필요한 작품(React/Vite 등)은 빌드 결과물만 넣는다(`vite build --base=./`).
+   - 갤러리로 돌아가는 배지: `<script src="/shared/back.js" defer></script>` (위치·색은 `data-position`, `data-theme`).
+   - 외부에 배포한 작품(external)은 폴더가 필요 없다.
 2. **works.json에 항목 추가**
 
    ```json
    {
-     "slug": "neon-landing",
-     "title": "Neon Landing",
+     "slug": "keyboard",
+     "title": "Keyboard",
      "type": "internal",
-     "url": "works/neon-landing/",
-     "tags": ["landing", "animation"],
-     "thumbnail": "thumbnails/neon-landing.webp",
+     "url": "keyboard/",
+     "tags": ["landing", "3d"],
+     "thumbnail": "thumbnails/keyboard.webp",
      "year": 2026
    }
    ```
 
-   - `internal`: 레포 안 `works/<slug>/`. `url`은 `works/<slug>/`
+   - `internal`: `url`은 `<slug>/`
    - `external`: 배포된 외부 주소를 `url`에 적는다. 홈에서 새 탭으로 열리고 외부 링크 표시가 붙는다
 3. **썸네일 추가** — `thumbnails/<slug>.webp` (4:3, 가로 1200px 이하 권장). 홈의 선택 칸은 가운데 정사각형을 픽셀로 줄여 보여 주고, 미리보기 화면은 4:3 전체를 보여 준다. 썸네일이 없으면 slug로 만든 픽셀 무늬가 대신 나온다. 공유 이미지가 따로 필요하면 `og/<slug>.png` (1200×630).
 
-로컬 확인: 레포 루트에서 `python -m http.server 8000` → http://127.0.0.1:8000
+로컬 확인: `python tools/serve.py` → http://127.0.0.1:8000 (작품 짧은 주소도 배포와 똑같이 열린다)
 
 ## 홈 설정
 
@@ -48,6 +54,7 @@ Dockerfile          배포 이미지
 
 [TwoMES Hosting](https://github.com/Zanviq/HOSTING)의 [app-contract.md](https://github.com/Zanviq/HOSTING/blob/main/docs/app-contract.md) 규칙을 따른다. **Dockerfile 방식** (서비스 하나).
 
+- `main`에 push하면 웹훅으로 자동 배포된다
 - 대시보드에서 저장소 `Zanviq/GALLERY`, 브랜치 `main`, 루트 `.` 선택
 - 포트 `8080`, 도메인 `gallery.zanviq.dev`
 - 저장공간·환경변수는 필요 없다
