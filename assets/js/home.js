@@ -9,7 +9,8 @@
   var TAG_LABELS = {
     client: '외주', landing: '랜딩', game: '게임', experiment: '실험', animation: '애니메이션',
     canvas: '캔버스', app: '앱', typography: '타이포', audio: '사운드', portfolio: '포트폴리오', pixel: '픽셀',
-    webgl: 'WebGL', '3d': '3D', brand: '브랜드'
+    webgl: 'WebGL', '3d': '3D', brand: '브랜드', promo: '홍보', office: '사무', interaction: '인터랙션',
+    mobile: '모바일', svg: 'SVG', physics: '물리', demo: '데모'
   };
 
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;

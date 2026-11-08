@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>optician og</title>
+<!-- Design-only page: rendered to og/optician.png (1200x630) by scripts/render-og.mjs. -->
+<link rel="stylesheet" href="/works/optician/css/fonts.css">
+<style>
+  html, body { margin: 0; background: #fff; }
+  .og { position: relative; width: 1200px; height: 630px; overflow: hidden; font-family: 'Gothic A1', sans-serif; color: #111316; }
+  .v { position: absolute; left: 56px; top: 150px; font: 700 15px/1 'Gothic A1'; color: rgb(17 19 22 / .72); }
+  h1 { position: absolute; left: 92px; top: 62px; margin: 0; font: 900 112px/1 'Gothic A1'; letter-spacing: .26em; }
+  .lede { position: absolute; left: 96px; top: 222px; margin: 0; font: 700 27px/1.4 'Gothic A1'; }
+  .duo { position: absolute; left: 96px; top: 330px; width: 380px; }
+  .duo svg { display: block; width: 380px; height: 114px; }
+  .sides { display: flex; justify-content: space-between; margin-top: 8px; font: 700 15px/1 'Gothic A1'; }
+  .credit { position: absolute; left: 96px; bottom: 44px; margin: 0; font: 400 16px/1 'Gothic A1'; color: rgb(17 19 22 / .72); }
+  .wheel { position: absolute; left: 640px; top: 35px; width: 560px; height: 560px; }
+</style>
+</head>
+<body>
+<div class="og">
+  <p class="v">0.1</p>
+  <h1>또렷안경</h1>
+  <p class="lede">렌즈를 가게에서 직접 깎는 동네 안경원</p>
+  <div class="duo">
+    <svg viewBox="0 0 400 120" id="duo"><defs>
+      <filter id="br" x="-10%" y="-20%" width="120%" height="140%"><feGaussianBlur stdDeviation="1.5"/></filter>
+      <filter id="bg" x="-10%" y="-20%" width="120%" height="140%"><feGaussianBlur stdDeviation="1.5"/></filter>
+    </defs>
+      <rect x="0" y="0" width="200" height="120" fill="#D0021B"/><rect x="200" y="0" width="200" height="120" fill="#00A05A"/>
+      <path id="dl" filter="url(#br)" fill="#111316"/><path id="dr" filter="url(#bg)" fill="#111316"/>
+    </svg>
+    <div class="sides"><span>왼쪽 빨강</span><span>오른쪽 초록</span></div>
+  </div>
+  <p class="credit">가상 안경원입니다. zanviq gallery 작품.</p>
+  <svg class="wheel" viewBox="0 0 600 600" id="wheel">
+    <defs>
+      <filter id="defocus" x="-10%" y="-10%" width="120%" height="140%"><feGaussianBlur stdDeviation="0.9"/></filter>
+      <clipPath id="ap"><circle cx="300" cy="300" r="212"/></clipPath>
+    </defs>
+    <circle cx="300" cy="300" r="286" fill="#111316"/>
+    <g id="ring" transform="rotate(72 300 300)"></g>
+    <circle cx="300" cy="300" r="212" fill="#fff"/>
+    <g clip-path="url(#ap)"><g id="chart" filter="url(#defocus)"></g></g>
+    <path d="M288 0h24l-12 16z" fill="#111316"/>
+  </svg>
+</div>
+<script type="module">
+  import { rowPath } from '/works/optician/js/optotype.js';
+  const NS = 'http://www.w3.org/2000/svg';
+  const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); p.appendChild(e); return e; };
+  document.getElementById('dl').setAttribute('d', rowPath([...'다커'], 100, 38, 44, 0.5).d);
+  document.getElementById('dr').setAttribute('d', rowPath([...'다커'], 300, 38, 44, 0.5).d);
+  const ring = document.getElementById('ring');
+  for (let a = 0; a < 360; a += 4) el('line', { x1: 300, y1: 16, x2: 300, y2: 25, stroke: '#fff', 'stroke-width': 1.4, transform: `rotate(${a} 300 300)` }, ring);
+  for (let v = -4; v <= 4.001; v += 0.25) {
+    const major = Math.abs(v - Math.round(v)) < 1e-9, a = v / 0.25 * 9;
+    el('line', { x1: 300, y1: 32, x2: 300, y2: major ? 54 : 44, stroke: v < 0 ? '#D0021B' : '#fff', 'stroke-width': major ? 4 : 2.4, transform: `rotate(${a} 300 300)` }, ring);
+    if (major) { const t = el('text', { x: 300, y: 80, fill: '#fff', 'text-anchor': 'middle', 'font-family': 'Gothic A1', 'font-weight': 700, 'font-size': 22, transform: `rotate(${a} 300 300)` }, ring); t.textContent = v === 0 ? '0' : (v < 0 ? '−' : '+') + Math.abs(v); }
+  }
+  const LINES = [['가', .1], ['너타', .2], ['라커다', .3], ['거나터카', .4], ['더가러너', .5], ['타라거커나', .6], ['다너카가터', .8], ['러거타나더', 1]];
+  const hs = LINES.map(([, v]) => 10 / v);
+  let total = hs.reduce((s, h) => s + h, 0); for (let i = 1; i < hs.length; i++) total += 0.6 * hs[i];
+  let y = 300 - total / 2, d = '';
+  const chart = document.getElementById('chart');
+  LINES.forEach(([t, v], i) => {
+    const row = rowPath([...t], 300, y, hs[i]); d += row.d;
+    const lab = el('text', { x: 300 + row.width / 2 + 12, y: y + hs[i] / 2 + 4, 'font-family': 'Gothic A1', 'font-weight': 700, 'font-size': 12, fill: '#111316' }, chart);
+    lab.textContent = v === 1 ? '1.0' : String(v);
+    y += hs[i] + (i + 1 < hs.length ? 0.6 * hs[i + 1] : 0);
+  });
+  el('path', { d, fill: '#111316' }, chart);
+  document.fonts.ready.then(() => document.body.dataset.ready = '1');
+</script>
+</body>
+</html>

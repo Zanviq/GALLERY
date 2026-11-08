@@ -34,5 +34,14 @@
     "tags": ["landing", "canvas", "animation", "brand"],
     "thumbnail": "thumbnails/startup.webp",
     "year": 2026
+  },
+  {
+    "slug": "optician",
+    "title": "또렷안경",
+    "type": "internal",
+    "url": "optician/",
+    "tags": ["landing", "interaction", "svg", "typography", "brand"],
+    "thumbnail": "thumbnails/optician.webp",
+    "year": 2026
   }
 ]

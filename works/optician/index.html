@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>또렷안경 | 렌즈를 가게에서 직접 깎는 동네 안경원</title>
+<meta name="description" content="검안, 테 고르기, 렌즈 가공을 한 가게 안에서 하는 동네 안경원입니다. 재고가 있는 렌즈는 맞춘 날 찾아가실 수 있습니다. 가상 안경원 작품입니다.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="zanviq gallery">
+<meta property="og:title" content="또렷안경 | 렌즈를 가게에서 직접 깎는 동네 안경원">
+<meta property="og:description" content="시력표처럼 읽는 안경원 홈페이지. 렌즈 휠을 돌려 도수를 찾고, 적록 검사로 확인하고, 테 크기를 얼굴에 맞춰 봅니다.">
+<meta property="og:url" content="https://gallery.zanviq.dev/optician/">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/optician.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="흰 바탕에 검은 글씨로 크게 쓴 또렷안경과, 검은 렌즈 휠 안에 들어 있는 한글 시력표">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+<link rel="preload" href="./fonts/gothic-a1-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/gothic-a1-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/fonts.css">
+<link rel="stylesheet" href="./css/site.css">
+<script type="module" src="./js/main.js"></script>
+<script src="/shared/back.js" data-position="bottom-right" data-theme="light" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header class="rail" id="rail">
+  <a class="brand" href="#top">
+    <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <path class="brand__red" d="M16 3a13 13 0 0 0 0 26z"/>
+      <path class="brand__green" d="M16 3a13 13 0 0 1 0 26z"/>
+      <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="3"/>
+    </svg>
+    <span class="brand__name">또렷안경</span>
+  </a>
+  <button class="rail__toggle" type="button" aria-expanded="false" aria-controls="chart-index">차례</button>
+  <nav class="index" id="chart-index" aria-label="차례">
+    <ol class="index__list">
+      <li style="--v:.1"><a href="#top"><span class="index__t">또렷안경</span><span class="index__v" aria-hidden="true">0.1</span></a></li>
+      <li style="--v:.2"><a href="#exam"><span class="index__t">검안 순서</span><span class="index__v" aria-hidden="true">0.2</span></a></li>
+      <li style="--v:.3"><a href="#fit"><span class="index__t">테 고르기</span><span class="index__v" aria-hidden="true">0.3</span></a></li>
+      <li style="--v:.4"><a href="#bench"><span class="index__t">렌즈 가공</span><span class="index__v" aria-hidden="true">0.4</span></a></li>
+      <li style="--v:.5"><a href="#care"><span class="index__t">사후 관리</span><span class="index__v" aria-hidden="true">0.5</span></a></li>
+      <li style="--v:.6"><a href="#price"><span class="index__t">가격</span><span class="index__v" aria-hidden="true">0.6</span></a></li>
+      <li style="--v:.8"><a href="#visit"><span class="index__t">찾아오는 길</span><span class="index__v" aria-hidden="true">0.8</span></a></li>
+    </ol>
+  </nav>
+  <dl class="rail__hours">
+    <div><dt>월–금</dt><dd>10:00–20:00</dd></div>
+    <div><dt>토</dt><dd>10:00–18:00</dd></div>
+    <div><dt>일·공휴일</dt><dd>쉽니다</dd></div>
+  </dl>
+</header>
+
+<main id="main">
+
+  <!-- 0.1 -->
+  <section class="line line--top" id="top" style="--v:.1" aria-labelledby="h-top">
+    <div class="top">
+      <p class="line__v top__v" aria-hidden="true">0.1</p>
+      <h1 class="top__name" id="h-top">또렷안경</h1>
+      <div class="top__intro">
+        <p class="top__lede">렌즈를 가게에서 직접 깎는 동네 안경원입니다.</p>
+        <p>검안부터 테 고르기, 렌즈 가공까지 한 가게 안에서 합니다. 재고가 있는 렌즈라면 맞춘 날 바로 찾아가실 수 있습니다.</p>
+      </div>
+      <dl class="facts">
+        <div><dt>검안</dt><dd>25분, 무료</dd></div>
+        <div><dt>렌즈 가공</dt><dd>40분 안팎</dd></div>
+        <div><dt>예약</dt><dd>없이 오셔도 됩니다</dd></div>
+      </dl>
+
+      <div class="scope" role="group" aria-labelledby="h-scope">
+        <div class="scope__head">
+          <h2 class="scope__title" id="h-scope">도수 찾기</h2>
+          <p class="scope__how">가상 손님의 오른눈입니다. 휠을 끌어 돌리거나 −0.25, +0.25 버튼을 눌러 시력표가 가장 또렷해지는 칸을 찾으세요.</p>
+        </div>
+
+        <div class="wheel" id="wheel">
+          <svg class="wheel__art" id="wheel-art" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
+            <defs>
+              <filter id="defocus" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">
+                <feGaussianBlur id="defocus-blur" stdDeviation="0"/>
+              </filter>
+              <clipPath id="aperture-clip"><circle cx="300" cy="300" r="212"/></clipPath>
+            </defs>
+            <circle class="wheel__body" cx="300" cy="300" r="286"/>
+            <g class="wheel__ring" id="wheel-ring"></g>
+            <circle class="wheel__aperture" cx="300" cy="300" r="212"/>
+            <g clip-path="url(#aperture-clip)">
+              <g id="chart-scale"><g id="chart" filter="url(#defocus)"></g></g>
+            </g>
+            <path class="wheel__index" d="M288 0h24l-12 16z"/>
+          </svg>
+          <div class="wheel__grip" id="wheel-grip" role="slider" tabindex="0"
+               aria-label="렌즈 휠, 구면 도수" aria-valuemin="-4" aria-valuemax="4" aria-valuenow="0"
+               aria-valuetext="0.00 디옵터" aria-describedby="wheel-keys"></div>
+          <div class="wheel__window" aria-hidden="true"></div>
+        </div>
+        <p class="sr-only" id="wheel-keys">화살표 키로 0.25씩, Page Up과 Page Down으로 1씩 돌립니다.</p>
+
+        <div class="readout">
+          <p class="readout__value"><abbr title="구면 도수">S</abbr> <span id="sph" class="readout__num">0.00</span> <abbr title="디옵터">D</abbr></p>
+          <div class="readout__steps">
+            <button type="button" class="btn btn--line" id="step-minus" aria-label="마이너스 쪽으로 한 칸, 0.25">−0.25</button>
+            <button type="button" class="btn btn--line" id="step-plus" aria-label="플러스 쪽으로 한 칸, 0.25">+0.25</button>
+          </div>
+        </div>
+        <p class="status" id="status" aria-live="polite"><span class="sr-only" id="status-sph"></span><span id="status-text">휠을 돌려 보세요. 지금은 맨 위 0.1 줄만 겨우 읽힙니다.</span></p>
+
+        <div class="duo" role="group" aria-labelledby="h-duo">
+          <h3 class="duo__title" id="h-duo">적록 이색 검사</h3>
+          <p class="duo__ask">왼쪽과 오른쪽, 어느 쪽 글자가 더 또렷합니까?</p>
+          <svg class="duo__band" id="duo-band" viewBox="0 0 400 120" aria-hidden="true" focusable="false">
+            <defs>
+              <filter id="blur-red" x="-10%" y="-20%" width="120%" height="140%" color-interpolation-filters="sRGB"><feGaussianBlur id="blur-red-amt" stdDeviation="0"/></filter>
+              <filter id="blur-green" x="-10%" y="-20%" width="120%" height="140%" color-interpolation-filters="sRGB"><feGaussianBlur id="blur-green-amt" stdDeviation="0"/></filter>
+            </defs>
+            <rect class="duo__red" x="0" y="0" width="200" height="120"/>
+            <rect class="duo__green" x="200" y="0" width="200" height="120"/>
+            <g id="duo-left" filter="url(#blur-red)"></g>
+            <g id="duo-right" filter="url(#blur-green)"></g>
+          </svg>
+          <div class="duo__sides" aria-hidden="true"><span>왼쪽 빨강</span><span>오른쪽 초록</span></div>
+          <div class="duo__answers">
+            <button type="button" class="btn btn--line" data-answer="red">왼쪽이 또렷합니다</button>
+            <button type="button" class="btn btn--line" data-answer="same">같습니다</button>
+            <button type="button" class="btn btn--line" data-answer="green">오른쪽이 또렷합니다</button>
+          </div>
+          <p class="duo__reply" id="duo-reply" aria-live="polite"></p>
+          <p class="duo__record" id="duo-record" hidden>
+            <span class="duo__rx">처방 <strong>오른눈 S −2.25</strong>, 교정 시력 1.0</span>
+            <a href="#fit">이 도수로 테 고르기</a>
+          </p>
+          <p class="duo__why">빨간빛은 초록빛보다 눈 안쪽 깊은 곳에 맺힙니다. 그래서 도수가 모자라면 빨강 쪽이, 넘치면 초록 쪽이 또렷합니다. 색 이름 대신 왼쪽과 오른쪽으로 묻기 때문에 색약이 있어도 할 수 있습니다.</p>
+        </div>
+        <p class="scope__note">화면으로 시력을 잴 수는 없습니다. 검사 순서를 보여 드리는 그림입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 0.2 -->
+  <section class="line" id="exam" style="--v:.2" aria-labelledby="h-exam">
+    <p class="line__v" aria-hidden="true">0.2</p>
+    <div class="line__body">
+      <h2 class="line__h" id="h-exam" style="--chars:5.6">검안 순서</h2>
+      <p class="line__lede">검안은 25분쯤 걸립니다. 안경을 맞추지 않아도 검안은 무료입니다.</p>
+      <ol class="steps" style="--total:25">
+        <li style="--start:0;--min:3">
+          <h3 class="steps__name">묻기</h3><p class="steps__min">3분</p>
+          <p class="steps__text">언제 불편한지, 무엇을 오래 보시는지 여쭙니다. 쓰던 안경이 있으면 그 도수를 먼저 읽어 둡니다.</p>
+        </li>
+        <li style="--start:3;--min:2">
+          <h3 class="steps__name">자동 굴절 검사</h3><p class="steps__min">2분</p>
+          <p class="steps__text">기계 안의 그림을 보시는 동안 대략의 도수를 잽니다. 여기서 나온 값은 출발점일 뿐입니다.</p>
+        </li>
+        <li style="--start:5;--min:8">
+          <h3 class="steps__name">시력표 검사</h3><p class="steps__min">8분</p>
+          <p class="steps__text">검안기 렌즈를 한 칸씩 바꾸며 시력표를 읽으십니다. 또렷해지는 첫 칸에서 멈춥니다. 더 센 렌즈도 또렷해 보이지만 눈을 지치게 합니다. <a href="#wheel">맨 위 휠</a>이 이 단계입니다.</p>
+        </li>
+        <li style="--start:13;--min:2">
+          <h3 class="steps__name">적록 이색 검사</h3><p class="steps__min">2분</p>
+          <p class="steps__text">빨강과 초록 바탕의 글자를 비교해 도수가 넘치거나 모자라지 않은지 확인합니다.</p>
+        </li>
+        <li style="--start:15;--min:5">
+          <h3 class="steps__name">두 눈 맞추기</h3><p class="steps__min">5분</p>
+          <p class="steps__text">두 눈이 함께 편하게 보는지, 휴대폰 거리의 글씨는 어떤지 봅니다.</p>
+        </li>
+        <li style="--start:20;--min:5">
+          <h3 class="steps__name">걸어 보기</h3><p class="steps__min">5분</p>
+          <p class="steps__text">시험테에 정한 렌즈를 끼우고 가게 안을 걸어 보십니다. 바닥이나 계단이 울렁이면 도수를 조금 덜어냅니다.</p>
+        </li>
+      </ol>
+      <p class="line__aside">어린이의 첫 안경, 갑자기 나빠진 시력, 눈 통증이 있으면 안과 진료를 먼저 권합니다.</p>
+    </div>
+  </section>
+
+  <!-- 0.3 -->
+  <section class="line" id="fit" style="--v:.3" aria-labelledby="h-fit">
+    <p class="line__v" aria-hidden="true">0.3</p>
+    <div class="line__body">
+      <h2 class="line__h" id="h-fit" style="--chars:5.6">테 고르기</h2>
+      <p class="line__lede">테 다리 안쪽에 찍힌 숫자는 렌즈 폭, 두 렌즈 사이(브리지), 다리 길이를 밀리미터로 적은 것입니다. 얼굴에 맞춰 바꿔 보세요.</p>
+
+      <div class="fit">
+        <p class="stamp" id="stamp" aria-live="off"><span data-part="a">52</span><span class="stamp__box">□</span><span data-part="dbl">18</span>-<span data-part="l">140</span></p>
+
+        <div class="fit__views">
+          <figure class="fit__view fit__view--front">
+            <svg id="face-front" viewBox="-104 -62 208 130" role="img" aria-labelledby="face-front-cap"></svg>
+            <figcaption id="face-front-cap">앞에서 본 모습</figcaption>
+          </figure>
+          <figure class="fit__view fit__view--side">
+            <svg id="face-side" viewBox="-34 -66 214 130" role="img" aria-labelledby="face-side-cap"></svg>
+            <figcaption id="face-side-cap">옆에서 본 모습</figcaption>
+          </figure>
+        </div>
+
+        <div class="fit__controls" role="group" aria-label="테 크기">
+          <fieldset class="seg">
+            <legend>얼굴</legend>
+            <div class="seg__row">
+              <button type="button" class="seg__btn" data-face="narrow" aria-pressed="false">좁은 얼굴</button>
+              <button type="button" class="seg__btn" data-face="medium" aria-pressed="true">보통 얼굴</button>
+              <button type="button" class="seg__btn" data-face="wide" aria-pressed="false">넓은 얼굴</button>
+            </div>
+          </fieldset>
+          <div class="range">
+            <label for="r-a">렌즈 폭</label>
+            <output id="o-a" for="r-a" aria-hidden="true">52mm</output>
+            <input type="range" id="r-a" min="46" max="58" step="1" value="52" aria-valuetext="52밀리미터">
+          </div>
+          <div class="range">
+            <label for="r-dbl">브리지</label>
+            <output id="o-dbl" for="r-dbl" aria-hidden="true">18mm</output>
+            <input type="range" id="r-dbl" min="14" max="22" step="1" value="18" aria-valuetext="18밀리미터">
+          </div>
+          <div class="range">
+            <label for="r-l">다리 길이</label>
+            <output id="o-l" for="r-l" aria-hidden="true">140mm</output>
+            <input type="range" id="r-l" min="130" max="150" step="5" value="140" aria-valuetext="140밀리미터">
+          </div>
+        </div>
+
+        <ul class="fit__verdict" id="fit-verdict" aria-live="polite">
+          <li data-check="width"></li>
+          <li data-check="eye"></li>
+          <li data-check="temple"></li>
+        </ul>
+      </div>
+      <p class="line__aside">숫자가 맞아도 모양과 무게에 따라 쓴 느낌이 다릅니다. 매장에는 테가 600개쯤 있고, 마지막은 써 보고 정합니다.</p>
+    </div>
+  </section>
+
+  <!-- 0.4 -->
+  <section class="line" id="bench" style="--v:.4" aria-labelledby="h-bench">
+    <p class="line__v" aria-hidden="true">0.4</p>
+    <div class="line__body">
+      <h2 class="line__h" id="h-bench" style="--chars:5.6">렌즈 가공</h2>
+      <p class="line__lede">가게 뒤편 가공실에서 렌즈를 테 모양대로 깎습니다. 위에서 고른 테와 찾은 도수로 그려 보면 이렇습니다.</p>
+
+      <div class="bench">
+        <div class="bench__fig">
+          <svg id="blank" class="bench__blank" viewBox="-44 -44 88 88" role="img" aria-labelledby="blank-cap"></svg>
+          <svg id="section" class="bench__section" viewBox="-44 -10 88 20" role="img" aria-labelledby="section-cap"></svg>
+        </div>
+        <div class="bench__side">
+          <dl class="bench__nums">
+            <div><dt>테와 도수</dt><dd id="b-input">52□18, 오른눈 S −2.25</dd></div>
+            <div><dt>렌즈 원판</dt><dd id="b-blank">지름 65mm</dd></div>
+            <div><dt>귀 쪽 가장자리</dt><dd id="b-edge-t">2.8mm</dd></div>
+            <div><dt>코 쪽 가장자리</dt><dd id="b-edge-n">2.2mm</dd></div>
+          </dl>
+          <p class="sr-only" id="blank-cap">렌즈 원판 위에 테 모양과 광학 중심을 그린 그림. 숫자는 옆 목록에 있습니다.</p>
+          <p class="sr-only" id="section-cap">렌즈를 가로로 자른 단면. 가운데가 얇고 가장자리가 두껍습니다.</p>
+          <fieldset class="seg seg--index">
+            <legend>굴절률</legend>
+            <div class="seg__row">
+              <button type="button" class="seg__btn" data-index="1.56" aria-pressed="false">1.56<small>40,000원</small></button>
+              <button type="button" class="seg__btn" data-index="1.60" aria-pressed="true">1.60<small>60,000원</small></button>
+              <button type="button" class="seg__btn" data-index="1.67" aria-pressed="false">1.67<small>90,000원</small></button>
+              <button type="button" class="seg__btn" data-index="1.74" aria-pressed="false">1.74<small>150,000원</small></button>
+            </div>
+          </fieldset>
+          <p class="bench__note" id="b-note" aria-live="polite"></p>
+          <button type="button" class="btn btn--ink" id="cut">깎아 보기</button>
+        </div>
+      </div>
+
+      <ol class="steps steps--bench" style="--total:31">
+        <li style="--start:0;--min:3"><h3 class="steps__name">테 본뜨기</h3><p class="steps__min">3분</p><p class="steps__text">테를 형상 측정기에 물려 렌즈 자리의 모양을 읽습니다.</p></li>
+        <li style="--start:3;--min:3"><h3 class="steps__name">중심 찍기</h3><p class="steps__min">3분</p><p class="steps__text">렌즈미터로 광학 중심을 찾아 점을 찍고, 눈동자 높이에 맞춰 둡니다.</p></li>
+        <li style="--start:6;--min:2"><h3 class="steps__name">블록 붙이기</h3><p class="steps__min">2분</p><p class="steps__text">중심에 고정 블록을 붙여 가공기에 물립니다.</p></li>
+        <li style="--start:8;--min:8"><h3 class="steps__name">깎기</h3><p class="steps__min">8분</p><p class="steps__text">숫돌이 테 모양을 따라 돌며 깎고, 테 홈에 들어갈 V자 산을 냅니다.</p></li>
+        <li style="--start:16;--min:15"><h3 class="steps__name">끼우고 맞추기</h3><p class="steps__min">15분</p><p class="steps__text">렌즈를 끼운 뒤 코받침과 다리를 얼굴에 맞게 구부립니다.</p></li>
+      </ol>
+      <p class="line__aside">누진다초점 렌즈와 1.74 렌즈는 주문해서 받은 뒤 깎기 때문에 2–3일 걸립니다. 가져오신 테에도 깎아 끼웁니다.</p>
+    </div>
+  </section>
+
+  <!-- 0.5 -->
+  <section class="line" id="care" style="--v:.5" aria-labelledby="h-care">
+    <p class="line__v" aria-hidden="true">0.5</p>
+    <div class="line__body">
+      <h2 class="line__h" id="h-care" style="--chars:5.6">사후 관리</h2>
+      <dl class="care">
+        <div><dt>조정</dt><dd>코받침, 나사, 다리 각도는 언제든 무료로 맞춰 드립니다. 다른 곳에서 맞춘 안경도 됩니다.</dd></div>
+        <div><dt>세척</dt><dd>초음파 세척기로 5분, 무료입니다.</dd></div>
+        <div><dt>처방 보증</dt><dd>맞춘 날부터 30일 안에 어지럽거나 흐리면 다시 검안합니다. 도수를 바꿔야 하면 렌즈를 한 번 새로 깎아 드리고, 비용은 받지 않습니다.</dd></div>
+        <div><dt>코팅 보증</dt><dd>1년 안에 코팅이 저절로 벗겨지면 같은 렌즈로 바꿔 드립니다. 긁힌 자국은 보증하지 않습니다.</dd></div>
+        <div><dt>부품</dt><dd>코받침 한 쌍 3,000원, 다리 끝 한 쌍 5,000원입니다.</dd></div>
+        <div><dt>검안 기록</dt><dd>5년 동안 보관합니다. 다음 검안 때 지난 도수와 나란히 놓고 봅니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 0.6 -->
+  <section class="line" id="price" style="--v:.6" aria-labelledby="h-price">
+    <p class="line__v" aria-hidden="true">0.6</p>
+    <div class="line__body">
+      <h2 class="line__h" id="h-price" style="--chars:2.7">가격</h2>
+      <p class="line__lede">렌즈 값에는 가공비가 들어 있습니다. 검안은 무료입니다.</p>
+      <div class="prices">
+        <table class="price">
+          <caption>렌즈 한 쌍</caption>
+          <tbody>
+            <tr><th scope="row">1.56 단초점</th><td>40,000원</td></tr>
+            <tr><th scope="row">1.60 단초점</th><td>60,000원</td></tr>
+            <tr><th scope="row">1.67 단초점</th><td>90,000원</td></tr>
+            <tr><th scope="row">1.74 단초점 <small>주문, 2–3일</small></th><td>150,000원</td></tr>
+            <tr><th scope="row">누진다초점 1.60 <small>주문, 3일</small></th><td>220,000원부터</td></tr>
+          </tbody>
+        </table>
+        <table class="price">
+          <caption>테와 그 밖의 것</caption>
+          <tbody>
+            <tr><th scope="row">가게에서 고른 국산 테</th><td>49,000–98,000원</td></tr>
+            <tr><th scope="row">그 밖의 테</th><td>120,000–280,000원</td></tr>
+            <tr><th scope="row">가져오신 테에 렌즈 끼우기</th><td>렌즈 값 + 10,000원</td></tr>
+            <tr><th scope="row">색 넣기(착색)</th><td>렌즈 값 + 30,000원</td></tr>
+            <tr><th scope="row">검안</th><td>무료</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="line__aside">도수가 높으면 굴절률 높은 렌즈를 권하지만, 고르는 것은 손님입니다. 카드, 현금, 계좌 이체 모두 받습니다. 콘택트렌즈는 팔지 않습니다.</p>
+    </div>
+  </section>
+
+  <!-- 0.8 -->
+  <section class="line" id="visit" style="--v:.8" aria-labelledby="h-visit">
+    <p class="line__v" aria-hidden="true">0.8</p>
+    <div class="line__body">
+      <h2 class="line__h" id="h-visit" style="--chars:6.8">찾아오는 길</h2>
+      <div class="visit">
+        <div class="visit__text">
+          <p class="addr">여울시 초롱골 돋보기길 3, 1층<small class="fake-note">가상 서비스입니다. 실제 주소가 아닙니다.</small></p>
+          <p>초롱골시장 정류장에서 내려 길을 건너고, 시장 옆 골목으로 올라가 돋보기길에서 오른쪽으로 꺾으시면 됩니다. 걸어서 2분, 세탁소와 빵집 사이의 흰 간판입니다.</p>
+          <p>주차장은 없습니다. 시장 공영주차장에 세우시면 1시간 주차 확인을 해 드립니다.</p>
+          <dl class="hours">
+            <div><dt>월–금</dt><dd>10:00–20:00</dd></div>
+            <div><dt>토</dt><dd>10:00–18:00</dd></div>
+            <div><dt>일·공휴일</dt><dd>쉽니다</dd></div>
+          </dl>
+          <p class="line__aside">검안 접수는 문 닫기 40분 전까지 받습니다.</p>
+        </div>
+        <figure class="visit__map">
+          <svg viewBox="0 0 360 240" role="img" aria-labelledby="map-cap">
+            <g class="map__roads">
+              <path class="map__main" d="M0 172H360"/>
+              <path d="M112 0V240"/>
+              <path d="M112 100H360"/>
+            </g>
+            <rect class="map__block" x="16" y="16" width="78" height="138"/>
+            <text class="map__label" x="55" y="90" text-anchor="middle">초롱골시장</text>
+            <rect class="map__block" x="138" y="46" width="58" height="40"/>
+            <text class="map__label map__label--sm" x="167" y="70" text-anchor="middle">세탁소</text>
+            <g class="map__shop">
+              <rect x="200" y="46" width="60" height="40"/>
+              <text x="230" y="71" text-anchor="middle">또렷안경</text>
+            </g>
+            <rect class="map__block" x="264" y="46" width="58" height="40"/>
+            <text class="map__label map__label--sm" x="293" y="70" text-anchor="middle">빵집</text>
+            <text class="map__road" x="300" y="124" text-anchor="middle">돋보기길</text>
+            <text class="map__road" x="300" y="202" text-anchor="middle">초롱대로</text>
+            <g class="map__stop">
+              <rect x="122" y="186" width="18" height="18"/>
+              <text x="148" y="200">초롱골시장 정류장</text>
+            </g>
+            <path class="map__walk" d="M131 186V112H230V90"/>
+          </svg>
+          <figcaption id="map-cap">약도. 초롱골시장 정류장에서 길을 건너 시장 옆 골목으로 올라간 뒤, 돋보기길에서 오른쪽으로 꺾으면 세탁소와 빵집 사이에 있습니다. 가상의 동네입니다.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 1.0 -->
+<footer class="line line--foot" style="--v:1">
+  <p class="line__v" aria-hidden="true">1.0</p>
+  <div class="line__body">
+    <p class="foot__line">이 줄까지 또렷하게 읽히면 1.0입니다.</p>
+    <p class="foot__small">가상 안경원입니다. zanviq gallery 작품.<br>글꼴 Gothic A1 (SIL Open Font License 1.1)</p>
+  </div>
+</footer>
+</body>
+</html>
