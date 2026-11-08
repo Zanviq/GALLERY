@@ -600,6 +600,8 @@ main:focus { outline: none; }
 .foot__name .brand__ko { font-size: 1.5rem; }
 .foot__name .brand__en { margin-left: 8px; }
 .foot__addr { grid-column: 2; font: 400 var(--t-ui)/1.6 var(--f-ui); color: var(--on-night-mute); margin-top: var(--s-1); }
+/* 가상 브랜드의 주소 옆에 붙는 안내 */
+.fake-note { display: block; margin-top: 2px; font: 400 var(--t-micro)/1.5 var(--f-ui); color: var(--on-night-mute); }
 .foot__nav { grid-column: 7 / span 6; }
 .foot__nav ul { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); }
 .foot__nav a { font: 400 var(--t-ui)/1 var(--f-ui); display: inline-flex; min-height: 44px; align-items: center; text-decoration: none; color: var(--on-night); }

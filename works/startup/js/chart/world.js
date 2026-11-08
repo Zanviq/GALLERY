@@ -1,4 +1,4 @@
-// Terrain for a fictional bay ("남포만 일대"): a height field, its contours, and a
+// Terrain for a fictional bay ("윤슬만 일대"): a height field, its contours, and a
 // nautical-chart rendering of everything that never moves.
 // World units: 1 unit ≈ 10 m. North is up.
 
@@ -73,7 +73,7 @@ export const FARMS = [
 ];
 
 export const WATER_NAMES = [
-  { text: '남 포 만', x: 735, y: 222, size: 17 },
+  { text: '윤 슬 만', x: 735, y: 222, size: 17 },
   { text: '솔 섬 수 도', x: 1290, y: 640, size: 14, rot: -0.42 },
   { text: '바 깥 바 다', x: 360, y: 930, size: 15 },
 ];

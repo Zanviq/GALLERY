@@ -332,6 +332,8 @@ b { font-weight: 600; }
   font-family: var(--f-ko); font-weight: 800; font-size: var(--t-2xl); line-height: .95; letter-spacing: -.03em;
 }
 .sec-desc { grid-column: 7 / span 5; max-width: 30em; color: var(--ink-2); padding-bottom: .4em; }
+/* 가상 축제의 주소 옆에 붙는 안내 */
+.fake-note { display: block; margin-top: .5em; font-size: .875em; }
 
 /* ---------- timetable ---------- */
 .tt { border-top: 3px solid var(--ink); }

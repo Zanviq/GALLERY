@@ -705,6 +705,8 @@ main { padding-top: var(--header-h); }
 .contact__info > div { display: grid; grid-template-columns: 112px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--night-rule); }
 .contact__info dt { font-size: 14.5px; color: var(--night-ink-2); line-height: 1.6; }
 .contact__info dd { font-size: 16px; line-height: 1.6; }
+/* 가상 회사의 주소 옆에 붙는 안내 */
+.contact__info .fake-note { display: block; margin-top: 2px; font-size: 13.5px; line-height: 1.5; color: var(--night-ink-2); }
 .contact__form { grid-column: 7 / span 6; }
 .inquiry .fld label, .topics legend { color: var(--night-ink); }
 .inquiry .opt { color: var(--night-ink-2); }
