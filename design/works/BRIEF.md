@@ -95,7 +95,8 @@ not be banned or already used; report it.
 - Look at your own phone captures at 2x zoom before reporting. A past work passed every script
   check but had a margin label sitting on top of the first letter of a line at 390px wide.
 - Each work invents its own town/place names. Already taken: 여울시, 초롱골, 돋보기길 (optician);
-  새물시, 느릅마루, 종달샘, 빗물터, 솔바위 (laundry); 미리내구, 등사로 (riso).
+  새물시, 느릅마루, 종달샘, 빗물터, 솔바위 (laundry); 미리내구, 등사로 (riso);
+  물굽이시, 모래뜸 (futsal).
 - Font licences: if a family's OFL declares a Reserved Font Name (NAVER's NanumSquare/Round/Neo,
   some foundry builds), a subset counts as a modified version, so rename the subset family in the
   font file and CSS (laundry did this). Google Fonts builds usually have no RFN; check the OFL text.

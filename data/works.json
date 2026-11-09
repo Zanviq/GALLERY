@@ -79,5 +79,14 @@
     "tags": ["interaction", "webgl", "physics", "canvas"],
     "thumbnail": "thumbnails/curtain.webp",
     "year": 2026
+  },
+  {
+    "slug": "futsal",
+    "title": "늦깎이 FS",
+    "type": "internal",
+    "url": "futsal/",
+    "tags": ["landing", "interaction", "svg", "animation"],
+    "thumbnail": "thumbnails/futsal.webp",
+    "year": 2026
   }
 ]
