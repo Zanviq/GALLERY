@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>남겨 둔 불: 전구 하나가 서는 1인극</title>
+<meta name="description" content="에메랄드색 벨벳 막을 손으로 끌어 열고, 세게 당겨 찢고, 은실로 다시 꿰매는 페이지. 막 뒤에는 빈 무대에 켜 둔 전구 하나가 있습니다. 가상 공연입니다.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="zanviq gallery">
+<meta property="og:title" content="남겨 둔 불: 전구 하나가 서는 1인극">
+<meta property="og:description" content="벨벳 막을 끌어 열고, 당겨 찢고, 은실로 꿰매 보세요. 가상 공연입니다.">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/curtain.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://gallery.zanviq.dev/curtain/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+<link rel="preload" href="./fonts/grandiflora.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/site.css">
+<script>
+  document.documentElement.classList.add('js');
+  if (/[?&]capture/.test(location.search)) document.documentElement.classList.add('capture');
+</script>
+<script type="module" src="./js/main.js"></script>
+<script src="/shared/back.js" data-position="top-left" data-theme="dark" defer></script>
+</head>
+<body>
+<main class="theatre">
+  <div class="stage" data-stage>
+    <canvas class="stage__set" data-set aria-hidden="true"></canvas>
+
+    <section class="card" data-card aria-labelledby="show-title">
+      <h1 class="card__title" id="show-title">남겨 둔 불</h1>
+      <p class="card__sub">전구 하나가 서는 1인극</p>
+      <p class="card__note">관객이 모두 돌아간 뒤에도 극장은 무대에 불 하나를 켜 둡니다. 오늘 밤에는 그 불이 주인공입니다.</p>
+      <dl class="card__credits">
+        <div><dt>출연</dt><dd>전구 하나</dd></div>
+        <div><dt>막 담당</dt><dd>막을 연 분</dd></div>
+      </dl>
+    </section>
+
+    <canvas class="stage__cloth" data-cloth role="img" aria-label="에메랄드색 벨벳 막. 닫혀 있습니다."></canvas>
+    <div class="mask mask--fly" aria-hidden="true"></div>
+    <div class="mask mask--leg mask--left" aria-hidden="true"></div>
+    <div class="mask mask--leg mask--right" aria-hidden="true"></div>
+    <canvas class="stage__rig" data-rig aria-hidden="true"></canvas>
+  </div>
+
+  <div class="apron">
+    <p class="hint" data-hint aria-live="polite">천을 잡아 옆으로 끌면 막이 열립니다. 아래로 세게 당기면 찢어집니다.</p>
+    <div class="cues" role="group" aria-label="막 조작">
+      <button class="cue" type="button" data-cue="open">열기</button>
+      <button class="cue" type="button" data-cue="close">닫기</button>
+      <button class="cue" type="button" data-cue="tear">찢기</button>
+      <button class="cue" type="button" data-cue="mend">꿰매기</button>
+    </div>
+    <p class="credit">가상 공연입니다. zanviq gallery 작품.</p>
+    <noscript><p class="noscript">막을 움직이려면 자바스크립트가 필요합니다. 막 없이 무대만 보입니다.</p></noscript>
+  </div>
+</main>
+</body>
+</html>

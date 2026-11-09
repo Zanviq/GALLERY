@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>riso og</title>
+<!-- Dev page for og/riso.png (1200x630): the same ink engine as the work, captured by shots.mjs. -->
+<link rel="stylesheet" href="../../../works/riso/css/fonts.css">
+<style>
+  html, body { margin: 0; background: #fff; }
+  .og { width: 1200px; height: 630px; display: grid; grid-template-columns: 790px 1fr; align-items: center; gap: 44px; padding: 0 40px 0 34px; box-sizing: border-box; }
+  canvas { width: 790px; height: auto; display: block; box-shadow: 0 0 0 1px #bdbdbd, 0 14px 34px -22px rgb(0 0 0 / .45); }
+  .t { font-family: 'Gowun Dodum', sans-serif; color: #000; }
+  .b { font-family: 'Black Han Sans', sans-serif; font-size: 112px; line-height: .9; margin: 0; }
+  .s { font-size: 24px; margin: 14px 0 26px; }
+  .h { font-family: 'Black Han Sans', sans-serif; font-size: 30px; line-height: 1.2; margin: 0; }
+  .u { font-size: 17px; color: #555; margin-top: 26px; }
+</style>
+</head>
+<body>
+<div class="og">
+  <canvas id="c"></canvas>
+  <div class="t">
+    <p class="b">겹</p>
+    <p class="s">리소 인쇄실</p>
+    <p class="h">형광 핑크, 블루, 옐로를 겹쳐 50장부터 찍습니다</p>
+    <p class="u">gallery.zanviq.dev/riso</p>
+  </div>
+</div>
+<script type="module">
+  import { Table, defaultState, measureGlyph } from '../../../works/riso/js/sheet.js';
+  await document.fonts.load('100px "Black Han Sans"', '겹');
+  await document.fonts.load('16px "Gowun Dodum"', '가');
+  measureGlyph();
+  const t = new Table({ canvas: document.getElementById('c'), ppm: 5, state: defaultState() });
+  t.print(false);
+  requestAnimationFrame(() => requestAnimationFrame(() => { document.body.dataset.ready = '1'; }));
+</script>
+</body>
+</html>

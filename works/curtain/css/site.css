@@ -1,0 +1,215 @@
+@import url('./fonts.css');
+
+:root {
+  --house: #000000;
+  --silver-hi: #F1F4F5;
+  --silver: #C3CACD;
+  --silver-lo: #5E676B;
+  --text: #DDE3E5;
+  --text-dim: #8F999D;
+  --lamp: 1;
+  --fly: 56px;
+  --leg: 24px;
+  --gutter: max(16px, 3vw);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--house);
+  color: var(--text);
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Grandiflora One', serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.theatre {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+/* ---- stage ---------------------------------------------------------------------------- */
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 0;
+}
+
+.stage > canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.stage__set { z-index: 0; }
+.stage__cloth { z-index: 2; touch-action: none; cursor: grab; -webkit-tap-highlight-color: transparent; }
+.stage__cloth.is-holding { cursor: grabbing; }
+.stage__rig { z-index: 4; pointer-events: none; }
+
+.mask {
+  position: absolute;
+  z-index: 3;
+  background: var(--house);
+  pointer-events: none;
+}
+.mask--fly { top: 0; left: 0; right: 0; height: calc(var(--fly) - 4px); }
+.mask--leg { top: 0; bottom: 0; width: var(--leg); }
+.mask--left { left: 0; }
+.mask--right { right: 0; }
+
+html:not(.js) .mask, html:not(.js) .stage > canvas { display: none; }
+
+/* the card on the back wall: lit by the bulb, so it dims with it */
+.card {
+  position: absolute;
+  z-index: 1;
+  left: var(--card-x, 50%);
+  top: var(--card-y, 18%);
+  width: var(--card-w, min(440px, 80vw));
+  transform: translateX(var(--card-shift, -50%));
+  opacity: calc(0.4 + 0.6 * var(--lamp));
+  color: var(--text);
+}
+
+.card__title {
+  margin: 0 0 0.18em;
+  font-weight: 400;
+  font-size: var(--title-size, clamp(44px, 8vw, 104px));
+  line-height: 1;
+  color: var(--silver-hi);
+  white-space: nowrap;
+}
+
+.card__sub {
+  margin: 0 0 1.1em;
+  font-size: clamp(18px, 2.2vw, 24px);
+  line-height: 1.35;
+  color: var(--silver-hi);
+}
+
+.card__note {
+  margin: 0 0 1.2em;
+  max-width: 26em;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.card__credits {
+  margin: 0;
+  display: grid;
+  gap: 2px;
+  font-size: 17px;
+  line-height: 1.5;
+}
+.card__credits div { display: flex; gap: 1em; }
+.card__credits dt { color: var(--text-dim); min-width: 3.6em; }
+.card__credits dd { margin: 0; color: var(--text); }
+
+/* ---- apron ---------------------------------------------------------------------------- */
+
+.apron {
+  position: relative;
+  z-index: 5;
+  background: var(--house);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "hint cues"
+    "credit cues";
+  align-items: center;
+  column-gap: 32px;
+  row-gap: 4px;
+  padding: 18px var(--gutter) max(16px, env(safe-area-inset-bottom));
+  border-top: 1px solid rgb(195 202 205 / 0.16);
+}
+
+.hint {
+  grid-area: hint;
+  margin: 0;
+  min-height: 1.6em;
+  max-width: 44em;
+  color: var(--text);
+}
+
+.credit {
+  grid-area: credit;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-dim);
+}
+
+.noscript { grid-column: 1 / -1; margin: 8px 0 0; }
+
+.cues {
+  grid-area: cues;
+  display: flex;
+  gap: 10px;
+}
+
+html:not(.js) .cues { display: none; }
+
+.cue {
+  appearance: none;
+  min-width: 72px;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid var(--silver);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--silver-hi);
+  font: inherit;
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.cue:hover { border-color: var(--silver-hi); background: rgb(241 244 245 / 0.08); }
+.cue:active { background: var(--silver); border-color: var(--silver); color: var(--house); }
+.cue:focus { outline: none; }
+.cue:focus-visible { outline: 2px solid var(--silver-hi); outline-offset: 3px; }
+
+@media (max-width: 639px) {
+  .apron {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "hint" "cues" "credit";
+    row-gap: 10px;
+    padding-top: 14px;
+  }
+  .hint { min-height: 3.2em; font-size: 16px; line-height: 1.6; }
+  .cues { gap: 8px; }
+  .cue { flex: 1 1 0; min-width: 0; padding: 0 6px; }
+}
+
+@media (max-height: 460px) and (min-width: 640px) {
+  .apron { padding-top: 10px; padding-bottom: 10px; }
+  .cue { min-height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+}
+
+/* captures for the gallery thumbnail and share image */
+html.capture [data-gallery-back] { display: none !important; }

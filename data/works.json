@@ -61,5 +61,23 @@
     "tags": ["landing", "interaction", "canvas", "physics", "mobile", "brand"],
     "thumbnail": "thumbnails/laundry.webp",
     "year": 2026
+  },
+  {
+    "slug": "riso",
+    "title": "겹 리소 인쇄실",
+    "type": "internal",
+    "url": "riso/",
+    "tags": ["landing", "interaction", "canvas", "brand"],
+    "thumbnail": "thumbnails/riso.webp",
+    "year": 2026
+  },
+  {
+    "slug": "curtain",
+    "title": "남겨 둔 불",
+    "type": "internal",
+    "url": "curtain/",
+    "tags": ["interaction", "webgl", "physics", "canvas"],
+    "thumbnail": "thumbnails/curtain.webp",
+    "year": 2026
   }
 ]
