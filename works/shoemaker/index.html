@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>골과 본 | 숫돌시 밀랍길의 맞춤 구두 공방</title>
+<meta name="description" content="세 사람이 손님 한 분마다 골 하나와 본 한 벌을 지어 구두를 만드는 공방. 발 본뜨기, 첫 방문과 치수, 골 고르기, 가봉, 완성까지 열한 주, 수선과 밑창 교체, 가격, 공방 위치. 가상 공방 작품입니다.">
+<meta name="theme-color" content="#3D0C17">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="zanviq gallery">
+<meta property="og:title" content="골과 본 | 숫돌시 밀랍길의 맞춤 구두 공방">
+<meta property="og:description" content="종이에 발 윤곽을 그리면 길이와 볼 너비를 재고, 그 윤곽을 갑피 본 다섯 장으로 바꿔 가죽 위에 분필로 그려 놓습니다.">
+<meta property="og:url" content="https://gallery.zanviq.dev/shoemaker/">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/shoemaker.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="회색 본지 위의 발 윤곽과 치수선, 그리고 옥스블러드 가죽 위에 흰 분필로 그린 갑피 본 다섯 장">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+<link rel="preload" href="./fonts/gowun-batang-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/gowun-batang-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/golbon-gothic-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/fonts.css">
+<link rel="stylesheet" href="./css/site.css">
+<script type="module" src="./js/main.js"></script>
+<script src="/shared/back.js" data-position="bottom-right" data-theme="light" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<svg class="defs" aria-hidden="true" focusable="false" width="0" height="0">
+  <defs>
+    <filter id="chalk-ink" x="-3%" y="-3%" width="106%" height="106%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.38" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="d"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="1" seed="5" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.85" result="ga"/>
+      <feComposite in="d" in2="ga" operator="in"/>
+    </filter>
+    <pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <path d="M0 0V5" class="hatch-line"/>
+    </pattern>
+    <pattern id="cork" width="7" height="7" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.9" class="cork-dot"/><circle cx="5.5" cy="5" r="0.7" class="cork-dot"/>
+    </pattern>
+  </defs>
+</svg>
+
+<header class="top" id="top">
+  <div class="wrap top__in">
+    <a class="brand" href="#top" aria-label="골과 본, 맞춤 구두 공방, 맨 위로">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <path d="M14.6 3.3C19 3.1 22.5 6.4 22.7 11.4C22.8 14.2 22.1 16.8 21.5 19C20.9 21.4 20.4 23.6 20.3 25.6C20.2 28 18.6 29.5 16.2 29.5C13.9 29.5 12.4 28.2 12.3 26.2C12.2 24.4 12.6 22.4 12.6 20.4C12.6 18.2 9.7 15.8 9.6 11.8C9.5 6.6 11.4 3.5 14.6 3.3Z" class="brand__last"/>
+        <path d="M11 12.3 21.8 14.1" class="brand__chalk"/>
+      </svg>
+      <span class="brand__name">골과 본</span>
+      <span class="brand__what">맞춤 구두 공방</span>
+    </a>
+    <nav class="nav" aria-label="주문 순서">
+      <ul class="nav__list">
+        <li><a href="#measure">치수</a></li>
+        <li><a href="#last">골</a></li>
+        <li><a href="#fitting">가봉</a></li>
+        <li><a href="#weeks">기간</a></li>
+        <li><a href="#repair">수선</a></li>
+        <li><a href="#price">가격</a></li>
+        <li><a href="#place">위치</a></li>
+      </ul>
+      <details class="nav__more">
+        <summary>순서<span class="nav__more-x">&nbsp;보기</span></summary>
+        <ul>
+          <li><a href="#measure">첫 방문과 치수</a></li>
+          <li><a href="#last">골 고르기</a></li>
+          <li><a href="#fitting">가봉</a></li>
+          <li><a href="#weeks">완성까지 열한 주</a></li>
+          <li><a href="#repair">수선과 밑창 교체</a></li>
+          <li><a href="#price">가격</a></li>
+          <li><a href="#place">공방 위치</a></li>
+        </ul>
+      </details>
+    </nav>
+    <a class="top__cta" href="#visit">첫 방문 잡기</a>
+  </div>
+</header>
+
+<main id="main">
+<section class="bench" data-bench aria-labelledby="bench-title">
+  <div class="wrap bench__grid">
+    <div class="bench__text">
+      <h1 id="bench-title" class="display">구두보다 먼저<br>발을 그립니다.</h1>
+      <p class="lede">숫돌시 밀랍길 2층에서 세 사람이 구두를 짓습니다. 손님 한 분마다 발에 맞춘 골 하나와, 가죽을 자를 본 한 벌을 먼저 만듭니다. 골과 본이 있어야 구두가 시작됩니다.</p>
+      <p class="bench__read">종이 위에 발 윤곽이 하나 놓여 있습니다. 첫 방문에서 저희가 처음 읽는 숫자를 그 윤곽에서 읽어 치수 카드에 적었습니다.</p>
+
+    </div>
+
+    <div class="bench__work">
+      <div class="sheet-wrap">
+        <svg class="sheet" data-sheet role="img" aria-labelledby="sheet-title"></svg>
+        <p class="sheet-hint" data-hint hidden>뒤꿈치를 아래 선에 맞추고<br>발 둘레를 한 바퀴 그려 보십시오.</p>
+      </div>
+      <p class="bench__how">마우스나 손가락으로 종이 위에 발 둘레를 한 바퀴 그립니다. 키보드로는 샘플 발을 고르고 눈금자로 길이와 볼 너비를 맞춥니다.</p>
+      <div class="controls">
+        <fieldset class="eyelets">
+          <legend>샘플 발</legend>
+          <label class="eyelet"><input type="radio" name="foot" value="a"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">본 A <small>엄지가 긴 발, 244&nbsp;mm</small></span></label>
+          <label class="eyelet"><input type="radio" name="foot" value="b" checked><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">본 B <small>둘째 발가락이 긴 발, 258&nbsp;mm</small></span></label>
+          <label class="eyelet"><input type="radio" name="foot" value="c"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">본 C <small>볼이 넓은 발, 266&nbsp;mm</small></span></label>
+          <label class="eyelet" data-drawn-choice hidden><input type="radio" name="foot" value="drawn"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">직접 그린 발 <small>종이 위에 그린 윤곽</small></span></label>
+        </fieldset>
+        <div class="rulers">
+          <div class="ruler">
+            <label for="r-length">길이</label>
+            <output for="r-length" data-ruler-out="length">258&nbsp;mm</output>
+            <input id="r-length" type="range" min="220" max="300" step="1" value="258" data-ruler="length">
+          </div>
+          <div class="ruler">
+            <label for="r-width">볼 너비</label>
+            <output for="r-width" data-ruler-out="width">99&nbsp;mm</output>
+            <input id="r-width" type="range" min="80" max="125" step="1" value="99" data-ruler="width">
+          </div>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn btn--chalk" data-morph>본으로 옮기기</button>
+          <button type="button" class="btn btn--line" data-clear>종이 비우기</button>
+        </div>
+      </div>
+      <p class="status" data-status role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="tag" data-card>
+      <div class="tag__head">
+        <h2 class="tag__title">치수 카드</h2>
+        <p class="tag__sub">손님 골에 걸어 두는 꼬리표</p>
+      </div>
+      <dl class="tag__rows">
+        <div class="tag__row"><dt>발 길이</dt><dd><b data-m="length">258</b> <span class="u">mm</span></dd></div>
+        <div class="tag__row"><dt>볼 너비</dt><dd><b data-m="width">99</b> <span class="u">mm</span></dd></div>
+        <div class="tag__row"><dt>발등 둘레</dt><dd><span class="approx">약</span> <b data-m="girth">244</b> <span class="u">mm</span></dd></div>
+        <div class="tag__row tag__row--last"><dt>추천 골</dt><dd><b data-m="last">265</b> <span class="u">mm</span><span class="tag__grade" data-m="grade">보통 볼 (E)</span></dd></div>
+      </dl>
+      <p class="tag__note">모두 어림값입니다. 종이 위 윤곽에는 높이가 없어 발등 둘레는 길이와 볼 너비로 짐작했고, 화면에 그린 발은 실제 발과 크기가 다릅니다. 골 치수는 발 길이에 발끝 여유 6&nbsp;mm를 더해 5&nbsp;mm 단위로 올린 값입니다. 실제 치수는 <a href="#measure">첫 방문</a>에서 줄자로 양발을 재서 정합니다.</p>
+      <div class="tag__pieces" data-pieces-box hidden>
+        <h3 class="tag__title tag__title--small">가죽에 놓은 본, 한 짝 분량</h3>
+        <ul class="pieces" data-pieces>
+          <li><span>앞날개</span><span data-piece="vamp"></span></li>
+          <li><span>뒷날개 바깥</span><span data-piece="quarter-out"></span></li>
+          <li><span>뒷날개 안</span><span data-piece="quarter-in"></span></li>
+          <li><span>혀</span><span data-piece="tongue"></span></li>
+          <li><span>안감</span><span data-piece="lining"></span></li>
+        </ul>
+        <p class="tag__note">축척 1:2로 그렸습니다. 흰 화살표는 결 방향이고, 점선 바깥은 골 밑으로 접어 넣을 여유 18&nbsp;mm입니다. 앞날개와 뒷날개는 화살표를 등선과 나란히 놓아, 신는 동안 앞뒤로 늘어나지 않게 자릅니다. 안쪽 뒷날개는 복사뼈 높이에 맞춰 윗선을 3&nbsp;mm 올립니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="step" id="measure" aria-labelledby="measure-title">
+  <div class="wrap step__grid">
+    <div class="step__when">
+      <p class="when"><span class="when__week">0주</span><span class="when__who">함은결이 맡습니다</span></p>
+    </div>
+    <div class="step__text">
+      <h2 id="measure-title">첫 방문과 치수</h2>
+      <p>첫 방문은 한 시간 반쯤 걸립니다. 오후 3시 이후로만 잡아 드립니다. 발은 저녁이 가까울수록 조금 붓는데, 구두는 부은 발에도 맞아야 하기 때문입니다.</p>
+      <p>양발을 따로 잽니다. 열에 아홉은 왼발과 오른발이 2–5&nbsp;mm 다릅니다. 종이에 윤곽을 뜨고, 줄자로 세 군데 둘레를 재고, 맨발로 공방 안을 몇 걸음 걸으시는 모습을 봅니다.</p>
+      <p>가장 자주 신는 구두를 신고 오십시오. 닳은 밑창이 걸음을 알려 줍니다.</p>
+      <ul class="facts">
+        <li><span>재는 것</span><span>발 길이, 볼 너비, 볼 둘레, 발등 둘레, 뒤꿈치 둘레, 아치 높이</span></li>
+        <li><span>걸리는 시간</span><span>1시간 30분</span></li>
+        <li><span>측정비</span><span>30,000원, 주문하시면 구둣값에서 뺍니다</span></li>
+      </ul>
+    </div>
+    <figure class="step__fig">
+      <svg class="ink" viewBox="0 0 400 236" role="img" aria-labelledby="fig-measure">
+        <title id="fig-measure">발 옆모습에 줄자를 감는 세 자리: 볼 둘레, 발등 둘레, 뒤꿈치 둘레</title>
+        <g class="ink__lines">
+          <path class="ink__ground" d="M14 190H392"/>
+          <path d="M64 20C64 52 62 78 56 96C50 112 42 128 41 150C40 168 48 182 70 182C86 184 100 182 120 178C160 172 214 176 248 180C268 182 280 188 300 188L340 188C354 189 366 188 370 182C376 172 366 160 346 155C320 148 278 146 236 136C196 122 160 110 142 92C132 74 128 52 128 20"/>
+          <path class="ink__cut" d="M64 20H128"/>
+          <ellipse class="ink__tape" cx="304" cy="168" rx="9" ry="23" transform="rotate(-8 304 168)"/>
+          <ellipse class="ink__tape" cx="200" cy="150" rx="10" ry="30" transform="rotate(-12 200 150)"/>
+          <ellipse class="ink__tape" cx="92" cy="128" rx="64" ry="10" transform="rotate(-40 92 128)"/>
+          <path class="ink__leader" d="M318 126L308 146M226 98L206 118M168 66L134 98"/>
+          <path class="ink__dim" d="M41 210H366M41 204V216M366 204V216"/>
+        </g>
+        <g class="ink__text">
+          <text x="318" y="122">볼 둘레</text>
+          <text x="214" y="92">발등 둘레</text>
+          <text x="164" y="60">뒤꿈치 둘레</text>
+          <text x="204" y="230" text-anchor="middle">발 길이</text>
+        </g>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<section class="step" id="last" aria-labelledby="last-title">
+  <div class="wrap step__grid">
+    <div class="step__when">
+      <p class="when"><span class="when__week">1–2주</span><span class="when__who">함은결이 맡습니다</span></p>
+    </div>
+    <div class="step__text">
+      <h2 id="last-title">골 고르기</h2>
+      <p>골은 구두를 짓는 나무 발입니다. 라스트라고도 합니다. 가죽은 이 골에 씌워 모양을 잡기 때문에, 구두가 발에 맞는지는 거의 골에서 정해집니다.</p>
+      <p>골을 처음부터 깎지는 않습니다. 공방 선반에 있는 표준 골 46개 가운데 손님 발에 가장 가까운 것을 고르고, 모자란 곳에는 가죽을 덧대고 넘치는 곳은 깎아 냅니다. 덧대는 자리는 대개 엄지 관절 옆, 발등, 새끼발가락 바깥쪽입니다.</p>
+      <p>고친 골에는 번호표를 달아 선반에 둡니다. 두 번째 켤레부터는 이 골로 바로 시작하므로 값이 내려가고, 기간이 3주쯤 줄어듭니다.</p>
+    </div>
+    <figure class="step__fig">
+      <svg class="ink" viewBox="0 0 400 236" role="img" aria-labelledby="fig-last">
+        <title id="fig-last">나무 골의 옆모습. 발등에 가죽을 덧댄 자리와 발끝을 깎아 낸 자리, 번호표</title>
+        <g class="ink__lines">
+          <path class="ink__ground" d="M14 202H392"/>
+          <path d="M92 44L160 42C168 42 172 48 176 58C188 86 214 104 250 120C290 136 330 148 356 158C372 164 380 174 372 184C364 190 344 192 314 193C286 194 258 196 226 196C176 196 134 186 108 172C88 162 64 162 54 154C46 146 44 132 46 116C48 92 58 70 70 56C76 48 84 44 92 44Z"/>
+          <circle cx="118" cy="56" r="5"/>
+          <path d="M152 43C151 62 156 76 168 88"/>
+          <path class="ink__patch" d="M204 93.5L225 107.5L250 120L268 127L271 121.5L253 114.7L228 102.2L207 88.2Z"/>
+          <path class="ink__trim" d="M314 141C338 146 358 152 369 163"/>
+          <path d="M118 61C112 78 100 92 82 100"/>
+          <path d="M40 100L80 92L84 116L44 124Z"/>
+          <circle cx="76" cy="99" r="2"/>
+          <path class="ink__leader" d="M276 82L242 108M330 120L346 154"/>
+        </g>
+        <g class="ink__text">
+          <text x="280" y="78">덧댄 가죽 2&nbsp;mm</text>
+          <text x="300" y="114">깎아 낸 곳</text>
+          <text x="52" y="113" class="ink__small" transform="rotate(-11 52 113)">412</text>
+        </g>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<section class="step" id="fitting" aria-labelledby="fitting-title">
+  <div class="wrap step__grid">
+    <div class="step__when">
+      <p class="when"><span class="when__week">4주</span><span class="when__who">길소래가 맡습니다</span></p>
+    </div>
+    <div class="step__text">
+      <h2 id="fitting-title">가봉</h2>
+      <p>가봉 구두는 실제 구두와 같은 본으로, 값싼 가죽과 임시 밑창으로 짓습니다. 신고 공방 안을 10분쯤 걸으시는 동안 저희는 흰 분필로 가죽 위에 고칠 곳을 표시합니다.</p>
+      <p>보는 곳은 셋입니다. 걸을 때 뒤꿈치가 뜨는지, 끈을 묶은 발등이 눌리는지, 새끼발가락이 가죽에 닿는지.</p>
+      <p>표시한 대로 골과 본을 고칩니다. 대부분 한 번으로 끝나고, 두 번까지는 값에 들어 있습니다. 다 쓴 가봉 구두는 원하시면 가져가셔도 됩니다.</p>
+    </div>
+    <figure class="step__fig">
+      <svg class="ink" viewBox="0 0 400 236" role="img" aria-labelledby="fig-fit">
+        <title id="fig-fit">가봉 구두의 옆모습. 가죽 위에 흰 분필로 뒤꿈치, 발등, 새끼발가락 자리를 표시했다</title>
+        <g class="ink__solid">          <path class="ink__shoe" d="M58 178C50 146 52 106 68 76C92 68 120 72 142 80C152 84 160 85 168 83C186 90 206 100 232 112C272 126 322 138 354 150C374 158 382 170 376 180L370 186H60Z"/>          <path class="ink__shoe" d="M56 186H112L109 206H60Z"/>          <path class="ink__shoe" d="M112 186H372C381 187 382 194 374 196C330 200 280 204 240 205C196 205 150 200 112 194Z"/>
+        </g>
+        <g class="ink__lines">
+          <path class="ink__ground" d="M14 206H392"/>
+          <path class="ink__seam" d="M168 83C176 104 180 128 178 150C177 162 172 172 164 180M232 112C224 132 222 156 230 180M150 82C140 104 126 122 108 134C92 144 76 150 62 152"/>
+          <g class="ink__eyelets"><circle cx="178" cy="90" r="2.4"/><circle cx="190" cy="96" r="2.4"/><circle cx="202" cy="102" r="2.4"/><circle cx="214" cy="107" r="2.4"/></g>
+          <g class="ink__chalk">
+            <circle cx="72" cy="88" r="12"/>
+            <path d="M190 112l10-8M196 118l10-8M202 124l10-8"/>
+            <path d="M322 148c8 6 14 12 18 20"/>
+            <path d="M344 140l8 -4M344 140l2 8"/>
+          </g>
+          <path class="ink__leader" d="M60 40L68 74M210 52L202 102M318 92L334 140"/>
+        </g>
+        <g class="ink__text">
+          <text x="30" y="34">뒤꿈치 뜸 3&nbsp;mm</text>
+          <text x="186" y="46">발등 눌림</text>
+          <text x="276" y="86">새끼발가락 닿음</text>
+        </g>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<section class="weeks" id="weeks" aria-labelledby="weeks-title">
+  <div class="wrap">
+    <div class="weeks__head">
+      <h2 id="weeks-title">완성까지 열한 주</h2>
+      <p>손님이 공방에 오시는 날은 세 번입니다. 치수를 재는 날, 가봉하는 날, 찾아가시는 날. 3–5월과 9–11월에는 주문이 몰려 열네 주까지 걸립니다. 결혼식처럼 날짜가 정해진 일이 있으면 첫 방문 때 말씀해 주십시오. 그 날짜에 맞출 수 있는지 그 자리에서 답합니다.</p>
+    </div>
+    <ol class="plan" aria-label="주별 작업">
+      <li class="plan__row is-visit" style="--from:0;--to:0"><span class="plan__wk">0주</span><span class="plan__task">첫 방문과 치수 <em>방문</em></span><span class="plan__bar" aria-hidden="true"></span></li>
+      <li class="plan__row" style="--from:1;--to:2"><span class="plan__wk">1–2주</span><span class="plan__task">골 고르기, 덧대고 깎기</span><span class="plan__bar" aria-hidden="true"></span></li>
+      <li class="plan__row" style="--from:2;--to:3"><span class="plan__wk">2–3주</span><span class="plan__task">본 뜨기, 가봉 구두 짓기</span><span class="plan__bar" aria-hidden="true"></span></li>
+      <li class="plan__row is-visit" style="--from:4;--to:4"><span class="plan__wk">4주</span><span class="plan__task">가봉 <em>방문</em></span><span class="plan__bar" aria-hidden="true"></span></li>
+      <li class="plan__row" style="--from:5;--to:5"><span class="plan__wk">5주</span><span class="plan__task">골과 본 고치기, 가죽 재단</span><span class="plan__bar" aria-hidden="true"></span></li>
+      <li class="plan__row" style="--from:6;--to:7"><span class="plan__wk">6–7주</span><span class="plan__task">갑피 재봉</span><span class="plan__bar" aria-hidden="true"></span></li>
+      <li class="plan__row" style="--from:7;--to:8"><span class="plan__wk">7–8주</span><span class="plan__task">골에 씌워 두기. 가죽이 골 모양을 기억할 때까지 2주</span><span class="plan__bar" aria-hidden="true"></span></li>
+      <li class="plan__row" style="--from:9;--to:10"><span class="plan__wk">9–10주</span><span class="plan__task">웰트 손바느질, 밑창, 굽</span><span class="plan__bar" aria-hidden="true"></span></li>
+      <li class="plan__row is-visit" style="--from:11;--to:11"><span class="plan__wk">11주</span><span class="plan__task">광내기, 찾아가시는 날 <em>방문</em></span><span class="plan__bar" aria-hidden="true"></span></li>
+    </ol>
+    <div class="plan__scale" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11주</span></div>
+  </div>
+</section>
+
+<section class="step" id="repair" aria-labelledby="repair-title">
+  <div class="wrap step__grid">
+    <div class="step__when">
+      <p class="when"><span class="when__week">그 뒤로</span><span class="when__who">마다솜이 맡습니다</span></p>
+    </div>
+    <div class="step__text">
+      <h2 id="repair-title">수선과 밑창 교체</h2>
+      <p>저희 구두는 밑창을 웰트에 손으로 꿰매 붙입니다. 밑창이 닳으면 바깥쪽 실만 풀고 새 밑창을 꿰맵니다. 갑피와 안창은 그대로 두므로, 잘 관리하면 밑창을 서너 번 갈아 가며 신을 수 있습니다.</p>
+      <p>다른 곳에서 지은 웰트 구두도 받습니다. 밑창을 접착제로만 붙인 구두는 밑창을 떼면 갑피가 상해서 갈지 않고, 대신 고무 반창을 덧대 드립니다.</p>
+      <p>저희 구두의 실밥이 터지면 첫해에는 값을 받지 않고 고칩니다. 수선은 맡기신 날부터 2–3주 걸립니다.</p>
+    </div>
+    <figure class="step__fig">
+      <svg class="ink" viewBox="0 0 400 236" role="img" aria-labelledby="fig-sole">
+        <title id="fig-sole">웰트 구두 바닥의 단면. 갑피와 안감이 안창 밑으로 접혀 들어가고, 웰트 실과 밑창 실이 따로 지나간다</title>
+        <g class="ink__solid">          <path class="ink__fill-leather" d="M96 14V140C96 148 100 152 108 152H150V144H110C106 144 104 142 104 138V14Z"/>          <path class="ink__fill-leather" d="M30 150H96V168H30C26 168 24 164 24 159S26 150 30 150Z"/>
+        </g>
+        <g class="ink__lines">
+          <path d="M104 14V134C104 139 106 141 111 141H146M109 14V131C109 134 110 136 113 136H146"/>
+          <path class="ink__hatch" d="M112 116H392V134H112Z"/>
+          <path d="M118 134V148H132V134"/>
+          <path class="ink__cork" d="M150 134H392V168H150Z"/>
+          <path d="M28 168H392V192H28C22 192 20 186 20 180S22 168 28 168Z"/>
+          <path class="ink__stitch" d="M70 162L124 140"/>
+          <path class="ink__stitch ink__stitch--cut" d="M58 146V196"/>
+          <path class="ink__leader" d="M148 40H101M148 74H107M240 100L240 116M36 134L42 150M62 92L86 154M30 214L56 196"/>
+        </g>
+        <g class="ink__text">
+          <text x="154" y="45">갑피</text>
+          <text x="154" y="79">안감</text>
+          <text x="244" y="96">안창</text>
+          <text x="200" y="156" class="ink__on">코르크 채움</text>
+          <text x="200" y="185" class="ink__on">밑창</text>
+          <text x="14" y="130">웰트</text>
+          <text x="14" y="88">웰트 실</text>
+          <text x="20" y="230">밑창 실: 밑창을 갈 때 이 실만 풉니다</text>
+        </g>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<section class="price" id="price" aria-labelledby="price-title">
+  <div class="wrap">
+    <h2 id="price-title">가격</h2>
+    <p class="price__lede">값에는 가봉 두 번, 골과 본 보관, 첫 광내기가 들어 있습니다. 주문하실 때 절반, 찾아가실 때 절반을 받습니다.</p>
+    <div class="price__grid">
+      <div class="price__group">
+        <h3>새로 짓기</h3>
+        <dl class="prices">
+          <div><dt><span>구두 한 켤레<small>옥스퍼드, 더비, 몽크</small></span></dt><dd>1,180,000원</dd></div>
+          <div><dt><span>부츠 한 켤레<small>첼시, 끈 부츠</small></span></dt><dd>1,460,000원</dd></div>
+          <div><dt><span>같은 골로 짓는 두 번째 켤레부터</span></dt><dd>890,000원</dd></div>
+          <div><dt><span>첫 방문 측정<small>주문하시면 구둣값에서 뺍니다</small></span></dt><dd>30,000원</dd></div>
+          <div><dt><span>세 번째 가봉부터<small>한 번에</small></span></dt><dd>60,000원</dd></div>
+        </dl>
+      </div>
+      <div class="price__group">
+        <h3>수선</h3>
+        <dl class="prices">
+          <div><dt><span>가죽 밑창 교체<small>웰트 구두</small></span></dt><dd>180,000원</dd></div>
+          <div><dt><span>고무 반창 덧대기</span></dt><dd>45,000원</dd></div>
+          <div><dt><span>굽 교체</span></dt><dd>55,000원</dd></div>
+          <div><dt><span>뒤꿈치 안감 갈기</span></dt><dd>70,000원</dd></div>
+          <div><dt><span>저희 구두 실밥 수선<small>첫해</small></span></dt><dd>받지 않습니다</dd></div>
+        </dl>
+      </div>
+    </div>
+    <p class="price__note">가죽은 공방에 있는 송아지 가죽 여섯 가지 가운데 고르시고, 그 밖의 가죽은 들여오는 값에 따라 달라집니다.</p>
+  </div>
+</section>
+
+<section class="place" id="place" aria-labelledby="place-title">
+  <div class="wrap place__grid">
+    <div class="place__info">
+      <h2 id="place-title">공방 위치</h2>
+      <address class="addr">
+        <span class="addr__line">숫돌시 밀랍길 14, 2층</span>
+        <span class="addr__note">가상 서비스입니다. 실제 주소가 아닙니다.</span>
+      </address>
+      <p>밀랍길 입구 정류장에서 내려 오르막 쪽으로 2분 걸으시면, 1층이 열쇠 가게인 붉은 벽돌 건물입니다. 계단으로 2층에 올라와 왼쪽 문입니다. 승강기는 없습니다.</p>
+      <dl class="hours">
+        <div><dt>화–금</dt><dd>11:00–19:00</dd></div>
+        <div><dt>토</dt><dd>10:00–17:00</dd></div>
+        <div><dt>일, 월</dt><dd>쉽니다</dd></div>
+      </dl>
+      <p class="hours__note">첫 방문은 예약하신 분만 오후 3시 이후에 받습니다. 작업 중에는 문을 잠가 두니, 수선을 맡기러 오실 때도 미리 알려 주십시오.</p>
+      <figure class="place__map">
+        <svg class="ink" viewBox="0 0 400 272" role="img" aria-labelledby="fig-map">
+          <title id="fig-map">약도. 밀랍길 입구 정류장에서 밀랍길을 따라 오르막으로 2분 걸으면 14번지 건물</title>
+          <g class="ink__solid">
+            <path class="ink__fill-leather" d="M246 74L284 58L296 84L258 100Z"/>
+          </g>
+          <g class="ink__lines">
+            <path d="M0 196C90 176 170 140 250 100C300 76 350 60 400 52M0 226C96 206 180 170 262 128C312 104 356 88 400 82"/>
+            <path class="ink__thin" d="M150 160L118 24M178 147L148 24"/>
+            <path class="ink__water" d="M298 272C312 250 330 238 346 222C362 206 378 192 400 182"/>
+            <path class="ink__walk" d="M44 222C120 196 184 164 250 112"/>
+            <circle cx="38" cy="234" r="6"/>
+            <path d="M28 20V50M28 20L22 32M28 20L34 32"/>
+          </g>
+          <g class="ink__text">
+            <text x="22" y="66">북</text>
+            <text x="16" y="264">밀랍길 입구 정류장</text>
+            <text x="44" y="176" transform="rotate(-13 44 176)">밀랍길</text>
+            <text x="300" y="44">14번지, 2층</text>
+            <text x="198" y="192" class="ink__small" transform="rotate(-27 198 192)">걸어서 2분, 오르막</text>
+            <text x="352" y="252" class="ink__small">숫돌천</text>
+          </g>
+        </svg>
+      </figure>
+    </div>
+
+    <div class="visit" id="visit">
+      <h2 class="visit__title">첫 방문 잡기</h2>
+      <p class="visit__lede">원하시는 날과 시간을 고르시면 요청서를 만들어 드립니다. 가상 공방이라 이 요청은 아무 데도 보내지 않고, 이 화면에만 남습니다.</p>
+      <form class="visit__form" data-visit novalidate>
+        <fieldset class="eyelets eyelets--paper">
+          <legend>무엇을 지으실지</legend>
+          <label class="eyelet"><input type="radio" name="what" value="구두" checked><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">구두</span></label>
+          <label class="eyelet"><input type="radio" name="what" value="부츠"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">부츠</span></label>
+          <label class="eyelet"><input type="radio" name="what" value="수선"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">수선만</span></label>
+        </fieldset>
+        <fieldset class="eyelets eyelets--paper eyelets--row" aria-describedby="err-day">
+          <legend>요일</legend>
+          <label class="eyelet"><input type="radio" name="day" value="화요일"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">화</span></label>
+          <label class="eyelet"><input type="radio" name="day" value="수요일"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">수</span></label>
+          <label class="eyelet"><input type="radio" name="day" value="목요일"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">목</span></label>
+          <label class="eyelet"><input type="radio" name="day" value="금요일"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">금</span></label>
+          <label class="eyelet"><input type="radio" name="day" value="토요일"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">토</span></label>
+          <p class="field-error" id="err-day" data-error="day"></p>
+        </fieldset>
+        <fieldset class="eyelets eyelets--paper eyelets--row" aria-describedby="err-time">
+          <legend>시간</legend>
+          <label class="eyelet"><input type="radio" name="time" value="오후 3시"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">오후 3시</span></label>
+          <label class="eyelet"><input type="radio" name="time" value="오후 5시"><span class="eyelet__ring" aria-hidden="true"></span><span class="eyelet__text">오후 5시</span></label>
+          <p class="field-error" id="err-time" data-error="time"></p>
+        </fieldset>
+        <label class="check"><input type="checkbox" name="card" checked><span class="check__box" aria-hidden="true"></span><span>위에서 그린 치수 카드를 요청서에 함께 적기</span></label>
+        <button type="submit" class="btn btn--leather">요청서 만들기</button>
+      </form>
+      <div class="slip" data-slip hidden tabindex="-1">
+        <p class="slip__title">요청서</p>
+        <p class="slip__body" data-slip-body></p>
+        <p class="slip__note">보내지 않았습니다. 가상 공방이라 이 요청서는 이 화면에만 있습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <p class="foot__shop">골과 본 맞춤 구두 공방. 2019년부터 밀랍길 2층에서, 함은결, 길소래, 마다솜.</p>
+    <p class="foot__small">가상 구두 공방입니다. zanviq gallery 작품.<br>사람, 공방, 주소, 값은 모두 지어낸 것입니다. 발 본뜨기의 숫자는 그림에서 읽은 어림값입니다.<br>글꼴: 고운바탕 (SIL Open Font License 1.1), Golbon Gothic (나눔바른고딕을 글자 수만큼 줄이고 이름을 바꾼 글꼴, SIL Open Font License 1.1)</p>
+  </div>
+</footer>
+</body>
+</html>

@@ -23,7 +23,7 @@ Status: planned → building → reviewed → registered (in data/works.json).
 | 4 | laundry | 홈페이지 · mobile-first | 셀프 빨래방 체인 | 지점별 기계 현황판(가상 실시간), 기계 누르면 남은 시간, 빨래가 굴러가는 드럼 (Canvas 2D) | 세탁실 타일 민트 #BEE9DA, 스테인리스 #C5CCD2, 그래파이트 #1F2428, 기계 LED 녹 #12B76A · 적 #F04438 | Jua, Nanum Square Round | registered |
 | 5 | idphoto | 홈페이지 · desktop+mobile | 증명사진관 | 규격 맞추기: 그림으로 된 모델(또는 브라우저 안에서만 쓰는 카메라)에 여권 규격 가이드, 셔터 플래시, 8컷 인화지 재단선 | 증명사진 하늘색 배경 #B9D3EA, 플래시 흰색 #FFFFFF, 검정 #101214 | Song Myung, Noto Sans KR | registered |
 | 6 | futsal | 홈페이지 · desktop+mobile | 동네 여자 풋살 클럽 | 전술판: 선수 5명·공을 끌고 침투 화살표를 그리면 재생 (SVG) | 실내 코트 블루 #1C4FA0, 클럽 클라렛 #761C3C, 라인 흰색 (코트 바닥 + 유니폼) | Do Hyeon, Sunflower | registered |
-| 7 | shoemaker | 홈페이지 · desktop+mobile | 맞춤 구두 공방 | 발 본뜨기: 발 윤곽을 그리면 길이·볼 너비·라스트 치수 → 갑피 패턴 조각으로 변형 (SVG) | 옥스블러드 #3D0C17 / #6B1A2A, 재단 초크 회색 #E3E6E8, 흰 초크 선 (구두약, 재단 초크) | Gowun Batang, Nanum Barun Gothic | planned |
+| 7 | shoemaker | 홈페이지 · desktop+mobile | 맞춤 구두 공방 | 발 본뜨기: 발 윤곽을 그리면 길이·볼 너비·라스트 치수 → 갑피 패턴 조각으로 변형 (SVG) | 옥스블러드 #3D0C17 / #6B1A2A, 재단 초크 회색 #E3E6E8, 흰 초크 선 (구두약, 재단 초크) | Gowun Batang, Nanum Barun Gothic (subset renamed Golbon Gothic) | registered |
 | 8 | softlab | 홈페이지 · desktop-first | 가상 대학의 소프트로보틱스 연구실 | 공압 그리퍼 시뮬레이션: 압력을 올리면 실리콘 손가락이 휘어 물체를 쥠 (mass-spring, Canvas) | 그래파이트 #24272B, 반투명 실리콘 흰색 #EEF2F3, 압력계 형광 연두 #CCF544 | Noto Serif KR, Nanum Square Neo | planned |
 | 9 | naengmyeon | 홈페이지 · mobile-first | 오래된 냉면집 | 번호표 기계(가상 대기열), 화면을 그어 가위로 면 자르기 | 서리 낀 스테인리스 #E2E9EC, 메밀 회갈색 #74685F, 옛 간판 청록 #0E6D78 | Nanum Brush Script, Nanum Gothic | planned |
 | 10 | watchmaker | 홈페이지 · desktop+mobile | 시계 수리 공방 | 용두를 끌어 태엽을 감으면 기어 트레인·탈진기·밸런스가 움직임, 부품 분해 목록 (SVG) | 니켈 #E5E7EA, 청색 열처리 나사 #26368F, 루비 #A3122A (무브먼트 소재) | MaruBuri | planned |
