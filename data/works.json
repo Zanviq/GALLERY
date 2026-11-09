@@ -142,5 +142,23 @@
     "tags": ["landing", "interaction", "svg", "animation", "brand"],
     "thumbnail": "thumbnails/shoemaker.webp",
     "year": 2026
+  },
+  {
+    "slug": "cinema",
+    "title": "점멸",
+    "type": "internal",
+    "url": "cinema/",
+    "tags": ["promo", "interaction", "canvas", "brand"],
+    "thumbnail": "thumbnails/cinema.webp",
+    "year": 2026
+  },
+  {
+    "slug": "lostfound",
+    "title": "갈래터미널 유실물 보관소",
+    "type": "internal",
+    "url": "lostfound/",
+    "tags": ["game", "interaction", "svg", "typography"],
+    "thumbnail": "thumbnails/lostfound.webp",
+    "year": 2026
   }
 ]

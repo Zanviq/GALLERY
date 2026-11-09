@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>lostfound sketches (dev only)</title>
+<style>body{margin:0;background:#fff;font:14px sans-serif;color:#171B1F}main{display:grid;grid-template-columns:repeat(8,150px);gap:8px;padding:12px}figure{margin:0;border:1px solid #AEB6BC;padding:6px;text-align:center}svg{width:128px;height:96px;fill:none;stroke:#171B1F;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}</style></head>
+<body><main id="m"></main>
+<script type="module">
+import { sketchSVG, SKETCH_NAMES } from '/works/lostfound/js/sketches.js';
+document.getElementById('m').innerHTML = SKETCH_NAMES.map((n) => `<figure>${sketchSVG(n, 's')}<figcaption>${n}</figcaption></figure>`).join('');
+</script></body></html>
