@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>색모래 병</title>
+<meta name="description" content="물들인 공예 모래를 골라 유리병에 붓고, 휴대폰을 기울여 물결 층을 만드는 페이지예요. 가득 차면 코르크로 막고 그림으로 저장해요. 가상 모래 공예예요.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="zanviq gallery">
+<meta property="og:title" content="색모래 병">
+<meta property="og:description" content="모래를 골라 붓고, 병을 기울여 물결을 만들어요. 가상 모래 공예예요.">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/sand.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://gallery.zanviq.dev/sand/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+<link rel="preload" href="./fonts/bwp.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/fonts.css">
+<link rel="stylesheet" href="./css/site.css">
+<script>
+  document.documentElement.classList.add('js');
+  if (/[?&]capture/.test(location.search)) document.documentElement.classList.add('capture');
+</script>
+<script type="module" src="./js/main.js"></script>
+<script src="/shared/back.js" data-position="top-right" data-theme="dark" defer></script>
+</head>
+<body>
+<div class="page">
+  <main class="app">
+    <header class="head">
+      <h1 class="title">색모래 병</h1>
+      <p class="lead">모래를 골라 붓고, 병을 기울여 물결을 만들어요.</p>
+      <p class="status" aria-live="polite"><span data-status-text></span> <button class="undo" type="button" data-undo hidden>되돌리기</button></p>
+    </header>
+
+    <div class="stage" data-stage>
+      <canvas class="stage__canvas" data-canvas role="img" aria-label="빈 유리병이에요."></canvas>
+      <p class="stage__fallback" data-fallback hidden>이 브라우저에서는 모래를 그릴 수 없어요.</p>
+      <section class="sensor" data-sensor hidden aria-labelledby="sensor-title">
+        <h2 class="sensor__title" id="sensor-title">휴대폰을 기울여서 부을까요?</h2>
+        <p class="sensor__text">움직임 센서를 켜면 기울인 쪽으로 모래가 쌓이고, 흔들면 위층이 섞여요. 기울기와 흔들림만 읽고, 어디로도 보내지 않아요.</p>
+        <div class="sensor__actions">
+          <button class="btn btn--fill" type="button" data-sensor-on>센서 켜기</button>
+          <button class="btn" type="button" data-sensor-off>버튼으로 할게요</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="deck">
+      <div class="deck__panel deck__panel--fill" data-panel="fill">
+        <div class="rack" role="group" aria-label="모래 고르기">
+          <button class="jar" type="button" data-jar="1" aria-pressed="true"><canvas class="jar__pic" aria-hidden="true"></canvas><span class="jar__name">진분홍</span></button>
+          <button class="jar" type="button" data-jar="2" aria-pressed="false"><canvas class="jar__pic" aria-hidden="true"></canvas><span class="jar__name">노랑</span></button>
+          <button class="jar" type="button" data-jar="3" aria-pressed="false"><canvas class="jar__pic" aria-hidden="true"></canvas><span class="jar__name">파랑</span></button>
+          <button class="jar" type="button" data-jar="4" aria-pressed="false"><canvas class="jar__pic" aria-hidden="true"></canvas><span class="jar__name">연두</span></button>
+          <button class="jar" type="button" data-jar="5" aria-pressed="false"><canvas class="jar__pic" aria-hidden="true"></canvas><span class="jar__name">하양</span></button>
+        </div>
+        <div class="pour-row">
+          <button class="btn btn--icon" type="button" data-tilt="-1" aria-label="왼쪽으로 기울이기">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><g transform="rotate(-24 16 18)"><path d="M13.5 4h5v5c0 1.6 5 2.4 5 6v11.5a1.5 1.5 0 0 1-1.5 1.5h-12A1.5 1.5 0 0 1 8.5 26.5V15c0-3.6 5-4.4 5-6z"/></g><path class="ground" d="M3 30.5h26"/></svg>
+          </button>
+          <button class="btn btn--fill btn--pour" type="button" data-pour>붓기</button>
+          <button class="btn btn--fill btn--pour" type="button" data-cork hidden>코르크 막기</button>
+          <button class="btn btn--icon" type="button" data-tilt="1" aria-label="오른쪽으로 기울이기">
+            <svg viewBox="0 0 32 32" aria-hidden="true"><g transform="rotate(24 16 18)"><path d="M13.5 4h5v5c0 1.6 5 2.4 5 6v11.5a1.5 1.5 0 0 1-1.5 1.5h-12A1.5 1.5 0 0 1 8.5 26.5V15c0-3.6 5-4.4 5-6z"/></g><path class="ground" d="M3 30.5h26"/></svg>
+          </button>
+          <button class="btn btn--text" type="button" data-sensor-stop hidden>센서 끄기</button>
+        </div>
+        <div class="tools">
+          <button class="btn" type="button" data-shake>흔들기</button>
+          <button class="btn" type="button" data-instant>바로 쌓기</button>
+          <button class="btn" type="button" data-empty>비우기</button>
+        </div>
+      </div>
+      <div class="deck__panel deck__panel--done" data-panel="done" hidden>
+        <button class="btn btn--fill btn--big" type="button" data-save>그림으로 저장</button>
+        <button class="btn btn--big" type="button" data-new>새 병</button>
+        <p class="done__note">그림은 이 기기 안에서 만들어요. 어디로도 보내지 않아요.</p>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <p>가상 모래 공예예요. zanviq gallery 작품.</p>
+      <noscript><p>모래를 부으려면 자바스크립트가 필요해요.</p></noscript>
+    </footer>
+  </main>
+
+  <aside class="aside" aria-labelledby="aside-title">
+    <h2 class="aside__title" id="aside-title">휴대폰에서 보는 페이지예요</h2>
+    <div class="aside__tag"><!-- qr:start --><svg class="qr" viewBox="-4 -4 37 37" role="img" aria-label="휴대폰 카메라로 비추면 gallery.zanviq.dev/sand/ 가 열려요" shape-rendering="crispEdges"><rect x="-4" y="-4" width="37" height="37" fill="#fff"/><path fill="#000" d="M0 0h7v1h-7zM8 0h1v1h-1zM10 0h1v1h-1zM15 0h2v1h-2zM18 0h1v1h-1zM20 0h1v1h-1zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h3v1h-3zM16 1h2v1h-2zM19 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM15 2h2v1h-2zM18 2h2v1h-2zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM9 3h3v1h-3zM16 3h2v1h-2zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h1v1h-1zM12 4h1v1h-1zM14 4h6v1h-6zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h4v1h-4zM15 5h3v1h-3zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM9 7h2v1h-2zM13 7h1v1h-1zM15 7h2v1h-2zM18 7h3v1h-3zM0 8h1v1h-1zM3 8h6v1h-6zM10 8h4v1h-4zM17 8h1v1h-1zM21 8h1v1h-1zM24 8h1v1h-1zM26 8h3v1h-3zM0 9h2v1h-2zM4 9h2v1h-2zM7 9h2v1h-2zM12 9h2v1h-2zM16 9h1v1h-1zM18 9h2v1h-2zM23 9h2v1h-2zM26 9h2v1h-2zM2 10h1v1h-1zM6 10h2v1h-2zM10 10h1v1h-1zM13 10h1v1h-1zM15 10h3v1h-3zM20 10h1v1h-1zM23 10h2v1h-2zM26 10h1v1h-1zM1 11h2v1h-2zM4 11h1v1h-1zM8 11h1v1h-1zM11 11h3v1h-3zM16 11h2v1h-2zM19 11h4v1h-4zM25 11h1v1h-1zM28 11h1v1h-1zM0 12h1v1h-1zM3 12h1v1h-1zM5 12h2v1h-2zM8 12h1v1h-1zM11 12h3v1h-3zM15 12h2v1h-2zM19 12h1v1h-1zM22 12h2v1h-2zM28 12h1v1h-1zM0 13h6v1h-6zM9 13h1v1h-1zM12 13h3v1h-3zM16 13h1v1h-1zM21 13h8v1h-8zM0 14h1v1h-1zM3 14h1v1h-1zM5 14h6v1h-6zM12 14h2v1h-2zM16 14h2v1h-2zM19 14h1v1h-1zM21 14h2v1h-2zM24 14h1v1h-1zM26 14h1v1h-1zM28 14h1v1h-1zM1 15h1v1h-1zM3 15h3v1h-3zM9 15h1v1h-1zM12 15h1v1h-1zM15 15h1v1h-1zM18 15h2v1h-2zM23 15h1v1h-1zM26 15h1v1h-1zM28 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM6 16h2v1h-2zM9 16h1v1h-1zM11 16h1v1h-1zM14 16h1v1h-1zM18 16h3v1h-3zM23 16h1v1h-1zM25 16h1v1h-1zM0 17h2v1h-2zM9 17h1v1h-1zM12 17h3v1h-3zM16 17h1v1h-1zM18 17h4v1h-4zM24 17h1v1h-1zM26 17h2v1h-2zM0 18h3v1h-3zM4 18h1v1h-1zM6 18h2v1h-2zM9 18h1v1h-1zM12 18h1v1h-1zM15 18h1v1h-1zM19 18h1v1h-1zM21 18h1v1h-1zM24 18h2v1h-2zM28 18h1v1h-1zM0 19h4v1h-4zM7 19h1v1h-1zM9 19h1v1h-1zM12 19h1v1h-1zM14 19h3v1h-3zM19 19h3v1h-3zM24 19h3v1h-3zM0 20h3v1h-3zM6 20h4v1h-4zM13 20h2v1h-2zM16 20h2v1h-2zM19 20h9v1h-9zM8 21h1v1h-1zM14 21h3v1h-3zM20 21h1v1h-1zM24 21h2v1h-2zM0 22h7v1h-7zM8 22h2v1h-2zM11 22h1v1h-1zM14 22h2v1h-2zM18 22h3v1h-3zM22 22h1v1h-1zM24 22h2v1h-2zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM10 23h3v1h-3zM14 23h1v1h-1zM17 23h1v1h-1zM19 23h2v1h-2zM24 23h1v1h-1zM28 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h2v1h-2zM12 24h5v1h-5zM19 24h7v1h-7zM27 24h2v1h-2zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM8 25h1v1h-1zM11 25h1v1h-1zM13 25h1v1h-1zM15 25h2v1h-2zM18 25h2v1h-2zM28 25h1v1h-1zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM9 26h1v1h-1zM13 26h1v1h-1zM15 26h2v1h-2zM18 26h4v1h-4zM23 26h2v1h-2zM26 26h3v1h-3zM0 27h1v1h-1zM6 27h1v1h-1zM12 27h1v1h-1zM15 27h1v1h-1zM19 27h1v1h-1zM21 27h1v1h-1zM23 27h1v1h-1zM25 27h2v1h-2zM28 27h1v1h-1zM0 28h7v1h-7zM8 28h3v1h-3zM13 28h1v1h-1zM19 28h4v1h-4zM24 28h1v1h-1z"/></svg><!-- qr:end --></div>
+    <p class="aside__url">gallery.zanviq.dev/sand/</p>
+    <p class="aside__text">카메라로 비추면 휴대폰에서 열려요. 여기서도 마우스와 키보드로 할 수 있어요.</p>
+    <dl class="keys">
+      <div><dt>병 끌기, 화살표 키</dt><dd>기울이기</dd></div>
+      <div><dt>스페이스 누르고 있기</dt><dd>붓기</dd></div>
+      <div><dt>S</dt><dd>흔들기</dd></div>
+      <div><dt>숫자 1~5</dt><dd>모래 고르기</dd></div>
+    </dl>
+  </aside>
+</div>
+</body>
+</html>

@@ -115,5 +115,14 @@
     "tags": ["landing", "interaction", "canvas", "brand"],
     "thumbnail": "thumbnails/observatory.webp",
     "year": 2026
+  },
+  {
+    "slug": "sand",
+    "title": "색모래 병",
+    "type": "internal",
+    "url": "sand/",
+    "tags": ["interaction", "mobile", "canvas", "physics", "animation"],
+    "thumbnail": "thumbnails/sand.webp",
+    "year": 2026
   }
 ]

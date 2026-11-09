@@ -1,0 +1,248 @@
+/* 색모래 병 · tokens and rules from design/works/sand/DESIGN.md.
+   Only the sand has colour: everything else is one white ink on black. */
+:root {
+  --shelf: #000;
+  --ink: #fff;
+  --ink-dim: #8a9096;
+  --hover: #1f1f1f;
+  --sand-pink: #e4007f;
+  --sand-yellow: #ffe419;
+  --sand-cobalt: #1f4fe0;
+  --sand-lime: #6ccb2a;
+  --sand-white: #f2f4f5;
+  --focus: var(--sand-yellow);
+  --font: 'Black And White Picture', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+  --r-tag: 6px;
+  --r-btn: 12px;
+  --line: 2px;
+  --col: 430px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--shelf); color: var(--ink); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--shelf);
+  color: var(--ink);
+  font: 18px/1.45 var(--font);
+  font-weight: 400;
+  overflow-x: hidden;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+h1, h2, p, dl, dd { margin: 0; }
+h1, h2 { font-weight: 400; }
+button { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+/* ── page: the phone column, and beside it on wide screens the note with the QR ── */
+.page { min-height: 100vh; min-height: 100dvh; }
+.app {
+  width: 100%;
+  max-width: var(--col);
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 max(var(--s4), env(safe-area-inset-right)) 0 max(var(--s4), env(safe-area-inset-left));
+}
+.aside { display: none; }
+
+/* ── header ── */
+.head { padding-top: max(var(--s4), env(safe-area-inset-top)); }
+.title {
+  font-size: clamp(44px, 12.5vw, 56px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  padding-right: 112px;            /* the gallery badge sits top-right */
+}
+.lead { margin-top: var(--s3); font-size: 19px; line-height: 1.35; }
+.status {
+  margin-top: var(--s2);
+  min-height: calc(17px * 1.35 * 2);
+  font-size: 17px;
+  line-height: 1.35;
+}
+.undo {
+  display: inline-block;
+  min-height: 44px;
+  margin: -12px 0;
+  padding: 0 var(--s2);
+  border: 0;
+  background: none;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+  cursor: pointer;
+}
+
+/* ── stage ── */
+.stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 300px;
+  margin: var(--s2) calc(-1 * var(--s4)) 0;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: grab;
+}
+.stage.is-dragging { cursor: grabbing; }
+.stage.is-done { cursor: default; }
+.stage__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.stage__fallback { position: absolute; left: var(--s4); right: var(--s4); bottom: var(--s4); }
+
+.sensor {
+  position: absolute;
+  left: var(--s3);
+  right: var(--s3);
+  bottom: var(--s3);
+  padding: var(--s3) var(--s4) var(--s4);
+  background: var(--shelf);
+  border: var(--line) solid var(--ink);
+  border-radius: var(--r-btn);
+  cursor: default;
+}
+.sensor__title { font-size: 21px; line-height: 1.25; }
+.sensor__text { margin-top: var(--s1); font-size: 17px; line-height: 1.4; }
+.sensor__actions { margin-top: var(--s3); display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
+
+/* ── buttons ── */
+.btn {
+  min-height: 48px;
+  padding: 0 var(--s3);
+  border: var(--line) solid var(--ink);
+  border-radius: var(--r-btn);
+  background: var(--shelf);
+  color: var(--ink);
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.btn:hover { background: var(--hover); }
+.btn:active, .btn.is-held { background: var(--ink); color: var(--shelf); }
+.btn--fill { background: var(--ink); color: var(--shelf); }
+.btn--fill:hover { background: #e6e6e6; }
+.btn--fill:active, .btn--fill.is-held { background: var(--shelf); color: var(--ink); }
+.btn[aria-disabled='true'] {
+  border-style: dashed;
+  border-color: var(--ink-dim);
+  background: var(--shelf);
+  color: var(--ink-dim);
+  cursor: not-allowed;
+}
+.btn--icon { width: 56px; padding: 0; display: grid; place-items: center; }
+.btn--icon svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.btn--big { min-height: 56px; font-size: 20px; }
+
+/* ── deck: the jar rack and the controls; both panels share one grid cell so the stage keeps its size ── */
+.deck { display: grid; padding-top: var(--s3); }
+.deck__panel { grid-area: 1 / 1; min-width: 0; }
+.deck__panel[hidden] { display: block !important; visibility: hidden; }
+.deck__panel--done { display: grid; gap: var(--s2); align-content: center; }
+.done__note { font-size: 17px; line-height: 1.4; }
+
+.rack { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s1); }
+.jar {
+  display: grid;
+  justify-items: center;
+  gap: var(--s1);
+  padding: var(--s1) 0 0;
+  border: 0;
+  border-radius: var(--r-btn);
+  background: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.jar__pic { width: 44px; height: 52px; display: block; transition: transform 120ms ease-out; }
+.jar__name {
+  min-width: 100%;
+  padding: 3px 2px 2px;
+  border-radius: var(--r-tag);
+  font-size: 17px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.jar[aria-pressed='true'] .jar__pic { transform: translateY(-6px); }
+.jar[aria-pressed='true'] .jar__name { background: var(--ink); color: var(--shelf); }
+.jar:hover .jar__name { text-decoration: underline; text-underline-offset: 3px; }
+.jar[aria-pressed='true']:hover .jar__name { text-decoration: none; }
+.jar[aria-disabled='true'] { cursor: not-allowed; }
+
+.pour-row { margin-top: var(--s3); display: flex; gap: var(--s2); }
+.pour-row .btn--pour { flex: 1 1 auto; min-height: 56px; font-size: 22px; }
+.pour-row .btn--icon { min-height: 56px; flex: none; }
+.btn--text { flex: none; min-height: 56px; font-size: 18px; }
+.tools { margin-top: var(--s2); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); }
+.tools .btn { padding: 0 var(--s1); white-space: nowrap; }
+
+/* ── footer ── */
+.foot {
+  padding: var(--s3) 0 max(var(--s3), env(safe-area-inset-bottom));
+  font-size: 17px;
+  line-height: 1.35;
+}
+.foot p + p { margin-top: var(--s1); }
+
+/* ── wide screens: the column stays phone-sized; the note sits beside it ── */
+@media (min-width: 700px) and (pointer: fine) {
+  .page {
+    display: grid;
+    grid-template-columns: minmax(0, var(--col)) 260px;
+    justify-content: center;
+    align-items: center;
+    column-gap: 40px;
+  }
+  .app {
+    margin: 0;
+    min-height: 0;
+    height: min(100vh, 940px);
+    height: min(100dvh, 940px);
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+  }
+  .stage { margin-left: calc(-1 * var(--s4) + 1px); margin-right: calc(-1 * var(--s4) + 1px); }
+  .aside { display: block; padding: var(--s5) 0; }
+}
+@media (min-width: 1000px) and (pointer: fine) {
+  .page { grid-template-columns: 1fr minmax(0, var(--col)) 1fr; column-gap: 0; }
+  .app { grid-column: 2; }
+  .aside { grid-column: 3; justify-self: start; width: 280px; margin-left: 56px; }
+}
+@media (min-width: 700px) and (pointer: fine) and (max-height: 640px) {
+  .app { height: auto; min-height: 100vh; }
+}
+
+.aside__title { font-size: 28px; line-height: 1.2; }
+.aside__tag {
+  margin-top: var(--s5);
+  width: 176px;
+  padding: 0;
+  border-radius: var(--r-tag);
+  overflow: hidden;
+  background: #fff;
+}
+.aside__tag .qr { display: block; width: 176px; height: 176px; }
+.aside__url { margin-top: var(--s3); font-size: 18px; }
+.aside__text { margin-top: var(--s3); font-size: 17px; line-height: 1.45; }
+.keys { margin-top: var(--s5); display: grid; gap: var(--s2); font-size: 17px; line-height: 1.35; }
+.keys div { display: grid; gap: 2px; padding-top: var(--s2); border-top: 1px solid #444; }
+.keys dd { color: var(--ink); }
+.keys dt { color: var(--ink-dim); }
+
+/* captures for the gallery card hide the badge */
+.capture [data-gallery-back] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .jar__pic { transition: none; }
+}
