@@ -34,7 +34,8 @@ RENAMER = pathlib.Path(sys.argv[2]) if len(sys.argv) > 2 else None
 
 DISPLAY_TAGS = re.compile(r'<(h1|h2|h3)\b[^>]*>(.*?)</\1>', re.S)
 DISPLAY_CLASS = re.compile(
-    r'class="[^"]*\b(top__mark|foot__mark|release__date|cinemas__name|gv__day|note__by)\b[^"]*"[^>]*>(.*?)</(a|p|span|h2)>', re.S)
+    r'class="[^"]*\b(top__mark|foot__mark|release__date|cinemas__name|gv__day|note__by|hero__log|poster__tag'
+    r'|poster__date|script__h)\b[^"]*"[^>]*>(.*?)</(a|p|span|h2)>', re.S)
 # strings the canvas draws in Diphylleia (js/frames.js, js/sheet.js)
 DISPLAY_JS = '점멸 예고편 3안'
 

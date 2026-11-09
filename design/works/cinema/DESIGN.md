@@ -1,89 +1,87 @@
 # 점멸 — release page design (works/cinema)
 
 Release page for 《점멸》, an invented black-and-white Korean independent feature, put out by the
-invented distributor 낮은창필름. Direction chosen from the subject, not from reference sites (UXKIN was
-not connected): a small distributor's page that behaves like two things the film is made of, the dark of
-the screen and the paper of a photographic print.
+invented distributor 낮은창필름. A small distributor's page that behaves like the things the film is made
+of: the dark of the screen, the paper of a photographic print, and a poster on a cinema wall.
+
+## Revision, 2026-11-09 (owner review)
+
+The owner pointed at the drawn light-switch frame as the example of what looks AI-made. Every picture on
+the page was a canvas drawing; all of them are gone.
+
+- **Removed**: the 1,300-line canvas scene renderer (`js/frames.js` drawings of the building, stairs,
+  room, hands, switch, bus...), the drawn hero picture and its canvas blink, the drawn press-note still,
+  the review sheet `frames.html`, and the footer line that said the scenes were drawn.
+- **Added**: 13 generated black-and-white film stills (Gemini, see `IMAGES.md`), graded as one set by
+  `scripts/stills.py`. Key references came first (the flat's exterior, 은재's portrait, 상훈 at the bus
+  door) and every later shot was generated from them with `--ref`, so the two actors, the switch and the
+  building stay the same people and places. The "light off" frames (stairs, switch, window) are
+  retouched from the lit ones rather than regenerated, so the cut between them changes only the light.
+- **Added**: a proper main poster as the hero. Generated key art (the dark building, one lit window,
+  은재 under the stop's lamp) with HTML type set on it: cast line, tagline, vertical title, festival
+  line, release date and billing block. It is laid out in container units so it scales as one sheet.
+  On first view the window goes dark and blinks on twice (one-off; never under reduced motion).
+- **Added**: a full-width still (the two at the bus stop, with its yellow subtitle) between the trailer
+  and the press note, and a portrait still in the press note.
+- **More room**: sections 168px apart (104 on phones), headings 48px, list rows looser, the
+  transcript folded into a disclosure, the trailer stage on a wider 1360px measure with the screen
+  given 7/12 and the sheet 5/12.
 
 ## Direction
 
-- **Two materials.** The page is the dark of a cinema (pure black). Objects on it are paper: the
-  contact sheet (white photographic paper border, black exposed area) and one press-note block on white.
-- **One loud element.** The contact sheet with its loupe is the only bold thing. Everything around it is
-  quiet type on black: no cards, no icons, no section numbers.
-- **Yellow is a voice, not a colour.** #FFE13B appears only where someone in the film speaks: the hero
-  subtitle, the trailer screen subtitle and the subtitle transcript. Never on links, focus, buttons,
-  marks or the favicon.
+- **Three materials.** The page is the dark of a cinema (pure black). The poster is a printed sheet on
+  it. The contact sheet is photographic paper (white border, black exposed area); the press note is
+  paper too.
+- **One loud element per screen.** The poster in the first view, the contact sheet with its loupe in
+  the second, one full-width still in the third. Everything around them is quiet type on black.
+- **Yellow is a voice, not a colour.** #FFE13B appears only where someone in the film speaks: the
+  trailer screen subtitle, the subtitle under the full-width still and the transcript lines. Never on
+  links, focus, buttons, the poster or the favicon.
 
 ## Colour
 
 | token | value | role |
 |---|---|---|
-| `--black` | #000000 | page ground, film rebate between strips, screen surround |
-| `--white` | #FFFFFF | primary text on black, paper border of the sheet, wax pencil, focus ring on dark |
+| `--black` | #000000 | page ground, film rebate, screen surround, poster ground |
+| `--white` | #FFFFFF | primary text on black, paper border of the sheet, wax pencil, poster type |
 | `--g-200` | #CFCFCF | secondary text on black (13.5:1) |
 | `--g-400` | #9A9A9A | meta text on black, edge-print figures (7.4:1) |
-| `--g-600` | #6B6B6B | rules and control borders on black (UI parts, 3.9:1) |
-| `--g-800` | #262626 | film base / rebate, hairline fills on black |
+| `--g-600` | #6B6B6B | control borders on black (UI parts, 3.9:1) |
+| `--g-800` | #262626 | film base, hairline above the transcript |
 | `--paper-ink-2` | #4D4D4D | secondary text on the white press note (8.5:1) |
 | `--sub` | #FFE13B | subtitle lines only (16.1:1 on black) |
 
 Reason: the film is shot in black and white, and the only colour a Korean audience sees on such a film
-is the yellow of the subtitles. Frames inside the sheet are drawn in grey values only.
-Focus: 2px white outline + 2px black gap on dark; 2px black outline on the white press note.
+is the yellow of the subtitles. All photographs are greyscale. Poster type sits on the dark parts of the
+key art with a bottom scrim and a soft dark halo; measured against the brightest 2% of pixels under each
+line it stays above 9.7:1.
 
-## Typography
+## Typography (unchanged families)
 
-- **Diphylleia** 400 (OFL 1.1, JAMO / Minha Hyung, no Reserved Font Name). Title, headings, dates set
-  as display, title cards inside the trailer, wax-pencil roll note. Brush-edged strokes read like a
-  title card; never below 21px.
-- **LINE Seed Sans KR** 400 / 700 (OFL 1.1, © LY Corporation, no Reserved Font Name; the font's
-  trademark field names "LINE Seed KR", so the subset is renamed `Jeommyeol Sans` to keep the
-  trademark off a modified font). Body, UI, subtitles (700), edge print and stop sign inside frames.
-- Scale (px, classical): 12 · 14 · 17 (body) · 21 · 28 · 36 · 56 · 96 · clamp up to 200 (title).
-- Body 17/1.8, measure ≤ 34em. Headings Diphylleia 36/1.25 desktop, 28 phone. No all-caps labels,
-  no eyebrows; a heading is just the name of the thing (줄거리, 감독의 말, 상영관, 관객과의 대화).
-- Subtitles: LINE Seed 700, clamp(16px, 2.2vw, 24px), black outline drawn with text-shadow, centred at
-  the bottom of the picture like a real subtitle.
+- **Diphylleia** 400 (OFL 1.1, no Reserved Font Name): title, headings, the poster tagline and date,
+  the hero logline (26–36px), dates, theatre names, wax-pencil roll note, title cards.
+- **LINE Seed Sans KR** 400 / 700 (OFL 1.1, © LY Corporation; subset renamed `Jeommyeol Sans`): body,
+  UI, subtitles (700), poster cast line and billing block, edge print.
+- `scripts/fonts.py` subsets both from every character in the HTML and JS and fails on a missing glyph.
 
-## Spacing and layout
+## Layout
 
-- 8px base: 4, 8, 12, 16, 24, 32, 48, 64, 96, 128. Sections 128px apart on desktop, 80 on phones.
-- Content width 1200px; gutters 24px (16px under 400px).
-- Hero: picture left-heavy (a lit window at night, drawn), the title set vertically at the right edge
-  like a Korean release poster, release facts in one block under the picture. Left aligned throughout;
-  the only centred block is the credits, set the way end credits are (role right, name left).
-- Trailer: sheet and screen side by side (equal columns) from 900px, so both fit one desktop
-  viewport; under 900px the six strips lie end to end in one horizontal strip that scrolls under a
-  fixed loupe ring, with the screen above it.
-
-## Shape and depth
-
-- Paper and film are cut, so corners are square. Exceptions taken from the objects: 35mm frame
-  corners round 2% of the frame height, perforations round slightly, the loupe is a circle.
-- No shadows except the loupe's rim. No gradients outside the drawn frames.
-
-## Components
-
-- **Links**: white, 1px underline offset 4px; hover thickens the underline. On paper: black.
-- **Buttons** (trailer controls): 44px squares or 44px-high text buttons, 1px `--g-600` border,
-  white glyphs drawn as SVG triangles; hover border white; pressed state inverts (white ground, black
-  glyph); disabled at 40% opacity.
-- **Lists** (상영관, 관객과의 대화, 자막 전문): rows separated by space only, no rules; date or
-  name in Diphylleia on the left, details right. No ticket shapes, no grid timetable. The current
-  shot in the transcript gets a 3px white bar on its left edge.
-- **Fake-address note**: 13px `--g-400` beside every address: "가상 서비스입니다. 실제 주소가 아닙니다."
-- **Footer**: distributor line, festival line, "가상 영화입니다. zanviq gallery 작품."
-- **Gallery badge**: `/shared/back.js` with `data-theme="light"`, bottom-right (keeps its yellow text
-  off a page where yellow means subtitles). Its small orange logo square is shared site chrome and the
-  only hue on the page that this work does not control.
+- Hero: poster left (`min(600px, 42vw, (100svh − 150px) × 0.67)`), right column split top and bottom:
+  the logline set large in Diphylleia at the top, facts and the two links at the bottom. Under 1024px the
+  poster stacks above the column at up to 560px wide.
+- Trailer: sheet 5fr, screen 7fr from 900px; under 900px the six strips lie end to end under a fixed
+  ring, with the screen above.
+- Still: full width up to 1680px, subtitle 7% from the bottom, caption under it.
+- Press note on white, story / still / director's note on a 12-column grid.
 
 ## Imagery
 
-- No photographs. Every frame of the film is drawn on canvas in greys: a building at night, a
-  stairwell, a room, hands, rain on glass, a bus stop, silhouettes, a light switch, a bus at night.
-- Film grain and halation exist only inside frames (and the hero picture, which is a frame). The page
-  background stays flat black.
-- Wax pencil: white, slightly broken stroke, used for the director's circled selects, one X on the
-  fogged last frame, and the roll note.
-- Favicon: a single lit window in a black square, white and grey only.
+- Photographs only, all generated and graded to one greyscale set (levels per still, one shared fine
+  grain). No drawn pictures anywhere. Code still draws what is naturally code: the contact sheet's
+  rebate, perforations and edge print, the wax-pencil circles, the two title cards (type), the loupe
+  ring and the UI.
+- Each shot of the trailer is one still; its three frames are slightly tighter crops, so the camera
+  seems to creep in, and the light-change shots alternate lit and retouched-dark versions.
+- Sizes: stills at 400 / 800 / 1600px (sheet, loupe and screen pick the smallest that covers them;
+  the screen shows the small one until the sharp one arrives), poster at 700 / 1200px.
+- Favicon: unchanged (a single lit window in a black square).

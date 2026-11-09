@@ -1,7 +1,7 @@
 // The contact-sheet trailer: loupe on the sheet (wide screens) or loose strips under a ring (phones),
 // a screen that shows the current frame with its subtitle, buttons, keys and the transcript.
 import { FRAMES, SHOTS, PACE, shotOf } from './data.js';
-import { frameBitmap, hasBitmap, grain, FW, FH } from './frames.js';
+import { frameBitmap, grain, onStill, prefetch, FW, FH } from './frames.js';
 import {
   SHEET_W, SHEET_H, STRIP, LOOSE_GAP, LOOSE_LEN, drawSheet, drawStrip, frameCenter, looseCenter,
   nearestOnSheet, nearestLoose,
@@ -42,29 +42,18 @@ export function initTrailer(root) {
   let lastScreen = 0;
   let grainLoop = 0;
   let grainUntil = 0;
-  const queue = new Set();
-  let queueTimer = 0;
 
-  // ---------- frame bitmaps, rendered a few at a time ----------
-  function pump() {
-    queueTimer = 0;
-    let budget = 4;
-    for (const key of queue) {
-      queue.delete(key);
-      const [fn, w] = key.split('@').map(Number);
-      frameBitmap(fn, w);
-      if (--budget <= 0) break;
-    }
-    drawPaper();
-    if (queue.size) queueTimer = setTimeout(pump, 16);
-  }
-  function lazyBitmap(fn, w) {
-    if (hasBitmap(fn, w)) return frameBitmap(fn, w);
-    queue.add(fn + '@' + Math.round(w));
-    if (!queueTimer) queueTimer = setTimeout(pump, 0);
-    return null;
-  }
-  const eagerBitmap = (fn, w) => frameBitmap(fn, w);
+  // ---------- frame bitmaps: crops of stills, redrawn when a sharper still arrives ----------
+  const bitmap = (fn, w) => frameBitmap(fn, w);
+  let redrawRaf = 0;
+  onStill(() => {
+    if (redrawRaf) return;
+    redrawRaf = requestAnimationFrame(() => {
+      redrawRaf = 0;
+      drawPaper();
+      showScreen(true);
+    });
+  });
 
   // ---------- layout ----------
   function layout() {
@@ -118,14 +107,14 @@ export function initTrailer(root) {
       const ctx = paper.getContext('2d');
       const k = sheetPx * dpr;
       ctx.setTransform(k, 0, 0, k, 0, 0);
-      drawSheet(ctx, k, lazyBitmap);
+      drawSheet(ctx, k, bitmap);
       drawLoupe();
     } else {
       const k = loosePx * dpr;
       track.querySelectorAll('canvas').forEach((c, s) => {
         const ctx = c.getContext('2d');
         ctx.setTransform(k, 0, 0, k, 0, 0);
-        drawStrip(ctx, s, k, lazyBitmap);
+        drawStrip(ctx, s, k, bitmap);
       });
     }
   }
@@ -152,7 +141,7 @@ export function initTrailer(root) {
     ctx.fillRect(0, 0, D, D);
     ctx.setTransform(k, 0, 0, k, D / 2 - loupePos[0] * k, D / 2 - loupePos[1] * k);
     const half = D / 2 / k;
-    drawSheet(ctx, k, eagerBitmap, [loupePos[0] - half, loupePos[1] - half, half * 2, half * 2]);
+    drawSheet(ctx, k, bitmap, [loupePos[0] - half, loupePos[1] - half, half * 2, half * 2]);
     ctx.restore();
     // a soft fall-off at the lens edge
     const g = ctx.createRadialGradient(D / 2, D / 2, D * 0.36, D / 2, D / 2, D / 2);
@@ -259,10 +248,19 @@ export function initTrailer(root) {
   function showScreen(force) {
     if (!force && lastScreen === n) return;
     lastScreen = n;
+    paintScreen();
+  }
+
+  function paintScreen() {
     const ctx = screenCanvas.getContext('2d');
     const bmp = frameBitmap(n, screenCanvas.width);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.drawImage(bmp, 0, 0, screenCanvas.width, screenCanvas.height);
+    if (bmp) ctx.drawImage(bmp, 0, 0, screenCanvas.width, screenCanvas.height);
+    else {
+      ctx.fillStyle = '#050505';
+      ctx.fillRect(0, 0, screenCanvas.width, screenCanvas.height);
+    }
+    return ctx;
   }
 
   function liveGrain() {
@@ -278,11 +276,8 @@ export function initTrailer(root) {
       }
       if (t - last > 80) {
         last = t;
-        const ctx = screenCanvas.getContext('2d');
-        const bmp = frameBitmap(n, screenCanvas.width);
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.drawImage(bmp, 0, 0, screenCanvas.width, screenCanvas.height);
-        grain(ctx, screenCanvas.width, screenCanvas.height, (t / 80) | 0, 0.2);
+        const ctx = paintScreen();
+        grain(ctx, screenCanvas.width, screenCanvas.height, (t / 80) | 0, 0.12);
       }
       grainLoop = requestAnimationFrame(tick);
     };
@@ -315,6 +310,8 @@ export function initTrailer(root) {
     });
     showScreen();
     liveGrain();
+    if (n < 36) prefetch(n + 1, screenCanvas.width);
+    if (n < 34) prefetch(n + 3, screenCanvas.width);
     if (!playing) setPlayLabel();
   }
 
@@ -402,19 +399,6 @@ export function initTrailer(root) {
   lastScreen = 0;
   showScreen();
   setPlayLabel();
-
-  // warm the loupe-size frames once the sheet is drawn, a few at a time
-  const warm = () => {
-    if (!wide) return;
-    const w = STRIP.fw * sheetPx * MAG * dpr;
-    let i = 1;
-    const step = () => {
-      for (let c = 0; c < 2 && i <= 36; c++, i++) frameBitmap(i, w);
-      if (i <= 36) setTimeout(step, 30);
-    };
-    setTimeout(step, 400);
-  };
-  warm();
 
   return { go, get frame() { return n; } };
 }

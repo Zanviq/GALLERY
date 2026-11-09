@@ -48,3 +48,7 @@ be noticed before the light does.
   subtitle line sits under the picture in yellow.
 - Favicon: black square, one small lit window (white pane with a grey sash cross), no yellow.
 - Wax pencil marks on the sheet: white, stroke drawn as two slightly offset passes with gaps.
+- Revision 2026-11-09: the key visual and the frames are now generated black-and-white photographs
+  (see IMAGES.md), not drawings. The same rules hold for choosing, cropping and grading them: one lit
+  thing per frame, true blacks, grain only inside the picture, light changed by a cut between a lit and
+  a darkened print of the same frame.

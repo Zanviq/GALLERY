@@ -57,24 +57,29 @@ and usable without instruction: the loupe already sits on frame 1 and the screen
 [idle] --넘겨 보기--> [playing] --last frame | any input | off-screen | tab hidden--> [idle]
 [any] --resize across 900px--> same frame, other layout
 ```
-Loading: the hero picture renders first; strips render when the sheet comes within one viewport of the
-screen; until a strip is drawn its rebate and frame numbers are already visible.
+Loading: the poster is preloaded and shown lit straight away. Frames are crops of photographs
+(revision 2026-11-09): when the trailer comes within 600px the sheet asks for every still at 400px
+(about 100 KB in all); until one arrives its frame is a dark cell inside the drawn rebate. The screen
+and loupe ask for the size that covers them (800 or 1600) and show the smaller one meanwhile; the next
+shots are prefetched at screen size.
 No-JS: the sheet is replaced by a note and the transcript list (plain text) stays readable.
 
 ## Motion
 
 - Loupe glide 160ms ease-out; screen frame change is a cut (film does not crossfade inside a shot).
-- Hero: on first view the window in the picture blinks twice (on 260ms, off 220ms, on 260ms, off,
-  then on) and the subtitle appears. Once only. Reduced motion: picture already lit, subtitle shown.
-- Grain on the screen: 12fps, only while frames are changing or playing; stops when the section is
-  off-screen or the tab is hidden; never under reduced motion (static grain is baked into frames).
-- Reduced motion overall: no glide, no grain movement, no hero blink. Frames step as cuts.
+- Poster: on first view, once the dark version has decoded and the page is still at the top, the
+  lit window goes dark (900ms), then on 260ms, off 220ms, on. Once only. Reduced motion: the dark
+  version is never loaded; the poster stays lit.
+- Grain on the screen: 12fps overlay, only while frames are changing or playing; stops when the
+  section is off-screen or the tab is hidden; never under reduced motion (the stills carry their own).
+- Reduced motion overall: no glide, no grain movement, no poster blink. Frames step as cuts.
 
 ## Edge cases
 
-- Fonts are loaded before any canvas text (stop sign, title cards, edge print) is drawn; frames are
-  redrawn if fonts arrive late.
+- Fonts are loaded before any canvas text (title cards, edge print, roll note) is drawn; the sheet is
+  redrawn whenever a still arrives.
 - Resize / DPR change: strips re-rendered at the new size, current frame kept.
 - Very narrow (360px): strip frames 132px wide, loupe ring 120px, screen full width.
-- Canvas missing: sheet and screen hidden, transcript shown with scene descriptions.
+- Canvas missing: sheet and screen hidden, transcript shown with scene descriptions (the transcript
+  is a closed disclosure, "예고편 자막 전문", one click or Enter away).
 - Storage is not used.

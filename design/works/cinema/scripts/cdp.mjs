@@ -130,6 +130,7 @@ async function shot(file, format = 'png', full = false) {
   writeFileSync(file, Buffer.from(data, 'base64'));
 }
 
+if (process.env.INIT_JS) await cmd('Page.addScriptToEvaluateOnNewDocument', { source: process.env.INIT_JS });
 await go(url);
 for (const op of rest) {
   const i = op.indexOf('=');

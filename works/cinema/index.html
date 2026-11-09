@@ -16,6 +16,7 @@
   <link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
   <link rel="preload" href="./fonts/diphylleia-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./fonts/jeommyeol-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./img/poster-lit-1200.webp" as="image" imagesrcset="./img/poster-lit-700.webp 700w, ./img/poster-lit-1200.webp 1200w" imagesizes="(min-width: 1024px) min(600px, 42vw), min(560px, calc(100vw - 32px))">
   <link rel="stylesheet" href="./css/fonts.css">
   <link rel="stylesheet" href="./css/site.css">
   <script>document.documentElement.classList.add('js');</script>
@@ -40,29 +41,40 @@
   <main id="main">
     <section class="hero" id="top" aria-labelledby="title">
       <div class="wrap hero__grid">
-        <figure class="hero__picture" data-hero>
-          <canvas width="900" height="600" aria-hidden="true"></canvas>
-          <p class="hero__sub sub" data-hero-sub>잘 있다는 뜻이었대요.</p>
-          <figcaption class="sr-only">비 오는 밤, 정류장에서 올려다본 아파트 4층 맨 끝 창에 불이 켜진다.</figcaption>
-        </figure>
-        <h1 class="hero__title" id="title">점멸</h1>
+        <div class="poster" data-poster>
+          <img class="poster__img" src="./img/poster-lit-1200.webp" srcset="./img/poster-lit-700.webp 700w, ./img/poster-lit-1200.webp 1200w"
+               sizes="(min-width: 1024px) min(600px, 42vw), min(560px, calc(100vw - 32px))" width="1200" height="1789" fetchpriority="high"
+               alt="메인 포스터. 비 오는 밤, 창이 모두 꺼진 낡은 아파트에서 4층 맨 끝 창 하나에만 불이 켜져 있고, 아래 정류장 가로등 곁에 우산을 쓴 여자가 그 창을 올려다본다.">
+          <img class="poster__img poster__off" data-off="./img/poster-off-1200.webp" data-off-small="./img/poster-off-700.webp" width="1200" height="1789" alt="" aria-hidden="true">
+          <p class="poster__cast"><span>차해림</span> <span>도경환</span> <span>윤말순</span></p>
+          <p class="poster__tag">불이 두 번 켜지면<br>잘 있다는 뜻이었다</p>
+          <h1 class="poster__title" id="title">점멸</h1>
+          <div class="poster__foot">
+            <p class="poster__fest">제7회 늦별독립영화제 장편경쟁</p>
+            <p class="poster__date">12월 2일 개봉</p>
+            <p class="poster__billing">각본, 감독 여은솔 프로듀서 방수연 촬영 변지후 조명 탁성민 미술 공다인 편집 염하준 음악 서이로 사운드 국진배 제작, 배급 낮은창필름</p>
+          </div>
+        </div>
         <div class="hero__facts">
           <p class="hero__log">어머니의 빈집을 정리하러 내려간 은재가, 밤마다 창의 불을 두 번 켰다 끈 어머니의 습관을 알게 되는 일주일.</p>
-          <dl class="facts">
-            <div><dt>감독</dt><dd>여은솔</dd></div>
-            <div><dt>출연</dt><dd>차해림, 도경환, 윤말순</dd></div>
-            <div><dt>개봉</dt><dd>2026년 12월 2일 수요일</dd></div>
-          </dl>
-          <p class="hero__links">
-            <a class="btn" href="#theatres">상영관 보기</a>
-            <a class="link" href="#trailer">예고편 넘겨 보기</a>
-          </p>
+          <div class="hero__info">
+            <dl class="facts">
+              <div><dt>감독</dt><dd>여은솔</dd></div>
+              <div><dt>출연</dt><dd>차해림, 도경환, 윤말순</dd></div>
+              <div><dt>개봉</dt><dd>2026년 12월 2일 수요일</dd></div>
+              <div><dt>상영</dt><dd>흑백, 97분, 12세 이상 관람가</dd></div>
+            </dl>
+            <p class="hero__links">
+              <a class="btn" href="#theatres">상영관 보기</a>
+              <a class="link" href="#trailer">예고편 넘겨 보기</a>
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="trailer" id="trailer" aria-labelledby="trailer-h" data-trailer>
-      <div class="wrap">
+      <div class="wrap wrap--wide">
         <div class="trailer__head">
           <h2 id="trailer-h">예고편</h2>
           <div class="trailer__intro">
@@ -118,18 +130,18 @@
           </figure>
         </div>
 
-        <section class="script" aria-labelledby="script-h">
-          <h3 id="script-h">예고편 자막 전문</h3>
+        <details class="script">
+          <summary><span class="script__h">예고편 자막 전문</span> <span class="script__count">열네 장면</span></summary>
           <p class="script__note">장면을 누르면 그 장면의 첫 컷으로 갑니다. 노란 글은 자막, 회색 글은 화면 설명입니다.</p>
           <ol class="script__list">
             <li data-shot><button type="button"><span class="script__cut">컷 1–3</span><span class="script__desc">비 오는 밤, 언덕 위 아파트. 4층 맨 끝 창만 불이 꺼져 있다.</span><span class="script__line">엄마 집은 이번 주 안에 비울게.</span></button></li>
             <li data-shot><button type="button"><span class="script__cut">컷 4–6</span><span class="script__desc">어두운 계단. 한 박자 늦게 전등이 켜지고 은재가 올라간다.</span><span class="script__line">계단 불은 아직도 늦게 켜지네.</span></button></li>
             <li data-shot><button type="button"><span class="script__cut">컷 7–9</span><span class="script__desc">짐 상자가 쌓인 방. 은재가 창을 향한 의자에 앉는다.</span><span class="script__line">엄마는 이 의자에서 창밖만 봤어요.</span></button></li>
-            <li data-shot><button type="button"><span class="script__cut">컷 10–12</span><span class="script__desc">두 손이 작은 수첩을 편다. 날짜 옆마다 동그라미가 두 개.</span><span class="script__line">날짜마다 동그라미가 두 개씩 있어요.</span></button></li>
+            <li data-shot><button type="button"><span class="script__cut">컷 10–12</span><span class="script__desc">두 손이 작은 수첩을 편다. 줄마다 작은 동그라미가 둘씩 그려져 있다.</span><span class="script__line">날짜마다 동그라미가 두 개씩 있어요.</span></button></li>
             <li data-shot><button type="button"><span class="script__cut">컷 13–15</span><span class="script__desc">빗방울 맺힌 창. 아래로 버스 불빛이 다가온다.</span><span class="script__line">열한 시 사십 분, 막차가 여기 서요.</span></button></li>
-            <li data-shot><button type="button"><span class="script__cut">컷 16–18</span><span class="script__desc">소리개고개 정류장. 버스 전조등이 가까워진다.</span><span class="script__line">안 타실 거면 문 닫을게요.</span></button></li>
+            <li data-shot><button type="button"><span class="script__cut">컷 16–18</span><span class="script__desc">소리개고개 정류장. 막차의 문이 열리고 기사 상훈이 내다본다.</span><span class="script__line">안 타실 거면 문 닫을게요.</span></button></li>
             <li data-shot><button type="button"><span class="script__cut">컷 19–21</span><span class="script__desc">가로등 아래 두 사람. 우산을 든 은재와 모자를 쓴 상훈.</span><span class="script__line">불이 두 번 켜지면, 저도 전조등을 두 번 켰어요.</span></button></li>
-            <li data-shot><button type="button"><span class="script__cut">컷 22–24</span><span class="script__desc">벽의 낡은 스위치. 손가락이 불을 켰다가 끈다.</span><span class="script__line">잘 있다는 뜻이었대요.</span></button></li>
+            <li data-shot><button type="button"><span class="script__cut">컷 22–24</span><span class="script__desc">벽의 낡은 스위치. 어머니의 손가락이 불을 켰다가 끈다.</span><span class="script__line">잘 있다는 뜻이었대요.</span></button></li>
             <li data-shot><button type="button"><span class="script__cut">컷 25</span><span class="script__desc">검은 화면에 제목 〈점멸〉.</span></button></li>
             <li data-shot><button type="button"><span class="script__cut">컷 26–28</span><span class="script__desc">빗속을 달리는 막차 안. 와이퍼 너머로 가로등이 지나간다.</span><span class="script__line">한 달 내내 그 창이 깜깜했어요.</span></button></li>
             <li data-shot><button type="button"><span class="script__cut">컷 29–31</span><span class="script__desc">창가에 선 은재가 벽의 스위치로 손을 뻗는다.</span><span class="script__line">엄마, 나 왔어.</span></button></li>
@@ -137,8 +149,20 @@
             <li data-shot><button type="button"><span class="script__cut">컷 35</span><span class="script__desc">검은 화면에 12월 2일 개봉.</span></button></li>
             <li data-shot><button type="button"><span class="script__cut">컷 36</span><span class="script__desc">롤의 끝. 빛이 들어 하얗게 탄 컷.</span></button></li>
           </ol>
-        </section>
+        </details>
       </div>
+    </section>
+
+    <section class="scene" aria-label="스틸, 정류장의 두 사람">
+      <figure class="scene__fig">
+        <div class="scene__pic">
+          <img src="./img/still-two-1600.webp" srcset="./img/still-two-800.webp 800w, ./img/still-two-1600.webp 1600w" sizes="min(100vw, 1680px)"
+               width="1600" height="1066" loading="lazy" decoding="async"
+               alt="비 내리는 밤, 정류장 가로등 아래. 모자를 쓴 상훈이 말을 하고, 검은 우산을 든 은재는 고개를 숙이고 듣는다.">
+          <p class="scene__sub sub">불이 두 번 켜지면, 저도 전조등을 두 번 켰어요.</p>
+        </div>
+        <figcaption>상훈 역의 도경환, 은재 역의 차해림. 소리개고개 정류장.</figcaption>
+      </figure>
     </section>
 
     <section class="note" id="story" aria-label="줄거리와 감독의 말">
@@ -149,8 +173,10 @@
           <p>짐을 싸던 은재는 어머니의 수첩에서 날짜마다 나란히 그려진 작은 동그라미 두 개를 찾습니다. 비가 그치지 않는 일주일 동안 은재는 정류장에서 막차를 모는 상훈을 몇 번 마주치고, 어머니가 밤마다 창가의 불을 두 번 켰다 끈 까닭을 듣게 됩니다.</p>
         </article>
         <figure class="note__still">
-          <canvas data-still="9" width="600" height="400" aria-hidden="true"></canvas>
-          <figcaption>컷 9. 어머니의 의자에 앉은 은재.</figcaption>
+          <img src="./img/still-eunjae-1600.webp" srcset="./img/still-eunjae-800.webp 800w, ./img/still-eunjae-1600.webp 1600w"
+               sizes="(min-width: 761px) 46vw, calc(100vw - 48px)" width="1600" height="1066" loading="lazy" decoding="async"
+               alt="짐 상자가 쌓인 방, 창가에 기대앉은 은재가 이쪽을 본다. 창에서 들어온 빛이 얼굴 한쪽을 비춘다.">
+          <figcaption>은재 역의 차해림. 어머니의 집, 짐을 다 싸고 난 밤.</figcaption>
         </figure>
         <article class="note__words" aria-labelledby="words-h">
           <h2 id="words-h">감독의 말</h2>
@@ -271,7 +297,7 @@
     <div class="wrap foot__grid">
       <p class="foot__mark">점멸</p>
       <p>제작과 배급 낮은창필름. 상영 문의는 각 극장으로 해 주십시오.</p>
-      <p>이 페이지의 장면은 사진이 아니라 모두 그림으로 그렸습니다.</p>
+      <p>포스터와 스틸 사진은 이미지 생성 모델로 만들었습니다.</p>
       <p class="foot__credit">가상 영화입니다. zanviq gallery 작품.</p>
     </div>
   </footer>
