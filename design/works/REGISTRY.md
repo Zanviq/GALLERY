@@ -18,7 +18,7 @@ Status: planned → building → reviewed → registered (in data/works.json).
 | # | slug | category · platform | concept | signature interaction | palette (reason) | Korean fonts | status |
 |---|---|---|---|---|---|---|---|
 | 1 | optician | 홈페이지 · desktop+mobile | 동네 안경원 + 렌즈 가공실 | 한글 시력표를 렌즈 휠(디옵터)로 맞추면 흐림이 걷힘, 적록 이색 검사, 선 얼굴에 테 폭·다리 길이 맞추기 (SVG/CSS) | 검사실 흰색 #FFFFFF, 검정 #111316, 이색 검사 적 #D0021B · 녹 #00A05A (적록 이색 검사 그대로) | Gothic A1 | registered |
-| 2 | observatory | 홈페이지 · desktop+mobile | 가상 도시의 시립 천문대 | 날짜·시각을 돌려 맞추는 회전 성도판(planisphere), 오늘 밤 볼 대상 목록 (Canvas) | 검정 #000 + 암적응용 적색광 #FF4436 / #A3141B / #3D0709, 다른 색 없음 (천문대의 붉은 손전등) | Nanum Myeongjo, Nanum Gothic Coding | planned |
+| 2 | observatory | 홈페이지 · desktop+mobile | 가상 도시의 시립 천문대 | 날짜·시각을 돌려 맞추는 회전 성도판(planisphere), 오늘 밤 볼 대상 목록 (Canvas) | 검정 #000 + 암적응용 적색광 #FF4436 / #A3141B / #3D0709, 다른 색 없음 (천문대의 붉은 손전등) | Nanum Myeongjo, Nanum Gothic Coding (subsets renamed Bueongjae Serif / Mono) | registered |
 | 3 | riso | 홈페이지 · desktop+mobile | 리소그래프 인쇄소 | 잉크 판을 끌어 겹치면 곱하기 혼색·핀트 어긋남·입자, 드럼 순서 바꾸기, 견적 (Canvas/SVG blend) | 흰 종이 #FFFFFF, 형광 핑크 #FF48B0, 블루 #0078BF, 옐로 #FFE800 (실제 리소 드럼 잉크, 2차색은 겹칠 때만) | Black Han Sans, Gowun Dodum | registered |
 | 4 | laundry | 홈페이지 · mobile-first | 셀프 빨래방 체인 | 지점별 기계 현황판(가상 실시간), 기계 누르면 남은 시간, 빨래가 굴러가는 드럼 (Canvas 2D) | 세탁실 타일 민트 #BEE9DA, 스테인리스 #C5CCD2, 그래파이트 #1F2428, 기계 LED 녹 #12B76A · 적 #F04438 | Jua, Nanum Square Round | registered |
 | 5 | idphoto | 홈페이지 · desktop+mobile | 증명사진관 | 규격 맞추기: 그림으로 된 모델(또는 브라우저 안에서만 쓰는 카메라)에 여권 규격 가이드, 셔터 플래시, 8컷 인화지 재단선 | 증명사진 하늘색 배경 #B9D3EA, 플래시 흰색 #FFFFFF, 검정 #101214 | Song Myung, Noto Sans KR | planned |
@@ -27,7 +27,7 @@ Status: planned → building → reviewed → registered (in data/works.json).
 | 8 | softlab | 홈페이지 · desktop-first | 가상 대학의 소프트로보틱스 연구실 | 공압 그리퍼 시뮬레이션: 압력을 올리면 실리콘 손가락이 휘어 물체를 쥠 (mass-spring, Canvas) | 그래파이트 #24272B, 반투명 실리콘 흰색 #EEF2F3, 압력계 형광 연두 #CCF544 | Noto Serif KR, Nanum Square Neo | planned |
 | 9 | naengmyeon | 홈페이지 · mobile-first | 오래된 냉면집 | 번호표 기계(가상 대기열), 화면을 그어 가위로 면 자르기 | 서리 낀 스테인리스 #E2E9EC, 메밀 회갈색 #74685F, 옛 간판 청록 #0E6D78 | Nanum Brush Script, Nanum Gothic | planned |
 | 10 | watchmaker | 홈페이지 · desktop+mobile | 시계 수리 공방 | 용두를 끌어 태엽을 감으면 기어 트레인·탈진기·밸런스가 움직임, 부품 분해 목록 (SVG) | 니켈 #E5E7EA, 청색 열처리 나사 #26368F, 루비 #A3122A (무브먼트 소재) | MaruBuri | planned |
-| 11 | quiet-floors | 홍보 · desktop+mobile | 층간소음 줄이기 공익 캠페인 | 아파트 단면도: 방을 눌러 뛰기·의자 끌기를 하면 진동이 아랫집으로 번지고 소음계가 반응, 매트·슬리퍼로 줄이기 | 콘크리트 #D6D6D2, 아파트 외벽 파스텔 녹 #B5DCB0 · 하늘 #BFD9F2, 소음계 적 #E5372E (계기에만) | Dongle, Paperlogy | planned |
+| 11 | quiet-floors | 홍보 · desktop+mobile | 층간소음 줄이기 공익 캠페인 | 아파트 단면도: 방을 눌러 뛰기·의자 끌기를 하면 진동이 아랫집으로 번지고 소음계가 반응, 매트·슬리퍼로 줄이기 | 콘크리트 #D6D6D2, 아파트 외벽 파스텔 녹 #B5DCB0 · 하늘 #BFD9F2, 소음계 적 #E5372E (계기에만) | Dongle, Paperlogy | registered |
 | 12 | cinema | 홍보 · desktop+mobile | 가상 독립영화 개봉 | 흑백 프레임이 찍힌 밀착 인화지를 넘기며 자막으로 줄거리를 읽는 예고편 (사진 대신 그래픽 프레임) | 흑백 #000 / #FFF / 회색, 자막 노랑 #FFE13B (한국 극장 자막) | Diphylleia, LINE Seed Sans KR | planned |
 | 13 | sparkling | 홍보 · desktop+mobile | 깻잎 탄산수 출시 | 병뚜껑을 끌어 따면 기포가 터져 오름, 흔들면 더 끓음 (Canvas 입자) | 들깻잎 진녹 #1E4D2B, 기포 흰색 #FFFFFF, 병 유리 물빛 #9FD8CF | Bagel Fat One, S-Core Dream | planned |
 | 14 | adopt | 홍보 · mobile-only | 유기묘 입양 캠페인 | 일러스트 고양이 프로필을 넘기며 성격 맞추기 (SVG 생성 고양이) | 발바닥 분홍 #F5C2CC, 차콜 #2A2A2E, 흰색 | Gaegu, Elice DX Neolli | planned |

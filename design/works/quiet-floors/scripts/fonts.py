@@ -1,0 +1,145 @@
+"""Subset Dongle and Paperlogy to what works/quiet-floors uses.
+
+    <fontenv>/python.exe -I design/works/quiet-floors/scripts/fonts.py <dir with source TTFs>
+
+Sources (downloaded once into the scratch folder, not kept in the repo):
+  Dongle-Bold.ttf                github.com/google/fonts/ofl/dongle      (OFL 1.1, no Reserved Font Name)
+  Paperlogy-4Regular.ttf,
+  Paperlogy-7Bold.ttf            github.com/Freesentation/paperlogy, Paperlogy-1.001.zip (OFL 1.1, no Reserved Font Name)
+
+Neither licence header declares a Reserved Font Name, so the subsets keep their names.
+Dongle: only the display text (headlines, onomatopoeia, prices, dates, the tally, "103").
+Paperlogy 400: every character on the page plus all 11,172 Hangul syllables and the compatibility jamo, so text typed into the
+note keeps its face. Paperlogy 700: every character on the page.
+Fails if a used character is missing or has an empty outline.
+"""
+import html
+import pathlib
+import re
+import sys
+
+from fontTools import subset
+from fontTools.ttLib import TTFont
+
+sys.stdout.reconfigure(encoding='utf-8')
+ROOT = pathlib.Path(__file__).resolve().parents[4]
+SITE = ROOT / 'works' / 'quiet-floors'
+OUT = SITE / 'fonts'
+SRC = pathlib.Path(sys.argv[1])
+
+DISPLAY_CLASS = re.compile(r'class="[^"]*\b(d1|d2|d3|brand__name|sound__word)\b[^"]*"[^>]*>(.*?)</(h1|h2|p|span)>', re.S)
+
+
+def page_text():
+    text = (SITE / 'index.html').read_text(encoding='utf-8')
+    text = re.sub(r'<!--.*?-->', '', text, flags=re.S)
+    return html.unescape(text)
+
+
+def js_text():
+    out = ''
+    for js in sorted((SITE / 'js').glob('*.js')):
+        src = js.read_text(encoding='utf-8')
+        src = re.sub(r'(?m)^\s*//[^\n]*', '', src)
+        src = re.sub(r'/\*.*?\*/', '', src, flags=re.S)
+        out += src
+    return out
+
+
+def all_chars():
+    chars = set(ch for ch in page_text() + js_text() if ord(ch) >= 32)
+    chars |= set(chr(c) for c in range(32, 127))
+    chars |= set('·‘’“”…×–—')
+    chars.discard('﻿')
+    return chars
+
+
+def display_chars():
+    parts = [re.sub(r'<[^>]+>', '', m.group(2)) for m in DISPLAY_CLASS.finditer(page_text())]
+    chars = set(''.join(parts))
+    chars |= set('0123456789.!')
+    return set(ch for ch in chars if ord(ch) >= 32)
+
+
+def hangul():
+    out = set(chr(cp) for cp in range(0xAC00, 0xD7A4))
+    out |= set(chr(cp) for cp in range(0x3131, 0x318F))
+    return out
+
+
+def check(font, chars, stem):
+    cmap = font.getBestCmap()
+    glyf = font['glyf'] if 'glyf' in font else None
+    bad = []
+    for ch in sorted(chars):
+        if ch.isspace():
+            continue
+        g = cmap.get(ord(ch))
+        if g is None:
+            bad.append(f'{ch} U+{ord(ch):04X} missing')
+        elif glyf is not None and glyf[g].numberOfContours == 0:
+            bad.append(f'{ch} U+{ord(ch):04X} empty')
+    if bad:
+        print(f'{stem}: PROBLEM', ', '.join(bad))
+    return not bad
+
+
+FACES = [
+    # source, out stem, family, weight, char set, css extra
+    ('Dongle-Bold.ttf', 'dongle-700', 'Dongle', 700, 'display',
+     '  ascent-override: 56%;\n  descent-override: 42%;\n  line-gap-override: 0%;\n'),
+    ('Paperlogy-4Regular.ttf', 'paperlogy-400', 'Paperlogy', 400, 'body+ks', ''),
+    ('Paperlogy-7Bold.ttf', 'paperlogy-700', 'Paperlogy', 700, 'body', ''),
+]
+
+
+def main():
+    sets = {'display': display_chars(), 'body': all_chars()}
+    sets['body+ks'] = sets['body'] | hangul()
+    print({k: len(v) for k, v in sets.items()}, 'characters')
+    print('display:', ''.join(sorted(sets['display'])))
+    OUT.mkdir(exist_ok=True)
+    rules = []
+    ok = True
+    for src, stem, family, weight, which, extra in FACES:
+        font = TTFont(SRC / src)
+        chars = sets[which]
+        # the page's own characters must all be real glyphs; KS extras may be skipped silently
+        must = sets['display'] if which == 'display' else sets['body']
+        ok &= check(font, must, stem)
+        cmap = font.getBestCmap()
+        opts = subset.Options()
+        opts.flavor = 'woff2'
+        opts.layout_features = ['kern', 'liga', 'calt', 'ccmp', 'locl', 'mark', 'mkmk', 'tnum']
+        opts.name_IDs = ['*']
+        opts.name_languages = ['*']
+        opts.notdef_outline = True
+        opts.hinting = False
+        sub = subset.Subsetter(opts)
+        sub.populate(unicodes=[ord(c) for c in chars if ord(c) in cmap])
+        sub.subset(font)
+        path = OUT / f'{stem}.woff2'
+        font.flavor = 'woff2'
+        font.save(path)
+        print(f'{path.name}  {path.stat().st_size / 1024:.1f} KB')
+        rules.append('@font-face {\n'
+                     f"  font-family: '{family}';\n"
+                     f"  src: url('../fonts/{stem}.woff2') format('woff2');\n"
+                     f'  font-weight: {weight};\n'
+                     '  font-style: normal;\n'
+                     '  font-display: swap;\n'
+                     f'{extra}'
+                     '}\n')
+    header = ('/* Generated by design/works/quiet-floors/scripts/fonts.py. Subsets holding only the characters this page uses.\n'
+              '   Dongle: SIL OFL 1.1, Copyright 2021 The Dongle Project Authors (fonts/OFL-Dongle.txt).\n'
+              '   Paperlogy: SIL OFL 1.1, Copyright 2024 The PAPERLOGY Authors (fonts/OFL-Paperlogy.txt).\n'
+              '   Neither declares a Reserved Font Name. Dongle syllables run from -0.40 to 0.53 em, so its metrics are\n'
+              '   overridden to its real glyph box (syllables with a final consonant drop far below the baseline). */\n')
+    (SITE / 'css' / 'fonts.css').write_text(header + '\n'.join(rules), encoding='utf-8')
+    print('wrote css/fonts.css')
+    if not ok:
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()

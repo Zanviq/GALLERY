@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>observatory og</title>
+<!-- Social preview source (dev only). Captured at 1200x630 by scripts/og.mjs into og/observatory.png. -->
+<link rel="stylesheet" href="../../../works/observatory/css/fonts.css">
+<style>
+  html, body { margin: 0; background: #000; }
+  .og { position: relative; width: 1200px; height: 630px; overflow: hidden; background: #000; color: #FF4436; font-family: 'Nanum Myeongjo', serif; }
+  .wrap { position: absolute; left: 470px; top: -122px; width: 760px; height: 760px; }
+  canvas { display: block; }
+  .text { position: absolute; left: 64px; top: 72px; width: 420px; }
+  .glyph { width: 64px; height: 64px; display: block; }
+  h1 { margin: 28px 0 0; font-weight: 800; font-size: 76px; line-height: 1.12; letter-spacing: -0.02em; }
+  .city { margin: 14px 0 0; font-size: 26px; font-weight: 700; }
+  .line { margin: 40px 0 0; font-size: 24px; line-height: 1.6; max-width: 360px; }
+  .data { position: absolute; left: 64px; bottom: 56px; font: 400 18px 'Nanum Gothic Coding', monospace; }
+</style>
+</head>
+<body>
+<div class="og">
+  <div class="wrap" id="wrap"><canvas id="c"></canvas></div>
+  <div class="text">
+    <svg class="glyph" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="18.5" fill="#3D0709" stroke="#FF4436" stroke-width="1.5"/>
+      <path d="M20 9.5 C29 9.5 33.5 16 33.5 23 C33.5 31 27.5 37.5 20 37.5 C12.5 37.5 6.5 31 6.5 23 C6.5 16 11 9.5 20 9.5 Z" fill="#000" stroke="#FF4436" stroke-width="1.5"/>
+      <circle cx="15" cy="20" r="1.4" fill="#FF4436"/><circle cx="24.5" cy="17" r="1.8" fill="#FF4436"/>
+      <circle cx="21" cy="28" r="1.1" fill="#FF4436"/><circle cx="28" cy="27" r="1" fill="#FF4436"/>
+    </svg>
+    <h1>부엉재<br>천문대</h1>
+    <p class="city">솔메시립 공개 천문대</p>
+    <p class="line">성도판을 돌려<br>오늘 밤 하늘을 맞춰 보십시오.</p>
+  </div>
+  <p class="data">북위 37.5° 회전 성도판, 11월 9일 20:30</p>
+</div>
+<script type="module">
+  import { createPlanisphere } from '../../../works/observatory/js/planisphere.js';
+  import * as A from '../../../works/observatory/js/astro.js';
+  const ps = createPlanisphere({ canvas: document.getElementById('c'), wrap: document.getElementById('wrap'), reduced: () => true });
+  ps.set(A.kstInstant(2026, 11, 9, 20 * 60 + 30));
+  ps.setTargets(['M31', 'M57', 'NGC 869']);
+</script>
+</body>
+</html>

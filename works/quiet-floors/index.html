@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>사뿐 · 겹뜰 주민협의회 층간소음 캠페인</title>
+  <meta name="description" content="우리 집 바닥은 아랫집 천장이에요. 아파트 단면도에서 소리가 어디로 건너가는지 보고, 돈 적게 드는 것부터 바꿔 보는 층간소음 캠페인. 가상 캠페인입니다.">
+  <meta name="theme-color" content="#BFD9F2">
+  <meta property="og:title" content="사뿐 · 우리 집 바닥은 아랫집 천장이에요">
+  <meta property="og:description" content="겹뜰 주민협의회의 층간소음 캠페인. 가상 캠페인입니다. zanviq gallery 작품.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://gallery.zanviq.dev/og/quiet-floors.png">
+  <link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+  <link rel="preload" href="./fonts/dongle-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./fonts/paperlogy-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./css/fonts.css">
+  <link rel="stylesheet" href="./css/site.css">
+  <script type="module" src="./js/main.js"></script>
+  <script src="/shared/back.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+
+  <header class="top">
+    <a class="brand" href="#main" aria-label="사뿐, 맨 위로">
+      <span class="brand__name">사뿐</span>
+      <span class="brand__by">겹뜰 주민협의회<br>층간소음 캠페인</span>
+    </a>
+    <nav class="top__nav" aria-label="바로가기">
+      <a href="#listen">아랫집 소리</a>
+      <a href="#fixes">작은 것부터</a>
+      <a href="#note">쪽지</a>
+      <a href="#help">협의회</a>
+      <a class="top__pledge" href="#pledge">약속하기</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- the section drawing -->
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 class="hero__title d1" id="hero-title">우리 집 바닥은<br>아랫집 천장이에요</h1>
+
+      <p class="hero__lede lead">콘크리트 한 장을 사이에 두고 사는 이웃끼리, 소리가 어디로 건너가는지 먼저 봐요. 그리고 돈 적게 드는 것부터 바꿔 봐요. 겹뜰 주민협의회가 여는 층간소음 캠페인, 사뿐이에요.</p>
+
+      <div class="controls controls--act">
+        <fieldset class="chips">
+          <legend><span data-source-unit>401호</span>에서 무슨 소리를 낼까요</legend>
+          <p class="hint">단면도에서 방을 누르면 그 집으로 바뀌어요. 키보드로는 방향키로 옮기고 Enter로 소리를 내요.</p>
+          <div class="chips__row" id="activity-chips"></div>
+        </fieldset>
+      </div>
+
+      <figure class="figure" id="section-figure">
+        <div class="figure__stage" id="stage">
+          <svg class="building" id="building" viewBox="0 0 600 770" role="img" aria-labelledby="building-title building-desc">
+            <title id="building-title">나란히마을 103동 단면도</title>
+            <desc id="building-desc">2층부터 5층까지 층마다 두 집, 1층은 필로티인 아파트를 자른 그림이에요. 고른 집에서 소리를 내면 바닥 콘크리트가 떨리고, 아래층 천장에서 소리가 퍼져요.</desc>
+          </svg>
+          <div class="rooms" id="rooms" role="group" aria-label="소리 낼 집 고르기"></div>
+        </div>
+        <figcaption class="legend">
+          <span class="legend__item"><svg viewBox="0 0 44 14" aria-hidden="true"><path d="M2 7 Q 7.5 1 13 7 T 24 7 T 35 7 T 42 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>바닥과 벽을 타고 가는 소리 (충격음)</span>
+          <span class="legend__item"><svg viewBox="0 0 44 14" aria-hidden="true"><circle cx="22" cy="7" r="5" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2 3"/><circle cx="22" cy="7" r="1.6" fill="currentColor"/></svg>공기를 타고 퍼지는 소리 (공기 전달음)</span>
+        </figcaption>
+      </figure>
+
+      <div class="meter" id="meter" role="group" aria-labelledby="meter-name">
+        <div class="meter__head">
+          <p class="meter__name" id="meter-name"><span data-meter-unit>301호</span> 소음계</p>
+          <p class="meter__clock"><span class="meter__clock-label">시각</span> <span data-clock>밤 10:40</span></p>
+        </div>
+        <div class="meter__face">
+          <svg class="meter__digits" id="meter-digits" viewBox="0 0 150 80" aria-hidden="true"></svg>
+          <span class="meter__unit" aria-hidden="true">dB</span>
+          <div class="meter__side">
+            <p class="meter__max"><span class="meter__k">최대</span> <span data-max>--</span></p>
+            <p class="meter__bg"><span class="meter__k">배경</span> <span data-bg>28</span></p>
+          </div>
+        </div>
+        <svg class="meter__bar" id="meter-bar" viewBox="0 0 300 30" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div class="meter__scale" aria-hidden="true"><span>20</span><span>30</span><span>40</span><span>50</span><span>60</span><span>70</span></div>
+        <div class="compare" aria-hidden="true">
+          <div class="compare__row"><span class="compare__k">고치기 전</span><span class="compare__track"><span class="compare__fill" data-before-bar></span></span><span class="compare__v" data-before>50</span></div>
+          <div class="compare__row"><span class="compare__k">지금</span><span class="compare__track"><span class="compare__fill" data-now-bar></span></span><span class="compare__v" data-now>50</span></div>
+        </div>
+        <p class="sr-only" id="meter-compare-sr"></p>
+        <p class="meter__note">흐린 칸은 그 시각의 배경 소음이에요. 모두 예시 수치이고, 실제 측정값이나 법에서 정한 기준이 아니에요.</p>
+      </div>
+
+      <div class="controls controls--fix">
+        <fieldset class="chips">
+          <legend>무엇을 바꿔 볼까요</legend>
+          <div class="chips__row" id="fix-chips"></div>
+        </fieldset>
+        <div class="controls__row">
+          <button class="btn" type="button" id="replay">다시 듣기</button>
+          <label class="check">
+            <input type="checkbox" id="sound-toggle">
+            <span>아랫집에서 들리는 소리도 듣기</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="readout" id="readout">
+        <p class="readout__text" id="readout-text"></p>
+        <p class="sr-only" aria-live="polite" id="live"></p>
+        <details class="units">
+          <summary>집마다 얼마나 들리는지</summary>
+          <table class="units__table">
+            <caption class="sr-only">고른 집에서 낸 소리가 다른 집에서 들리는 크기 (예시)</caption>
+            <thead><tr><th scope="col">집</th><th scope="col">어디</th><th scope="col">크기</th><th scope="col">배경보다</th></tr></thead>
+            <tbody id="units-body"></tbody>
+          </table>
+        </details>
+      </div>
+    </section>
+
+    <div class="slab" aria-hidden="true"></div>
+
+    <!-- what it sounds like from below -->
+    <section class="listen" id="listen" aria-labelledby="listen-title">
+      <div class="wrap">
+        <h2 class="d2" id="listen-title">아랫집에서는<br>이렇게 들려요</h2>
+        <p class="lead listen__lede">윗집에서 잠깐 낸 소리가 아랫집에서는 머리 위 천장 전체에서 들려요. 어떤 소리인지 알면 무엇을 고칠지도 보여요.</p>
+
+        <div class="kinds">
+          <figure class="kind">
+            <svg class="kind__fig" viewBox="0 0 300 170" aria-hidden="true" data-mini="impact"></svg>
+            <figcaption>
+              <h3 class="t-h3">부딪혀서 나는 소리, 충격음</h3>
+              <p>발뒤꿈치나 아령이 바닥을 치면 콘크리트가 통째로 떨려요. 떨리는 아랫집 천장이 스피커처럼 소리를 내요. 그래서 귀마개나 창문으로는 잘 막히지 않고, 바닥에 닿는 순간을 부드럽게 해야 줄어요.</p>
+            </figcaption>
+          </figure>
+          <figure class="kind">
+            <svg class="kind__fig" viewBox="0 0 300 170" aria-hidden="true" data-mini="air"></svg>
+            <figcaption>
+              <h3 class="t-h3">공기로 퍼지는 소리, 공기 전달음</h3>
+              <p>말소리, TV, 음악은 공기를 타고 퍼지다가 벽과 바닥에서 대부분 막혀요. 아랫집까지 가는 건 문틈, 창문, 배관 구멍으로 새는 일부예요. 소리를 줄이고 창문을 닫으면 줄어요.</p>
+            </figcaption>
+          </figure>
+        </div>
+
+        <ul class="sounds" id="sounds">
+          <li class="sound" data-activity="run">
+            <p class="sound__word" aria-hidden="true">쿵쿵쿵</p>
+            <div class="sound__body">
+              <h3 class="t-h3">아이가 뛰기</h3>
+              <p>아래에서는 천장 한가운데서 북을 치는 것처럼 들려요. 낮고 무거워서 귀보다 몸이 먼저 느껴요.</p>
+              <p class="sound__kind">무거운 충격음. 뒤꿈치가 닿는 자리에 매트와 실내화.</p>
+            </div>
+            <button class="btn btn--quiet sound__go" type="button" data-play="run">단면도에서 들어 보기<span class="sr-only">: 아이가 뛰기</span></button>
+          </li>
+          <li class="sound" data-activity="chair">
+            <p class="sound__word" aria-hidden="true">드르륵</p>
+            <div class="sound__body">
+              <h3 class="t-h3">의자 끌기</h3>
+              <p>천장을 긁는 가늘고 높은 소리예요. 짧아도 날카로워서 잠든 사람을 깨워요.</p>
+              <p class="sound__kind">가벼운 충격음. 의자 다리에 패드.</p>
+            </div>
+            <button class="btn btn--quiet sound__go" type="button" data-play="chair">단면도에서 들어 보기<span class="sr-only">: 의자 끌기</span></button>
+          </li>
+          <li class="sound" data-activity="door">
+            <p class="sound__word" aria-hidden="true">쾅</p>
+            <div class="sound__body">
+              <h3 class="t-h3">문 쾅 닫기</h3>
+              <p>아랫집보다 옆집과 윗집이 더 놀라요. 문틀을 따라 벽 전체가 한 번 흔들리고, 큰 소리는 공기로도 퍼져요.</p>
+              <p class="sound__kind">벽을 타는 충격음과 공기 전달음. 문틀에 완충재.</p>
+            </div>
+            <button class="btn btn--quiet sound__go" type="button" data-play="door">단면도에서 들어 보기<span class="sr-only">: 문 쾅 닫기</span></button>
+          </li>
+          <li class="sound" data-activity="washer">
+            <p class="sound__word" aria-hidden="true">우우웅</p>
+            <div class="sound__body">
+              <h3 class="t-h3">밤 세탁기</h3>
+              <p>탈수가 시작되면 웅 하는 떨림이 바닥과 벽을 타고 10분 넘게 이어져요. 조용한 밤일수록 또렷해요.</p>
+              <p class="sound__kind">이어지는 떨림과 공기 전달음. 돌리는 시간을 낮으로.</p>
+            </div>
+            <button class="btn btn--quiet sound__go" type="button" data-play="washer">단면도에서 들어 보기<span class="sr-only">: 밤 세탁기</span></button>
+          </li>
+          <li class="sound" data-activity="weights">
+            <p class="sound__word" aria-hidden="true">쿵!</p>
+            <div class="sound__body">
+              <h3 class="t-h3">운동 기구 내려놓기</h3>
+              <p>아령 하나를 바닥에 내려놓으면 두 층 아래까지 울려요. 이 단면도에서 가장 큰 소리예요.</p>
+              <p class="sound__kind">무거운 충격음. 두꺼운 매트 위에서, 내려놓을 땐 천천히.</p>
+            </div>
+            <button class="btn btn--quiet sound__go" type="button" data-play="weights">단면도에서 들어 보기<span class="sr-only">: 운동 기구 내려놓기</span></button>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="slab" aria-hidden="true"></div>
+
+    <!-- small fixes -->
+    <section class="fixes" id="fixes" aria-labelledby="fixes-title">
+      <div class="wrap">
+        <h2 class="d2" id="fixes-title">돈 적게 드는<br>것부터</h2>
+        <p class="lead fixes__lede">큰 공사보다 먼저 할 수 있는 것들이에요. 싼 것부터 적었어요. 가격은 대략이고, 줄어드는 크기는 위 단면도와 같은 예시예요.</p>
+
+        <ol class="fixlist">
+          <li class="fix">
+            <div class="fix__price">
+              <svg class="fix__pic" viewBox="0 0 120 64" aria-hidden="true"><path class="fl" d="M0 62 H120"/><circle cx="60" cy="30" r="24"/><path d="M60 30 V15 M60 30 L72 23"/><path class="tk" d="M60 8 V11 M60 49 V52 M38 30 H41 M79 30 H82"/></svg>
+              <p><span class="d3">0원</span></p>
+            </div>
+            <div class="fix__body">
+              <h3 class="t-h3">시간 바꾸기</h3>
+              <p>세탁기와 청소기는 밤 9시 전에, 운동은 저녁 8시 전에 해요. 소리 크기는 같아도 낮에는 생활 소음에 묻혀 덜 튀어요.</p>
+            </div>
+            <div class="fix__gain"><p><span class="fix__what">밤 세탁기</span>소리는 그대로, 배경에 묻혀요</p></div>
+            <button class="btn btn--quiet fix__go" type="button" data-try="time" data-with="washer">단면도에서 해 보기<span class="sr-only">: 시간 바꾸기</span></button>
+          </li>
+          <li class="fix">
+            <div class="fix__price">
+              <svg class="fix__pic" viewBox="0 0 120 64" aria-hidden="true"><path class="fl" d="M0 62 H120"/><path d="M44 6 V60 M44 12 H52 M44 22 H52 M42 36 H80 M78 38 V60"/><rect class="pad" x="39" y="56" width="10" height="6" rx="1.5"/><rect class="pad" x="73" y="56" width="10" height="6" rx="1.5"/></svg>
+              <p><span class="d3">2천 원</span><span class="fix__per">의자 4개분</span></p>
+            </div>
+            <div class="fix__body">
+              <h3 class="t-h3">의자 다리 패드</h3>
+              <p>식탁 의자부터 붙여요. 바닥에 펠트만 붙이는 것보다 다리를 감싸는 덮개형이 덜 빠져요.</p>
+            </div>
+            <div class="fix__gain"><p><span class="fix__what">의자 끌기</span>13 dB 작아져요</p></div>
+            <button class="btn btn--quiet fix__go" type="button" data-try="pad" data-with="chair">단면도에서 해 보기<span class="sr-only">: 의자 다리 패드</span></button>
+          </li>
+          <li class="fix">
+            <div class="fix__price">
+              <svg class="fix__pic" viewBox="0 0 120 64" aria-hidden="true"><path class="fl" d="M0 62 H120"/><path d="M76 2 V62 M84 2 V62"/><path class="leaf" d="M76 6 L40 14 V62 L76 58 Z"/><rect class="pad" x="70" y="18" width="7" height="12" rx="2"/></svg>
+              <p><span class="d3">3천 원</span><span class="fix__per">문 한 짝</span></p>
+            </div>
+            <div class="fix__body">
+              <h3 class="t-h3">방문 완충재</h3>
+              <p>문틀 안쪽에 고무 완충재를 두세 개 붙여요. 바람에 문이 닫혀도 쾅이 툭이 돼요.</p>
+            </div>
+            <div class="fix__gain"><p><span class="fix__what">문 쾅 닫기</span>14 dB 작아져요</p></div>
+            <button class="btn btn--quiet fix__go" type="button" data-try="doorstop" data-with="door">단면도에서 해 보기<span class="sr-only">: 방문 완충재</span></button>
+          </li>
+          <li class="fix">
+            <div class="fix__price">
+              <svg class="fix__pic" viewBox="0 0 120 64" aria-hidden="true"><path class="fl" d="M0 62 H120"/><path class="leaf" d="M30 50 C30 40 44 38 60 40 C74 34 86 34 92 44 C94 50 92 53 88 53 H34 C31 53 30 52 30 50 Z"/><path class="sole" d="M30 53 H92 V56 C92 59 90 61 86 61 H40 C34 61 30 58 30 54 Z"/></svg>
+              <p><span class="d3">1만 원</span><span class="fix__per">한 켤레</span></p>
+            </div>
+            <div class="fix__body">
+              <h3 class="t-h3">실내화 신기</h3>
+              <p>뒤꿈치 쪽이 도톰한 것으로 골라요. 걸음 소리가 쿵에서 통으로 바뀌어요.</p>
+            </div>
+            <div class="fix__gain"><p><span class="fix__what">아이가 뛰기</span>4 dB 작아져요</p></div>
+            <button class="btn btn--quiet fix__go" type="button" data-try="slipper" data-with="run">단면도에서 해 보기<span class="sr-only">: 실내화 신기</span></button>
+          </li>
+          <li class="fix">
+            <div class="fix__price">
+              <svg class="fix__pic" viewBox="0 0 120 64" aria-hidden="true"><path class="fl" d="M0 62 H120"/><rect class="mat" x="12" y="50" width="96" height="12" rx="2"/><path class="tk" d="M12 56 H108"/><path d="M46 40 H74"/><rect class="pad" x="38" y="30" width="9" height="20" rx="2"/><rect class="pad" x="73" y="30" width="9" height="20" rx="2"/></svg>
+              <p><span class="d3">6만 원</span><span class="fix__per">거실 한 장부터, 빌리면 0원</span></p>
+            </div>
+            <div class="fix__body">
+              <h3 class="t-h3">매트 깔기</h3>
+              <p>아이가 뛰는 거실과 운동하는 자리에 깔아요. 두께 4cm 안팎이 좋아요. 사기 전에 <a href="#help">협의회에서 2주 빌려</a> 써 보세요.</p>
+            </div>
+            <div class="fix__gain"><p><span class="fix__what">운동 기구 내려놓기</span>13 dB 작아져요</p><p><span class="fix__what">아이가 뛰기</span>9 dB 작아져요</p></div>
+            <button class="btn btn--quiet fix__go" type="button" data-try="mat" data-with="weights">단면도에서 해 보기<span class="sr-only">: 매트 깔기</span></button>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <div class="slab" aria-hidden="true"></div>
+
+    <!-- talking to the neighbour -->
+    <section class="note" id="note" aria-labelledby="note-title">
+      <div class="wrap note__grid">
+        <div class="note__intro">
+          <h2 class="d2" id="note-title">쪽지로 먼저<br>말 걸기</h2>
+          <p class="lead">얼굴 보고 말하기 어려우면 쪽지가 좋아요. 마음이 가라앉은 다음 날 낮에 문 앞에 붙이거나 직접 건네요.</p>
+          <h3 class="t-h3 note__tips-title">이렇게 쓰면 잘 통해요</h3>
+          <ul class="tips">
+            <li>언제, 어떤 소리인지 적어요. "시끄러워요"보다 "밤 10시 넘어 쿵쿵 소리"가 답하기 쉬워요.</li>
+            <li>부탁은 한 가지만. 여러 개를 적으면 꾸중처럼 읽혀요.</li>
+            <li>천장을 치거나 밤에 문을 두드리지 않아요. 소리를 한 번 더 만드는 일이에요.</li>
+            <li>윗집이라면 먼저 알려요. "토요일 저녁에 아이 생일 모임이 있어요" 한 줄이면 아랫집도 마음의 준비를 해요.</li>
+          </ul>
+        </div>
+
+        <form class="note__form" id="note-form" novalidate>
+          <fieldset class="seg">
+            <legend class="sr-only">나는 어느 집인가요</legend>
+            <label><input type="radio" name="who" value="below" checked><span>나는 아랫집이에요</span></label>
+            <label><input type="radio" name="who" value="above"><span>나는 윗집이에요</span></label>
+          </fieldset>
+          <div class="fields">
+            <label class="field"><span class="field__k">우리 집</span><select name="me" id="note-me"></select></label>
+            <label class="field"><span class="field__k">받는 집</span><select name="to" id="note-to"></select></label>
+            <label class="field field--wide"><span class="field__k" data-k-what>들리는 소리</span><select name="what" id="note-what"></select></label>
+            <label class="field field--wide"><span class="field__k">언제</span><select name="when" id="note-when"></select></label>
+            <label class="field field--wide"><span class="field__k" data-k-ask>부탁</span><select name="ask" id="note-ask"></select></label>
+            <label class="field field--wide"><span class="field__k">한마디 더 <span class="field__opt">(안 써도 돼요)</span></span><input type="text" name="extra" id="note-extra" maxlength="80" autocomplete="off" aria-describedby="note-count"><span class="field__count" id="note-count">0/80</span></label>
+          </div>
+        </form>
+
+        <div class="note__out">
+          <div class="paper" id="note-paper" tabindex="-1">
+            <p class="paper__to" data-note-to></p>
+            <div class="paper__body" data-note-body></div>
+            <p class="paper__from" data-note-from></p>
+          </div>
+          <p class="note__privacy">이 쪽지는 어디로도 보내지 않아요. 복사해서 직접 전하세요.</p>
+          <div class="note__actions">
+            <button class="btn" type="button" id="note-copy">쪽지 복사하기</button>
+            <p class="note__status" id="note-status" role="status"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="slab" aria-hidden="true"></div>
+
+    <!-- the association -->
+    <section class="help" id="help" aria-labelledby="help-title">
+      <div class="wrap help__grid">
+        <div class="help__intro">
+          <h2 class="d2" id="help-title">말로 안 풀릴 땐<br>협의회와 같이</h2>
+          <p class="lead">겹뜰 주민협의회는 나란히마을 주민들이 꾸린 모임이에요. 누가 잘못했는지 가리는 곳이 아니라, 두 집이 같이 앉을 자리를 만드는 곳이에요.</p>
+          <svg class="help__pic" viewBox="0 0 360 206" aria-hidden="true">
+            <rect class="hp-room" x="12" y="14" width="336" height="158"/>
+            <rect class="hp-board" x="30" y="40" width="58" height="46"/>
+            <path class="hp-thin" d="M37 48 H58 M37 55 H66 M37 62 H52 M64 68 H81 M64 75 H76"/>
+            <path class="hp-line" d="M134 128 H226 M140 128 V172 M220 128 V172"/>
+            <path class="hp-line" d="M108 96 V172 M108 142 H128 M128 142 V172"/>
+            <path class="hp-line" d="M252 96 V172 M252 142 H232 M232 142 V172"/>
+            <g class="hp-person"><circle cx="122" cy="102" r="9"/><path d="M122 111 L124 142 H140 M124 120 L146 126"/></g>
+            <g class="hp-person"><circle cx="238" cy="102" r="9"/><path d="M238 111 L236 142 H220 M236 120 L214 126"/></g>
+            <g class="hp-person hp-mid"><circle cx="180" cy="94" r="9"/><path d="M180 103 V126 M180 112 L166 124 M180 112 L194 124"/></g>
+            <g class="hp-mats"><circle cx="296" cy="157" r="14"/><circle cx="326" cy="157" r="14"/><circle cx="311" cy="131" r="14"/><circle cx="296" cy="157" r="5"/><circle cx="326" cy="157" r="5"/><circle cx="311" cy="131" r="5"/></g>
+            <path class="hp-concrete" d="M0 0 H360 V14 H0 Z M0 172 H360 V190 H0 Z M0 14 H12 V172 H0 Z M348 14 H360 V172 H348 Z"/>
+            <path class="hp-ground" d="M0 190 H360"/>
+          </svg>
+        </div>
+
+        <div class="offers">
+          <div class="offer">
+            <h3 class="t-h3">이웃 조정의 날</h3>
+            <p>매달 둘째, 넷째 토요일 오전 10시부터 12시까지. 두 집이 같이 오면 조정 교육을 받은 주민 봉사자가 함께 앉아요. 한 집만 와도 이야기를 듣고 쪽지 쓰는 걸 도와드려요. 사랑방 앞 게시판에 호수만 적어 두세요.</p>
+          </div>
+          <div class="offer">
+            <h3 class="t-h3">매트 빌리기</h3>
+            <p>거실용 매트 30장을 2주 동안 무료로 빌려드려요. 아이가 있는 집, 아랫집과 이야기 중인 집이 먼저예요. 평일 오후 2시부터 6시까지 사랑방에서 빌리고 돌려줘요.</p>
+          </div>
+          <div class="offer">
+            <h3 class="t-h3">같이 재 보는 날</h3>
+            <p>매달 첫째 수요일 저녁 7시. 윗집에서 평소처럼 지내고, 아랫집에서 협의회 소음계로 같이 재 봐요. 숫자를 함께 보면 어디를 고칠지 두 집 모두 알게 돼요.</p>
+          </div>
+        </div>
+
+        <div class="dates">
+          <h3 class="t-h3">다가오는 날</h3>
+          <ol class="dates__list">
+            <li><span class="dates__d d3">11.14</span><span class="dates__w">토 오전 10시</span><span class="dates__t">이웃 조정의 날</span></li>
+            <li><span class="dates__d d3">11.28</span><span class="dates__w">토 오전 10시</span><span class="dates__t">이웃 조정의 날</span></li>
+            <li><span class="dates__d d3">12.2</span><span class="dates__w">수 저녁 7시</span><span class="dates__t">같이 재 보는 날</span></li>
+            <li><span class="dates__d d3">12.12</span><span class="dates__w">토 오전 10시</span><span class="dates__t">이웃 조정의 날</span></li>
+            <li><span class="dates__d d3">12.26</span><span class="dates__w">토 오전 10시</span><span class="dates__t">이웃 조정의 날</span></li>
+          </ol>
+          <div class="place">
+            <h3 class="t-h3">사랑방</h3>
+            <p class="place__addr">겹뜰시 볕뉘로 27, 나란히마을 관리동 1층<small class="fake-note">가상 서비스예요. 실제 주소가 아니에요.</small></p>
+            <p class="place__hours">평일 오후 2시부터 6시까지, 조정의 날에는 토요일 오전에도 열어요.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="slab" aria-hidden="true"></div>
+
+    <!-- pledge -->
+    <section class="pledge" id="pledge" aria-labelledby="pledge-title">
+      <div class="wrap pledge__grid">
+        <div>
+          <h2 class="d2" id="pledge-title">우리 집 약속</h2>
+          <p class="lead">할 수 있는 것만 골라요. 고른 약속은 이 기기에만 남아요.</p>
+          <form class="pledge__form" id="pledge-form">
+            <fieldset>
+              <legend class="sr-only">약속할 것 고르기</legend>
+              <ul class="pledge__list" id="pledge-list"></ul>
+            </fieldset>
+            <div class="pledge__actions">
+              <button class="btn" type="submit" id="pledge-submit" aria-describedby="pledge-help">약속하기</button>
+              <p class="pledge__help" id="pledge-help">하나 이상 고르면 약속할 수 있어요.</p>
+            </div>
+          </form>
+        </div>
+        <div class="tally" role="group" aria-labelledby="tally-k">
+          <p class="tally__k" id="tally-k">이 기기에서 한 약속</p>
+          <p class="tally__n"><span class="d1" data-tally>0</span><span class="tally__u">개</span></p>
+          <p class="tally__note">이 숫자는 이 브라우저에만 저장돼요. 다른 집의 약속은 세지 않고, 어디로도 보내지 않아요.</p>
+          <p class="tally__state" id="tally-state" role="status"></p>
+          <ul class="tally__mine" id="tally-mine"></ul>
+          <button class="btn btn--quiet" type="button" id="pledge-clear" hidden>이 기기에서 지우기</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__grid">
+      <p class="foot__brand"><span class="brand__name">사뿐</span><span>겹뜰 주민협의회 층간소음 캠페인</span></p>
+      <p class="foot__addr">사랑방 겹뜰시 볕뉘로 27, 나란히마을 관리동 1층<small class="fake-note">가상 서비스예요. 실제 주소가 아니에요.</small></p>
+      <p class="foot__fine">이 페이지의 데시벨 숫자는 이해를 돕는 예시예요. 실제 측정값이나 법에서 정한 기준이 아니고, 어느 기관의 안내도 아니에요.</p>
+      <p class="foot__credit">가상 캠페인입니다. zanviq gallery 작품.</p>
+    </div>
+  </footer>
+</body>
+</html>

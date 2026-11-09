@@ -97,5 +97,23 @@
     "tags": ["game", "mobile", "canvas", "audio", "interaction"],
     "thumbnail": "thumbnails/stamp.webp",
     "year": 2026
+  },
+  {
+    "slug": "quiet-floors",
+    "title": "사뿐",
+    "type": "internal",
+    "url": "quiet-floors/",
+    "tags": ["promo", "interaction", "svg", "animation", "audio"],
+    "thumbnail": "thumbnails/quiet-floors.webp",
+    "year": 2026
+  },
+  {
+    "slug": "observatory",
+    "title": "부엉재천문대",
+    "type": "internal",
+    "url": "observatory/",
+    "tags": ["landing", "interaction", "canvas", "brand"],
+    "thumbnail": "thumbnails/observatory.webp",
+    "year": 2026
   }
 ]

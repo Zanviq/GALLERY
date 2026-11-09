@@ -96,10 +96,14 @@ not be banned or already used; report it.
   check but had a margin label sitting on top of the first letter of a line at 390px wide.
 - Each work invents its own town/place names. Already taken: 여울시, 초롱골, 돋보기길 (optician);
   새물시, 느릅마루, 종달샘, 빗물터, 솔바위 (laundry); 미리내구, 등사로 (riso);
-  물굽이시, 모래뜸 (futsal).
-- Font licences: if a family's OFL declares a Reserved Font Name (NAVER's NanumSquare/Round/Neo,
-  some foundry builds), a subset counts as a modified version, so rename the subset family in the
-  font file and CSS (laundry did this). Google Fonts builds usually have no RFN; check the OFL text.
+  물굽이시, 모래뜸 (futsal); 겹뜰시, 나란히마을, 볕뉘로 (quiet-floors); 솔메시, 부엉재 (observatory).
+- Font licences: if a family's OFL declares a Reserved Font Name, a subset counts as a modified
+  version, so rename the subset family in the font file's name table AND in every CSS/JS/canvas
+  reference (laundry did this). This applies to EVERY Nanum family including the Google Fonts builds
+  (Nanum Gothic, Myeongjo, Gothic Coding, Brush Script, Pen Script, Barun Gothic, Square*, and
+  MaruBuri: NAVER reserves all those names), and to IBM Plex ("Plex"). Copy the licence's real
+  copyright line (with its RFN list) into your licence file. Renamer:
+  `<scratchpad>/fontenv/Scripts/python.exe -I <scratchpad>/tools/rename_font.py <file> "New Name"`.
 
 ## 6. Tools that already exist
 
