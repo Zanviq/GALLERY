@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="ko" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>밤차 | 자는 동안 도착하는 침대열차</title>
+<meta name="description" content="밤 11시 5분 높바람에서 침대에 누우면 아침 7시 5분 마파람입니다. 매일 밤 두 도시 사이를 달리는 침대열차 밤차의 시각표, 객실과 요금, 노선.">
+<meta name="theme-color" content="#1B2F6E">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="zanviq gallery">
+<meta property="og:title" content="밤차 | 자는 동안 도착하는 침대열차">
+<meta property="og:description" content="높바람 23:05 출발, 마파람 07:05 도착. 매일 밤 두 도시 사이를 달리는 가상 침대열차 스타트업의 홈페이지.">
+<meta property="og:url" content="https://gallery.zanviq.dev/nighttrain/">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/nighttrain.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+<link rel="preload" href="./fonts/orbit-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/gowun-batang-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/site.css">
+<link rel="modulepreload" href="./js/main.js">
+<link rel="modulepreload" href="./js/data.js">
+<script>document.documentElement.className = 'js';</script>
+<script src="/shared/back.js" data-position="bottom-left" data-theme="light" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header class="top" id="top">
+  <a class="top__brand" href="#top" aria-label="밤차 처음으로">밤차</a>
+  <nav class="top__nav" id="nav" aria-label="주요 메뉴">
+    <ul>
+      <li><a href="#timetable">시각표</a></li>
+      <li><a href="#night">하룻밤</a></li>
+      <li><a href="#cabins">객실</a></li>
+      <li><a href="#route">노선</a></li>
+      <li><a href="#why">왜 밤기차</a></li>
+      <li><a href="#company">회사</a></li>
+    </ul>
+  </nav>
+  <a class="btn btn--on-night top__cta" href="#book">자리 고르기</a>
+  <button class="top__menu" type="button" aria-expanded="false" aria-controls="nav">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18M3 16h18"/></svg>
+    <span>메뉴</span>
+  </button>
+</header>
+
+<main id="main">
+
+<section class="hero grid" aria-labelledby="hero-title">
+  <div class="hero__text">
+    <h1 class="hero__title" id="hero-title">자는 동안<br>도착합니다.</h1>
+  </div>
+  <p class="hero__lead">밤 11시 5분, 높바람역에서 침대에 눕습니다. 눈을 뜨면 아침 7시 5분, 마파람역입니다. 여덟 시간 동안 일부러 천천히 달립니다. 반대 방향 2호는 마파람에서 밤 11시 10분에 떠납니다.</p>
+
+  <div class="board">
+    <p class="board__row"><span class="board__lab"><span class="board__stn">높바람</span> <span class="board__what">출발</span></span> <time class="board__time" datetime="23:05">23:05</time></p>
+    <p class="board__mid"><span>8시간, 412 km</span> <span>매일 밤</span> <span>1인실 129,000원부터</span></p>
+    <p class="board__row"><span class="board__lab"><span class="board__stn">마파람</span> <span class="board__what">도착</span></span> <time class="board__time" datetime="07:05">07:05</time></p>
+  </div>
+
+  <div class="hero__act">
+    <a class="btn btn--on-night btn--solid" href="#book">자리 고르기</a>
+    <a class="link link--on-night" href="#timetable">오늘 밤 시각표 보기</a>
+  </div>
+
+  <figure class="hero__photo">
+    <img src="./img/cabin-night-1200.webp" srcset="./img/cabin-night-720.webp 720w, ./img/cabin-night-1200.webp 1200w" sizes="(min-width: 1024px) 40vw, 100vw" width="1200" height="1490" alt="불이 꺼진 1인실. 창밖은 어두운 파란 밤이고, 검은 독서등이 흰 베개를 비춥니다. 침대 끝에 파란 양모 담요가 개어져 있습니다." fetchpriority="high">
+    <figcaption>1인실, 밤 11시 20분</figcaption>
+  </figure>
+</section>
+
+<section class="tt sec" id="timetable" aria-labelledby="tt-title">
+  <div class="sec__head grid">
+    <h2 class="sec__title" id="tt-title">시각표</h2>
+    <p class="sec__desc">매일 밤 두 편이 서로 반대 방향으로 떠납니다. 날짜를 고르면 그날 밤 요금과 남은 자리가 나옵니다. 금요일과 토요일 밤은 요금이 조금 높습니다.</p>
+  </div>
+
+  <div class="tt__bar grid">
+    <fieldset class="dates" data-dates>
+      <legend>출발하는 밤</legend>
+      <div class="dates__list" data-date-list></div>
+    </fieldset>
+    <fieldset class="seg" data-dir>
+      <legend>방향</legend>
+      <label><input type="radio" name="dir" value="all" checked><span>둘 다</span></label>
+      <label><input type="radio" name="dir" value="south"><span>남쪽으로</span></label>
+      <label><input type="radio" name="dir" value="north"><span>북쪽으로</span></label>
+    </fieldset>
+  </div>
+
+  <div class="tt__wrap grid">
+    <table class="board-table" data-tt>
+      <caption class="sr-only" data-tt-caption>밤차 시각표</caption>
+      <thead>
+        <tr>
+          <th scope="col" class="c-train">편</th>
+          <th scope="col" class="c-dep">출발</th>
+          <th scope="col" class="c-arr">도착</th>
+          <th scope="col" class="c-dur">걸리는 시간</th>
+          <th scope="col" class="c-cabin">객실</th>
+          <th scope="col" class="c-price">요금 <span>(원)</span></th>
+          <th scope="col" class="c-left">남은 자리</th>
+          <th scope="col" class="c-act"><span class="sr-only">고르기</span></th>
+        </tr>
+      </thead>
+      <tbody data-tt-body>
+        <tr class="is-first"><th scope="row" class="c-train">1호 높바람 → 마파람</th><td class="c-dep">23:05</td><td class="c-arr">07:05</td><td class="c-dur">8:00</td><td class="c-cabin">1인실</td><td class="c-price">129,000</td><td class="c-left">—</td><td class="c-act"></td></tr>
+        <tr class="is-first"><th scope="row" class="c-train">2호 마파람 → 높바람</th><td class="c-dep">23:10</td><td class="c-arr">07:15</td><td class="c-dur">8:05</td><td class="c-cabin">1인실</td><td class="c-price">129,000</td><td class="c-left">—</td><td class="c-act"></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tt__notes grid">
+    <p>〃 위 칸과 같음. 요금은 1인실·2인실은 한 칸, 4인 침대칸은 한 자리 값이며 침구, 세면도구, 아침 차와 빵이 들어 있습니다.</p>
+    <p>출발 25분 전부터 탈 수 있습니다. 남은 자리는 예시로 보여 드리는 값입니다.</p>
+  </div>
+</section>
+
+<section class="night" id="night" aria-labelledby="night-title">
+  <div class="night__dark">
+    <div class="sec__head grid">
+      <h2 class="sec__title" id="night-title">하룻밤은 이렇게 지나갑니다</h2>
+      <p class="sec__desc">1호 기준입니다. 2호는 5분에서 10분씩 늦습니다.</p>
+    </div>
+    <ol class="steps">
+      <li class="step step--wide grid">
+        <p class="step__time"><time datetime="22:40">22:40</time></p>
+        <figure class="step__photo">
+          <img src="./img/platform-1600.webp" srcset="./img/platform-800.webp 800w, ./img/platform-1600.webp 1600w" sizes="(min-width: 1024px) 66vw, 100vw" width="1600" height="1073" loading="lazy" alt="밤의 플랫폼에 파란 객차가 서 있고 창마다 불이 켜져 있습니다. 승객 두 명이 가방을 들고 열린 문 쪽으로 걸어가고, 승무원이 문 옆에서 기다립니다.">
+        </figure>
+        <div class="step__text">
+          <h3>타는 곳에 승무원이 서 있습니다</h3>
+          <p>출발 25분 전부터 탈 수 있습니다. 표를 내밀 필요 없이 이름을 말하면 객실까지 안내합니다. 큰 가방은 침대 밑 서랍에 들어갑니다.</p>
+        </div>
+      </li>
+      <li class="step step--tall grid">
+        <p class="step__time"><time datetime="23:05">23:05</time></p>
+        <div class="step__text">
+          <h3>불을 끄고 독서등만 켭니다</h3>
+          <p>출발 안내 방송은 한 번뿐입니다. 객실 문은 안에서 잠그고, 블라인드는 끝까지 내려옵니다. 시트와 베개는 그날 낮에 세탁한 것입니다.</p>
+        </div>
+        <figure class="step__photo">
+          <img src="./img/reading-1200.webp" srcset="./img/reading-720.webp 720w, ./img/reading-1200.webp 1200w" sizes="(min-width: 1024px) 34vw, 100vw" width="1200" height="1490" loading="lazy" alt="2인실 아래 침대에서 승객이 파란 담요를 덮고 독서등 아래에서 책을 읽습니다.">
+        </figure>
+      </li>
+      <li class="step step--tall step--flip grid">
+        <p class="step__time"><time datetime="23:30">23:30</time></p>
+        <figure class="step__photo">
+          <img src="./img/tea-1200.webp" srcset="./img/tea-720.webp 720w, ./img/tea-1200.webp 1200w" sizes="(min-width: 1024px) 34vw, 100vw" width="1200" height="1490" loading="lazy" alt="창가 선반 위에서 두 손이 김이 오르는 흰 찻잔을 감싸고 있습니다. 창밖은 어두운 밤입니다.">
+        </figure>
+        <div class="step__text">
+          <h3>따뜻한 차 한 잔</h3>
+          <p>보리차나 캐모마일을 객실로 가져다 드립니다. 밤에는 카페인이 든 음료와 술을 팔지 않습니다.</p>
+        </div>
+      </li>
+      <li class="step step--quiet grid">
+        <p class="step__time"><time datetime="00:00">00:00</time><span class="step__dash" aria-hidden="true">—</span><time datetime="06:00">06:00</time></p>
+        <div class="step__text">
+          <h3>방송하지 않는 여섯 시간</h3>
+          <p>자정이 되면 복도 등이 어두운 파란빛으로 바뀌고, 아침 6시까지 안내 방송을 하지 않습니다. 새벽 2시 10분 고요목에서 45분 동안 멈춰 서서 기관사가 바뀝니다. 이때는 문을 열지 않습니다.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="night__morning">
+    <ol class="steps" start="5">
+      <li class="step step--wide grid">
+        <p class="step__time"><time datetime="06:10">06:10</time></p>
+        <figure class="step__photo">
+          <img src="./img/dawn-1600.webp" srcset="./img/dawn-800.webp 800w, ./img/dawn-1600.webp 1600w" sizes="(min-width: 1024px) 66vw, 100vw" width="1600" height="1073" loading="lazy" alt="블라인드를 올린 1인실 창밖으로 서리 내린 논과 미루나무 줄, 안개 낀 낮은 산이 보입니다. 창가 선반에 흰 찻잔이 놓여 있습니다.">
+        </figure>
+        <div class="step__text">
+          <h3>블라인드를 올리면 들판입니다</h3>
+          <p>이슬재를 지날 무렵 해가 뜹니다. 깨워 달라고 하면 승무원이 내리기 40분 전에 문을 두 번 두드립니다.</p>
+        </div>
+      </li>
+      <li class="step step--tall grid">
+        <p class="step__time"><time datetime="06:30">06:30</time></p>
+        <div class="step__text">
+          <h3>세수하고, 아침 차와 빵</h3>
+          <p>객실마다 수건과 세면도구가 있고, 샤워실은 객차마다 하나 있습니다. 아침 차와 빵 두 개는 요금에 들어 있습니다.</p>
+        </div>
+        <figure class="step__photo">
+          <img src="./img/attendant-1200.webp" srcset="./img/attendant-720.webp 720w, ./img/attendant-1200.webp 1200w" sizes="(min-width: 1024px) 34vw, 100vw" width="1200" height="1490" loading="lazy" alt="파란 제복을 입은 승무원이 객차 복도에서 흰 수건과 파란 담요를 안고 서 있습니다.">
+        </figure>
+      </li>
+      <li class="step step--wide grid">
+        <p class="step__time"><time datetime="07:05">07:05</time></p>
+        <figure class="step__photo">
+          <img src="./img/arrival-1600.webp" srcset="./img/arrival-800.webp 800w, ./img/arrival-1600.webp 1600w" sizes="(min-width: 1024px) 66vw, 100vw" width="1600" height="1073" loading="lazy" alt="아침 햇빛이 드는 플랫폼. 파란 객차에서 내린 승객들이 가방을 들고 출구 쪽으로 걸어가고, 멀리 도시의 건물들이 보입니다.">
+        </figure>
+        <div class="step__text">
+          <h3>마파람역입니다</h3>
+          <p>역이 도심 한가운데 있어 내려서 바로 출근할 수 있습니다. 내린 뒤 한 시간 동안은 역 2층 밤차 라운지에서 씻고 짐을 맡길 수 있습니다.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="cabins sec" id="cabins" aria-labelledby="cabins-title">
+  <div class="sec__head grid">
+    <h2 class="sec__title" id="cabins-title">객실은 세 가지입니다</h2>
+    <p class="sec__desc">어느 객실이든 침구는 같습니다. 그날 세탁한 면 시트와 베개, 그리고 파란 양모 담요. 다른 것은 넓이와 문입니다.</p>
+  </div>
+
+  <article class="cabin grid" aria-labelledby="cabin-single">
+    <figure class="cabin__photo">
+      <img src="./img/cabin-single-1600.webp" srcset="./img/cabin-single-800.webp 800w, ./img/cabin-single-1600.webp 1600w" sizes="(min-width: 1024px) 58vw, 100vw" width="1600" height="1073" loading="lazy" alt="1인실을 창 쪽에서 문 쪽으로 본 모습. 왼쪽에 파란 담요를 덮은 침대와 독서등, 문 옆에 작은 세면대와 거울이 있습니다.">
+    </figure>
+    <div class="cabin__info">
+      <h3 class="cabin__name" id="cabin-single">1인실</h3>
+      <p class="cabin__one">혼자 문을 잠그고 잡니다. 세면대와 변기가 방 안에 있습니다.</p>
+      <svg class="plan" viewBox="0 0 330 220" role="img" aria-labelledby="plan-single">
+        <title id="plan-single">1인실 평면도. 바닥 가로 2.00m, 세로 1.25m. 창 쪽으로 길이 190cm, 폭 80cm 침대가 있고 문 옆에 세면대와 변기가 있습니다.</title>
+        <rect class="plan__wall" x="40" y="30" width="200" height="125"/>
+        <line class="plan__window" x1="62" y1="30" x2="218" y2="30"/>
+        <rect class="plan__bed" x="45" y="35" width="190" height="80"/>
+        <rect class="plan__blanket" x="196" y="35" width="39" height="80"/>
+        <rect class="plan__pillow" x="51" y="45" width="20" height="60" rx="4"/>
+        <rect class="plan__fix" x="205" y="122" width="30" height="28"/>
+        <circle class="plan__fix" cx="220" cy="136" r="8"/>
+        <line class="plan__door" x1="120" y1="155" x2="178" y2="155"/>
+        <text class="plan__label" x="140" y="22" text-anchor="middle">창</text>
+        <text class="plan__label" x="149" y="146" text-anchor="middle">문</text>
+        <g class="plan__dim"><line x1="40" y1="182" x2="240" y2="182"/><line x1="40" y1="176" x2="40" y2="188"/><line x1="240" y1="176" x2="240" y2="188"/><text x="140" y="204" text-anchor="middle">2.00 m</text></g>
+        <g class="plan__dim"><line x1="262" y1="30" x2="262" y2="155"/><line x1="256" y1="30" x2="268" y2="30"/><line x1="256" y1="155" x2="268" y2="155"/><text x="274" y="97">1.25 m</text></g>
+      </svg>
+      <dl class="spec">
+        <div><dt>침대</dt><dd>190 × 80 cm, 하나</dd></div>
+        <div><dt>방 안에</dt><dd>세면대, 변기, 옷걸이, 콘센트 두 개</dd></div>
+        <div><dt>한 편성에</dt><dd>객차 3량, 30실</dd></div>
+      </dl>
+      <p class="price"><span class="price__num">129,000</span><span class="price__unit">원, 한 칸</span></p>
+      <p class="price__peak">금·토 밤 149,000원</p>
+    </div>
+  </article>
+
+  <article class="cabin grid" aria-labelledby="cabin-double">
+    <figure class="cabin__photo">
+      <img src="./img/cabin-double-1600.webp" srcset="./img/cabin-double-800.webp 800w, ./img/cabin-double-1600.webp 1600w" sizes="(min-width: 1024px) 58vw, 100vw" width="1600" height="1073" loading="lazy" alt="2인실. 왼쪽 벽에 위아래 침대와 검은 사다리, 맞은편에 옷장과 창 아래 접이 탁자가 있습니다.">
+    </figure>
+    <div class="cabin__info">
+      <h3 class="cabin__name" id="cabin-double">2인실</h3>
+      <p class="cabin__one">둘이 위아래 침대에서 잡니다. 혼자 넓게 써도 값은 같습니다.</p>
+      <svg class="plan" viewBox="0 0 330 250" role="img" aria-labelledby="plan-double">
+        <title id="plan-double">2인실 평면도. 바닥 가로 2.00m, 세로 1.60m. 창 쪽으로 위아래 침대가 있고 맞은편에 옷장과 접이 탁자가 있습니다.</title>
+        <rect class="plan__wall" x="40" y="30" width="200" height="160"/>
+        <line class="plan__window" x1="62" y1="30" x2="218" y2="30"/>
+        <rect class="plan__bed" x="45" y="35" width="190" height="75"/>
+        <rect class="plan__upper" x="49" y="39" width="182" height="67"/>
+        <rect class="plan__blanket" x="196" y="35" width="39" height="75"/>
+        <rect class="plan__pillow" x="51" y="43" width="20" height="58" rx="4"/>
+        <rect class="plan__fix" x="45" y="150" width="45" height="35"/>
+        <rect class="plan__fix" x="190" y="118" width="45" height="22"/>
+        <line class="plan__door" x1="110" y1="190" x2="168" y2="190"/>
+        <text class="plan__label" x="140" y="22" text-anchor="middle">창</text>
+        <text class="plan__label" x="139" y="181" text-anchor="middle">문</text>
+        <g class="plan__dim"><line x1="40" y1="214" x2="240" y2="214"/><line x1="40" y1="208" x2="40" y2="220"/><line x1="240" y1="208" x2="240" y2="220"/><text x="140" y="236" text-anchor="middle">2.00 m</text></g>
+        <g class="plan__dim"><line x1="262" y1="30" x2="262" y2="190"/><line x1="256" y1="30" x2="268" y2="30"/><line x1="256" y1="190" x2="268" y2="190"/><text x="274" y="114">1.60 m</text></g>
+      </svg>
+      <dl class="spec">
+        <div><dt>침대</dt><dd>190 × 75 cm, 위아래 둘</dd></div>
+        <div><dt>방 안에</dt><dd>세면대, 옷장, 접이 탁자, 콘센트 네 개</dd></div>
+        <div><dt>한 편성에</dt><dd>객차 2량, 16실</dd></div>
+      </dl>
+      <p class="price"><span class="price__num">198,000</span><span class="price__unit">원, 한 칸</span></p>
+      <p class="price__peak">금·토 밤 228,000원</p>
+    </div>
+  </article>
+
+  <article class="cabin grid" aria-labelledby="cabin-four">
+    <figure class="cabin__photo">
+      <img src="./img/cabin-four-1600.webp" srcset="./img/cabin-four-800.webp 800w, ./img/cabin-four-1600.webp 1600w" sizes="(min-width: 1024px) 58vw, 100vw" width="1600" height="1073" loading="lazy" alt="4인 침대칸. 좁은 통로 양쪽에 위아래 침대가 두 개씩 마주 보고, 침대마다 회색 커튼과 독서등이 있습니다. 끝에 창과 작은 탁자가 있습니다.">
+    </figure>
+    <div class="cabin__info">
+      <h3 class="cabin__name" id="cabin-four">4인 침대칸</h3>
+      <p class="cabin__one">자리 하나를 삽니다. 침대마다 커튼과 독서등, 콘센트가 있습니다.</p>
+      <svg class="plan" viewBox="0 0 330 270" role="img" aria-labelledby="plan-four">
+        <title id="plan-four">4인 침대칸 평면도. 바닥 가로 1.90m, 세로 2.00m. 통로 양쪽에 길이 185cm, 폭 70cm 침대가 위아래로 두 개씩 있습니다.</title>
+        <rect class="plan__wall" x="40" y="30" width="190" height="200"/>
+        <line class="plan__window" x1="98" y1="30" x2="172" y2="30"/>
+        <rect class="plan__bed" x="44" y="34" width="70" height="185"/>
+        <rect class="plan__upper" x="48" y="38" width="62" height="177"/>
+        <rect class="plan__blanket" x="44" y="184" width="70" height="35"/>
+        <rect class="plan__pillow" x="54" y="40" width="50" height="18" rx="4"/>
+        <rect class="plan__bed" x="156" y="34" width="70" height="185"/>
+        <rect class="plan__upper" x="160" y="38" width="62" height="177"/>
+        <rect class="plan__blanket" x="156" y="184" width="70" height="35"/>
+        <rect class="plan__pillow" x="166" y="40" width="50" height="18" rx="4"/>
+        <rect class="plan__fix" x="118" y="34" width="34" height="18"/>
+        <line class="plan__door" x1="116" y1="230" x2="154" y2="230"/>
+        <text class="plan__label" x="135" y="22" text-anchor="middle">창</text>
+        <text class="plan__label" x="135" y="221" text-anchor="middle">문</text>
+        <g class="plan__dim"><line x1="40" y1="250" x2="230" y2="250"/><line x1="40" y1="244" x2="40" y2="256"/><line x1="230" y1="244" x2="230" y2="256"/><text x="135" y="268" text-anchor="middle">1.90 m</text></g>
+        <g class="plan__dim"><line x1="252" y1="30" x2="252" y2="230"/><line x1="246" y1="30" x2="258" y2="30"/><line x1="246" y1="230" x2="258" y2="230"/><text x="264" y="134">2.00 m</text></g>
+      </svg>
+      <dl class="spec">
+        <div><dt>침대</dt><dd>185 × 70 cm, 위아래 넷</dd></div>
+        <div><dt>칸 안에</dt><dd>침대마다 커튼, 독서등, 콘센트 하나</dd></div>
+        <div><dt>한 편성에</dt><dd>객차 3량, 108자리, 여성 전용 칸 따로</dd></div>
+      </dl>
+      <p class="price"><span class="price__num">59,000</span><span class="price__unit">원, 한 자리</span></p>
+      <p class="price__peak">금·토 밤 69,000원</p>
+    </div>
+  </article>
+</section>
+
+<section class="route sec" id="route" aria-labelledby="route-title">
+  <div class="sec__head grid">
+    <h2 class="sec__title" id="route-title">412km, 다섯 역</h2>
+    <p class="sec__desc">고속선 대신 화물열차가 다니지 않는 옛 일반선을 씁니다. 곧고 평평한 구간을 골라 평균 시속 52km로 천천히 달립니다. 타는 역은 자정 전에만, 내리는 역은 새벽 6시 뒤에만 섭니다.</p>
+  </div>
+
+  <div class="route__map grid">
+    <svg class="map" viewBox="0 0 1200 380" aria-hidden="true">
+      <path class="map__line" d="M60 120 H300 L380 200 H760 L840 120 H1140"/>
+      <path class="map__quiet" d="M410 200 H730"/>
+      <g class="map__stop map__stop--end"><circle cx="60" cy="120" r="14"/></g>
+      <g class="map__stop map__stop--half"><circle cx="300" cy="120" r="11"/></g>
+      <g class="map__stop map__stop--pass"><rect x="560" y="190" width="20" height="20" transform="rotate(45 570 200)"/></g>
+      <g class="map__stop map__stop--half"><circle cx="840" cy="120" r="11"/></g>
+      <g class="map__stop map__stop--end"><circle cx="1140" cy="120" r="14"/></g>
+      <text class="map__name" x="60" y="86">높바람</text>
+      <text class="map__km" x="60" y="34">0 km</text>
+      <text class="map__name" x="300" y="86" text-anchor="middle">달무리</text>
+      <text class="map__km" x="300" y="34" text-anchor="middle">61 km</text>
+      <text class="map__name" x="570" y="262" text-anchor="middle">고요목</text>
+      <text class="map__km" x="570" y="288" text-anchor="middle">208 km</text>
+      <text class="map__name" x="840" y="86" text-anchor="middle">이슬재</text>
+      <text class="map__km" x="840" y="34" text-anchor="middle">349 km</text>
+      <text class="map__name" x="1140" y="86" text-anchor="end">마파람</text>
+      <text class="map__km" x="1140" y="34" text-anchor="end">412 km</text>
+      <text class="map__note" x="570" y="176" text-anchor="middle">00:00–06:00 문을 열지 않는 구간</text>
+      <text class="map__dir" x="60" y="172">↓ 1호 남쪽으로</text>
+      <text class="map__dir" x="1140" y="172" text-anchor="end">2호 북쪽으로 ↑</text>
+    </svg>
+  </div>
+
+  <div class="route__table grid">
+    <table class="stations">
+      <caption class="sr-only">정차역과 시각. 1호는 높바람에서 마파람으로, 2호는 마파람에서 높바람으로 갑니다.</caption>
+      <thead>
+        <tr><th scope="col">역</th><th scope="col">높바람에서</th><th scope="col">1호 남쪽으로</th><th scope="col">2호 북쪽으로</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row"><span class="mark mark--end" aria-hidden="true"></span>높바람</th><td>0 km</td><td><b>23:05</b> 출발</td><td><b>07:15</b> 도착</td></tr>
+        <tr><th scope="row"><span class="mark mark--half" aria-hidden="true"></span>달무리</th><td>61 km</td><td><b>23:56</b> 타기만</td><td><b>06:08</b> 내리기만</td></tr>
+        <tr><th scope="row"><span class="mark mark--pass" aria-hidden="true"></span>고요목</th><td>208 km</td><td><b>02:10–02:55</b> 멈춤, 문 닫힘</td><td><b>02:20–03:05</b> 멈춤, 문 닫힘</td></tr>
+        <tr><th scope="row"><span class="mark mark--half" aria-hidden="true"></span>이슬재</th><td>349 km</td><td><b>05:58</b> 내리기만</td><td><b>23:58</b> 타기만</td></tr>
+        <tr><th scope="row"><span class="mark mark--end" aria-hidden="true"></span>마파람</th><td>412 km</td><td><b>07:05</b> 도착</td><td><b>23:10</b> 출발</td></tr>
+      </tbody>
+    </table>
+    <ul class="legend">
+      <li><span class="mark mark--end" aria-hidden="true"></span>타고 내리는 역</li>
+      <li><span class="mark mark--half" aria-hidden="true"></span>타기만 하거나 내리기만 하는 역</li>
+      <li><span class="mark mark--pass" aria-hidden="true"></span>멈추지만 문을 열지 않는 역</li>
+    </ul>
+  </div>
+</section>
+
+<section class="why sec" id="why" aria-labelledby="why-title">
+  <div class="sec__head grid">
+    <h2 class="sec__title" id="why-title">잠든 시간에 갑니다</h2>
+    <p class="sec__desc">높바람 시청 앞에서 마파람 시청 앞까지, 평일 저녁에 떠나는 경우를 다른 방법과 견주어 보았습니다.</p>
+  </div>
+
+  <div class="cmp grid">
+    <div class="cmp__head">
+      <h3>깨어서 길에 쓰는 시간</h3>
+      <p class="cmp__big">40<span>분</span></p>
+      <p>역까지 가는 길과 내린 뒤 걷는 길만 셉니다. 나머지 여덟 시간은 잡니다.</p>
+    </div>
+    <ul class="bars" aria-label="깨어서 길에 쓰는 시간">
+      <li style="--v:1"><span class="bars__label">자동차</span><span class="bars__bar"></span><span class="bars__val">5시간 10분</span></li>
+      <li style="--v:.71"><span class="bars__label">비행기</span><span class="bars__bar"></span><span class="bars__val">3시간 40분</span></li>
+      <li style="--v:.6"><span class="bars__label">고속열차</span><span class="bars__bar"></span><span class="bars__val">3시간 5분</span></li>
+      <li class="is-us" style="--v:.13"><span class="bars__label">밤차</span><span class="bars__bar"></span><span class="bars__val">40분</span></li>
+    </ul>
+  </div>
+
+  <div class="cmp grid">
+    <div class="cmp__head">
+      <h3>한 사람 편도 이산화탄소</h3>
+      <p class="cmp__big">9<span>kg</span></p>
+      <p>비행기의 8분의 1 정도입니다. 기관차는 전기로 달립니다.</p>
+    </div>
+    <ul class="bars" aria-label="한 사람 편도 이산화탄소">
+      <li style="--v:1"><span class="bars__label">비행기</span><span class="bars__bar"></span><span class="bars__val">74 kg</span></li>
+      <li style="--v:.85"><span class="bars__label">자동차, 혼자</span><span class="bars__bar"></span><span class="bars__val">63 kg</span></li>
+      <li style="--v:.135"><span class="bars__label">고속열차</span><span class="bars__bar"></span><span class="bars__val">10 kg</span></li>
+      <li class="is-us" style="--v:.122"><span class="bars__label">밤차</span><span class="bars__bar"></span><span class="bars__val">9 kg</span></li>
+    </ul>
+  </div>
+
+  <div class="cmp grid">
+    <div class="cmp__head">
+      <h3>하룻밤 묵는 값까지 치면</h3>
+      <p class="cmp__big">85,000<span>원</span></p>
+      <p>저녁 비행기와 도심 호텔 하룻밤보다 1인실이 이만큼 덜 듭니다.</p>
+    </div>
+    <ul class="bars" aria-label="한 사람 하룻밤 비용">
+      <li style="--v:1"><span class="bars__label">비행기와 호텔</span><span class="bars__bar"></span><span class="bars__val">214,000원</span></li>
+      <li class="is-us" style="--v:.603"><span class="bars__label">밤차 1인실</span><span class="bars__bar"></span><span class="bars__val">129,000원</span></li>
+      <li class="is-us" style="--v:.276"><span class="bars__label">밤차 4인 침대칸</span><span class="bars__bar"></span><span class="bars__val">59,000원</span></li>
+    </ul>
+  </div>
+
+  <p class="why__method grid"><span>시간은 지도 앱의 평일 저녁 경로 평균, 비행기는 공항 오가는 길과 수속을 포함했습니다. 이산화탄소는 연료와 전력 사용량을 승객 수로 나눈 값이고, 밤차는 지난 1년 운행 기록(평균 승차율 81%)으로 셈했습니다. 비행기 값은 지난 1년 평일 평균 96,000원, 호텔은 마파람 도심 평균 118,000원입니다.</span></p>
+</section>
+
+<section class="company sec" id="company" aria-labelledby="company-title">
+  <div class="sec__head grid">
+    <h2 class="sec__title" id="company-title">밤기차를 다시 띄운 사람들</h2>
+  </div>
+
+  <div class="story grid">
+    <p class="story__lead">높바람과 마파람 사이 마지막 밤기차는 2011년에 끊겼습니다. 비행기로 한 시간이면 가는 길에 여덟 시간짜리 열차를 탈 사람은 없다는 이유였습니다.</p>
+    <p class="story__body">2023년, 그 열차의 객차를 정비하던 윤도경이 거꾸로 생각해 보았습니다. 여덟 시간이 아니라 하룻밤이라고 부르면 어떨까. 호텔에서 객실을 맡던 서하린과 항공 예약 시스템을 만들던 마준우가 합류했고, 셋은 폐차를 앞둔 침대 객차 열여덟 량을 사서 1년 반 동안 다시 지었습니다. 첫 열차는 2025년 10월 1일 밤에 떠났습니다.</p>
+  </div>
+
+  <ul class="people grid">
+    <li class="person">
+      <img src="./img/founder-yoon-720.webp" srcset="./img/founder-yoon-400.webp 400w, ./img/founder-yoon-720.webp 720w" sizes="(min-width: 760px) 28vw, 100vw" width="720" height="894" loading="lazy" alt="회색 작업복을 입은 윤도경이 파란 객차 옆면 앞에 서 있습니다.">
+      <h3>윤도경</h3>
+      <p class="person__role">대표</p>
+      <p>철도 차량 정비 18년. 객차의 바퀴와 브레이크, 그리고 흔들림을 맡습니다.</p>
+    </li>
+    <li class="person">
+      <img src="./img/founder-seo-720.webp" srcset="./img/founder-seo-400.webp 400w, ./img/founder-seo-720.webp 720w" sizes="(min-width: 760px) 28vw, 100vw" width="720" height="894" loading="lazy" alt="흰 셔츠에 회색 카디건을 입은 서하린이 파란 객차 옆면 앞에 서 있습니다.">
+      <h3>서하린</h3>
+      <p class="person__role">객실과 서비스</p>
+      <p>비즈니스호텔 객실 운영 11년. 침구와 승무원, 아침 차를 맡습니다.</p>
+    </li>
+    <li class="person">
+      <img src="./img/founder-ma-720.webp" srcset="./img/founder-ma-400.webp 400w, ./img/founder-ma-720.webp 720w" sizes="(min-width: 760px) 28vw, 100vw" width="720" height="894" loading="lazy" alt="검은 스웨터에 안경을 쓴 마준우가 파란 객차 옆면 앞에 서 있습니다.">
+      <h3>마준우</h3>
+      <p class="person__role">운행과 예약</p>
+      <p>항공 예약 시스템 개발 9년. 시각표와 요금, 예약을 맡습니다.</p>
+    </li>
+  </ul>
+
+  <dl class="year grid">
+    <div><dt>첫 1년 손님</dt><dd>41,300명</dd></div>
+    <div><dt>5분 안에 도착한 비율</dt><dd>96.8%</dd></div>
+    <div><dt>객차</dt><dd>18량, 두 편성</dd></div>
+    <div><dt>함께 일하는 사람</dt><dd>62명</dd></div>
+  </dl>
+
+  <div class="money grid">
+    <h3>투자</h3>
+    <p>2024년 시드 투자는 개인 투자자 열한 명이 함께했습니다. 2026년 3월 시리즈 A 85억 원은 들녘벤처스가 이끌고 곧은길파트너스가 참여했습니다. 이 돈으로 2027년 봄에 세 번째 편성을 들여옵니다.</p>
+  </div>
+
+  <div class="jobs grid">
+    <h3 class="jobs__title">함께 일할 사람을 찾습니다</h3>
+    <ul class="jobs__list">
+      <li><span class="jobs__name">객실 승무원</span><span class="jobs__where">높바람, 마파람</span><span class="jobs__when">밤 근무, 주 3–4회</span></li>
+      <li><span class="jobs__name">차량 정비사</span><span class="jobs__where">높바람 차량기지</span><span class="jobs__when">낮 근무</span></li>
+      <li><span class="jobs__name">운행 관리자</span><span class="jobs__where">높바람 본사</span><span class="jobs__when">교대 근무</span></li>
+      <li><span class="jobs__name">예약 시스템 개발자</span><span class="jobs__where">높바람 본사 또는 원격</span><span class="jobs__when">낮 근무</span></li>
+    </ul>
+    <p class="jobs__note">가상 회사라서 이 페이지로는 지원을 받지 않습니다.</p>
+  </div>
+</section>
+
+<section class="book sec" id="book" aria-labelledby="book-title">
+  <div class="sec__head grid">
+    <h2 class="sec__title" id="book-title">자리 고르기</h2>
+    <p class="sec__desc demo-note">이 예약 칸은 데모입니다. 무엇을 눌러도 아무 데도 보내지 않고, 예약도 만들어지지 않습니다.</p>
+  </div>
+
+  <form class="book__form grid" data-book novalidate>
+    <div class="book__fields">
+      <fieldset class="field">
+        <legend>방향</legend>
+        <div class="choice">
+          <label><input type="radio" name="train" value="1" checked><span><b>높바람 → 마파람</b><small>1호, 23:05 출발</small></span></label>
+          <label><input type="radio" name="train" value="2"><span><b>마파람 → 높바람</b><small>2호, 23:10 출발</small></span></label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label class="field__label" for="book-date">출발하는 밤</label>
+        <select id="book-date" name="date" data-book-date></select>
+      </div>
+
+      <fieldset class="field">
+        <legend>객실</legend>
+        <div class="choice choice--3">
+          <label><input type="radio" name="cabin" value="single" checked><span><b>1인실</b><small data-cabin-price="single">129,000원</small></span></label>
+          <label><input type="radio" name="cabin" value="double"><span><b>2인실</b><small data-cabin-price="double">198,000원</small></span></label>
+          <label><input type="radio" name="cabin" value="couchette"><span><b>4인 침대칸</b><small data-cabin-price="couchette">59,000원</small></span></label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <span class="field__label" id="pax-label">사람</span>
+        <div class="stepper" role="group" aria-labelledby="pax-label">
+          <button type="button" data-pax="-1" aria-label="한 명 빼기">−</button>
+          <output data-pax-out aria-live="polite">1명</output>
+          <button type="button" data-pax="1" aria-label="한 명 더하기">+</button>
+        </div>
+        <p class="field__help" data-pax-help>1인실은 한 명이 씁니다.</p>
+      </div>
+    </div>
+
+    <aside class="sum" aria-labelledby="sum-title">
+      <h3 class="sum__title" id="sum-title">고른 내용</h3>
+      <p class="sum__date" data-sum-date>오늘 밤</p>
+      <p class="sum__times"><span class="sum__leg"><span data-sum-from>높바람</span> <b data-sum-dep>23:05</b></span> <span class="sum__leg"><span class="sum__arrow" aria-hidden="true">→</span> <span data-sum-to>마파람</span> <b data-sum-arr>07:05</b></span></p>
+      <p class="sum__what" data-sum-what>1인실 한 칸, 1명</p>
+      <p class="sum__total"><span class="sum__num" data-sum-total>129,000</span><span>원</span></p>
+      <p class="sum__left" data-sum-left></p>
+      <button class="btn btn--solid sum__go" type="submit">예약 내용 확인</button>
+      <p class="sum__status" role="status" data-book-status></p>
+    </aside>
+  </form>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot__in grid">
+    <p class="foot__mark" aria-hidden="true">밤차</p>
+    <div class="foot__col foot__col--a">
+      <h2 class="foot__h">고객센터</h2>
+      <p>밤 9시부터 아침 9시까지, 열차가 다니는 시간에 맞춰 엽니다.</p>
+    </div>
+    <div class="foot__col foot__col--b">
+      <h2 class="foot__h">본사</h2>
+      <p>높바람시 차고지길 12</p>
+      <p class="foot__note">가상 서비스입니다. 실제 주소가 아닙니다.</p>
+    </div>
+    <p class="foot__legal">주식회사 밤차. 가상 서비스입니다. zanviq gallery 작품.</p>
+  </div>
+</footer>
+
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>

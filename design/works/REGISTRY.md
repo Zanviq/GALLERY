@@ -44,7 +44,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 
 | slug | category · platform | concept | signature | palette | fonts | status |
 |---|---|---|---|---|---|---|
-| nighttrain | 홈페이지 · desktop+mobile | 밤차: 야간 침대열차 스타트업 (가상 도시 간) | 출발 시각표를 타이포그래피로, 선 노선도, 생성 사진 | agent picks with reason | Gowun Batang, Orbit | building |
+| nighttrain | 홈페이지 · desktop+mobile | 밤차: 야간 침대열차 스타트업 (높바람 23:05 → 마파람 07:05) | 출발 시각표를 타이포그래피로, 선 노선도, 생성 사진 | train/blanket blue #1B2F6E, timetable white #FFFFFF, dawn frost #E4EAF1, ink #0F1626 | Gowun Batang, Orbit | registered |
 | ramen | 홈페이지 · desktop+mobile | 작은 식품 스타트업의 새 봉지라면 | 맛마다 재료 색 면, 포장 앞면을 평면 타이포로, 생성 음식 사진 | one field per flavour from its ingredient | Black Han Sans, Gowun Dodum | building |
 | sculpture | 홍보 · desktop+mobile | 《닳다》 탁은결 개인전, 모롱시립미술관 (worn places cast as terrazzo) | 전시 포스터 + 도록식 작품 목록, 생성 전시 사진 | bottle-glass green #1E9A47, black #0A0A0A, white | Noto Serif KR 200/400/900 + Schibsted Grotesk | registered |
 | marathon | (row 15 above, re-planned) | | | | | building |
