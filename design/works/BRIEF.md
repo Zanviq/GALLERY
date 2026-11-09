@@ -96,7 +96,7 @@ not be banned or already used; report it.
   check but had a margin label sitting on top of the first letter of a line at 390px wide.
 - Each work invents its own town/place names. Already taken: 여울시, 초롱골, 돋보기길 (optician);
   새물시, 느릅마루, 종달샘, 빗물터, 솔바위 (laundry); 미리내구, 등사로 (riso);
-  물굽이시, 모래뜸 (futsal); 겹뜰시, 나란히마을, 볕뉘로 (quiet-floors); 솔메시, 부엉재 (observatory).
+  물굽이시, 모래뜸 (futsal); 겹뜰시, 나란히마을, 볕뉘로 (quiet-floors); 솔메시, 부엉재 (observatory); 볕드리시, 맞바라기길 (idphoto).
 - Font licences: if a family's OFL declares a Reserved Font Name, a subset counts as a modified
   version, so rename the subset family in the font file's name table AND in every CSS/JS/canvas
   reference (laundry did this). This applies to EVERY Nanum family including the Google Fonts builds

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>idphoto og (dev)</title>
+<link rel="stylesheet" href="../../../works/idphoto/css/fonts.css">
+<style>
+  html, body { margin: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; background: #B9D3EA; color: #101214; position: relative; }
+  .word { position: absolute; left: 70px; top: 176px; font: 400 98px/1 'Song Myung'; letter-spacing: -0.01em; }
+  .sub { position: absolute; left: 74px; top: 316px; font: 500 28px/1.45 'Noto Sans KR'; }
+  .small { position: absolute; left: 74px; top: 446px; font: 500 21px/1.5 'Noto Sans KR'; }
+  .rule { position: absolute; left: 74px; top: 426px; width: 64px; height: 3px; background: #101214; }
+  svg { position: absolute; left: 604px; top: 135px; width: 540px; height: 360px; overflow: visible; }
+</style>
+</head>
+<body>
+<div class="word">정면사진관</div>
+<div class="sub">여권, 주민등록증, 운전면허,<br>비자, 취업용 반명함.</div>
+<div class="rule"></div>
+<div class="small">규격은 저희가 외우고 있습니다.</div>
+<svg id="sheet" viewBox="0 0 152.4 101.6" aria-hidden="true"></svg>
+<script type="module">
+  import { SITTERS, shapes, toSVG, landmarks } from '../../../works/idphoto/js/sitter.js';
+  import { byId } from '../../../works/idphoto/js/formats.js';
+  const F = byId('passport'), sp = SITTERS[0], L = landmarks(sp);
+  const s = 0.34, eyeTop = 20;
+  const cy = L.eyeY - (eyeTop - F.h / 2) / s;
+  const person = toSVG(shapes(sp));
+  const mx = (152.4 - 4 * F.w) / 2, my = (101.6 - 2 * F.h) / 2;
+  let out = `<defs><clipPath id="c"><rect width="${F.w}" height="${F.h}"/></clipPath>
+    <filter id="sh" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx="0" dy="1.6" stdDeviation="1.8" flood-color="#101214" flood-opacity=".32"/></filter></defs>`;
+  out += `<rect width="152.4" height="101.6" fill="#FFFFFF" filter="url(#sh)"/>`;
+  for (let r = 0; r < 2; r++) for (let c = 0; c < 4; c++) {
+    out += `<g transform="translate(${mx + c * F.w} ${my + r * F.h})" clip-path="url(#c)"><rect width="${F.w}" height="${F.h}" fill="#FFFFFF"/>` +
+      `<g transform="translate(${F.w / 2} ${F.h / 2}) scale(${s}) translate(0 ${-cy})">${person}</g></g>`;
+  }
+  const bw = 4 * F.w, bh = 2 * F.h, d = [], t = [];
+  for (let r = 0; r <= 2; r++) { const y = my + r * F.h; d.push(`M${mx} ${y}H${mx + bw}`); t.push(`M${mx - 3} ${y}H${mx - 0.8}M${mx + bw + 0.8} ${y}H${mx + bw + 3}`); }
+  for (let c = 0; c <= 4; c++) { const x = mx + c * F.w; d.push(`M${x} ${my}V${my + bh}`); t.push(`M${x} ${my - 3}V${my - 0.8}M${x} ${my + bh + 0.8}V${my + bh + 3}`); }
+  out += `<path d="${d.join('')}" stroke="#101214" stroke-width=".22" stroke-dasharray="1 .8" fill="none"/>`;
+  out += `<path d="${t.join('')}" stroke="#101214" stroke-width=".22" fill="none"/>`;
+  // the trimmer has run the first line and rests at its end
+  out += `<path d="M0 ${my}H${152.4 - 6}" stroke="#101214" stroke-width=".4"/>`;
+  out += `<circle cx="${152.4 - 6}" cy="${my}" r="2.1" fill="#FFFFFF" stroke="#101214" stroke-width=".4"/><circle cx="${152.4 - 6}" cy="${my}" r=".6" fill="#101214"/>`;
+  out += `<text x="${mx}" y="${101.6 - (my - 3) / 2 + 0.1}" font-family="Noto Sans KR" font-weight="500" font-size="1.9" dominant-baseline="middle" fill="#101214">정면사진관   여권 3.5 × 4.5 cm   8컷</text>`;
+  document.getElementById('sheet').innerHTML = out;
+  document.fonts.ready.then(() => document.body.setAttribute('data-ready', ''));
+</script>
+</body>
+</html>

@@ -124,5 +124,14 @@
     "tags": ["interaction", "mobile", "canvas", "physics", "animation"],
     "thumbnail": "thumbnails/sand.webp",
     "year": 2026
+  },
+  {
+    "slug": "idphoto",
+    "title": "정면사진관",
+    "type": "internal",
+    "url": "idphoto/",
+    "tags": ["landing", "interaction", "canvas", "svg", "brand"],
+    "thumbnail": "thumbnails/idphoto.webp",
+    "year": 2026
   }
 ]
