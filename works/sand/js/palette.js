@@ -18,7 +18,10 @@ function hash(n) {
   return (x >>> 0) / 4294967296;
 }
 
-/** 32 shades per sand: 28 ordinary grains, 2 darker specks, 2 bare-quartz specks. */
+/**
+ * 32 shades per sand: 28 ordinary grains, 2 darker specks, 2 bare-quartz specks.
+ * Dye coats each grain a little differently: lightness and a slight hue drift per grain.
+ */
 export function shadesFor(colour) {
   const base = rgb(SANDS[colour].hex);
   const white = colour === 5;
@@ -26,14 +29,14 @@ export function shadesFor(colour) {
   for (let s = 0; s < 32; s++) {
     let c;
     if (s < 28) {
-      const f = 0.92 + 0.15 * hash(colour * 97 + s);               // lightness jitter
-      c = base.map((v, k) => v * f + (hash(colour * 131 + s * 7 + k) - 0.5) * 12);
-      if (white) c = c.map((v, k) => v - 10 * hash(colour * 17 + s) - (k === 2 ? 0 : 3));
+      const f = 0.86 + 0.24 * hash(colour * 97 + s);                 // lightness, about +-12%
+      c = base.map((v, k) => v * f + (hash(colour * 131 + s * 7 + k) - 0.5) * 22);
+      if (white) c = c.map((v, k) => v - 14 * hash(colour * 17 + s) - (k === 2 ? 0 : 4));
     } else if (s < 30) {
-      const f = s === 28 ? 0.78 : 0.7;
-      c = white ? [200, 206, 212].map((v) => v - (s - 28) * 14) : base.map((v) => v * f);
+      const f = s === 28 ? 0.72 : 0.62;
+      c = white ? [196, 202, 208].map((v) => v - (s - 28) * 16) : base.map((v) => v * f);
     } else {
-      const m = s === 30 ? 0.2 : 0.3;
+      const m = s === 30 ? 0.3 : 0.42;
       c = white ? [255, 255, 255] : base.map((v) => v + (255 - v) * m);
     }
     out.push(c.map(clamp));
@@ -41,22 +44,20 @@ export function shadesFor(colour) {
   return out;
 }
 
-/** 256-entry lookup from cell byte to an ABGR pixel (little-endian ImageData). */
+/**
+ * Lookup from (cell byte << 3 | edge shade) to an ABGR pixel (little-endian ImageData).
+ * Edge shade 0..7 darkens sand seen through the curve of the glass by up to 45%.
+ * Bytes 0 (empty) and 255 (glass/outside) stay transparent.
+ */
 export function buildLut() {
-  const lut = new Uint32Array(256);
+  const lut = new Uint32Array(256 * 8);
   for (let c = 1; c <= 5; c++) {
     shadesFor(c).forEach(([r, g, b], s) => {
-      lut[c * 32 + s] = (255 << 24 | b << 16 | g << 8 | r) >>> 0;
+      for (let k = 0; k < 8; k++) {
+        const f = 1 - 0.45 * (k / 7);
+        lut[((c * 32 + s) << 3) | k] = ((255 << 24) | (clamp(b * f) << 16) | (clamp(g * f) << 8) | clamp(r * f)) >>> 0;
+      }
     });
   }
-  return lut;   // 0 (empty) and 255 (glass/outside) stay transparent
-}
-
-/** CSS colour strings for a cell byte, used for falling grains drawn one by one. */
-export function buildCss() {
-  const css = new Array(256).fill('');
-  for (let c = 1; c <= 5; c++) {
-    shadesFor(c).forEach(([r, g, b], s) => { css[c * 32 + s] = `rgb(${r},${g},${b})`; });
-  }
-  return css;
+  return lut;
 }

@@ -4,27 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>색모래 병</title>
-<meta name="description" content="물들인 공예 모래를 골라 유리병에 붓고, 휴대폰을 기울여 물결 층을 만드는 페이지예요. 가득 차면 코르크로 막고 그림으로 저장해요. 가상 모래 공예예요.">
+<meta name="description" content="물들인 공예 모래를 유리병에 붓고, 휴대폰을 기울여 물결 층을 쌓는 페이지예요. 가득 차면 코르크로 막아 햇빛 드는 창가에 세워 두고 사진으로 저장해요. 가상 모래 공예예요.">
 <meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="zanviq gallery">
 <meta property="og:title" content="색모래 병">
-<meta property="og:description" content="모래를 골라 붓고, 병을 기울여 물결을 만들어요. 가상 모래 공예예요.">
+<meta property="og:description" content="색모래를 유리병에 붓고 기울여 물결 층을 쌓아요. 코르크로 막으면 창가에 세워 둬요. 가상 모래 공예예요.">
 <meta property="og:image" content="https://gallery.zanviq.dev/og/sand.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://gallery.zanviq.dev/sand/">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
 <link rel="preload" href="./fonts/bwp.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./img/bottle-back.webp" as="image" type="image/webp">
 <link rel="stylesheet" href="./css/fonts.css">
 <link rel="stylesheet" href="./css/site.css">
 <script>
   document.documentElement.classList.add('js');
   if (/[?&]capture/.test(location.search)) document.documentElement.classList.add('capture');
+  (function () {
+    var card = /[?&]card=(thumb|og)/.exec(location.search);
+    if (card) document.documentElement.classList.add('capture', 'card', 'card--' + card[1]);
+  })();
 </script>
 <script type="module" src="./js/main.js"></script>
 <script src="/shared/back.js" data-position="top-right" data-theme="dark" defer></script>
@@ -34,16 +38,23 @@
   <main class="app">
     <header class="head">
       <h1 class="title">색모래 병</h1>
-      <p class="lead">모래를 골라 붓고, 병을 기울여 물결을 만들어요.</p>
+      <p class="lead">색모래를 붓고 병을 기울여 물결 층을 쌓아요.</p>
       <p class="status" aria-live="polite"><span data-status-text></span> <button class="undo" type="button" data-undo hidden>되돌리기</button></p>
     </header>
 
     <div class="stage" data-stage>
-      <canvas class="stage__canvas" data-canvas role="img" aria-label="빈 유리병이에요."></canvas>
+      <div class="bottle" data-bottle>
+        <img class="bottle__layer" src="./img/bottle-back.webp" alt="" width="600" height="1204" fetchpriority="high">
+        <canvas class="bottle__sand" data-canvas role="img" aria-label="유리병이에요."></canvas>
+        <img class="bottle__layer" src="./img/bottle-front.webp" alt="" width="600" height="1204">
+        <img class="bottle__cork" src="./img/cork.webp" alt="" width="174" height="164" data-cork-img hidden>
+      </div>
+      <img class="held" src="./img/jar-1.webp" alt="" width="240" height="337" data-held>
+      <canvas class="finish" data-finish role="img" aria-label=""></canvas>
       <p class="stage__fallback" data-fallback hidden>이 브라우저에서는 모래를 그릴 수 없어요.</p>
       <section class="sensor" data-sensor hidden aria-labelledby="sensor-title">
         <h2 class="sensor__title" id="sensor-title">휴대폰을 기울여서 부을까요?</h2>
-        <p class="sensor__text">움직임 센서를 켜면 기울인 쪽으로 모래가 쌓이고, 흔들면 위층이 섞여요. 기울기와 흔들림만 읽고, 어디로도 보내지 않아요.</p>
+        <p class="sensor__text">기울기만 읽고, 어디로도 안 보내요.</p>
         <div class="sensor__actions">
           <button class="btn btn--fill" type="button" data-sensor-on>센서 켜기</button>
           <button class="btn" type="button" data-sensor-off>버튼으로 할게요</button>
@@ -54,11 +65,11 @@
     <div class="deck">
       <div class="deck__panel deck__panel--fill" data-panel="fill">
         <div class="rack" role="group" aria-label="모래 고르기">
-          <button class="jar" type="button" data-jar="1" aria-pressed="true"><canvas class="jar__pic" aria-hidden="true"></canvas><span class="jar__name">진분홍</span></button>
-          <button class="jar" type="button" data-jar="2" aria-pressed="false"><canvas class="jar__pic" aria-hidden="true"></canvas><span class="jar__name">노랑</span></button>
-          <button class="jar" type="button" data-jar="3" aria-pressed="false"><canvas class="jar__pic" aria-hidden="true"></canvas><span class="jar__name">파랑</span></button>
-          <button class="jar" type="button" data-jar="4" aria-pressed="false"><canvas class="jar__pic" aria-hidden="true"></canvas><span class="jar__name">연두</span></button>
-          <button class="jar" type="button" data-jar="5" aria-pressed="false"><canvas class="jar__pic" aria-hidden="true"></canvas><span class="jar__name">하양</span></button>
+          <button class="jar" type="button" data-jar="1" aria-pressed="true"><img class="jar__pic" src="./img/jar-1.webp" alt="" width="240" height="337"><span class="jar__name">진분홍</span></button>
+          <button class="jar" type="button" data-jar="2" aria-pressed="false"><img class="jar__pic" src="./img/jar-2.webp" alt="" width="240" height="337"><span class="jar__name">노랑</span></button>
+          <button class="jar" type="button" data-jar="3" aria-pressed="false"><img class="jar__pic" src="./img/jar-3.webp" alt="" width="240" height="337"><span class="jar__name">파랑</span></button>
+          <button class="jar" type="button" data-jar="4" aria-pressed="false"><img class="jar__pic" src="./img/jar-4.webp" alt="" width="240" height="337"><span class="jar__name">연두</span></button>
+          <button class="jar" type="button" data-jar="5" aria-pressed="false"><img class="jar__pic" src="./img/jar-5.webp" alt="" width="240" height="337"><span class="jar__name">하양</span></button>
         </div>
         <div class="pour-row">
           <button class="btn btn--icon" type="button" data-tilt="-1" aria-label="왼쪽으로 기울이기">
@@ -75,12 +86,13 @@
           <button class="btn" type="button" data-shake>흔들기</button>
           <button class="btn" type="button" data-instant>바로 쌓기</button>
           <button class="btn" type="button" data-empty>비우기</button>
+          <button class="btn btn--toggle" type="button" data-sound aria-pressed="true">소리 켬</button>
         </div>
       </div>
       <div class="deck__panel deck__panel--done" data-panel="done" hidden>
-        <button class="btn btn--fill btn--big" type="button" data-save>그림으로 저장</button>
+        <button class="btn btn--fill btn--big" type="button" data-save>사진으로 저장</button>
         <button class="btn btn--big" type="button" data-new>새 병</button>
-        <p class="done__note">그림은 이 기기 안에서 만들어요. 어디로도 보내지 않아요.</p>
+        <p class="done__note">사진은 이 기기 안에서 만들어요. 어디로도 보내지 않아요.</p>
       </div>
     </div>
 

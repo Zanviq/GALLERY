@@ -94,7 +94,7 @@
     "title": "색모래 병",
     "type": "internal",
     "url": "sand/",
-    "tags": ["interaction", "mobile", "canvas", "physics", "animation"],
+    "tags": ["interaction", "mobile", "canvas", "physics", "audio", "animation"],
     "thumbnail": "thumbnails/sand.webp",
     "year": 2026
   },

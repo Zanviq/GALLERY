@@ -38,7 +38,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | 19 | paperboat | 게임 · desktop+mobile | 빗물 도랑의 종이배 | 종이배를 좌우로 몰아 낙엽·하수구 피하기, 3D를 그림책 인쇄처럼 바꾸는 후처리 필수 | 젖은 아스팔트 회색, 종이 흰색, 잉크 청흑, 강조 1색 (금지 목록 밖) | Yeon Sung | parked |
 | 20 | curtain | 홍보 · desktop+mobile | 백열극장이 다시 엽니다 (98석 지하 극장 재개관 2027-03-12, 고스트 라이트) | (2026-11-10 개정) 생성 벨벳 사진을 천 시뮬레이션으로 끌어 열면 전구 하나 켜진 무대와 재개관 시즌 포스터. 찢기 제거 | 에메랄드 벨벳 #0D5C47, 검정 #000000, 차가운 흰색 #F4F7F6 | Grandiflora One, SUIT (subset renamed Baekyeol Sans) | registered |
 | 21 | shadowplay | 인터랙션 · desktop+mobile | 종이 그림자극 | 광원을 끌면 종이 인형 그림자가 실시간으로 늘고 줄어듦 (2D 가시 다각형), 장면 꾸미기 | 청사진 프러시안 블루 #10335A, 흰색 | Moirai One, Gamja Flower | deleted |
-| 22 | sand | 인터랙션 · mobile-only | 색모래 병 | 폰을 기울여 색모래를 부어 층 쌓기, 흔들면 섞임 (falling-sand) | 원색 모래층(마젠타·코발트·라임·노랑·흰색), 검은 유리 | Black And White Picture | registered |
+| 22 | sand | 인터랙션 · mobile-only | 색모래 병 | (2026-11-10 개정) 생성 유리병 사진 두 겹 사이에 고운 모래 시뮬레이션(약 9.7만 알), 부을 때 모래 줄기·사태, 코르크 후 햇빛 창턱 사진에 내 모래를 합성해 저장 | 원색 모래층(#E4007F·#FFE419·#1F4FE0·#6CCB2A·#F2F4F5), 검정 바탕 | Black And White Picture | registered |
 
 ## Third-review batch (2026-11-10, BRIEF §00): 2 homepages, 2 promos, 1 game
 
@@ -50,7 +50,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | marathon | (row 15 above, re-planned) | | | | | registered |
 | ticketing | 게임 · desktop+mobile | 광클: 콘서트 티켓팅 (가상 예매처 앞줄티켓, 공연 3개 = 난이도 3단계) | 20:00:00 오픈 → 대기열 → 사라지는 좌석 지도(canvas) → 결제 타이머 → 티켓 | wristband pink #FF4F9A (+ #FF97C2, #FFCFE3 by grade), black, white, ash #E4E4E7 | Pretendard subset renamed Apjul Sans (deliberate exception to the §2 ban: it imitates a real booking UI) + Big Shoulders Display | registered |
 
-Revisions: curtain done (theatre reopening, photographic velvet); sand (striking effect; photographed bottle) running.
+Revisions done: curtain (theatre reopening, photographic velvet), sand (photographed bottle, fine sand, windowsill finish).
 Not revised after the third review (owner liked or did not flag them): startup, quiet-floors, optician, observatory, festival.
 
 ## Heavy works (the owner's real programs and internal tools; built last)

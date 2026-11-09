@@ -29,7 +29,7 @@ async function open(browser, { url, w, h, mobile, reduced, nostore }) {
   await page.evaluateOnNewDocument(COUNT_RAF);
   if (nostore) await page.evaluateOnNewDocument(NO_STORE);
   await page.setViewport({ width: w, height: h, deviceScaleFactor: mobile ? 2 : 1, isMobile: mobile, hasTouch: mobile });
-  if (reduced) await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
+  await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: reduced ? 'reduce' : 'no-preference' }]);
   await page.goto(url, { waitUntil: 'networkidle0', timeout: 90000 });
   await sleep(700);
   return { page, problems };
@@ -164,7 +164,9 @@ if (mode !== 'quick') {
   // storage blocked; idle loop sleeps; hidden tab pauses
   {
     const { page, problems } = await open(browser, { url: BASE + '/sand/', w: 390, h: 844, mobile: true, nostore: true });
-    await page.click('[data-sensor-off]');
+    { const st = await (await page.$('[data-stage]')).boundingBox(); await page.mouse.click(st.x + st.width / 2, st.y + st.height * 0.7); }
+    await sleep(300);
+    if (await page.$eval('[data-sensor]', (e) => !e.hidden)) await page.click('[data-sensor-off]');
     await sleep(1500);
     const a = await page.evaluate(() => window.__raf);
     await sleep(1000);

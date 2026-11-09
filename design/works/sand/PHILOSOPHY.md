@@ -8,12 +8,12 @@ of these units, each a shade apart from the next, so that from arm's length a la
 flat band and from close up it breaks into thousands of separate, stubborn points. The work should
 feel meticulously accumulated, as if someone placed every grain by hand over many patient hours.
 
-Everything that is not grain is a single white line printed on true black: one ink, one weight,
-the steady stroke of a screen print on black card. The line describes containers (glass, cork, cup)
-and never fills them. Black is not a mood or a void lit by glow; it is the dense, matte card the
-print sits on, and it stays black right up to the edge of every mark. No gradient, no soft light, no
-blur is permitted to soften that edge. The craft is in the restraint: a master-level economy where a
-single highlight stroke on the glass carries the whole idea of transparency.
+Everything that is not grain is real glass, photographed in its own light on true black: the edge
+lines, the long reflections, the glow in the thick base. The glass is never drawn; it is lit, and
+the light lies over the colours the way a vitrine's reflections lie over what it holds. Black is not
+a mood or a void lit by glow; it is the dense, matte ground the glass stands on, and it stays black
+right up to the edge of every reflection. Type and controls are one white ink on that black, flat,
+with no gradient, soft light or blur.
 
 Composition follows gravity. Masses settle to the bottom, slopes stop at a fixed angle, and every
 diagonal in the picture is a record of a tilt that once happened. Layers stack in strict sequence,
@@ -31,6 +31,7 @@ expertise in pigment, not of a colour picker.
 
 Text is rare and printed in the same white as the line, with letters that are themselves cut by
 fine horizontal gaps, as if they too were laid in strata. Words sit at the edges, small in number,
-large in size, and never touch the grain. A finished image holds one object, centred on a shelf
-line, with its reflection broken into flat print stripes beneath it: a quiet, exacting artifact
-that looks as though it took a whole afternoon of steady hands to make.
+large in size, and never touch the grain. A finished image holds one object: the corked bottle taken out
+of the dark and set on a sunlit sill, its shadow long on the white paint, the sun picking out the
+grain on one side: a quiet, exacting artifact that looks as though it took a whole afternoon of
+steady hands to make.

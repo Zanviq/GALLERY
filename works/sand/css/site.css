@@ -1,5 +1,6 @@
 /* 색모래 병 · tokens and rules from design/works/sand/DESIGN.md.
-   Only the sand has colour: everything else is one white ink on black. */
+   The glass, the jars and the cork are photographs on black; the sand is the only drawn thing.
+   Everything else is one white ink on black. */
 :root {
   --shelf: #000;
   --ink: #fff;
@@ -44,8 +45,8 @@ button { font: inherit; color: inherit; }
   width: 100%;
   max-width: var(--col);
   margin: 0 auto;
-  min-height: 100vh;
-  min-height: 100dvh;
+  min-height: calc(100vh + 52px);
+  min-height: calc(100dvh + 52px);
   display: flex;
   flex-direction: column;
   padding: 0 max(var(--s4), env(safe-area-inset-right)) 0 max(var(--s4), env(safe-area-inset-left));
@@ -60,7 +61,7 @@ button { font: inherit; color: inherit; }
   letter-spacing: 0.01em;
   padding-right: 112px;            /* the gallery badge sits top-right */
 }
-.lead { margin-top: var(--s3); font-size: 19px; line-height: 1.35; }
+.lead { margin-top: var(--s2); font-size: 18px; line-height: 1.35; padding-right: var(--s2); }
 .status {
   margin-top: var(--s2);
   min-height: calc(17px * 1.35 * 2);
@@ -92,24 +93,63 @@ button { font: inherit; color: inherit; }
   cursor: grab;
 }
 .stage.is-dragging { cursor: grabbing; }
-.stage.is-done { cursor: default; }
-.stage__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.stage.is-corked { cursor: default; }
+.stage { overflow: hidden; }
 .stage__fallback { position: absolute; left: var(--s4); right: var(--s4); bottom: var(--s4); }
+
+/* the bottle: back glass, the sand, front glass, the cork. Sized and turned by main.js */
+.bottle { position: absolute; left: 0; top: 0; will-change: transform; transition: opacity 300ms ease; }
+.bottle > img, .bottle > canvas { position: absolute; display: block; }
+.bottle__layer, .bottle__sand { left: 0; top: 0; width: 100%; height: 100%; }
+.bottle__sand { image-rendering: pixelated; image-rendering: crisp-edges; }
+.bottle__layer { pointer-events: none; -webkit-user-drag: none; }
+.bottle__cork { transform: translateY(-62%); opacity: 0; }
+.bottle__cork.is-in { transform: none; opacity: 1; }
+.bottle__cork.is-dropping { transition: transform 420ms cubic-bezier(0.5, 0, 0.75, 1), opacity 120ms linear; }
+
+/* the jar in your hand */
+.held {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  will-change: transform;
+  transition: opacity 500ms ease;
+}
+
+/* the finish: the corked bottle on the windowsill photograph */
+.finish {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 58%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 900ms ease, visibility 0s linear 900ms;
+  pointer-events: none;
+}
+.is-finished .finish { opacity: 1; visibility: visible; transition: opacity 900ms ease 220ms, visibility 0s; }
+.is-finished .bottle { opacity: 0; }
+.is-corked .held { opacity: 0; }
 
 .sensor {
   position: absolute;
   left: var(--s3);
   right: var(--s3);
-  bottom: var(--s3);
-  padding: var(--s3) var(--s4) var(--s4);
+  top: var(--s2);
+  padding: 10px var(--s3) var(--s3);
   background: var(--shelf);
   border: var(--line) solid var(--ink);
   border-radius: var(--r-btn);
   cursor: default;
 }
-.sensor__title { font-size: 21px; line-height: 1.25; }
-.sensor__text { margin-top: var(--s1); font-size: 17px; line-height: 1.4; }
-.sensor__actions { margin-top: var(--s3); display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
+.sensor__title { font-size: 19px; line-height: 1.25; }
+.sensor__text { margin-top: var(--s1); font-size: 17px; line-height: 1.35; }
+.sensor__actions { margin-top: var(--s2); display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
+.sensor__actions .btn { min-height: 44px; font-size: 18px; }
 
 /* ── buttons ── */
 .btn {
@@ -164,7 +204,7 @@ button { font: inherit; color: inherit; }
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
-.jar__pic { width: 44px; height: 52px; display: block; transition: transform 120ms ease-out; }
+.jar__pic { width: 44px; height: auto; aspect-ratio: 240 / 337; display: block; transition: transform 120ms ease-out; }
 .jar__name {
   min-width: 100%;
   padding: 3px 2px 2px;
@@ -183,8 +223,9 @@ button { font: inherit; color: inherit; }
 .pour-row .btn--pour { flex: 1 1 auto; min-height: 56px; font-size: 22px; }
 .pour-row .btn--icon { min-height: 56px; flex: none; }
 .btn--text { flex: none; min-height: 56px; font-size: 18px; }
-.tools { margin-top: var(--s2); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); }
-.tools .btn { padding: 0 var(--s1); white-space: nowrap; }
+.tools { margin-top: var(--s2); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s2); }
+.tools .btn { padding: 0 2px; white-space: nowrap; font-size: 17px; }
+.btn--toggle[aria-pressed='false'] { border-style: dashed; }
 
 /* ── footer ── */
 .foot {
@@ -242,7 +283,22 @@ button { font: inherit; color: inherit; }
 
 /* captures for the gallery card hide the badge */
 .capture [data-gallery-back] { display: none !important; }
+/* ?card=thumb / ?card=og: the same page with only the stage (and, for the share image, the title),
+   used to take the gallery thumbnail and the share image from the real thing */
+.card .page { display: block; }
+.card .app { max-width: none; width: 100vw; height: 100vh; min-height: 0; margin: 0; padding: 0; border: 0; display: grid; }
+.card .deck, .card .foot, .card .aside, .card .status, .card .sensor { display: none !important; }
+.card--thumb .head { display: none; }
+.card .stage { margin: 0; height: 100vh; min-height: 0; }
+.card--thumb .stage { height: 92vh; margin-top: 3vh; }
+.card--og .stage { height: 90vh; }
+.card--og .app { grid-template-columns: 560px 1fr; align-items: center; }
+.card--og .stage { grid-column: 1; grid-row: 1; }
+.card--og .head { grid-column: 2; grid-row: 1; padding: 0 72px 0 8px; }
+.card--og .title { font-size: 120px; padding: 0; }
+.card--og .lead { margin-top: 24px; font-size: 34px; line-height: 1.4; }
 
 @media (prefers-reduced-motion: reduce) {
   .jar__pic { transition: none; }
+  .bottle, .held, .finish, .is-finished .finish { transition: none; }
 }
