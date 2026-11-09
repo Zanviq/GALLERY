@@ -3,64 +3,168 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>남겨 둔 불: 전구 하나가 서는 1인극</title>
-<meta name="description" content="에메랄드색 벨벳 막을 손으로 끌어 열고, 세게 당겨 찢고, 은실로 다시 꿰매는 페이지. 막 뒤에는 빈 무대에 켜 둔 전구 하나가 있습니다. 가상 공연입니다.">
+<title>백열극장이 다시 엽니다 · 2027년 3월 12일</title>
+<meta name="description" content="공사로 문을 닫았던 98석 소극장 백열극장이 2027년 3월 12일 다시 엽니다. 닫혀 있던 1,159일 동안 무대에는 불 하나를 켜 두었습니다. 재개관 시즌 〈남겨 둔 불〉 네 편과 예매 안내. 가상 극장입니다.">
 <meta name="theme-color" content="#000000">
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="zanviq gallery">
-<meta property="og:title" content="남겨 둔 불: 전구 하나가 서는 1인극">
-<meta property="og:description" content="벨벳 막을 끌어 열고, 당겨 찢고, 은실로 꿰매 보세요. 가상 공연입니다.">
+<meta property="og:title" content="백열극장이 다시 엽니다 · 2027년 3월 12일">
+<meta property="og:description" content="문을 닫은 1,159일 동안 무대에 불 하나를 켜 두었습니다. 막을 열면 재개관 시즌이 보입니다. 가상 극장입니다.">
 <meta property="og:image" content="https://gallery.zanviq.dev/og/curtain.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://gallery.zanviq.dev/curtain/">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
 <link rel="preload" href="./fonts/grandiflora.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/baekyeol-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./img/velvet.webp" as="image" type="image/webp">
 <link rel="stylesheet" href="./css/site.css">
 <script>
   document.documentElement.classList.add('js');
   if (/[?&]capture/.test(location.search)) document.documentElement.classList.add('capture');
 </script>
 <script type="module" src="./js/main.js"></script>
-<script src="/shared/back.js" data-position="top-left" data-theme="dark" defer></script>
+<script src="/shared/back.js" data-position="bottom-right" data-theme="dark" defer></script>
 </head>
 <body>
-<main class="theatre">
-  <div class="stage" data-stage>
-    <canvas class="stage__set" data-set aria-hidden="true"></canvas>
+<header class="top">
+  <a class="brand" href="#stage">백열극장</a>
+  <nav class="nav" aria-label="이 페이지">
+    <a href="#program">프로그램</a>
+    <a href="#tickets">예매</a>
+    <a href="#visit">오시는 길</a>
+  </nav>
+</header>
 
-    <section class="card" data-card aria-labelledby="show-title">
-      <h1 class="card__title" id="show-title">남겨 둔 불</h1>
-      <p class="card__sub">전구 하나가 서는 1인극</p>
-      <p class="card__note">관객이 모두 돌아간 뒤에도 극장은 무대에 불 하나를 켜 둡니다. 오늘 밤에는 그 불이 주인공입니다.</p>
-      <dl class="card__credits">
-        <div><dt>출연</dt><dd>전구 하나</dd></div>
-        <div><dt>막 담당</dt><dd>막을 연 분</dd></div>
-      </dl>
-    </section>
-
-    <canvas class="stage__cloth" data-cloth role="img" aria-label="에메랄드색 벨벳 막. 닫혀 있습니다."></canvas>
-    <div class="mask mask--fly" aria-hidden="true"></div>
-    <div class="mask mask--leg mask--left" aria-hidden="true"></div>
-    <div class="mask mask--leg mask--right" aria-hidden="true"></div>
-    <canvas class="stage__rig" data-rig aria-hidden="true"></canvas>
-  </div>
-
-  <div class="apron">
-    <p class="hint" data-hint aria-live="polite">천을 잡아 옆으로 끌면 막이 열립니다. 아래로 세게 당기면 찢어집니다.</p>
-    <div class="cues" role="group" aria-label="막 조작">
-      <button class="cue" type="button" data-cue="open">열기</button>
-      <button class="cue" type="button" data-cue="close">닫기</button>
-      <button class="cue" type="button" data-cue="tear">찢기</button>
-      <button class="cue" type="button" data-cue="mend">꿰매기</button>
+<main>
+  <section class="stage" id="stage" aria-labelledby="hero-title" data-stage>
+    <!-- behind the curtain: the stage with its ghost light, and the season poster -->
+    <div class="set" data-set>
+      <picture>
+        <source media="(max-aspect-ratio: 3/5)" srcset="./img/stage-tall.webp" width="1020" height="2040">
+        <img class="set__photo" src="./img/stage-2000.webp" srcset="./img/stage-1200.webp 1200w, ./img/stage-2000.webp 2000w" sizes="100vw" width="2000" height="988" alt="">
+      </picture>
+      <div class="poster" aria-hidden="true">
+        <p class="poster__season">재개관 시즌 〈남겨 둔 불〉</p>
+        <p class="poster__date">3.12</p>
+        <p class="poster__first">금요일 저녁 7시 30분, 첫 공연</p>
+        <ol class="poster__list">
+          <li><span class="poster__when">3.12 – 3.28</span><span class="poster__show">켜 둔 불</span></li>
+          <li><span class="poster__when">4.2 – 4.18</span><span class="poster__show">물 새는 집</span></li>
+          <li><span class="poster__when">4.23 – 5.9</span><span class="poster__show">막간</span></li>
+          <li><span class="poster__when">5.14 – 5.30</span><span class="poster__show">빈 무대</span></li>
+        </ol>
+      </div>
     </div>
-    <p class="credit">가상 공연입니다. zanviq gallery 작품.</p>
-    <noscript><p class="noscript">막을 움직이려면 자바스크립트가 필요합니다. 막 없이 무대만 보입니다.</p></noscript>
-  </div>
+
+    <canvas class="cloth" data-cloth aria-hidden="true"></canvas>
+
+    <!-- what the closed curtain announces -->
+    <div class="bill" data-bill>
+      <h1 class="bill__title" id="hero-title">백열극장이<br>다시 엽니다</h1>
+      <p class="bill__date"><time datetime="2027-03-12">2027년 3월 12일 금요일</time></p>
+      <p class="bill__lead">공사로 문을 닫은 1,159일 동안 무대에 불 하나를 켜 두었습니다. 막을 열면 그 불과 다시 여는 첫 시즌이 보입니다.</p>
+      <div class="bill__cue">
+        <button class="btn btn--solid" type="button" data-open>막 열기</button>
+        <p class="bill__hint" data-hint>또는 막을 손으로 잡고 옆으로 끌어 보세요</p>
+      </div>
+    </div>
+
+    <div class="after" data-after hidden>
+      <button class="btn btn--line" type="button" data-close>막 닫기</button>
+      <a class="btn btn--line" href="#program">네 편 자세히 보기</a>
+    </div>
+    <p class="sr-only" aria-live="polite" data-status></p>
+    <noscript><p class="noscript">막을 움직이려면 자바스크립트가 필요합니다. 막 없이 무대만 보여 드립니다.</p></noscript>
+  </section>
+
+  <section class="sec sec--velvet" id="program" aria-labelledby="program-title">
+    <div class="sec__head">
+      <h2 class="sec__title" id="program-title">다시 여는 첫 시즌<br>〈남겨 둔 불〉</h2>
+      <p class="sec__lead">2027년 3월 12일부터 5월 30일까지 네 편을 차례로 올립니다. 화요일부터 금요일은 저녁 7시 30분, 토요일과 일요일은 오후 3시에 시작하고 월요일은 쉽니다.</p>
+    </div>
+    <ol class="shows">
+      <li class="show">
+        <p class="show__when"><time datetime="2027-03-12">3.12</time> – <time datetime="2027-03-28">3.28</time></p>
+        <div class="show__body">
+          <h3 class="show__title">켜 둔 불</h3>
+          <p class="show__meta">극단 백열 · 연극 · 90분</p>
+          <p class="show__text">문 닫은 극장을 밤마다 지킨 관리인과 무대 위 전구 하나의 이야기입니다. 1,159일을 아흔 분에 담았습니다. 재개관 첫 공연입니다.</p>
+        </div>
+      </li>
+      <li class="show">
+        <p class="show__when"><time datetime="2027-04-02">4.2</time> – <time datetime="2027-04-18">4.18</time></p>
+        <div class="show__body">
+          <h3 class="show__title">물 새는 집</h3>
+          <p class="show__meta">극단 낮은지붕 · 연극 · 100분</p>
+          <p class="show__text">천장에서 물이 새는 오래된 집에서 양동이 셋을 옮겨 가며 겨울을 나는 세 식구의 희극입니다.</p>
+        </div>
+      </li>
+      <li class="show">
+        <p class="show__when"><time datetime="2027-04-23">4.23</time> – <time datetime="2027-05-09">5.9</time></p>
+        <div class="show__body">
+          <h3 class="show__title">막간</h3>
+          <p class="show__meta">신작 낭독 · 50분</p>
+          <p class="show__text">새 작가 다섯 명이 쓴 단막을 하루 한 편씩, 배우들이 대본을 들고 읽습니다. 낭독이 끝나면 작가와 이야기를 나눕니다.</p>
+        </div>
+      </li>
+      <li class="show">
+        <p class="show__when"><time datetime="2027-05-14">5.14</time> – <time datetime="2027-05-30">5.30</time></p>
+        <div class="show__body">
+          <h3 class="show__title">빈 무대</h3>
+          <p class="show__meta">몸짓모임 아홉걸음 · 무용 · 70분</p>
+          <p class="show__text">의자 하나, 전구 하나, 무용수 둘. 대사 없이 몸으로만 하는 70분입니다.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="sec sec--house light" id="light" aria-labelledby="light-title">
+    <figure class="light__photo">
+      <img src="./img/bulb-1000.webp" srcset="./img/bulb-600.webp 600w, ./img/bulb-1000.webp 1000w" sizes="(min-width: 900px) 40vw, 100vw" width="1000" height="1135" loading="lazy" decoding="async" alt="철망 안에서 빛나는 투명한 전구. 주위는 온통 어둡다.">
+    </figure>
+    <div class="light__text">
+      <h2 class="sec__title" id="light-title">1,159일 동안<br>켜 둔 불</h2>
+      <p>극장에는 오래된 관습이 있습니다. 모두 돌아간 밤에도 무대 한가운데 전구 하나를 켜 둡니다. 어두운 무대에서 아무도 다치지 않도록, 그리고 이 극장이 비어 있지 않다는 표시로요.</p>
+      <p>2024년 1월 8일, 지하 객석에 물이 새고 건물 보강 공사가 시작되면서 백열극장은 문을 닫았습니다. 공사가 이어진 1,159일 동안에도 이 불은 끄지 않았습니다. 그사이 전구를 세 번 갈았습니다.</p>
+      <p>3월 12일 첫 공연이 끝나면 이 전구는 로비로 옮겨 걸어 둡니다.</p>
+    </div>
+  </section>
+
+  <section class="sec sec--velvet" id="tickets" aria-labelledby="tickets-title">
+    <div class="sec__head">
+      <h2 class="sec__title" id="tickets-title">예매</h2>
+      <p class="sec__lead">2027년 2월 15일 월요일 오후 2시에 네 편을 한꺼번에 엽니다. 전석 지정석입니다.</p>
+    </div>
+    <dl class="facts">
+      <div class="facts__row"><dt>일반</dt><dd>35,000원</dd></div>
+      <div class="facts__row"><dt>만 24세 이하, 대학생</dt><dd>20,000원</dd></div>
+      <div class="facts__row"><dt>〈막간〉 낭독</dt><dd>15,000원</dd></div>
+      <div class="facts__row"><dt>3월 12일 첫 공연</dt><dd class="facts__long">문을 닫은 동안 극장을 후원해 주신 분들을 먼저 모십니다. 일반 예매는 3월 13일 공연부터입니다.</dd></div>
+    </dl>
+    <p class="sec__note">가상 극장이라 이 페이지에서는 예매를 받지 않습니다.</p>
+  </section>
+
+  <section class="sec sec--velvet" id="visit" aria-labelledby="visit-title">
+    <div class="sec__head">
+      <h2 class="sec__title" id="visit-title">오시는 길</h2>
+      <p class="addr">빈터시 쪽문길&nbsp;17, 지하&nbsp;1층</p>
+      <p class="sec__note">가상 서비스입니다. 실제 주소가 아닙니다.</p>
+    </div>
+    <dl class="facts">
+      <div class="facts__row"><dt>객석</dt><dd>98석, 휠체어석 4석</dd></div>
+      <div class="facts__row"><dt>입장</dt><dd class="facts__long">공연 30분 전부터 들어오실 수 있습니다. 매표소는 공연 1시간 전에 엽니다.</dd></div>
+      <div class="facts__row"><dt>새로 생긴 것</dt><dd class="facts__long">지하 객석까지 내려가는 엘리베이터, 앞뒤 간격을 15cm 넓힌 객석, 새로 깐 무대 바닥.</dd></div>
+    </dl>
+  </section>
 </main>
+
+<footer class="foot">
+  <p class="foot__name">백열극장</p>
+  <p>가상 극장입니다. zanviq gallery 작품.</p>
+</footer>
 </body>
 </html>

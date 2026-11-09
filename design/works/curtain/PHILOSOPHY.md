@@ -1,33 +1,26 @@
 # Held Light
 
-A movement for work that is mostly dark, where a single material does all the talking and the
-light is something that has to be let in.
+A movement for work that is mostly dark, where one material carries the announcement and the
+light behind it is the reason for it.
 
-Space is a black room, and the room is not empty: it is waiting. Composition starts from a closed
-state, a heavy surface hanging edge to edge, and the eye's only clue is a seam of light at the
-bottom where the surface stops short of the floor. Everything worth seeing is behind something
-else. Form is earned by moving the surface aside, so the composition is never fixed; it is the
-residue of what a hand did to it.
+Space is a black room that is not empty: it is waiting. The composition starts closed, a heavy
+surface hanging edge to edge with words set on it like a bill pasted on a door. Everything worth
+seeing is behind the surface. A seam of light under the hem says something is lit back there, and
+for a moment the seam parts by itself, as if someone behind had brushed it.
 
-Colour is one dye and one metal. A deep green that is almost black where it faces you and blooms
-pale where it turns away, and a cold silver for every hard thing: the rail, the rings, the tassels,
-the thread. No third colour enters, not even for light, which stays a cool white so the green and
-the silver keep the whole register. The palette is painstakingly narrow so that shading, not hue,
-carries the form; every tone of green must come from the angle of the cloth to the eye and to the
-light, calculated, never painted on.
+Colour is one dye and one cold white. A deep green that is almost black in its folds and pale where
+it turns to the light, and the white of a bare bulb for every word. Once the surface has been passed,
+its green becomes the ground the information is printed on, flat, like ink on a programme. The
+photographs are nearly colourless so that the green keeps the whole register.
 
-Material is the subject. Pile, weight, fold, hem: the surface must feel heavy enough to swing late
-and settle slowly, soft enough to keep the mark of a palm, weak enough to tear along the line of
-greatest strain. Repairs are not hidden. A mended tear stays visible as a row of silver stitches,
-and the work grows more particular the more it is handled. This is master-level execution of a
-humble thing, the meticulous reconstruction of how one cloth behaves.
+Material is a photograph, not a model. The cloth is the picture of a real curtain, and moving it moves
+the picture: squeezed where it gathers, swinging where the hand let go, darker where the light cannot
+reach. Nothing is shaded that the camera did not see.
 
-Text is a whisper in hairline strokes, the same thinness as the thread. A title on a back wall, a
-line of instruction, four verbs. Nothing is labelled that the hands can discover. Typography sits
-where the light reaches it and nowhere else.
+Type is a hairline at poster size, the thinness of a filament, and a plain sans for what has to be
+read: dates, prices, the way in. A date set as large as the room. Four titles in a column. An address
+with its small honest note beside it.
 
-Scale and rhythm come from repetition at the edge of notice: pleats at an even pitch, rings at an
-even pitch until a hand crowds them, floorboards visible only inside one pool of light. The finished
-piece should look like it took countless hours of patient adjustment, every fold the product of deep
-expertise rather than a preset, so that a stagehand would recognise the weight and a stranger would
-simply want to reach out and pull.
+The finished page should feel like standing in a dark auditorium the night before a theatre opens
+again: one bulb on, the season chalked up, and the curtain heavy enough that you want to put your hand
+on it.

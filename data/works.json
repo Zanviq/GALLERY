@@ -46,10 +46,10 @@
   },
   {
     "slug": "curtain",
-    "title": "남겨 둔 불",
+    "title": "백열극장이 다시 엽니다",
     "type": "internal",
     "url": "curtain/",
-    "tags": ["interaction", "webgl", "physics", "canvas"],
+    "tags": ["promo", "interaction", "webgl", "physics", "typography"],
     "thumbnail": "thumbnails/curtain.webp",
     "year": 2026
   },

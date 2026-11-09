@@ -36,7 +36,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | 17 | stamp | 게임 · mobile-first | 결재 도장 찍기 타이밍 게임 | 컨베이어로 지나가는 서류에 한 번 터치로 도장, 정확도·연속 판정 | 사무 용지 흰색, 인주 적 #C8102E, 먹지 청 #1F3A93 | East Sea Dokdo, Hi Melody | registered |
 | 18 | lostfound | 게임 · desktop+mobile | 분실물 센터 추리 퍼즐 | 단서를 읽고 물건과 주인을 짝짓는 논리 퍼즐 (격자 소거) | 사물함 철판 #5B6770, 꼬리표 흰색, 마커 검정, 형광 꼬리표 #39D98A | Nanum Pen Script (subset renamed Kkoripyo Pen), Poor Story | deleted |
 | 19 | paperboat | 게임 · desktop+mobile | 빗물 도랑의 종이배 | 종이배를 좌우로 몰아 낙엽·하수구 피하기, 3D를 그림책 인쇄처럼 바꾸는 후처리 필수 | 젖은 아스팔트 회색, 종이 흰색, 잉크 청흑, 강조 1색 (금지 목록 밖) | Yeon Sung | parked |
-| 20 | curtain | 인터랙션 · desktop+mobile | 무대 커튼 | 천 시뮬레이션(Verlet): 커튼을 끌어 열고, 당기면 찢어짐 | 에메랄드 벨벳 #0D5C47, 검정, 은빛 술 | Grandiflora One | registered |
+| 20 | curtain | 홍보 · desktop+mobile | 백열극장이 다시 엽니다 (98석 지하 극장 재개관 2027-03-12, 고스트 라이트) | (2026-11-10 개정) 생성 벨벳 사진을 천 시뮬레이션으로 끌어 열면 전구 하나 켜진 무대와 재개관 시즌 포스터. 찢기 제거 | 에메랄드 벨벳 #0D5C47, 검정 #000000, 차가운 흰색 #F4F7F6 | Grandiflora One, SUIT (subset renamed Baekyeol Sans) | registered |
 | 21 | shadowplay | 인터랙션 · desktop+mobile | 종이 그림자극 | 광원을 끌면 종이 인형 그림자가 실시간으로 늘고 줄어듦 (2D 가시 다각형), 장면 꾸미기 | 청사진 프러시안 블루 #10335A, 흰색 | Moirai One, Gamja Flower | deleted |
 | 22 | sand | 인터랙션 · mobile-only | 색모래 병 | 폰을 기울여 색모래를 부어 층 쌓기, 흔들면 섞임 (falling-sand) | 원색 모래층(마젠타·코발트·라임·노랑·흰색), 검은 유리 | Black And White Picture | registered |
 
@@ -50,7 +50,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | marathon | (row 15 above, re-planned) | | | | | registered |
 | ticketing | 게임 · desktop+mobile | 광클: 콘서트 티켓팅 (가상 예매처 앞줄티켓, 공연 3개 = 난이도 3단계) | 20:00:00 오픈 → 대기열 → 사라지는 좌석 지도(canvas) → 결제 타이머 → 티켓 | wristband pink #FF4F9A (+ #FF97C2, #FFCFE3 by grade), black, white, ash #E4E4E7 | Pretendard subset renamed Apjul Sans (deliberate exception to the §2 ban: it imitates a real booking UI) + Big Shoulders Display | registered |
 
-Revisions also running: curtain (clear message: theatre reopening; photographic velvet), sand (striking effect; photographed bottle).
+Revisions: curtain done (theatre reopening, photographic velvet); sand (striking effect; photographed bottle) running.
 Not revised after the third review (owner liked or did not flag them): startup, quiet-floors, optician, observatory, festival.
 
 ## Heavy works (the owner's real programs and internal tools; built last)
@@ -71,5 +71,5 @@ Not revised after the third review (owner liked or did not flag them): startup, 
 ## Fonts in use (one work each)
 
 Galmuri11 (home) · Wanted Sans, Archivo (keyboard) · Anybody, Hahmlet, IBM Plex Sans KR (festival,
-perfume, startup) · Newsreader (perfume) · Spoqa Han Sans Neo (marathon) · and every Korean family assigned in the tables above.
+perfume, startup) · Newsreader (perfume) · Spoqa Han Sans Neo (marathon) · SUIT (curtain) · and every Korean family assigned in the tables above.
 Latin faces added by works (record here): Schibsted Grotesk (sculpture), Big Shoulders Display (ticketing)

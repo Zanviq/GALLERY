@@ -1,10 +1,17 @@
-"""Subset Grandiflora One to the characters the curtain page uses.
+"""Subset the page's two families to the characters it uses and self-host them.
 
-    python -I design/works/curtain/scripts/fonts.py <GrandifloraOne-Regular.ttf> [OFL.txt]
+    fontenv/Scripts/python.exe -I design/works/curtain/scripts/fonts.py \
+        <GrandifloraOne-Regular.ttf> <Grandiflora OFL.txt> <SUIT-Regular.ttf> <SUIT LICENSE>
 
-The TTF comes from github.com/google/fonts (ofl/grandifloraone). Scans works/curtain/index.html
-and js/*.js for every character, keeps printable ASCII too, writes works/curtain/fonts/grandiflora.woff2,
-works/curtain/css/fonts.css and copies the licence. Re-run whenever copy changes.
+- Grandiflora One (SIL OFL 1.1, Haesung Cho / JAMO): the TTF from github.com/google/fonts
+  (ofl/grandifloraone), cut down locally -> works/curtain/fonts/grandiflora.woff2.
+  Its OFL declares no Reserved Font Name, so the name is kept.
+- SUIT Regular (SIL OFL 1.1, SUNN): the static TTF from github.com/sun-typeface/SUIT
+  (fonts/static/ttf), cut down locally. Its OFL reserves the name "SUIT", so the subset is a
+  modified version and is renamed "Baekyeol Sans" in its name table and in the CSS
+  -> works/curtain/fonts/baekyeol-sans.woff2; licence from the same repository.
+
+Characters come from index.html and js/*.js. Writes css/fonts.css. Re-run whenever copy changes.
 """
 import pathlib
 import shutil
@@ -15,6 +22,9 @@ from fontTools.ttLib import TTFont
 
 ROOT = pathlib.Path(__file__).resolve().parents[4]
 SITE = ROOT / 'works' / 'curtain'
+OUT = SITE / 'fonts'
+TEXT_FAMILY = 'Baekyeol Sans'
+OLD = ('OFL.txt', 'gowun-dodum.woff2', 'OFL-gowun-dodum.txt', 'baekyeol-gothic.woff2', 'OFL-baekyeol-gothic.txt')
 
 
 def used_chars():
@@ -22,20 +32,34 @@ def used_chars():
     for js in sorted((SITE / 'js').glob('*.js')):
         text += js.read_text(encoding='utf-8')
     chars = set(ch for ch in text if ord(ch) >= 32)
-    chars |= set(chr(c) for c in range(32, 127))
+    chars |= set(chr(c) for c in range(32, 127)) | {chr(0xA0)}   # &nbsp; in the address
     chars.discard('﻿')
-    return chars
+    return ''.join(sorted(chars))
 
 
-def main():
-    src = pathlib.Path(sys.argv[1])
-    lic = pathlib.Path(sys.argv[2]) if len(sys.argv) > 2 else src.with_name('OFL.txt')
-    chars = used_chars()
+def rename(font, family):
+    """Same rules as <scratchpad>/tools/rename_font.py: family-related name IDs only."""
+    name = font['name']
+    rec = name.getName(17, 3, 1, 0x409) or name.getName(2, 3, 1, 0x409) or name.getName(2, 1, 0, 0)
+    style = rec.toUnicode() if rec else 'Regular'
+    ps = (family + '-' + style).replace(' ', '')
+    for r in list(name.names):
+        nid = r.nameID
+        if nid in (1, 16, 21):
+            r.string = family
+        elif nid in (4, 18):
+            r.string = family if style == 'Regular' else f'{family} {style}'
+        elif nid == 6:
+            r.string = ps
+        elif nid == 3:
+            r.string = f'{ps};subset'
+    keep = (family, f'{family} {style}')
+    name.names = [r for r in name.names if not (r.nameID in (1, 4, 16, 18, 21) and r.toUnicode() not in keep)]
+
+
+def cut(src, chars, out, family=None):
     cmap = TTFont(src).getBestCmap()
-    keep = sorted(c for c in chars if ord(c) in cmap)
-    missing = sorted(c for c in chars if ord(c) not in cmap and ord(c) > 127)
-    out = SITE / 'fonts' / 'grandiflora.woff2'
-    out.parent.mkdir(exist_ok=True)
+    missing = [c for c in chars if ord(c) not in cmap and ord(c) > 127]
     opts = subset.Options()
     opts.flavor = 'woff2'
     opts.layout_features = ['kern', 'liga', 'calt', 'ccmp', 'locl', 'mark', 'mkmk']
@@ -43,20 +67,45 @@ def main():
     opts.notdef_outline = True
     font = subset.load_font(str(src), opts)
     sub = subset.Subsetter(opts)
-    sub.populate(unicodes=[ord(c) for c in keep])
+    sub.populate(unicodes=[ord(c) for c in chars if ord(c) in cmap])
     sub.subset(font)
+    if family:
+        rename(font, family)
     subset.save_font(font, str(out), opts)
-    print(f'{len(keep)} glyphs kept, {out.stat().st_size / 1024:.1f} KB')
-    if missing:
-        print('NOT IN FONT (used on the page):', ' '.join(f'U+{ord(c):04X}' for c in missing))
-    if lic.exists():
-        shutil.copy(lic, SITE / 'fonts' / 'OFL.txt')
+    print(f'{out.name}  {out.stat().st_size / 1024:.1f} KB', ('  MISSING: ' + ' '.join(f'U+{ord(c):04X}' for c in missing)) if missing else '')
+    if family:
+        names = sorted({r.toUnicode() for r in TTFont(out)['name'].names if r.nameID in (1, 4, 6, 16)})
+        print('  name table now:', names)
+
+
+def main():
+    chars = used_chars()
+    print(len(chars), 'unique characters')
+    OUT.mkdir(exist_ok=True)
+    cut(pathlib.Path(sys.argv[1]), chars, OUT / 'grandiflora.woff2')
+    shutil.copy(sys.argv[2], OUT / 'OFL-grandiflora.txt')
+    cut(pathlib.Path(sys.argv[3]), chars, OUT / 'baekyeol-sans.woff2', TEXT_FAMILY)
+    (OUT / 'OFL-baekyeol-sans.txt').write_text(
+        'The font "Baekyeol Sans" (baekyeol-sans.woff2) is a subset of SUIT Regular, renamed because\n'
+        'its licence reserves the font name "SUIT". Original licence follows.\n\n'
+        + pathlib.Path(sys.argv[4]).read_text(encoding='utf-8'), encoding='utf-8')
+    for old in OLD:
+        if (OUT / old).exists():
+            (OUT / old).unlink()
     (SITE / 'css' / 'fonts.css').write_text(
-        '/* Generated by design/works/curtain/scripts/fonts.py: Grandiflora One (SIL OFL 1.1,\n'
-        '   Haesung Cho / JAMO) cut down to the characters this page uses. Licence: ../fonts/OFL.txt */\n'
+        '/* Generated by design/works/curtain/scripts/fonts.py. Both families are cut down to the\n'
+        '   characters this page uses. Grandiflora One: ../fonts/OFL-grandiflora.txt.\n'
+        '   Baekyeol Sans is SUIT renamed (its licence reserves the name): ../fonts/OFL-baekyeol-sans.txt */\n'
         '@font-face {\n'
         "  font-family: 'Grandiflora One';\n"
         "  src: url('../fonts/grandiflora.woff2') format('woff2');\n"
+        '  font-weight: 400;\n'
+        '  font-style: normal;\n'
+        '  font-display: swap;\n'
+        '}\n'
+        '@font-face {\n'
+        f"  font-family: '{TEXT_FAMILY}';\n"
+        "  src: url('../fonts/baekyeol-sans.woff2') format('woff2');\n"
         '  font-weight: 400;\n'
         '  font-style: normal;\n'
         '  font-display: swap;\n'

@@ -1,92 +1,48 @@
-// Release checks for the curtain page (dev tool, not deployed).
-//   node design/works/curtain/scripts/check.mjs <puppeteer-core dir> <out dir>
-// For each viewport: console errors/warnings, failed requests, horizontal overflow, overlaps between
-// the apron parts, the card and the badge, tab order, and a capture. Then reduced motion and no-WebGL.
-import { createRequire } from 'module';
+// Release checks for the curtain page over CDP (dev tool, not deployed).
+//   node design/works/curtain/scripts/check.mjs [base url]
+// Needs the headless Chrome cdp.mjs talks to. For each viewport: console/network problems (printed
+// by cdp.mjs), horizontal overflow, overlaps with the gallery badge, small tap targets, closed and
+// open. Then reduced motion, the Canvas2D fallback, keyboard order and the /works/ path.
+import { execFileSync } from 'child_process';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const [, , ppDir, outDir] = process.argv;
-const require = createRequire(path.join(ppDir, 'package.json'));
-const puppeteer = require('puppeteer-core');
-const BASE = 'http://127.0.0.1:8000';
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const here = path.dirname(fileURLToPath(import.meta.url));
+const cdp = path.join(here, 'cdp.mjs');
+const base = process.argv[2] || 'http://127.0.0.1:8000';
 
-const sizes = [[360, 740, true], [390, 844, true], [768, 1024, true], [1024, 768, false], [1440, 900, false], [1920, 1080, false]];
-
-async function run(browser, { url, w, h, mobile, reduced, tag, ops }) {
-  const page = await browser.newPage();
-  const problems = [];
-  page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') problems.push(`console.${m.type()}: ${m.text()}`); });
-  page.on('pageerror', (e) => problems.push('pageerror: ' + e.message));
-  page.on('requestfailed', (r) => problems.push('requestfailed: ' + r.url()));
-  page.on('response', (r) => { if (r.status() >= 400) problems.push(`http ${r.status()}: ${r.url()}`); });
-  await page.setViewport({ width: w, height: h, deviceScaleFactor: mobile ? 2 : 1, isMobile: mobile, hasTouch: mobile });
-  if (reduced) await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
-  await page.goto(url, { waitUntil: 'networkidle0', timeout: 90000 });
-  await sleep(1200);
-  const info = await page.evaluate(() => {
-    const r = (s) => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return [b.left, b.top, b.right, b.bottom].map(Math.round); };
-    const badge = document.querySelector('[data-gallery-back]');
-    const ba = badge && badge.shadowRoot && badge.shadowRoot.querySelector('a');
-    const bb = ba ? ba.getBoundingClientRect() : null;
-    return {
-      sw: document.documentElement.scrollWidth, iw: innerWidth, sh: document.documentElement.scrollHeight, ih: innerHeight,
-      hint: r('[data-hint]'), cues: r('.cues'), credit: r('.credit'), card: r('[data-card]'), stage: r('[data-stage]'),
-      title: r('.card__title'), badge: bb ? [bb.left, bb.top, bb.right, bb.bottom].map(Math.round) : null,
-      buttons: [...document.querySelectorAll('.cue')].map((b) => { const q = b.getBoundingClientRect(); return [Math.round(q.width), Math.round(q.height)]; }),
-      fontOk: document.fonts.check('17px "Grandiflora One"'),
-    };
-  });
+const probe = `(() => {
+  const box = (e) => { if (!e) return null; const b = e.getBoundingClientRect(); return b.width ? [b.left, b.top, b.right, b.bottom].map(Math.round) : null; };
+  const host = document.querySelector('[data-gallery-back]');
+  const badge = box(host && host.shadowRoot && host.shadowRoot.querySelector('a'));
   const hit = (a, b) => a && b && a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3];
-  if (info.sw > info.iw) problems.push(`horizontal overflow ${info.sw} > ${info.iw}`);
-  if (info.sh > info.ih) problems.push(`vertical overflow ${info.sh} > ${info.ih}`);
-  if (hit(info.hint, info.cues)) problems.push('hint overlaps cues');
-  if (hit(info.credit, info.cues)) problems.push('credit overlaps cues');
-  if (hit(info.badge, info.card)) problems.push('badge overlaps card');
-  if (info.card && info.stage && info.card[3] > info.stage[3]) problems.push('card runs below the stage');
-  if (info.card && (info.card[0] < 0 || info.card[2] > info.iw)) problems.push('card clipped sideways');
-  if (info.buttons.some(([bw, bh]) => bh < 44 || bw < 44)) problems.push('small tap target ' + JSON.stringify(info.buttons));
-  for (const op of ops || []) {
-    if (op.click) { await page.click(op.click); await sleep(op.wait || 300); }
-    if (op.shot) await page.screenshot({ path: path.join(outDir, op.shot) });
-    if (op.tab) {
-      const order = [];
-      for (let t = 0; t < op.tab; t++) {
-        await page.keyboard.press('Tab');
-        order.push(await page.evaluate(() => {
-          const a = document.activeElement;
-          if (a && a.shadowRoot) return 'badge';
-          const s = a ? getComputedStyle(a) : null;
-          return a ? `${a.textContent.trim()}${s && s.outlineStyle !== 'none' ? '(ring)' : '(NO RING)'}` : '-';
-        }));
-      }
-      info.tab = order.join(' > ');
-    }
-    if (op.log) info.log = await page.evaluate(op.log);
-  }
-  console.log(`[${tag}] ${w}x${h}`, problems.length ? 'PROBLEMS:\n  ' + problems.join('\n  ') : 'ok',
-    info.tab ? '\n  tab: ' + info.tab : '', info.log ? '\n  ' + JSON.stringify(info.log) : '', info.fontOk ? '' : '\n  font not ready');
-  await page.close();
+  const out = [];
+  if (document.documentElement.scrollWidth > innerWidth) out.push('overflow ' + document.documentElement.scrollWidth);
+  const parts = { bill: '.bill__cue', title: '.bill__title', after: '.after', brand: '.brand', nav: '.nav' };
+  const b = {}; for (const k in parts) b[k] = box(document.querySelector(parts[k]));
+  if (getComputedStyle(document.querySelector('[data-bill]')).opacity > 0.5) for (const k of ['bill', 'title']) if (hit(b[k], badge)) out.push(k + ' under badge');
+  if (!document.querySelector('[data-after]').hidden && hit(b.after, badge)) out.push('after under badge');
+  if (hit(b.brand, b.nav)) out.push('brand overlaps nav');
+  for (const e of document.querySelectorAll('.btn, .nav a')) { const r = e.getBoundingClientRect(); if (r.width && (r.height < 44 || r.width < 44)) out.push('small target ' + e.textContent.trim() + ' ' + Math.round(r.width) + 'x' + Math.round(r.height)); }
+  const st = document.querySelector('[data-stage]');
+  return (st.classList.contains('is-ready') ? 'ready ' : 'NOT READY ') + (out.join('; ') || 'ok');
+})()`;
+
+function run(label, url, size, flags, ops) {
+  const out = execFileSync('node', [cdp, url, size, ...flags, ...ops], { encoding: 'utf8', timeout: 120000 });
+  console.log(`${label}\n  ${out.trim().split('\n').join('\n  ')}`);
 }
 
-const only = process.argv[4];   // 'nogl' runs just the fallback pass
-const browser = only === 'nogl' ? null : await puppeteer.launch({
-  executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true, timeout: 120000,
-  args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--hide-scrollbars', '--no-first-run'],
-});
-if (browser) for (const [w, h, mobile] of sizes) {
-  await run(browser, { url: BASE + '/curtain/', w, h, mobile, tag: 'normal', ops: [{ shot: `chk-${w}.png` }, { click: '[data-cue=open]', wait: 5500 }, { shot: `chk-${w}-open.png` }] });
+const sizes = [['360x740@2', ['mobile']], ['390x844@2', ['mobile']], ['768x1024', ['mobile']], ['1024x768', []], ['1440x900', []], ['1920x1080', []]];
+for (const [size, flags] of sizes) {
+  run(size, `${base}/curtain/?debug`, size, flags, ['wait=1500', `log=${probe}`, 'eval=__curtain.pull(0)', 'wait=3200', `log=${probe}`,
+    'eval=document.getElementById("program").scrollIntoView()', 'wait=300', `log=${probe}`]);
 }
-if (browser) {
-await run(browser, { url: BASE + '/works/curtain/', w: 1280, h: 800, tag: 'long url', ops: [{ tab: 5 }] });
-await run(browser, { url: BASE + '/curtain/', w: 1280, h: 800, reduced: true, tag: 'reduced', ops: [
-  { click: '[data-cue=open]', wait: 900 }, { click: '[data-cue=tear]', wait: 900 }, { click: '[data-cue=mend]', wait: 900 }, { click: '[data-cue=close]', wait: 900 },
-  { log: '[document.querySelector("[data-hint]").textContent, document.querySelector("[data-cloth]").getAttribute("aria-label")]' }] });
-await browser.close();
-}
-
-// no WebGL at all: the Canvas2D fallback
-const b2 = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true, timeout: 120000, args: ['--disable-gpu', '--disable-webgl', '--disable-3d-apis', '--hide-scrollbars'] });
-await run(b2, { url: BASE + '/curtain/', w: 1280, h: 800, tag: 'no webgl', ops: [{ click: '[data-cue=tear]', wait: 2500 }, { shot: 'chk-nogl.png' }, { click: '[data-cue=mend]', wait: 2500 },
-  { log: '[document.querySelector("[data-cloth]").getContext("2d") ? "2d" : "gl", document.querySelector("[data-hint]").textContent]' }] });
-await b2.close();
+run('reduced motion 390', `${base}/curtain/`, '390x844@2', ['mobile', 'reduced'], ['wait=3500',
+  'log=document.querySelector("[data-bill]").style.opacity', 'tapsel=[data-open]', 'wait=200',
+  'log=document.querySelector("[data-status]").textContent', 'log=document.querySelector("[data-after]").hidden']);
+run('canvas2d fallback 1440', `${base}/curtain/?nogl&debug`, '1440x900', [], ['wait=1500', `log=${probe}`, 'eval=__curtain.pull(0)', 'wait=3200', `log=${probe}`]);
+run('keyboard 1440', `${base}/curtain/`, '1440x900', [], ['wait=1500',
+  ...Array(5).fill(0).flatMap(() => ['key=Tab', 'log=document.activeElement.textContent.trim() || document.activeElement.tagName']),
+  'key=Enter', 'wait=3200', 'log=document.activeElement.textContent.trim()', 'log=document.querySelector("[data-status]").textContent']);
+run('works path', `${base}/works/curtain/`, '1440x900', [], ['wait=1500', `log=${probe}`]);
