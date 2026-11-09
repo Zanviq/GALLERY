@@ -2,7 +2,7 @@
 import itertools
 C = {
     'court': '#1C4FA0', 'claret': '#761C3C', 'white': '#FFFFFF', 'ink': '#0D1B2E',
-    'runoff': '#163F80', 'court-hi': '#2A5DAE',
+    'court-deep': '#163F80',
 }
 def lum(h):
     h = h.lstrip('#'); out = []

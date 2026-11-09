@@ -1,32 +1,24 @@
-# Line and Magnet
+# Poster on the gym board
 
-A visual philosophy for 늦깎이 FS. It governs the key visual, the OG card, the favicon, and the
-mood of the page around the tactics board.
+A visual philosophy for 늦깎이 FS (revised 2026-11-09). It governs the hero, the OG card and the
+photographs.
 
-**The floor is the canvas.** One flat field of court blue, never shaded, never lit, never photographed.
-Space is measured, not felt: every distance on the board is a real distance in metres, and the white
-lines sit exactly where the Laws of the Game put them. The penalty area's two quarter circles and the
-short straight that joins them are the most futsal of all shapes, so that shape is the mark. The work
-should look as if someone measured the hall with a tape and drew it again at their kitchen table,
-meticulously, line by line, because they care about where the 10 m mark is.
+**The page is the note the club pinned up.** In spring 2021 someone stuck a sheet on the sports-hall
+notice board: "같이 공 찰 사람, 못 차도 돼요." The hero is that sheet made large: one flat field of
+court blue, the club's name set so big it becomes the picture, the days and the time where a poster
+puts its date, a single white line drawn as wide as a court line. Nothing else competes with it.
 
-**Colour is uniform, not taste.** Claret is the kit and nothing else wears it; white is chalk-line,
-ball and the goalkeeper's shirt; the blue-black only carries words. No fourth hue sneaks in for
-excitement. Contrast comes from scale and from the white rim that every claret magnet needs to stand
-on blue, a detail tuned with painstaking care because it is the difference between a token and an
-object you could pick up.
+**Colour is uniform, not taste.** Blue is the floor, claret is the shirt, white is the line, and the
+blue-black only carries words. The photographs show the same four things for real, so the page and
+the pictures agree without any grading trick.
 
-**Movement is drawn before it happens.** Dashed lines are runs, solid lines are passes, small white
-discs count the beats. A still image of the board should read like a coach's sheet that was redrawn
-until it was clean: arrows that do not cross without reason, heads that do not touch magnets, numbers
-that sit on the line's midpoint. The composition is the play itself; the eye follows the ball the way a
-player would.
+**Photographs are bright and present.** Real people in a well-lit hall, sharp, open-faced, mid-
+laugh or mid-touch of the ball. No film look, no grain, no dim corners: the club is not a memory, it
+is Monday and Thursday at half past eight.
 
-**Type is gym signage.** Do Hyeon is used big and blunt, like a shirt number or the word on a sports
-hall door; Sunflower stays small and plain beside it. Words are few: the club's name, one sentence,
-the occasional label in the margin of the run-off strip. Nothing is centred for elegance; it is set
-where a person with a marker would put it.
+**Room is the warmth.** One idea per screen: a sentence, a photo, a list. Large margins say the same
+thing the club says to a newcomer: there is no hurry here.
 
-**Craft is the warmth.** The club is made of adults who started late and got good slowly. The images
-should carry the same quality: patient, exact, unshowy, the product of many evenings of repetition.
-Every alignment checked twice, every stroke weight chosen, every arrow rerouted until it is quiet.
+**Type is gym signage.** Do Hyeon big and blunt, like a shirt number or the word on a hall door;
+Sunflower small and plain beside it. Everything set flush left, where a person with a marker would
+put it.
