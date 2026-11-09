@@ -115,5 +115,50 @@
     "tags": ["promo", "interaction", "canvas", "brand"],
     "thumbnail": "thumbnails/cinema.webp",
     "year": 2026
+  },
+  {
+    "slug": "nighttrain",
+    "title": "밤차",
+    "type": "internal",
+    "url": "nighttrain/",
+    "tags": ["landing", "brand", "typography", "demo"],
+    "thumbnail": "thumbnails/nighttrain.webp",
+    "year": 2026
+  },
+  {
+    "slug": "ramen",
+    "title": "제맛",
+    "type": "internal",
+    "url": "ramen/",
+    "tags": ["landing", "brand", "typography"],
+    "thumbnail": "thumbnails/ramen.webp",
+    "year": 2026
+  },
+  {
+    "slug": "sculpture",
+    "title": "닳다: 탁은결 개인전",
+    "type": "internal",
+    "url": "sculpture/",
+    "tags": ["promo", "typography"],
+    "thumbnail": "thumbnails/sculpture.webp",
+    "year": 2026
+  },
+  {
+    "slug": "marathon",
+    "title": "곧은내 하프마라톤",
+    "type": "internal",
+    "url": "marathon/",
+    "tags": ["promo", "typography", "svg", "brand"],
+    "thumbnail": "thumbnails/marathon.webp",
+    "year": 2026
+  },
+  {
+    "slug": "ticketing",
+    "title": "광클",
+    "type": "internal",
+    "url": "ticketing/",
+    "tags": ["game", "canvas", "audio", "interaction", "typography"],
+    "thumbnail": "thumbnails/ticketing.webp",
+    "year": 2026
   }
 ]
