@@ -125,14 +125,19 @@ function footer(rand) {
 
 // ---------------------------------------------------------------- documents
 
-function gyeoljaeDoc(rand, boxes, banned) {
+// o.flaw: 'nosign' (a 칸 before the circled one was never signed) or 'tape' (the amount was
+// changed with correction tape instead of a 정정인): both must go back unstamped.
+// o.urgent: a 긴급 note in marker. o.again: back from the 미결 pile, marked 재상신.
+function gyeoljaeDoc(rand, boxes, banned, o = {}) {
   const form = banned ? FORMS[0] : pick(rand, FORMS);
-  const [subject, line2, amount] = banned ? [banned[0], '자세한 내용은 붙임 참조', '미정'] : pick(rand, form.items);
+  let [subject, line2, amount] = banned ? [banned[0], '자세한 내용은 붙임 참조', '미정'] : pick(rand, form.items);
+  if (o.flaw === 'tape' && amount === '없음') amount = '58,000원';
   const who = pick(rand, PEOPLE), dept = pick(rand, DEPTS);
-  // already signed: every 칸 before the first circled one
+  // already signed: every 칸 before the first circled one (one of them left blank on a 'nosign')
   const first = boxes.length ? Math.min(...boxes) : 1;
-  const signed = [];
+  let signed = [];
   for (let i = 0; i < first; i++) signed.push(i);
+  if (o.flaw === 'nosign') signed.splice(Math.floor(rand() * signed.length), 1);
   const ab = approvalBlock(rand, banned ? [0] : signed, boxes, !!banned);
   const title = form.title.length === 1
     ? T(18, 21.6, 8.2, form.title[0], 'title', 'c')
@@ -140,11 +145,19 @@ function gyeoljaeDoc(rand, boxes, banned) {
   let lines = ab.lines + R(5, 42, 93, 24, 0.55) + L('M5 50H98M5 58H98M22 42V66', 0.35) + R(5, 70, 93, 42, 0.45) + L('M5 118H98', 0.3);
   let text = title + ab.text;
   text += T(13.5, 43.6, 4.2, '기안자', '', 'c') + T(25, 43.4, 4.6, `${who} (${dept})`);
-  text += T(13.5, 51.6, 4.2, '기안일', '', 'c') + T(25, 51.4, 4.6, '2026. 11. 9.');
+  text += T(13.5, 51.6, 4.2, '금액', '', 'c');
+  if (o.flaw === 'tape') {
+    // a strip of correction tape over the printed figure, a new figure written on it in pen
+    const w = amount.length * 3.3 + 5;
+    text += `<span class="tape" style="--x:24;--y:50.7;--w:${n1(w)}"></span>`;
+    text += T(25.5, 50.3, 6, amount.replace(/^\d/, (dg) => String((Number(dg) % 9) + 1)), 'hand pen');
+  } else {
+    text += T(25, 51.4, 4.6, amount);
+  }
   text += T(13.5, 59.6, 4.2, '제목', '', 'c') + T(25, 59.4, 4.6, subject);
   text += T(9, 73.5, 4.2, banned ? '아래와 같이 건의하오니 검토 바랍니다.' : '아래와 같이 시행하고자 하오니 결재 바랍니다.');
   text += T(9, 81, 4.2, `1. 내용: ${line2}`);
-  text += T(9, 88, 4.2, `2. 금액: ${amount}`);
+  text += T(9, 88, 4.2, '2. 기안일: 2026. 11. 9.');
   text += T(9, 95, 4.2, `3. 담당: ${dept} ${who}`);
   text += T(9, 103, 4, '붙임 1부. 끝.', 'soft');
   text += footer(rand);
@@ -152,6 +165,10 @@ function gyeoljaeDoc(rand, boxes, banned) {
   if (banned) {
     text += T(52, 63, 26, '반려', 'hand big', 'c');
     text += T(74, 98, 8.5, banned[1], 'hand', 'c');
+  }
+  if (o.urgent) {
+    text += T(5, 2.2, 8.4, '긴급', 'hand');
+    marks += L('M4.5 11.4C10 10.6 16 10.9 21.5 10.4', 0.9, 'marker');
   }
   const html = `<div class="sheet">${svg(lines)}${text}${svg(marks, 'ink')}</div>`;
   return { html, targets: boxes.map((i) => ({ u: BOXES[i] + 10, box: i })) };
@@ -217,14 +234,18 @@ function ganinDoc(rand) {
 }
 
 /**
- * spec: { kind: 'gyeoljae', boxes: [i...] } | { kind: 'jeongjeong' } | { kind: 'ganin' } | { kind: 'banryeo' }
- * returns { kind, el, sheets: [{el, x0}], ext0, ext1, targets, label }
+ * spec: { kind: 'gyeoljae', boxes: [i...], flaw?: 'nosign' | 'tape', urgent?: true }
+ *     | { kind: 'jeongjeong' } | { kind: 'ganin' } | { kind: 'banryeo' }; any spec may carry again: true
+ * returns { kind, el, sheets: [{el, x0}], ext0, ext1, targets, label, hold, flaw, urgent, again }
+ * hold = the document must go back without a stamp (반려, or a flaw). A flawed document is labelled
+ * like a clean one on purpose: spotting the flaw is the player's job.
  */
 export function buildDoc(spec, rand) {
   let built, label;
   if (spec.kind === 'gyeoljae') {
-    built = gyeoljaeDoc(rand, spec.boxes, null);
+    built = gyeoljaeDoc(rand, spec.boxes, null, spec);
     label = spec.boxes.length > 1 ? `${spec.boxes.map((i) => BOX_NAMES[i]).join(', ')} 두 칸` : `${BOX_NAMES[spec.boxes[0]]} 칸`;
+    if (spec.urgent) label = `긴급, ${label}`;
   } else if (spec.kind === 'banryeo') {
     built = gyeoljaeDoc(rand, [], pick(rand, BANNED));
     label = '반려, 찍지 말고 보내기';
@@ -239,9 +260,15 @@ export function buildDoc(spec, rand) {
   el.className = `doc doc-${spec.kind}`;
   el.innerHTML = built.html;
   const sheets = [...el.querySelectorAll('.sheet')].map((s) => ({ el: s, x0: s.classList.contains('sheet-a') ? -32 : 0 }));
+  if (spec.again) {
+    // back from the pile: 재상신 in marker, low on the page that carries the target
+    sheets.find((s) => s.x0 === 0).el.insertAdjacentHTML('beforeend', T(94, spec.kind === 'ganin' ? 111.4 : 103.6, 6.4, '재상신', 'hand', 'r'));
+  }
   return {
     kind: spec.kind, el, sheets, label,
     ext0: built.ext0 || 0, ext1: 100,
     targets: built.targets.map((t) => ({ ...t, status: null })),
+    hold: spec.kind === 'banryeo' || !!spec.flaw,
+    flaw: spec.flaw || null, urgent: !!spec.urgent, again: !!spec.again,
   };
 }

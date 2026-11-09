@@ -1,7 +1,8 @@
 // Dependency-free capture and check runner over the Chrome DevTools Protocol (dev tool, not deployed).
 // Needs a headless Chrome started with --remote-debugging-port=9347 (CDP_PORT). Every run gets a fresh
 // browser context (empty localStorage).
-//   node cdp.mjs <url> <W>x<H>[@dpr] [mobile] [reduced] [nostore] op op ...
+//   node cdp.mjs <url> <W>x<H>[@dpr] [mobile] [reduced|motion] [nostore] op op ...
+//   (motion forces prefers-reduced-motion: no-preference, for machines whose OS asks for reduce)
 // ops: wait=ms | shot=f.png | webp=f.webp | full=f.png | click=sel | focus=sel | key=Key | type=text
 //      eval=js | log=js | store=json (sets jamo.v1 and reloads) | reload=ms
 //      drag=x1,y1,x2,y2 | dragsel=from>to[@top|@bottom] | tap=x,y | tapsel=sel[@top|@bottom]
@@ -12,7 +13,7 @@ const [, , url, size, ...rest] = process.argv;
 const m = /^(\d+)x(\d+)(?:@([\d.]+))?$/.exec(size);
 let [W, H, DPR] = [Number(m[1]), Number(m[2]), Number(m[3] || 1)];
 const flags = new Set();
-while (rest.length && /^(mobile|reduced|nostore)$/.test(rest[0])) flags.add(rest.shift());
+while (rest.length && /^(mobile|reduced|motion|nostore)$/.test(rest[0])) flags.add(rest.shift());
 const mobile = flags.has('mobile');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -64,7 +65,9 @@ async function metrics() {
   await cmd('Emulation.setTouchEmulationEnabled', mobile ? { enabled: true, maxTouchPoints: 5 } : { enabled: false });
 }
 await metrics();
-if (flags.has('reduced')) await cmd('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+if (flags.has('reduced') || flags.has('motion')) {
+  await cmd('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: flags.has('reduced') ? 'reduce' : 'no-preference' }] });
+}
 if (flags.has('nostore')) {
   await cmd('Page.addScriptToEvaluateOnNewDocument', { source: `(() => { const deny = () => { throw new DOMException('denied', 'SecurityError'); };
     Object.defineProperty(window, 'localStorage', { get: deny }); Object.defineProperty(window, 'sessionStorage', { get: deny }); })();` });

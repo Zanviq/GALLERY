@@ -49,7 +49,7 @@
       </li>
       <li>
         <svg class="mini" viewBox="0 0 120 44" aria-hidden="true"><use href="#mini-banryeo"/></svg>
-        <p><b>반려</b> 찍지 말고 그냥 보내요.</p>
+        <p><b>그냥 보내기</b> 반려, 앞 칸 서명이 빠진 서류, 금액을 수정테이프로 고친 서류.</p>
       </li>
     </ol>
     <table class="score-table">
@@ -57,28 +57,23 @@
       <tbody>
         <tr><th scope="row">정확</th><td>100</td></tr>
         <tr><th scope="row">조금 비뚤</th><td>40</td></tr>
-        <tr><th scope="row">반려 지킴</th><td>60</td></tr>
-        <tr><th scope="row">6번 연속마다</th><td>배율 +1 (최대 4배)</td></tr>
+        <tr><th scope="row">그냥 보내기</th><td>60</td></tr>
+        <tr><th scope="row">잘못 찍음</th><td>-50, 미결로</td></tr>
+        <tr><th scope="row">놓침</th><td>미결로</td></tr>
+        <tr><th scope="row">18시에 남은 미결</th><td>1장에 -100</td></tr>
+        <tr><th scope="row">5번 연속마다</th><td>배율 +1 (최대 4배)</td></tr>
       </tbody>
     </table>
-    <p class="keys"><kbd>Space</kbd> 또는 <kbd>Enter</kbd> 꾹 <kbd>P</kbd> 멈춤 <kbd>M</kbd> 소리</p>
     <p class="record" id="aside-record"></p>
   </aside>
 
   <main class="desk" id="desk">
+    <div class="timebar" aria-hidden="true"><span id="timebar"></span></div>
     <p class="memo" id="memo"></p>
     <div class="stage" id="stage" aria-hidden="true">
       <div class="stamp-zone">
-        <div class="stamp" id="stamp">
-          <svg viewBox="0 0 40 100" preserveAspectRatio="none" focusable="false">
-            <path d="M1.5 15C1.5 5.5 9 1.5 20 1.5S38.5 5.5 38.5 15V93.5Q38.5 98.5 33.5 98.5H6.5Q1.5 98.5 1.5 93.5Z" fill="#C8102E"/>
-            <rect x="7" y="13" width="3.4" height="70" rx="1.7" fill="#FFFFFF" opacity=".5"/>
-            <rect x="12.6" y="16" width="1.3" height="62" rx=".65" fill="#FFFFFF" opacity=".28"/>
-            <circle cx="20" cy="12.5" r="2.5" fill="#FFFFFF"/>
-            <rect x="1.5" y="87.5" width="37" height="1.5" fill="#FFFFFF" opacity=".75"/>
-            <rect x="1.5" y="90.6" width="37" height=".8" fill="#FFFFFF" opacity=".45"/>
-          </svg>
-        </div>
+        <div class="pile" id="pile" data-level="low"><p class="pile-label">미결 <b id="pile-n">0</b>장</p><div class="pile-stack" id="pile-stack"></div></div>
+        <div class="stamp" id="stamp"><img src="./img/seal-240.webp" width="240" height="801" alt="" decoding="async" draggable="false"></div>
       </div>
       <div class="tray" id="tray">
         <div class="belt" id="belt"></div>
@@ -102,26 +97,36 @@
 
   <!-- cover -->
   <section class="panel panel-cover" id="cover" role="dialog" aria-modal="true" aria-labelledby="cover-title">
-    <div class="panel-paper">
-      <h1 class="cover-title" id="cover-title">칼퇴 결재</h1>
-      <div class="cover-seal" id="cover-seal" aria-hidden="true"></div>
-      <p class="cover-time">(주)한칸물산 총무팀, 오후 5시 58분 45초.</p>
-      <p class="cover-note">구 대리, 과장이랑 나는 워크숍 간다. 도장 맡기고 가니까 6시 전에 결재 다 찍어 둬.<span class="cover-sign">부장 도상훈</span></p>
-      <p class="cover-how">트레이로 지나가는 서류마다 알맞은 자리에 도장을 한 번에 찍어요. 칸이 도장 밑 점선 원에 들어올 때 누르면 돼요.</p>
-      <p class="cover-first" id="cover-first">처음이면 연습 서류 여섯 장이 먼저 와요. 언제든 건너뛸 수 있어요.</p>
-      <div class="cover-actions">
-        <button class="btn btn-primary" id="btn-start" type="button">결재 시작</button>
-        <button class="btn" id="btn-lesson" type="button">연습부터 하기</button>
+    <div class="panel-paper cover-paper">
+      <div class="cover-poster">
+        <div class="cover-head">
+          <h1 class="cover-title" id="cover-title"><span class="ct">칼퇴</span> <span class="ct">결재<span class="cover-seal" id="cover-seal" aria-hidden="true"></span></span></h1>
+          <p class="cover-time"><span>(주)한칸물산 총무팀,</span> <span>오후 5시 58분 45초.</span></p>
+        </div>
+        <img class="cover-stamp" src="./img/seal-stand-360.webp" width="360" height="798" alt="" decoding="async" draggable="false">
       </div>
-      <fieldset class="options">
-        <legend>설정</legend>
-        <button class="btn btn-opt" id="opt-slow" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span>느긋하게 <small>트레이 속도 70%</small></button>
-        <button class="btn btn-opt" id="opt-step" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span>칸칸이 이동 <small>트레이가 한 칸씩 끊어서 움직여요</small></button>
-        <button class="btn btn-opt" id="opt-sound" type="button" aria-pressed="true"><span class="tick" aria-hidden="true"></span>소리 <small>도장 소리, 종이 소리</small></button>
-      </fieldset>
-      <p class="record" id="cover-record"></p>
-      <p class="keys cover-keys"><kbd>Space</kbd> 또는 <kbd>Enter</kbd> 꾹 <kbd>P</kbd> 멈춤 <kbd>M</kbd> 소리</p>
-      <p class="footer-line">가상 회사입니다. zanviq gallery 작품.</p>
+      <div class="cover-body">
+        <p class="cover-note">구 대리, 과장이랑 나는 워크숍 간다. 도장 맡기고 가니까 6시 전에 결재 다 찍어 둬.<span class="cover-sign">부장 도상훈</span></p>
+        <p class="cover-how">트레이로 지나가는 서류마다 알맞은 자리에 도장을 한 번에 찍어요. 칸이 도장 밑 점선 원에 들어올 때 누르면 돼요.</p>
+        <p class="cover-how cover-stakes">놓치거나 잘못 찍은 서류는 미결로 쌓여요. 18시에 미결이 남으면 야근이에요.</p>
+        <div class="cover-actions">
+          <button class="btn btn-primary" id="btn-start" type="button">결재 시작</button>
+          <button class="btn" id="btn-lesson" type="button">연습부터 하기</button>
+        </div>
+        <p class="cover-first" id="cover-first">처음이면 연습 서류 여덟 장이 먼저 와요. 언제든 건너뛸 수 있어요.</p>
+        <details class="opts">
+          <summary><span class="opts-label">설정</span> <span class="opts-state" id="opts-state">보통 속도, 소리 켬</span></summary>
+          <fieldset class="options">
+            <legend class="sr-only">설정</legend>
+            <button class="btn btn-opt" id="opt-slow" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span>느긋하게 <small>트레이 속도 70%</small></button>
+            <button class="btn btn-opt" id="opt-step" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span>칸칸이 이동 <small>트레이가 한 칸씩 끊어서 움직여요</small></button>
+            <button class="btn btn-opt" id="opt-sound" type="button" aria-pressed="true"><span class="tick" aria-hidden="true"></span>소리 <small>도장 소리, 종이 소리</small></button>
+          </fieldset>
+        </details>
+        <p class="record" id="cover-record"></p>
+        <p class="keys cover-keys"><kbd>Space</kbd> 또는 <kbd>Enter</kbd> 꾹 <kbd>P</kbd> 멈춤 <kbd>M</kbd> 소리</p>
+        <p class="footer-line">가상 회사입니다. zanviq gallery 작품.</p>
+      </div>
     </div>
   </section>
 
@@ -156,6 +161,18 @@
           </tbody>
         </table>
       </div>
+      <div class="log-out">
+        <p class="log-off" id="log-off"></p>
+        <p class="log-off-sub" id="log-off-sub"></p>
+      </div>
+      <p class="log-total"><span>점수</span> <b id="log-score">0</b> <span class="log-best" id="log-best"></span></p>
+      <p class="log-comment" id="log-comment" hidden></p>
+      <p class="log-next" id="log-next"></p>
+      <div class="cover-actions log-actions">
+        <button class="btn btn-primary" id="btn-sign" type="button">확인 도장 찍고 퇴근</button>
+        <button class="btn btn-primary" id="btn-again" type="button" hidden>한 판 더</button>
+        <button class="btn" id="btn-home2" type="button" hidden>첫 화면으로</button>
+      </div>
       <dl class="log-meta">
         <div><dt>일자</dt><dd id="log-date"></dd></div>
         <div><dt>작성자</dt><dd>총무팀 대리 구도담</dd></div>
@@ -165,13 +182,6 @@
         <caption>오늘 결재 처리 내역</caption>
         <tbody id="log-rows"></tbody>
       </table>
-      <p class="log-total"><span>점수</span> <b id="log-score">0</b> <span class="log-best" id="log-best"></span></p>
-      <p class="log-comment" id="log-comment" hidden></p>
-      <div class="cover-actions log-actions">
-        <button class="btn btn-primary" id="btn-sign" type="button">확인 도장 찍고 퇴근</button>
-        <button class="btn btn-primary" id="btn-again" type="button" hidden>한 판 더</button>
-        <button class="btn" id="btn-home2" type="button" hidden>첫 화면으로</button>
-      </div>
       <p class="footer-line">가상 회사입니다. zanviq gallery 작품.</p>
     </div>
   </section>

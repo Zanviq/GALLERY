@@ -16,6 +16,9 @@ const live = $('live');
 const clockEl = $('clock');
 const clockLeft = $('clock-left');
 const pressBtn = $('press');
+const pileEl = $('pile');
+const pileStack = $('pile-stack');
+const timebar = $('timebar');
 const sheets = { cover: $('cover'), pause: $('pause'), log: $('log') };
 
 // ---------------------------------------------------------------- storage (optional)
@@ -40,9 +43,12 @@ document.querySelector('svg.defs defs').insertAdjacentHTML('beforeend',
 // ---------------------------------------------------------------- geometry
 const geo = { bw: 0, bh: 0, dw: 0, u: 0, aimX: 0, aimY: 0, top: 0, imp: 0, drop: 0 };
 const stageEl = $('stage');
+// the seal photograph (img/seal-240.webp) is 240 x 801: its face is as wide as the impression
+// (0.15 dw), so the standing seal is 0.15 * 3.34 = 0.5 document widths tall
+const STAMP_H = 0.15 * 3.34;
 function layout() {
   const wide = innerWidth >= 960;
-  // the stamp zone (0.36 dw + 22) and the tray (1.3 dw + 2 pad) share the stage height;
+  // the stamp zone (0.5 dw + 22) and the tray (1.3 dw + 2 pad) share the stage height;
   // measure the stage at full stretch, then shrink it to what it holds so the rest of the
   // height goes around it (memo above, 꾹 button at the thumb)
   stageEl.style.flex = '';
@@ -51,7 +57,7 @@ function layout() {
   const sh = stageEl.clientHeight;
   const sw = stageEl.clientWidth;
   const pad = sh < 420 ? 8 : 14;
-  let dw = Math.min((sh - 22 - pad * 2) / 1.66, sw * (wide ? 0.3 : 0.6), 300);
+  let dw = Math.min((sh - 22 - pad * 2) / (1.3 + STAMP_H), sw * (wide ? 0.3 : 0.6), 300);
   dw = Math.max(100, Math.floor(dw));
   geo.dw = dw;
   geo.u = dw / 100;
@@ -59,7 +65,7 @@ function layout() {
   geo.bh = Math.round(dw * 1.3 + pad * 2);
   tray.style.height = geo.bh + 'px';
   stageEl.style.flex = '0 0 auto';
-  stageEl.style.height = Math.round(dw * 0.36 + 22 + geo.bh) + 'px';
+  stageEl.style.height = Math.round(dw * STAMP_H + 22 + geo.bh) + 'px';
   geo.top = pad;
   geo.aimX = Math.round(geo.bw * (wide ? 0.27 : 0.31));
   geo.aimY = geo.top + ROW_Y * geo.u;
@@ -75,15 +81,21 @@ function layout() {
 
 // ---------------------------------------------------------------- game state
 const ROUND = 75;
-const SPEED_PTS = [[0, 55], [15, 62], [35, 74], [55, 87], [75, 100]]; // units per second
+const CRUNCH_AT = ROUND - 30; // the last 30 seconds on the clock
+const URGENT_AT = 54; // when the 긴급 document reaches the stamp
+const SPEED_PTS = [[0, 55], [15, 62], [30, 71], [45, 80], [60, 92], [75, 104]]; // units per real second
+const PILE_MAX = 12; // sheets drawn on the 미결 pile (the count keeps going)
+const PILE_MIN = 7; // minutes of overtime per document left on the pile at 18:00
 const G = {
   state: 'cover', prev: null, mode: 'round',
   offset: 0, v: 0, docs: [], nextX: 0, elapsed: 0, last: 0, grace: 0, stepAcc: 0,
   readyT: 0, closeT: 0, cooldown: 0, rand: rng(1), lastKind: [], seen: new Set(),
-  streak: 0, maxStreak: 0, score: 0, done: 0,
+  streak: 0, maxStreak: 0, score: 0, done: 0, pile: 0, queued: 0, crunch: false, urgentDone: false, memoT: 0,
   c: null, lesson: null, clockSec: -1, nextDoc: null, raf: 0, roundKey: 'normal',
 };
 const freshCounts = () => ({ perfect: 0, good: 0, miss: 0, wrong: 0, twice: 0, late: 0, air: 0, banKept: 0, banHit: 0 });
+// the clock runs faster in the last 30 seconds: 1x up to 17:59:30, then up to 1.3x
+const timeScale = () => (G.mode === 'round' ? 1 + 0.3 * Math.max(0, Math.min(1, (G.elapsed - CRUNCH_AT) / 12)) : 1);
 G.c = freshCounts();
 
 const q10 = (x) => Math.ceil((x - 2) / 10) * 10 + 2; // world x with targets on the 10-unit grid
@@ -116,6 +128,11 @@ function addDoc(spec, worldX) {
   d.rot = (G.rand() - 0.5) * 0.7;
   d.resolved = false;
   d.dirty = false;
+  // every sheet shows its own patch of the scanned paper (the scan is 240 x 323 doc units)
+  for (const s of d.sheets) {
+    s.el.style.setProperty('--px', (-Math.random() * 140).toFixed(1) + 'em');
+    s.el.style.setProperty('--py', (-Math.random() * 190).toFixed(1) + 'em');
+  }
   belt.appendChild(d.el);
   G.docs.push(d);
   placeDoc(d);
@@ -124,6 +141,7 @@ function addDoc(spec, worldX) {
 function clearDocs() {
   for (const d of G.docs) d.el.remove();
   G.docs = [];
+  stageEl.querySelectorAll('.doc.leaving').forEach((n) => n.remove());
   belt.querySelectorAll('.air-mark').forEach((n) => n.remove());
 }
 function placeDoc(d) {
@@ -132,16 +150,19 @@ function placeDoc(d) {
   d.el.style.transform = `translate3d(${x.toFixed(2)}px, ${geo.top}px, 0) rotate(${d.rot.toFixed(2)}deg)`;
 }
 
+// g1/g2 결재 one or two 칸, jj 정정인, gn 간인, br 반려,
+// ns 결재 with a missing signature, tp 결재 with a correction-taped amount (both: send back unstamped)
 const PHASES = [
   { until: 15, gap: [22, 40], w: { g1: 100 } },
-  { until: 35, gap: [18, 34], w: { g1: 68, jj: 32 } },
-  { until: 55, gap: [14, 30], w: { g1: 44, jj: 20, gn: 20, br: 16 } },
-  { until: 99, gap: [10, 24], w: { g1: 30, g2: 18, jj: 18, gn: 18, br: 16 } },
+  { until: 30, gap: [18, 34], w: { g1: 62, jj: 26, ns: 12 } },
+  { until: CRUNCH_AT, gap: [14, 30], w: { g1: 38, jj: 16, gn: 16, br: 10, ns: 10, tp: 10 } },
+  { until: 99, gap: [8, 20], w: { g1: 26, g2: 16, jj: 14, gn: 14, br: 8, ns: 11, tp: 11 } },
 ];
+const HOLD_KINDS = ['br', 'ns', 'tp'];
 function pickSpec(ph) {
   const w = { ...ph.w };
   const [a, b] = G.lastKind;
-  if (a === 'br') delete w.br; // never two 반려 in a row
+  if (HOLD_KINDS.includes(a)) for (const k of HOLD_KINDS) delete w[k]; // never two send-backs in a row
   if (a && a === b && a !== 'g1') delete w[a];
   const total = Object.values(w).reduce((s, x) => s + x, 0);
   let r = G.rand() * total, k = 'g1';
@@ -149,18 +170,39 @@ function pickSpec(ph) {
   G.lastKind = [k, a];
   if (k === 'g1') return { kind: 'gyeoljae', boxes: [Math.floor(G.rand() * 3)] };
   if (k === 'g2') { const s = Math.floor(G.rand() * 2); return { kind: 'gyeoljae', boxes: [s, s + 1] }; }
+  if (k === 'ns') return { kind: 'gyeoljae', boxes: [1 + Math.floor(G.rand() * 2)], flaw: 'nosign' };
+  if (k === 'tp') return { kind: 'gyeoljae', boxes: [Math.floor(G.rand() * 3)], flaw: 'tape' };
   if (k === 'jj') return { kind: 'jeongjeong' };
   if (k === 'gn') return { kind: 'ganin' };
   return { kind: 'banryeo' };
+}
+// a document back from the 미결 pile: a clean copy to stamp again
+function againSpec(tArrive) {
+  const r = G.rand();
+  if (r < 0.6 || tArrive < 30) return { kind: 'gyeoljae', boxes: [Math.floor(G.rand() * 3)], again: true };
+  return { kind: r < 0.8 ? 'jeongjeong' : 'ganin', again: true };
 }
 function spawnRound() {
   const ahead = (geo.bw - geo.aimX) / geo.u + 140;
   while (G.nextX < G.offset + ahead) {
     const v = Math.max(20, G.v);
-    const tArrive = G.elapsed + (G.nextX + 50 - G.offset) / v;
+    const tArrive = G.elapsed + (G.nextX + 50 - G.offset) / (v * timeScale());
     if (tArrive > ROUND + 2) { G.nextX = Infinity; break; }
     const ph = PHASES.find((p) => tArrive < p.until);
-    const spec = pickSpec(ph);
+    let spec;
+    if (!G.urgentDone && tArrive >= URGENT_AT) {
+      G.urgentDone = true;
+      spec = { kind: 'gyeoljae', boxes: [2], urgent: true };
+      G.lastKind = ['g1', G.lastKind[0]];
+    } else if (G.pile - G.queued > 0 && G.rand() < Math.min(0.55, 0.2 + 0.08 * (G.pile - G.queued))) {
+      // the pile feeds back onto the tray, so a good run can clear it; the sheet leaves the pile
+      // when its copy slides into view (render)
+      spec = againSpec(tArrive);
+      G.queued++;
+      G.lastKind = ['g1', G.lastKind[0]];
+    } else {
+      spec = pickSpec(ph);
+    }
     const ext0 = spec.kind === 'ganin' ? -32 : 0;
     const x = q10(G.nextX - ext0);
     addDoc(spec, x);
@@ -182,8 +224,10 @@ function setClock(sec) {
   const left = ROUND - s;
   clockLeft.textContent = left > 0 ? `퇴근까지 ${left}초` : '퇴근';
   $('clock-wrap').classList.toggle('last', left <= 10 && left > 0);
+  // in the last 30 seconds the wall clock ticks out loud, and it ticks faster as time speeds up
+  if (G.crunch && G.state === 'playing' && left > 0) sfx.tock(left <= 10);
 }
-function mult() { return 1 + Math.min(3, Math.floor(G.streak / 6)); }
+function mult() { return 1 + Math.min(3, Math.floor(G.streak / 5)); }
 function hud() {
   $('streak').textContent = G.streak;
   const m = mult();
@@ -197,16 +241,27 @@ function memo(text, lesson = false) {
   memoText = text;
   memoEl.textContent = text;
   memoEl.classList.toggle('lesson', lesson);
+  memoEl.classList.remove('shout');
   if (lesson && text) live.textContent = text;
+}
+// a line that holds the memo for a moment (the 다음: hints wait), read out by the live region
+function shout(text, sec) {
+  memo(text);
+  memoEl.classList.add('shout');
+  G.memoT = sec;
+  live.textContent = text;
 }
 const WORDS = {
   perfect: '정확!', good: '조금 비뚤', miss: '빗나감', wrong: '엉뚱한 칸', twice: '두 번 찍음',
-  late: '놓침', air: '헛도장', banKept: '반려 지킴', banHit: '반려인데!',
+  late: '놓침', air: '헛도장', banKept: '반려 지킴', banHit: '찍으면 안 돼요',
 };
 const SAY = {
   perfect: '정확', good: '조금 비뚤', miss: '빗나감', wrong: '엉뚱한 칸에 찍음', twice: '같은 칸에 두 번 찍음',
-  late: '놓침', air: '헛도장', banKept: '반려 서류를 깨끗하게 보냄', banHit: '반려 서류에 찍음',
+  late: '놓침', air: '헛도장', banKept: '찍지 않고 잘 보냄', banHit: '찍으면 안 되는 서류에 찍음',
 };
+const FLAW = { banryeo: '반려인데!', nosign: '서명 빠짐!', tape: '수정테이프!' };
+const FLAW_SAY = { banryeo: '반려', nosign: '서명 빠짐', tape: '수정테이프' };
+const RETURNED = ['miss', 'wrong', 'twice', 'banHit'];
 function feed(kind, extra = '') {
   const w = $('feed-word');
   w.textContent = WORDS[kind] + (extra ? ` ${extra}` : '');
@@ -217,12 +272,12 @@ function feed(kind, extra = '') {
 }
 
 // ---------------------------------------------------------------- marks on paper
-function addMark(d, x, kind, y = 41) {
+function addMark(d, x, kind, y = 41, text = WORDS[kind]) {
   // on a contract the word goes over both pages, so it is not cut at the seam
   const sheet = d.kind === 'ganin' ? { el: d.el, x0: 0 } : sheetFor(d, x);
   const m = document.createElement('span');
   m.className = `mark mark-${kind}`;
-  m.textContent = WORDS[kind];
+  m.textContent = text;
   m.style.setProperty('--x', (x - sheet.x0).toFixed(1));
   m.style.setProperty('--y', y);
   m.style.setProperty('--r', ((G.rand() - 0.5) * 8).toFixed(1) + 'deg');
@@ -262,6 +317,63 @@ function impress(d, lx, ly, quality) {
   }
 }
 
+// ---------------------------------------------------------------- the 미결 pile and the mistake cue
+function renderPile(bump = false) {
+  const n = Math.min(PILE_MAX, Math.max(0, G.pile));
+  while (pileStack.children.length < n) {
+    const s = document.createElement('i');
+    s.className = 'pile-sheet';
+    s.style.setProperty('--o', ((Math.random() - 0.5) * 7).toFixed(1) + 'px');
+    s.style.setProperty('--r', ((Math.random() - 0.5) * 3).toFixed(1) + 'deg');
+    pileStack.appendChild(s);
+  }
+  while (pileStack.children.length > n) pileStack.lastChild.remove();
+  $('pile-n').textContent = Math.max(0, G.pile);
+  pileEl.dataset.level = G.pile >= 8 ? 'high' : G.pile >= 4 ? 'mid' : 'low';
+  if (bump) { pileEl.classList.remove('bump'); void pileEl.offsetWidth; pileEl.classList.add('bump'); }
+}
+// a spoiled or missed document goes back on the 미결 pile: it leaves the tray and lands there
+function returnDoc(d) {
+  if (G.mode !== 'round' || d.gone) return;
+  d.gone = true;
+  d.resolved = true;
+  const i = G.docs.indexOf(d);
+  if (i >= 0) G.docs.splice(i, 1);
+  G.pile++;
+  const el = d.el;
+  const sr = stageEl.getBoundingClientRect();
+  const pr = pileStack.getBoundingClientRect();
+  const x0 = d.sx, y0 = tray.offsetTop + geo.top;
+  const from = `translate3d(${x0.toFixed(1)}px, ${y0}px, 0) rotate(${d.rot.toFixed(2)}deg)`;
+  el.style.transform = from;
+  el.classList.add('leaving');
+  stageEl.appendChild(el);
+  const done = () => { el.remove(); renderPile(true); };
+  if (reduceMQ.matches) {
+    el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, delay: 160, fill: 'forwards' }).onfinish = done;
+    return;
+  }
+  // land the shrunken sheet on top of the stack (it scales about its centre)
+  const s = Math.max(0.12, (pr.width + 8) / geo.dw);
+  const X = pr.left - sr.left + pr.width / 2 - geo.dw / 2;
+  const Y = pr.top - sr.top - geo.dw * 0.65 * s - geo.dw * 0.65;
+  el.animate([
+    { transform: from, opacity: 1 },
+    { transform: `translate3d(${x0.toFixed(1)}px, ${(y0 - geo.dw * 0.08).toFixed(1)}px, 0) rotate(${(d.rot - 3).toFixed(2)}deg)`, opacity: 1, offset: 0.3 },
+    { transform: `translate3d(${X.toFixed(1)}px, ${Y.toFixed(1)}px, 0) rotate(-8deg) scale(${s.toFixed(3)})`, opacity: 0.85, offset: 0.92 },
+    { transform: `translate3d(${X.toFixed(1)}px, ${Y.toFixed(1)}px, 0) rotate(-8deg) scale(${s.toFixed(3)})`, opacity: 0 },
+  ], { duration: 640, easing: 'cubic-bezier(.45,0,.6,1)', fill: 'forwards' }).onfinish = done;
+}
+let oopsT = 0;
+function oops(loud = true) {
+  if (loud) sfx.buzz();
+  desk.classList.remove('oops');
+  void desk.offsetWidth;
+  desk.classList.add('oops');
+  clearTimeout(oopsT);
+  oopsT = setTimeout(() => desk.classList.remove('oops'), 420);
+}
+
 // ---------------------------------------------------------------- judging
 function offsetAt(t) {
   if (settings.step || G.grace > 0) return G.offset;
@@ -294,11 +406,14 @@ function press(t) {
     return outcome('air', null);
   }
   const p = localPoint(d, off);
-  if (d.kind === 'banryeo') {
+  if (d.hold) {
+    // 반려, or a flaw the player should have caught: the stamp spoils it
     impress(d, p.x, p.y, 0);
     sfx.thump(0);
-    if (!d.dirty) { d.dirty = true; addMark(d, p.x, 'banHit', 44); }
-    return outcome('banHit', d);
+    if (!d.dirty) { d.dirty = true; addMark(d, p.x, 'banHit', 44, FLAW[d.flaw || 'banryeo']); }
+    outcome('banHit', d);
+    returnDoc(d);
+    return;
   }
   const T = tolerance();
   let open = null, done = null;
@@ -325,6 +440,7 @@ function press(t) {
   addMark(d, p.x, kind);
   if (d.kind === 'ganin' && (kind === 'perfect' || kind === 'good')) d.el.classList.add('split');
   outcome(kind, d, open && (kind === 'good' || kind === 'miss') ? (early ? '(일찍)' : '(늦게)') : '');
+  if (RETURNED.includes(kind)) returnDoc(d);
   checkResolved(d);
 }
 function airMark(off) {
@@ -338,7 +454,7 @@ function airMark(off) {
 }
 function checkResolved(d) {
   if (d.resolved) return;
-  if (d.kind === 'banryeo' || d.targets.every((t) => t.status)) {
+  if (d.hold || d.targets.every((t) => t.status)) {
     d.resolved = true;
     if (G.mode === 'round') { G.done++; hud(); }
     if (G.mode === 'lesson') lessonResolved(d);
@@ -347,6 +463,7 @@ function checkResolved(d) {
 function outcome(kind, d, extra = '') {
   const good = kind === 'perfect' || kind === 'good' || kind === 'banKept';
   feed(kind, extra);
+  if (!good) oops(kind !== 'air');
   if (G.mode === 'lesson') { G.lesson.last = kind; G.lesson.extra = extra; live.textContent = SAY[kind]; return; }
   G.c[kind]++;
   if (good) {
@@ -354,22 +471,24 @@ function outcome(kind, d, extra = '') {
     G.streak++;
     G.maxStreak = Math.max(G.maxStreak, G.streak);
     const base = kind === 'perfect' ? 100 : kind === 'good' ? 40 : 60;
-    G.score += base * mult();
-    if (mult() > before) sfx.tap2();
+    G.score += base * mult() * (d && d.urgent ? 2 : 1);
+    if (mult() > before) { sfx.tap2(); const mEl = $('mult'); mEl.classList.remove('bump'); void mEl.offsetWidth; mEl.classList.add('bump'); }
   } else {
     G.streak = 0;
+    if (RETURNED.includes(kind)) G.score = Math.max(0, G.score - 50);
   }
   hud();
-  live.textContent = `${SAY[kind]}. 연속 ${G.streak}.`;
+  const pileNote = RETURNED.includes(kind) || kind === 'late' ? ` 미결 ${G.pile + 1}장.` : '';
+  live.textContent = `${SAY[kind]}.${pileNote} 연속 ${G.streak}.`;
 }
 function sweep() {
   const T = tolerance();
-  for (const d of G.docs) {
+  for (const d of [...G.docs]) {
     if (d.resolved) continue;
     const lx = G.offset - d.worldX;
-    if (d.kind === 'banryeo') {
+    if (d.hold) {
       if (lx > 100) {
-        if (!d.dirty) outcome('banKept', d);
+        if (!d.dirty) outcome('banKept', d, d.flaw ? `(${FLAW_SAY[d.flaw]})` : '');
         checkResolved(d);
       }
       continue;
@@ -379,6 +498,7 @@ function sweep() {
         tg.status = 'late';
         addMark(d, tg.u, 'late', 40);
         outcome('late', d);
+        if (G.mode === 'round') { returnDoc(d); break; }
       }
     }
     checkResolved(d);
@@ -392,10 +512,11 @@ function dropStamp() {
     setTimeout(() => stampEl.classList.remove('down'), 120);
     return;
   }
+  // a resin seal is rigid: it travels down, rests a beat on the paper and lifts, no squash
   stampEl.animate([
     { transform: 'translate(-50%, 0)' },
-    { transform: `translate(-50%, ${geo.drop}px) scaleY(.96)`, offset: 0.26 },
-    { transform: `translate(-50%, ${geo.drop}px) scaleY(.96)`, offset: 0.38 },
+    { transform: `translate(-50%, ${geo.drop}px)`, offset: 0.26 },
+    { transform: `translate(-50%, ${geo.drop}px)`, offset: 0.4 },
     { transform: 'translate(-50%, 0)' },
   ], { duration: 230, easing: 'cubic-bezier(.3,.7,.4,1)' });
 }
@@ -408,6 +529,8 @@ const LESSON = [
   { spec: { kind: 'jeongjeong' }, memo: '숫자를 고친 서류엔 정정인. 두 줄 그은 숫자 한가운데에.' },
   { spec: { kind: 'ganin' }, memo: '계약서 두 장엔 간인. 겹친 이음매에 반씩 걸치게.' },
   { spec: { kind: 'banryeo' }, memo: '반려 서류는 찍지 말고 그냥 보내요.' },
+  { spec: { kind: 'gyeoljae', boxes: [1], flaw: 'nosign' }, memo: '담당 칸 서명이 빠졌어요. 앞 칸이 비어 있으면 찍지 말고 보내요.' },
+  { spec: { kind: 'gyeoljae', boxes: [0], flaw: 'tape' }, memo: '금액을 수정테이프로 고쳤어요. 이것도 찍지 말고 보내요.' },
 ];
 function startLesson() {
   closeSheets();
@@ -448,7 +571,7 @@ function lessonTick(dt) {
 function lessonResolved(d) {
   const L = G.lesson;
   if (d !== L.doc) return;
-  const kinds = d.kind === 'banryeo' ? [d.dirty ? 'banHit' : 'banKept'] : d.targets.map((t) => t.status);
+  const kinds = d.hold ? [d.dirty ? 'banHit' : 'banKept'] : d.targets.map((t) => t.status);
   const ok = kinds.every((k) => k === 'perfect' || k === 'good' || k === 'banKept');
   L.hold = false;
   if (ok) {
@@ -456,10 +579,10 @@ function lessonResolved(d) {
     memo(anyGood ? '조금 비뚤었지만 통과. 한가운데를 노려 봐요.' : '좋아요, 정확해요!', true);
     L.i++; L.tries = 0;
     L.wait = 1.2;
-    if (L.i >= LESSON.length) memo('연습 끝! 이제 진짜 결재예요. 18시까지 75초.', true);
+    if (L.i >= LESSON.length) memo('연습 끝! 놓치거나 잘못 찍은 서류는 미결로 쌓여요. 18시까지 75초.', true);
   } else {
     const k = kinds.find((x) => !(x === 'perfect' || x === 'good' || x === 'banKept'));
-    const why = k === 'banHit' ? '반려 서류는 깨끗하게 둬야 해요.'
+    const why = k === 'banHit' ? '이 서류는 깨끗하게 보내야 해요.'
       : k === 'late' ? '도장을 안 찍고 지나갔어요.'
       : k === 'wrong' ? '동그라미 친 칸이 아니에요.'
       : L.extra === '(일찍)' ? '조금 일찍 찍었어요. 칸이 점선 원 한가운데 올 때!'
@@ -485,10 +608,21 @@ function resetBoard(mode) {
   G.streak = 0; G.maxStreak = 0; G.score = 0; G.done = 0; G.c = freshCounts();
   G.rand = rng((Math.random() * 1e9) | 0);
   G.lastKind = []; G.nextDoc = null; G.clockSec = -1; G.signed = false;
+  G.pile = 0; G.queued = 0; G.crunch = false; G.urgentDone = false; G.memoT = 0;
+  app.classList.remove('crunch');
+  desk.classList.remove('oops');
   stampEl.classList.remove('down');
   $('feed-word').textContent = '';
+  renderPile();
+  timebar.style.transform = '';
   hud();
   G.v = speedNow();
+}
+function startCrunch() {
+  G.crunch = true;
+  app.classList.add('crunch');
+  shout('마지막 30초! 시계가 빨라져요.', 2.4);
+  sfx.alarm();
 }
 function startRound() {
   closeSheets();
@@ -505,8 +639,9 @@ function startRound() {
   focusPress();
 }
 function nextLabel() {
+  if (G.memoT > 0) return;
   const T = tolerance();
-  const d = G.docs.find((x) => !x.resolved && (x.kind === 'banryeo' ? G.offset - x.worldX <= 100 : x.targets.some((t) => !t.status && G.offset - x.worldX - t.u <= T.g)));
+  const d = G.docs.find((x) => !x.resolved && (x.hold ? G.offset - x.worldX <= 100 : x.targets.some((t) => !t.status && G.offset - x.worldX - t.u <= T.g)));
   if (d && d !== G.nextDoc) {
     G.nextDoc = d;
     const first = !G.seen.has(d.kind + (d.targets.length > 1 ? '2' : ''));
@@ -517,9 +652,12 @@ function nextLabel() {
 function endRound() {
   setState('closing');
   G.closeT = 1.1;
-  memo('18:00. 퇴근!');
+  // copies from the pile still on the tray at 18:00 are still 미결
+  for (const d of G.docs) if (d.again && d.entered && !d.resolved) G.pile++;
+  renderPile(true);
+  memo(G.pile ? `18:00. 미결 ${G.pile}장…` : '18:00. 퇴근!');
   sfx.bell();
-  live.textContent = '18시예요. 업무 일지가 나왔어요.';
+  live.textContent = G.pile ? `18시예요. 미결 ${G.pile}장이 남았어요.` : '18시예요. 미결 없이 퇴근해요.';
 }
 
 // ---------------------------------------------------------------- frame loop
@@ -540,10 +678,13 @@ function step(t) {
     if (G.readyT <= 0) { setState('playing'); G.seen = new Set(); }
   } else if (G.state === 'playing') {
     if (move) {
-      G.elapsed += dt;
+      G.elapsed += dt * timeScale();
+      if (!G.crunch && G.elapsed >= CRUNCH_AT) startCrunch();
       setClock(G.elapsed);
+      timebar.style.transform = `scaleX(${Math.max(0, 1 - G.elapsed / ROUND).toFixed(4)})`;
       if (G.elapsed >= ROUND) { endRound(); }
     }
+    if (G.memoT > 0) G.memoT -= dt;
   } else if (G.state === 'lesson') {
     if (move) move = lessonTick(dt);
   } else if (G.state === 'closing') {
@@ -576,7 +717,12 @@ function render() {
     const d = G.docs[i];
     placeDoc(d);
     if (d.sx < -geo.dw * 1.4 - 40 && (d.resolved || G.mode !== 'round')) { d.el.remove(); G.docs.splice(i, 1); }
-    else if (!d.entered && d.sx < geo.bw) { d.entered = true; if (G.state !== 'cover') sfx.slide(); }
+    else if (!d.entered && d.sx < geo.bw) {
+      d.entered = true;
+      if (G.state !== 'cover') sfx.slide();
+      if (d.again && G.mode === 'round') { G.pile--; G.queued--; renderPile(); }
+      if (d.urgent && G.state === 'playing') { shout('잠깐만요! 긴급 서류예요. 부장 칸, 점수 두 배.', 2.6); sfx.alarm(); }
+    }
   }
   const period = geo.u * 50;
   ticksEl.style.backgroundPosition = `${(-(G.offset * geo.u) % period).toFixed(2)}px 0`;
@@ -600,8 +746,9 @@ function inertBackground(on) {
 function openSheet(name, focusId) {
   for (const [k, el] of Object.entries(sheets)) el.hidden = k !== name;
   inertBackground(true);
+  sheets[name].scrollTop = 0;
   const f = $(focusId);
-  if (f) f.focus();
+  if (f) f.focus({ preventScroll: true });
 }
 function closeSheets() {
   for (const el of Object.values(sheets)) el.hidden = true;
@@ -641,29 +788,43 @@ function goHome() {
 function showLog() {
   setState('log');
   const c = G.c;
+  const pile = Math.max(0, G.pile);
+  const final = Math.max(0, G.score - pile * 100);
+  const returned = c.miss + c.wrong + c.twice + c.banHit;
   const rows = [
     ['결재 처리', `${G.done}건`],
     ['정확', `${c.perfect}번`],
     ['조금 비뚤', `${c.good}번`],
-    ['빗나감', `${c.miss + c.wrong + c.twice}번`],
-    ['놓침', `${c.late}번`],
-    ['헛도장', `${c.air}번`],
     ['반려 지킴', `${c.banKept}장`],
-    ['반려에 찍음', `${c.banHit}장`],
+    ['잘못 찍어 반송', `${returned}장`],
+    ['놓침', `${c.late}장`],
+    ['헛도장', `${c.air}번`],
     ['최고 연속', `${G.maxStreak}번`],
+    ['남은 미결', pile ? `${pile}장, -${fmt(pile * 100)}점` : '0장'],
   ];
   $('log-rows').innerHTML = rows.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('');
+  // the headline: what time 구 대리 actually gets to leave
+  const out = 18 * 60 + pile * PILE_MIN;
+  $('log-off').textContent = pile ? `${Math.floor(out / 60)}:${String(out % 60).padStart(2, '0')} 퇴근` : '18:00 칼퇴!';
+  $('log-off-sub').textContent = pile ? `미결 ${pile}장, 야근 ${pile * PILE_MIN}분` : '미결 0장';
+  $('log-off').classList.toggle('late', pile > 0);
   const now = new Date();
   $('log-date').textContent = `${now.getFullYear()}. ${now.getMonth() + 1}. ${now.getDate()}.`;
   $('log-mode').textContent = { normal: '보통 속도', slow: '느긋하게', step: '칸칸이 이동' }[G.roundKey];
-  $('log-score').textContent = fmt(G.score);
+  $('log-score').textContent = fmt(final);
   store.best = store.best || {};
   const prev = store.best[G.roundKey];
-  const isNew = !prev || G.score > prev.score;
-  if (isNew && G.score > 0) { store.best[G.roundKey] = { score: G.score, streak: G.maxStreak }; save(); }
+  const isNew = !prev || final > prev.score;
+  if (isNew && final > 0) { store.best[G.roundKey] = { score: final, streak: G.maxStreak }; save(); }
   const best = store.best[G.roundKey];
-  $('log-best').textContent = isNew && G.score > 0 ? '새 기록' : best ? `최고 ${fmt(best.score)}` : '';
-  $('log-best').classList.toggle('is-new', isNew && G.score > 0);
+  $('log-best').textContent = isNew && final > 0 ? '새 기록' : best ? `최고 ${fmt(best.score)}` : '';
+  $('log-best').classList.toggle('is-new', isNew && final > 0);
+  // one line that points at the next round
+  $('log-next').textContent = pile
+    ? `미결 ${pile}장만 없었으면 칼퇴, 점수 +${fmt(pile * 100)}.`
+    : !isNew && best ? `최고 기록까지 ${fmt(best.score - final + 1)}점.`
+    : G.maxStreak < 15 ? `연속 ${(Math.floor(G.maxStreak / 5) + 1) * 5}번이면 배율 ×${Math.min(4, Math.floor(G.maxStreak / 5) + 2)}.`
+    : '내일도 칼퇴.';
   $('log-sign').setAttribute('d', scribble(rng(7), 4, 5, 52, 17));
   $('log-confirm').innerHTML = '';
   $('log-comment').hidden = true;
@@ -686,13 +847,15 @@ function signLog() {
   cell.appendChild(canvas);
   sfx.thump(1);
   const c = G.c;
+  const pile = Math.max(0, G.pile);
   const judged = c.perfect + c.good + c.miss + c.wrong + c.twice + c.late + c.banKept + c.banHit + c.air;
   const acc = judged ? (c.perfect + c.good * 0.6 + c.banKept) / judged : 0;
   const text = judged === 0 ? '오늘 결재가 한 장도 없네. 내일 보자.'
-    : acc >= 0.9 ? '완벽해. 내일부터 도장은 구 대리 담당.'
-    : acc >= 0.75 ? '깔끔하네. 칼퇴 인정.'
-    : acc >= 0.5 ? '몇 장은 다시 찍자. 그래도 퇴근!'
-    : '칸부터 보고 찍자. 내일 일찍 와.';
+    : !pile && acc >= 0.85 ? '완벽해. 내일부터 도장은 구 대리 담당.'
+    : !pile ? '미결 없이 칼퇴. 잘했어.'
+    : pile <= 2 ? `미결 ${pile}장은 내일 아침에 먼저 해.`
+    : pile <= 5 ? '미결이 꽤 쌓였네. 내일 일찍 와.'
+    : '책상에 미결이 산더미야. 칸부터 보고 찍자.';
   const cm = $('log-comment');
   cm.textContent = text;
   cm.hidden = false;
@@ -709,6 +872,8 @@ function syncOptions() {
   for (const id of ['opt-step', 'pause-step']) $(id).setAttribute('aria-pressed', String(settings.step));
   for (const id of ['opt-sound', 'pause-sound', 'btn-sound']) $(id).setAttribute('aria-pressed', String(settings.sound));
   app.classList.toggle('stepped', settings.step);
+  const pace = [settings.slow && '느긋하게', settings.step && '칸칸이 이동'].filter(Boolean);
+  $('opts-state').textContent = `${pace.length ? pace.join(', ') : '보통 속도'}, 소리 ${settings.sound ? '켬' : '끔'}`;
 }
 function toggle(name) {
   settings[name] = !settings[name];
@@ -746,10 +911,10 @@ function coverScene() {
   render();
 }
 
-// the title sheet carries one firm impression, as if 구 대리 tried the stamp first
+// the title carries one firm impression over its last letter, as if 구 대리 tried the stamp first
 function coverSeal() {
   const box = $('cover-seal');
-  const { canvas } = makeImpression({ size: 84, dpr: Math.min(3, devicePixelRatio || 1), seed: 1109, press: 1.06, tilt: 0.8, tiltAngle: 2.3, rot: 0.05 });
+  const { canvas } = makeImpression({ size: 120, dpr: Math.min(3, devicePixelRatio || 1), seed: 1109, press: 1.06, tilt: 0.8, tiltAngle: 2.3, rot: 0.05 });
   box.replaceChildren(canvas);
 }
 
@@ -832,4 +997,4 @@ async function boot() {
 boot();
 
 // for automated checks only (no effect on play)
-window.__stamp = { G, geo, settings, press: (t) => press(t ?? performance.now()), startRound, startLesson };
+window.__stamp = { G, geo, settings, press: (t) => press(t ?? performance.now()), startRound, startLesson, renderPile };
