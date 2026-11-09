@@ -1,8 +1,51 @@
 # Production brief for gallery works (read fully before starting)
 
-Every work in `works/<slug>/` is built by one agent working alone, in parallel with four others.
+Every work in `works/<slug>/` is built by one agent working alone, in parallel with others.
 This file holds the rules that apply to all of them. `design/works/REGISTRY.md` holds each work's
-concept, palette, fonts and signature interaction, and lists what is already taken.
+concept, palette and fonts, and lists what is already taken.
+
+## 0. The owner's second review (2026-11-09). Read this first; it overrides anything below.
+
+After seeing the first batch, the owner said:
+
+1. **Too much of it is "experience" design.** Most pages were built around an interactive toy. A
+   promo page or homepage can simply *show*: a strong poster, good photographs, clear information.
+   Interaction is optional and small. Never build a toy just to have one. Games and pieces whose
+   category is "인터랙션" keep their interaction, but it must look right (point 2).
+2. **Drawings made by assembling shapes in code look AI-made.** SVG/Canvas/CSS pictures of people,
+   hands, objects, rooms, animals, products or scenes built from primitives read as AI output, and
+   so does 3D (three.js/WebGL renders of products, a stamp, a bottle, a joystick). Do not draw
+   pictures with code. Use **generated images** instead (§6: Gemini), then refine, retouch, crop and
+   grade them so they belong to the page. Code may still draw what is naturally code: type,
+   rules, grids, charts and data diagrams, maps made of lines, UI.
+3. **Crammed screens.** A lot of content is fine, but not squeezed in. Give every screen generous
+   whitespace and a clear hierarchy; fewer things per view, larger margins, room around images.
+4. **The model the owner likes is 너울 2027 (`works/festival/`).** It works like a printed poster:
+   one flat, confident colour field, huge display type used as the image, a strict grid, very few
+   gimmicks. That is the "designer feel" they want: editorial and poster-like, not app-like.
+5. **Homepages should be about things people know and care about, or startups.** Brands, products,
+   services and startups with something real to show. Avoid niche shops with little to say.
+
+### Images from Gemini: how to make them not look AI
+
+- Tool: `<scratchpad>/tools/gen_image.py` (key is read from a file; never print, copy or commit it).
+  Model `gemini-3-pro-image`. Use `--ref` to keep one product, person or place consistent across
+  shots (generate a hero first, then "the same … from another angle / in another setting"), and to
+  edit or clean up an image ("remove the extra finger", "make the wall plain").
+- Art-direct like a photographer or illustrator, not like a prompt: name the medium (35mm film,
+  medium-format colour negative, risograph print, linocut, gouache), the light (overcast window,
+  one bare bulb), lens and framing, imperfection (grain, slight blur, off-centre). Avoid "8k,
+  ultra detailed, cinematic, hyperrealistic, octane": that is the AI look.
+- No text inside images (set all text in HTML). No logos of real brands, no real people or places.
+- Inspect every image at full size before using it: hands, faces, eyes, text-like scribbles,
+  warped objects, duplicated parts. Fix with an edit pass or crop them out; discard if in doubt.
+- Make them belong: crop deliberately (`<scratchpad>/tools/img_prep.py`), grade to the page's
+  palette (greyscale, duotone, levels), match grain across the set.
+- Export webp at the sizes you need (`img_prep.py` writes 1600/800 by default), set width/height,
+  `loading="lazy"` below the fold. Image budget: first view under ~1.5 MB, whole page under ~4 MB.
+- Keep provenance: `gen_image.py` appends each prompt to `prompts.jsonl` next to the output; copy
+  the final prompts into `design/works/<slug>/IMAGES.md`.
+- Budget about 20 generations per work; stop and use what works rather than rolling forever.
 
 ## 1. Where things go
 
@@ -112,7 +155,7 @@ not be banned or already used; report it.
 - puppeteer-core: `<scratchpad>/perfume/pp/node_modules/puppeteer-core`. Capture script you can copy:
   `design/works/perfume/pp-shots.mjs` (viewports, scrolling, clicks, console capture).
   Launch args that work here: `--enable-unsafe-swiftshader --use-angle=swiftshader`.
-- Faster captures: `design/works/jamo/scripts/cdp.mjs` drives Chrome over CDP with no dependencies
+- Faster captures: `<scratchpad>/tools/cdp.mjs` drives Chrome over CDP with no dependencies
   (about 10 s a run here, against about 30 s just to load puppeteer-core). Copy it into your own
   `design/works/<slug>/scripts/` and adapt.
 - Python with fontTools + brotli: `<scratchpad>/fontenv/Scripts/python.exe`.

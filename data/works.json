@@ -45,24 +45,6 @@
     "year": 2026
   },
   {
-    "slug": "jamo",
-    "title": "획 하나 차이",
-    "type": "internal",
-    "url": "jamo/",
-    "tags": ["game", "typography", "interaction", "canvas"],
-    "thumbnail": "thumbnails/jamo.webp",
-    "year": 2026
-  },
-  {
-    "slug": "laundry",
-    "title": "뽀득 셀프 빨래방",
-    "type": "internal",
-    "url": "laundry/",
-    "tags": ["landing", "interaction", "canvas", "physics", "mobile", "brand"],
-    "thumbnail": "thumbnails/laundry.webp",
-    "year": 2026
-  },
-  {
     "slug": "riso",
     "title": "겹 리소 인쇄실",
     "type": "internal",
@@ -135,30 +117,12 @@
     "year": 2026
   },
   {
-    "slug": "shoemaker",
-    "title": "골과 본",
-    "type": "internal",
-    "url": "shoemaker/",
-    "tags": ["landing", "interaction", "svg", "animation", "brand"],
-    "thumbnail": "thumbnails/shoemaker.webp",
-    "year": 2026
-  },
-  {
     "slug": "cinema",
     "title": "점멸",
     "type": "internal",
     "url": "cinema/",
     "tags": ["promo", "interaction", "canvas", "brand"],
     "thumbnail": "thumbnails/cinema.webp",
-    "year": 2026
-  },
-  {
-    "slug": "lostfound",
-    "title": "갈래터미널 유실물 보관소",
-    "type": "internal",
-    "url": "lostfound/",
-    "tags": ["game", "interaction", "svg", "typography"],
-    "thumbnail": "thumbnails/lostfound.webp",
     "year": 2026
   },
   {
