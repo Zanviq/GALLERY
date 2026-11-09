@@ -31,7 +31,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | 12 | cinema | 홍보 · desktop+mobile | 가상 독립영화 개봉 | 흑백 프레임이 찍힌 밀착 인화지를 넘기며 자막으로 줄거리를 읽는 예고편 (사진 대신 그래픽 프레임) | 흑백 #000 / #FFF / 회색, 자막 노랑 #FFE13B (한국 극장 자막) | Diphylleia, LINE Seed Sans KR (subset renamed Jeommyeol Sans) | registered |
 | 13 | sparkling | 홍보 · desktop+mobile | 깻잎 탄산수 출시 | 병뚜껑을 끌어 따면 기포가 터져 오름, 흔들면 더 끓음 (Canvas 입자) | 들깻잎 진녹 #1E4D2B, 기포 흰색 #FFFFFF, 병 유리 물빛 #9FD8CF | Bagel Fat One, S-Core Dream | parked |
 | 14 | adopt | 홍보 · mobile-only | 유기묘 입양 캠페인 | 일러스트 고양이 프로필을 넘기며 성격 맞추기 (SVG 생성 고양이) | 발바닥 분홍 #F5C2CC, 차콜 #2A2A2E, 흰색 | Gaegu, Elice DX Neolli | parked |
-| 15 | marathon | 홍보 · desktop+mobile | 가상 도시 하프마라톤 | (2026-11-10 재기획) 포스터형 대회 안내: 거대한 21.0975, 코스 선 지도, 고도 차트, 생성 사진. 체험 요소 없음 | 일렉트릭 블루 #0047FF, 흰색, 검정, 결승 테이프 적 (배번표·기록계) | Gasoek One, KoddiUD OnGothic | building |
+| 15 | marathon | 홍보 · desktop+mobile | 곧은내 하프마라톤 2027 (가상 도시 하프마라톤) | (2026-11-10 재기획) 포스터형 대회 안내: 거대한 21.0975, 코스 선 지도, 고도 차트, 생성 사진. 체험 요소 없음 | 일렉트릭 블루 #0047FF, 흰색, 검정, 결승 테이프 적 (배번표·기록계) | Gasoek One, Spoqa Han Sans Neo (subset renamed Goteunnae Sans) | registered |
 | 16 | jamo | 게임 · desktop+mobile | 한글 자모 조립 퍼즐 (독창 규칙) | 흩어진 자모 타일을 끌어 음절로 모아 단서 낱말 완성 | 칠판 녹색 #1E3B2F, 분필 흰색 #F2F2EE, 분필 노랑 #F7E26B · 분홍 #F4A6C1 · 하늘 #9CC9F5 | Orbit | deleted |
 | 17 | stamp | 게임 · mobile-first | 결재 도장 찍기 타이밍 게임 | 컨베이어로 지나가는 서류에 한 번 터치로 도장, 정확도·연속 판정 | 사무 용지 흰색, 인주 적 #C8102E, 먹지 청 #1F3A93 | East Sea Dokdo, Hi Melody | registered |
 | 18 | lostfound | 게임 · desktop+mobile | 분실물 센터 추리 퍼즐 | 단서를 읽고 물건과 주인을 짝짓는 논리 퍼즐 (격자 소거) | 사물함 철판 #5B6770, 꼬리표 흰색, 마커 검정, 형광 꼬리표 #39D98A | Nanum Pen Script (subset renamed Kkoripyo Pen), Poor Story | deleted |
@@ -47,7 +47,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | nighttrain | 홈페이지 · desktop+mobile | 밤차: 야간 침대열차 스타트업 (높바람 23:05 → 마파람 07:05) | 출발 시각표를 타이포그래피로, 선 노선도, 생성 사진 | train/blanket blue #1B2F6E, timetable white #FFFFFF, dawn frost #E4EAF1, ink #0F1626 | Gowun Batang, Orbit | registered |
 | ramen | 홈페이지 · desktop+mobile | 제맛: 국물은 재료 하나로 (멸치·고추·대파·후추 봉지라면) | 맛마다 재료 색 면, 포장 앞면을 평면 타이포로, 생성 음식 사진(알파 컷아웃), 면 타이머 | 고추 crimson #B3112E (hero), 멸치 #A8BCCB, 대파 #2A7536, 후추 #141516, white | Black Han Sans, Gowun Dodum | registered |
 | sculpture | 홍보 · desktop+mobile | 《닳다》 탁은결 개인전, 모롱시립미술관 (worn places cast as terrazzo) | 전시 포스터 + 도록식 작품 목록, 생성 전시 사진 | bottle-glass green #1E9A47, black #0A0A0A, white | Noto Serif KR 200/400/900 + Schibsted Grotesk | registered |
-| marathon | (row 15 above, re-planned) | | | | | building |
+| marathon | (row 15 above, re-planned) | | | | | registered |
 | ticketing | 게임 · desktop+mobile | 광클: 콘서트 티켓팅 (가상 예매처 앞줄티켓, 공연 3개 = 난이도 3단계) | 20:00:00 오픈 → 대기열 → 사라지는 좌석 지도(canvas) → 결제 타이머 → 티켓 | wristband pink #FF4F9A (+ #FF97C2, #FFCFE3 by grade), black, white, ash #E4E4E7 | Pretendard subset renamed Apjul Sans (deliberate exception to the §2 ban: it imitates a real booking UI) + Big Shoulders Display | registered |
 
 Revisions also running: curtain (clear message: theatre reopening; photographic velvet), sand (striking effect; photographed bottle).
@@ -71,5 +71,5 @@ Not revised after the third review (owner liked or did not flag them): startup, 
 ## Fonts in use (one work each)
 
 Galmuri11 (home) · Wanted Sans, Archivo (keyboard) · Anybody, Hahmlet, IBM Plex Sans KR (festival,
-perfume, startup) · Newsreader (perfume) · and every Korean family assigned in the tables above.
+perfume, startup) · Newsreader (perfume) · Spoqa Han Sans Neo (marathon) · and every Korean family assigned in the tables above.
 Latin faces added by works (record here): Schibsted Grotesk (sculpture), Big Shoulders Display (ticketing)

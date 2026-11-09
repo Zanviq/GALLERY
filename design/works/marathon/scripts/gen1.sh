@@ -1,0 +1,16 @@
+#!/bin/sh
+# First round of photographs (Gemini via the scratchpad gen_image.py). Dev tool, not deployed.
+SP=/c/Users/jaemi/AppData/Local/Temp/claude/7e6ff043f79a9415/ab92f51c-d44a-48f8-b922-d120aba180a3/scratchpad
+G=$SP/marathon/gen
+mkdir -p "$G"
+STYLE="Bright contemporary sports photograph made on a modern full-frame digital camera, fast shutter so every person is sharp, low spring morning sun from the side with crisp shadows, clear pale blue sky, clean true-to-life colour and natural skin. No film grain, no haze, no motion blur, no vignette, not cinematic. Everyone wears plain unbranded running clothes in white, black, cobalt blue and a little red. No race bib numbers, no letters, no logos or brand marks on clothing or shoes, no readable signs anywhere."
+
+python -I $SP/tools/gen_image.py --out $G/medal.png --aspect 4:5 --prompt "Overhead product photograph of a single finisher medal lying flat on smooth pale grey poured concrete, hard low morning sunlight from the upper left casting one sharp clean shadow. Round brushed stainless-steel medal about 7 cm across; its face is a shallow relief of a long straight river with fine ripples, crossed by one raised horizontal band like a finish tape. No text, no numbers, no letters anywhere. The ribbon is a woven cobalt blue strap with a thin red centre stripe, loosely curled beside the medal. Crisp, true colour, modern catalogue photograph, no film grain." > $G/medal.log 2>&1 &
+
+python -I $SP/tools/gen_image.py --out $G/pack.png --aspect 3:2 --prompt "$STYLE A loose group of six amateur Korean runners of mixed ages running toward the camera on a wide car-free riverside levee road during a city half marathon: a grey-haired man in his sixties, two women in their thirties, a university student, a father in his forties, a woman in her fifties. Shot from road level with an 85mm lens, each runner mid-stride with natural running form, relaxed faces, some smiling. On one side a row of young trees in fresh pale green spring leaf, the calm wide river on the other, low modern apartment blocks far in the background." > $G/pack.log 2>&1 &
+
+python -I $SP/tools/gen_image.py --out $G/corral.png --aspect 3:2 --prompt "$STYLE Elevated view from a stepladder over the start area of a city half marathon a minute before the start: about three hundred amateur runners of all ages packed together on a wide city avenue closed to traffic, some stretching, some raising their hands and cheering, a few checking their watches. Long early-morning shadows, the sun low at the far end of the avenue. Plain white crowd barriers along both sides, a few volunteers in plain white vests. Modern Korean mid-sized city with street trees and mid-rise buildings whose storefronts have no signs." > $G/corral.log 2>&1 &
+
+python -I $SP/tools/gen_image.py --out $G/water.png --aspect 3:2 --prompt "$STYLE Side view at chest height at a roadside water station during a road race, 50mm lens: a long folding table with rows of white paper cups, three volunteers of different ages in plain white vests leaning forward and holding cups out at arm's length, two passing runners reaching out and taking cups mid-stride, a little water splashing in frozen droplets. Hands and fingers clearly visible and anatomically natural, five fingers each. Riverside road with fresh green trees behind." > $G/water.log 2>&1 &
+
+wait
