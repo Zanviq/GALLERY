@@ -48,7 +48,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | ramen | 홈페이지 · desktop+mobile | 제맛: 국물은 재료 하나로 (멸치·고추·대파·후추 봉지라면) | 맛마다 재료 색 면, 포장 앞면을 평면 타이포로, 생성 음식 사진(알파 컷아웃), 면 타이머 | 고추 crimson #B3112E (hero), 멸치 #A8BCCB, 대파 #2A7536, 후추 #141516, white | Black Han Sans, Gowun Dodum | registered |
 | sculpture | 홍보 · desktop+mobile | 《닳다》 탁은결 개인전, 모롱시립미술관 (worn places cast as terrazzo) | 전시 포스터 + 도록식 작품 목록, 생성 전시 사진 | bottle-glass green #1E9A47, black #0A0A0A, white | Noto Serif KR 200/400/900 + Schibsted Grotesk | registered |
 | marathon | (row 15 above, re-planned) | | | | | building |
-| ticketing | 게임 · desktop+mobile | 광클: 콘서트 티켓팅 (가상 예매처·가수·공연장) | 20:00:00 오픈 → 대기열 → 사라지는 좌석 지도 → 결제 타이머 → 티켓 | agent picks with reason | Pretendard (subset renamed) (+ numeral face) | building |
+| ticketing | 게임 · desktop+mobile | 광클: 콘서트 티켓팅 (가상 예매처 앞줄티켓, 공연 3개 = 난이도 3단계) | 20:00:00 오픈 → 대기열 → 사라지는 좌석 지도(canvas) → 결제 타이머 → 티켓 | wristband pink #FF4F9A (+ #FF97C2, #FFCFE3 by grade), black, white, ash #E4E4E7 | Pretendard subset renamed Apjul Sans (deliberate exception to the §2 ban: it imitates a real booking UI) + Big Shoulders Display | registered |
 
 Revisions also running: curtain (clear message: theatre reopening; photographic velvet), sand (striking effect; photographed bottle).
 Not revised after the third review (owner liked or did not flag them): startup, quiet-floors, optician, observatory, festival.
@@ -72,4 +72,4 @@ Not revised after the third review (owner liked or did not flag them): startup, 
 
 Galmuri11 (home) · Wanted Sans, Archivo (keyboard) · Anybody, Hahmlet, IBM Plex Sans KR (festival,
 perfume, startup) · Newsreader (perfume) · and every Korean family assigned in the tables above.
-Latin faces added by works (record here): Schibsted Grotesk (sculpture)
+Latin faces added by works (record here): Schibsted Grotesk (sculpture), Big Shoulders Display (ticketing)
