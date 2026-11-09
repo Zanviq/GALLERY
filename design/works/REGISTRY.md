@@ -46,7 +46,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 |---|---|---|---|---|---|---|
 | nighttrain | 홈페이지 · desktop+mobile | 밤차: 야간 침대열차 스타트업 (가상 도시 간) | 출발 시각표를 타이포그래피로, 선 노선도, 생성 사진 | agent picks with reason | Gowun Batang, Orbit | building |
 | ramen | 홈페이지 · desktop+mobile | 작은 식품 스타트업의 새 봉지라면 | 맛마다 재료 색 면, 포장 앞면을 평면 타이포로, 생성 음식 사진 | one field per flavour from its ingredient | Black Han Sans, Gowun Dodum | building |
-| sculpture | 홍보 · desktop+mobile | 가상 조각가 개인전 (가상 시립미술관) | 전시 포스터 + 도록식 작품 목록, 생성 전시 사진 | one identity colour + black/white | Noto Serif KR (+ Latin) | building |
+| sculpture | 홍보 · desktop+mobile | 《닳다》 탁은결 개인전, 모롱시립미술관 (worn places cast as terrazzo) | 전시 포스터 + 도록식 작품 목록, 생성 전시 사진 | bottle-glass green #1E9A47, black #0A0A0A, white | Noto Serif KR 200/400/900 + Schibsted Grotesk | registered |
 | marathon | (row 15 above, re-planned) | | | | | building |
 | ticketing | 게임 · desktop+mobile | 광클: 콘서트 티켓팅 (가상 예매처·가수·공연장) | 20:00:00 오픈 → 대기열 → 사라지는 좌석 지도 → 결제 타이머 → 티켓 | agent picks with reason | Pretendard (subset renamed) (+ numeral face) | building |
 
@@ -72,4 +72,4 @@ Not revised after the third review (owner liked or did not flag them): startup, 
 
 Galmuri11 (home) · Wanted Sans, Archivo (keyboard) · Anybody, Hahmlet, IBM Plex Sans KR (festival,
 perfume, startup) · Newsreader (perfume) · and every Korean family assigned in the tables above.
-Latin faces added by works (record here): —
+Latin faces added by works (record here): Schibsted Grotesk (sculpture)
