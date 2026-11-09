@@ -19,7 +19,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 |---|---|---|---|---|---|---|---|
 | 1 | optician | 홈페이지 · desktop+mobile | 동네 안경원 + 렌즈 가공실 | 한글 시력표를 렌즈 휠(디옵터)로 맞추면 흐림이 걷힘, 적록 이색 검사, 선 얼굴에 테 폭·다리 길이 맞추기 (SVG/CSS) | 검사실 흰색 #FFFFFF, 검정 #111316, 이색 검사 적 #D0021B · 녹 #00A05A (적록 이색 검사 그대로) | Gothic A1 | registered |
 | 2 | observatory | 홈페이지 · desktop+mobile | 가상 도시의 시립 천문대 | 날짜·시각을 돌려 맞추는 회전 성도판(planisphere), 오늘 밤 볼 대상 목록 (Canvas) | 검정 #000 + 암적응용 적색광 #FF4436 / #A3141B / #3D0709, 다른 색 없음 (천문대의 붉은 손전등) | Nanum Myeongjo, Nanum Gothic Coding (subsets renamed Bueongjae Serif / Mono) | registered |
-| 3 | riso | 홈페이지 · desktop+mobile | 리소그래프 인쇄소 | 잉크 판을 끌어 겹치면 곱하기 혼색·핀트 어긋남·입자, 드럼 순서 바꾸기, 견적 (Canvas/SVG blend) | 흰 종이 #FFFFFF, 형광 핑크 #FF48B0, 블루 #0078BF, 옐로 #FFE800 (실제 리소 드럼 잉크, 2차색은 겹칠 때만) | Black Han Sans, Gowun Dodum | registered |
+| 3 | riso | 홈페이지 · desktop+mobile | 리소그래프 인쇄소 | 잉크 판을 끌어 겹치면 곱하기 혼색·핀트 어긋남·입자, 드럼 순서 바꾸기, 견적 (Canvas/SVG blend) | 흰 종이 #FFFFFF, 형광 핑크 #FF48B0, 블루 #0078BF, 옐로 #FFE800 (실제 리소 드럼 잉크, 2차색은 겹칠 때만) | Black Han Sans, Gowun Dodum | deleted |
 | 4 | laundry | 홈페이지 · mobile-first | 셀프 빨래방 체인 | 지점별 기계 현황판(가상 실시간), 기계 누르면 남은 시간, 빨래가 굴러가는 드럼 (Canvas 2D) | 세탁실 타일 민트 #BEE9DA, 스테인리스 #C5CCD2, 그래파이트 #1F2428, 기계 LED 녹 #12B76A · 적 #F04438 | Jua, Nanum Square Round | deleted |
 | 5 | idphoto | 홈페이지 · desktop+mobile | 증명사진관 | 규격 맞추기: 그림으로 된 모델(또는 브라우저 안에서만 쓰는 카메라)에 여권 규격 가이드, 셔터 플래시, 8컷 인화지 재단선 | 증명사진 하늘색 배경 #B9D3EA, 플래시 흰색 #FFFFFF, 검정 #101214 | Song Myung, Noto Sans KR | registered |
 | 6 | futsal | 홈페이지 · desktop+mobile | 동네 여자 풋살 클럽 | 전술판: 선수 5명·공을 끌고 침투 화살표를 그리면 재생 (SVG) | 실내 코트 블루 #1C4FA0, 클럽 클라렛 #761C3C, 라인 흰색 (코트 바닥 + 유니폼) | Do Hyeon, Sunflower | registered |
@@ -37,7 +37,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | 18 | lostfound | 게임 · desktop+mobile | 분실물 센터 추리 퍼즐 | 단서를 읽고 물건과 주인을 짝짓는 논리 퍼즐 (격자 소거) | 사물함 철판 #5B6770, 꼬리표 흰색, 마커 검정, 형광 꼬리표 #39D98A | Nanum Pen Script (subset renamed Kkoripyo Pen), Poor Story | deleted |
 | 19 | paperboat | 게임 · desktop+mobile | 빗물 도랑의 종이배 | 종이배를 좌우로 몰아 낙엽·하수구 피하기, 3D를 그림책 인쇄처럼 바꾸는 후처리 필수 | 젖은 아스팔트 회색, 종이 흰색, 잉크 청흑, 강조 1색 (금지 목록 밖) | Yeon Sung | parked |
 | 20 | curtain | 인터랙션 · desktop+mobile | 무대 커튼 | 천 시뮬레이션(Verlet): 커튼을 끌어 열고, 당기면 찢어짐 | 에메랄드 벨벳 #0D5C47, 검정, 은빛 술 | Grandiflora One | registered |
-| 21 | shadowplay | 인터랙션 · desktop+mobile | 종이 그림자극 | 광원을 끌면 종이 인형 그림자가 실시간으로 늘고 줄어듦 (2D 가시 다각형), 장면 꾸미기 | 청사진 프러시안 블루 #10335A, 흰색 | Moirai One, Gamja Flower | registered |
+| 21 | shadowplay | 인터랙션 · desktop+mobile | 종이 그림자극 | 광원을 끌면 종이 인형 그림자가 실시간으로 늘고 줄어듦 (2D 가시 다각형), 장면 꾸미기 | 청사진 프러시안 블루 #10335A, 흰색 | Moirai One, Gamja Flower | deleted |
 | 22 | sand | 인터랙션 · mobile-only | 색모래 병 | 폰을 기울여 색모래를 부어 층 쌓기, 흔들면 섞임 (falling-sand) | 원색 모래층(마젠타·코발트·라임·노랑·흰색), 검은 유리 | Black And White Picture | registered |
 
 ## Heavy works (the owner's real programs and internal tools; built last)
