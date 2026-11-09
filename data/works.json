@@ -88,5 +88,14 @@
     "tags": ["landing", "interaction", "svg", "animation"],
     "thumbnail": "thumbnails/futsal.webp",
     "year": 2026
+  },
+  {
+    "slug": "stamp",
+    "title": "칼퇴 결재",
+    "type": "internal",
+    "url": "stamp/",
+    "tags": ["game", "mobile", "canvas", "audio", "interaction"],
+    "thumbnail": "thumbnails/stamp.webp",
+    "year": 2026
   }
 ]

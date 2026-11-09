@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>칼퇴 결재 | 18시 전에 도장 찍기</title>
+<meta name="description" content="(주)한칸물산 총무팀 구도담 대리가 되어, 트레이로 지나가는 결재 서류에 한 번에 도장을 찍는 타이밍 게임이에요. 결재란, 정정인, 간인, 반려까지 75초 안에.">
+<meta name="theme-color" content="#FFFFFF">
+<meta property="og:type" content="website">
+<meta property="og:title" content="칼퇴 결재">
+<meta property="og:description" content="지나가는 결재 서류에 한 번에 꾹. 18시까지 75초, 도장 타이밍 게임.">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/stamp.png">
+<meta property="og:url" content="https://gallery.zanviq.dev/stamp/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="./fonts/himelody.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/dokdo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/fonts.css">
+<link rel="stylesheet" href="./css/site.css">
+<script type="module" src="./js/main.js"></script>
+<script src="/shared/back.js" data-position="top-left" data-theme="light" defer></script>
+</head>
+<body>
+<div class="app" id="app" data-state="cover">
+
+  <header class="hud" id="hud">
+    <p class="brand"><span class="brand-name">칼퇴 결재</span> <span class="brand-co">(주)한칸물산 총무팀</span></p>
+    <p class="clock" id="clock-wrap"><span class="clock-time" id="clock">17:58:45</span> <span class="clock-left" id="clock-left">퇴근까지 75초</span></p>
+    <div class="hud-btns">
+      <button class="btn btn-sm" id="btn-sound" type="button" aria-pressed="true" aria-keyshortcuts="M"><span class="tick" aria-hidden="true"></span>소리</button>
+      <button class="btn btn-sm" id="btn-pause" type="button" aria-keyshortcuts="P">멈춤</button>
+    </div>
+  </header>
+
+  <aside class="rules" aria-labelledby="rules-title">
+    <h2 class="rules-title" id="rules-title">오늘 올라오는 서류</h2>
+    <ol class="rule-list">
+      <li>
+        <svg class="mini" viewBox="0 0 120 44" aria-hidden="true"><use href="#mini-gyeoljae"/></svg>
+        <p><b>결재 서류</b> 동그라미 친 칸에 꾹. 두 칸에 동그라미가 있으면 두 번.</p>
+      </li>
+      <li>
+        <svg class="mini" viewBox="0 0 120 44" aria-hidden="true"><use href="#mini-jeongjeong"/></svg>
+        <p><b>정정인</b> 두 줄 그은 숫자 한가운데.</p>
+      </li>
+      <li>
+        <svg class="mini" viewBox="0 0 120 44" aria-hidden="true"><use href="#mini-ganin"/></svg>
+        <p><b>간인</b> 두 장이 겹친 이음매에 반씩 걸치게.</p>
+      </li>
+      <li>
+        <svg class="mini" viewBox="0 0 120 44" aria-hidden="true"><use href="#mini-banryeo"/></svg>
+        <p><b>반려</b> 찍지 말고 그냥 보내요.</p>
+      </li>
+    </ol>
+    <table class="score-table">
+      <caption>점수</caption>
+      <tbody>
+        <tr><th scope="row">정확</th><td>100</td></tr>
+        <tr><th scope="row">조금 비뚤</th><td>40</td></tr>
+        <tr><th scope="row">반려 지킴</th><td>60</td></tr>
+        <tr><th scope="row">6번 연속마다</th><td>배율 +1 (최대 4배)</td></tr>
+      </tbody>
+    </table>
+    <p class="keys"><kbd>Space</kbd> 또는 <kbd>Enter</kbd> 꾹 <kbd>P</kbd> 멈춤 <kbd>M</kbd> 소리</p>
+    <p class="record" id="aside-record"></p>
+  </aside>
+
+  <main class="desk" id="desk">
+    <p class="memo" id="memo"></p>
+    <div class="stage" id="stage" aria-hidden="true">
+      <div class="stamp-zone">
+        <div class="stamp" id="stamp">
+          <svg viewBox="0 0 40 100" preserveAspectRatio="none" focusable="false">
+            <path d="M1.5 15C1.5 5.5 9 1.5 20 1.5S38.5 5.5 38.5 15V93.5Q38.5 98.5 33.5 98.5H6.5Q1.5 98.5 1.5 93.5Z" fill="#C8102E"/>
+            <rect x="7" y="13" width="3.4" height="70" rx="1.7" fill="#FFFFFF" opacity=".5"/>
+            <rect x="12.6" y="16" width="1.3" height="62" rx=".65" fill="#FFFFFF" opacity=".28"/>
+            <circle cx="20" cy="12.5" r="2.5" fill="#FFFFFF"/>
+            <rect x="1.5" y="87.5" width="37" height="1.5" fill="#FFFFFF" opacity=".75"/>
+            <rect x="1.5" y="90.6" width="37" height=".8" fill="#FFFFFF" opacity=".45"/>
+          </svg>
+        </div>
+      </div>
+      <div class="tray" id="tray">
+        <div class="belt" id="belt"></div>
+        <div class="ticks" id="ticks"></div>
+        <div class="aim" id="aim"><span class="notch notch-top"></span><span class="ring"></span><span class="notch notch-bottom"></span></div>
+      </div>
+    </div>
+    <div class="feed" id="feed">
+      <p class="feed-word" id="feed-word" aria-hidden="true"></p>
+      <dl class="feed-counts">
+        <div><dt>연속</dt><dd><span id="streak">0</span><span class="mult" id="mult"></span></dd></div>
+        <div><dt>점수</dt><dd id="score">0</dd></div>
+        <div><dt>처리</dt><dd><span id="done">0</span>건</dd></div>
+      </dl>
+    </div>
+    <button class="btn btn-sm skip" id="btn-skip" type="button" hidden>연습 건너뛰기</button>
+    <button class="press" id="press" type="button" aria-label="꾹, 도장 찍기" aria-keyshortcuts="Space Enter"><span class="press-label">꾹</span><span class="press-hint hint-touch">화면 아무 데나 톡</span><span class="press-hint hint-key">클릭, 또는 Space나 Enter</span></button>
+  </main>
+
+  <p class="sr-only" id="live" aria-live="polite"></p>
+
+  <!-- cover -->
+  <section class="panel panel-cover" id="cover" role="dialog" aria-modal="true" aria-labelledby="cover-title">
+    <div class="panel-paper">
+      <h1 class="cover-title" id="cover-title">칼퇴 결재</h1>
+      <div class="cover-seal" id="cover-seal" aria-hidden="true"></div>
+      <p class="cover-time">(주)한칸물산 총무팀, 오후 5시 58분 45초.</p>
+      <p class="cover-note">구 대리, 과장이랑 나는 워크숍 간다. 도장 맡기고 가니까 6시 전에 결재 다 찍어 둬.<span class="cover-sign">부장 도상훈</span></p>
+      <p class="cover-how">트레이로 지나가는 서류마다 알맞은 자리에 도장을 한 번에 찍어요. 칸이 도장 밑 점선 원에 들어올 때 누르면 돼요.</p>
+      <p class="cover-first" id="cover-first">처음이면 연습 서류 여섯 장이 먼저 와요. 언제든 건너뛸 수 있어요.</p>
+      <div class="cover-actions">
+        <button class="btn btn-primary" id="btn-start" type="button">결재 시작</button>
+        <button class="btn" id="btn-lesson" type="button">연습부터 하기</button>
+      </div>
+      <fieldset class="options">
+        <legend>설정</legend>
+        <button class="btn btn-opt" id="opt-slow" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span>느긋하게 <small>트레이 속도 70%</small></button>
+        <button class="btn btn-opt" id="opt-step" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span>칸칸이 이동 <small>트레이가 한 칸씩 끊어서 움직여요</small></button>
+        <button class="btn btn-opt" id="opt-sound" type="button" aria-pressed="true"><span class="tick" aria-hidden="true"></span>소리 <small>도장 소리, 종이 소리</small></button>
+      </fieldset>
+      <p class="record" id="cover-record"></p>
+      <p class="keys cover-keys"><kbd>Space</kbd> 또는 <kbd>Enter</kbd> 꾹 <kbd>P</kbd> 멈춤 <kbd>M</kbd> 소리</p>
+      <p class="footer-line">가상 회사입니다. zanviq gallery 작품.</p>
+    </div>
+  </section>
+
+  <!-- pause -->
+  <section class="panel panel-pause" id="pause" role="dialog" aria-modal="true" aria-labelledby="pause-title" hidden>
+    <div class="panel-paper">
+      <h2 class="panel-title" id="pause-title">잠깐 멈춤</h2>
+      <p class="pause-why" id="pause-why">시계도 트레이도 멈췄어요.</p>
+      <div class="cover-actions">
+        <button class="btn btn-primary" id="btn-resume" type="button">계속하기</button>
+        <button class="btn" id="btn-restart" type="button">처음부터 다시</button>
+        <button class="btn" id="btn-home" type="button">첫 화면으로</button>
+      </div>
+      <fieldset class="options">
+        <legend>설정</legend>
+        <button class="btn btn-opt" id="pause-slow" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span>느긋하게 <small>트레이 속도 70%</small></button>
+        <button class="btn btn-opt" id="pause-step" type="button" aria-pressed="false"><span class="tick" aria-hidden="true"></span>칸칸이 이동 <small>한 칸씩 끊어서 움직여요</small></button>
+        <button class="btn btn-opt" id="pause-sound" type="button" aria-pressed="true"><span class="tick" aria-hidden="true"></span>소리</button>
+      </fieldset>
+    </div>
+  </section>
+
+  <!-- work log -->
+  <section class="panel panel-log" id="log" role="dialog" aria-modal="true" aria-labelledby="log-title" hidden>
+    <div class="panel-paper carbon">
+      <div class="log-head">
+        <h2 class="log-title" id="log-title">업무 일지</h2>
+        <table class="log-appr">
+          <tbody>
+            <tr><th scope="col">작성</th><th scope="col">확인</th></tr>
+            <tr><td><svg class="sign" viewBox="0 0 60 30" aria-label="구도담 서명" role="img"><path id="log-sign" d=""/></svg></td><td class="log-confirm" id="log-confirm"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <dl class="log-meta">
+        <div><dt>일자</dt><dd id="log-date"></dd></div>
+        <div><dt>작성자</dt><dd>총무팀 대리 구도담</dd></div>
+        <div><dt>근무</dt><dd id="log-mode"></dd></div>
+      </dl>
+      <table class="log-table">
+        <caption>오늘 결재 처리 내역</caption>
+        <tbody id="log-rows"></tbody>
+      </table>
+      <p class="log-total"><span>점수</span> <b id="log-score">0</b> <span class="log-best" id="log-best"></span></p>
+      <p class="log-comment" id="log-comment" hidden></p>
+      <div class="cover-actions log-actions">
+        <button class="btn btn-primary" id="btn-sign" type="button">확인 도장 찍고 퇴근</button>
+        <button class="btn btn-primary" id="btn-again" type="button" hidden>한 판 더</button>
+        <button class="btn" id="btn-home2" type="button" hidden>첫 화면으로</button>
+      </div>
+      <p class="footer-line">가상 회사입니다. zanviq gallery 작품.</p>
+    </div>
+  </section>
+</div>
+
+<svg class="defs" aria-hidden="true" focusable="false" width="0" height="0">
+  <defs>
+    <g id="mini-gyeoljae" fill="none" stroke="#1F3A93">
+      <rect x="2" y="4" width="116" height="36" stroke-width="1.5"/>
+      <path d="M20 4v36M52 4v36M86 4v36M20 14h98" stroke-width="1"/>
+      <path d="M58 30c2-6 12-8 14-2s-6 6-4 0" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M86.5 22c1-9 30-10 31 0 1 10-30 11-31 1" stroke-width="2" stroke-linecap="round"/>
+      <use href="#seal-mark" x="94.5" y="19.5" width="15" height="15"/>
+    </g>
+    <g id="mini-jeongjeong" fill="none" stroke="#1F3A93">
+      <rect x="2" y="4" width="116" height="36" stroke-width="1.5"/>
+      <path d="M34 4v36" stroke-width="1"/>
+      <path d="M44 26h56M44 30h56" stroke-width="1.4"/>
+      <path d="M48 28h48" stroke-width="5" stroke-dasharray="3 3" opacity=".45"/>
+      <use href="#seal-mark" x="64.5" y="20.5" width="15" height="15"/>
+    </g>
+    <g id="mini-ganin" fill="none" stroke="#1F3A93">
+      <rect x="40" y="2" width="76" height="40" fill="#FFFFFF" stroke-width="1.2"/>
+      <rect x="4" y="5" width="70" height="38" fill="#FFFFFF" stroke-width="1.5"/>
+      <path d="M12 14h50M12 21h44M48 14h18M80 12h28M80 19h24" stroke-width="1" opacity=".6"/>
+      <clipPath id="mini-l"><rect x="0" y="0" width="74" height="44"/></clipPath>
+      <clipPath id="mini-r"><rect x="74" y="0" width="46" height="44"/></clipPath>
+      <use href="#seal-mark" x="66.5" y="18.5" width="15" height="15" clip-path="url(#mini-l)"/>
+      <g transform="translate(4 0)"><use href="#seal-mark" x="66.5" y="18.5" width="15" height="15" clip-path="url(#mini-r)"/></g>
+    </g>
+    <g id="mini-banryeo" fill="none" stroke="#1F3A93">
+      <rect x="2" y="4" width="116" height="36" stroke-width="1.5"/>
+      <path d="M20 4v36M52 4v36M86 4v36M20 14h98" stroke-width="1"/>
+      <path d="M22 38L116 8" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </defs>
+</svg>
+</body>
+</html>
