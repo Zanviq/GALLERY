@@ -115,33 +115,51 @@
     } catch (e) { return null; }
   }
 
-  /* ---------- modes (tags) ---------- */
+  /* ---------- modes (tags) ----------
+     Two groups: what a work is (always shown, in this order), then how it was made (only tags
+     shared by at least two works, most used first). A one-work technique tab is noise. */
+  var KINDS = ['client', 'landing', 'promo', 'office', 'brand', 'game', 'interaction', 'mobile'];
+  var MIN_TECH = 2;
   var modesEl = $('modes');
   function buildModes() {
     var count = {};
     works.forEach(function (w) { w.tags.forEach(function (t) { count[t] = (count[t] || 0) + 1; }); });
-    tags = ['all'].concat(Object.keys(count).sort(function (a, b) {
-      if (a === 'client') return -1;
-      if (b === 'client') return 1;
-      return count[b] - count[a] || label(a).localeCompare(label(b), 'ko');
-    }));
+    var kinds = KINDS.filter(function (t) { return count[t]; });
+    var techs = Object.keys(count).filter(function (t) { return KINDS.indexOf(t) < 0 && count[t] >= MIN_TECH; })
+      .sort(function (a, b) { return count[b] - count[a] || label(a).localeCompare(label(b), 'ko'); });
+    tags = ['all'].concat(kinds, techs);
     modesEl.textContent = '';
     if (!works.length) return;
     var q = document.createElement('span');
     q.className = 'modes__key'; q.textContent = 'Q'; q.setAttribute('aria-hidden', 'true');
     modesEl.appendChild(q);
     tags.forEach(function (t, i) {
+      if (i === kinds.length + 1 && techs.length && kinds.length) {
+        var sep = document.createElement('span');
+        sep.className = 'modes__sep';
+        sep.setAttribute('aria-hidden', 'true');
+        modesEl.appendChild(sep);
+      }
       var b = document.createElement('button');
       b.className = 'mode';
       b.type = 'button';
       b.dataset.i = i;
       b.textContent = t === 'all' ? '전체' : label(t);
+      b.setAttribute('aria-label', (t === 'all' ? '전체' : label(t)) + ' ' + (t === 'all' ? works.length : count[t]) + '개');
       modesEl.appendChild(b);
     });
     var e = q.cloneNode(); e.textContent = 'E';
     modesEl.appendChild(e);
     paintModes();
   }
+  // the row scrolls sideways on narrow screens: fade the edge that has more tabs behind it
+  function edgeModes() {
+    var max = modesEl.scrollWidth - modesEl.clientWidth;
+    modesEl.classList.toggle('more-l', modesEl.scrollLeft > 2);
+    modesEl.classList.toggle('more-r', max > 2 && modesEl.scrollLeft < max - 2);
+  }
+  modesEl.addEventListener('scroll', edgeModes, { passive: true });
+  addEventListener('resize', edgeModes);
   function paintModes() {
     // one tab stop for the whole row; Q / E (or a click) switch modes
     modesEl.querySelectorAll('.mode').forEach(function (b) {
@@ -155,6 +173,7 @@
       if (l < modesEl.scrollLeft) modesEl.scrollLeft = l - 24;
       else if (r > modesEl.scrollLeft + modesEl.clientWidth) modesEl.scrollLeft = r - modesEl.clientWidth + 24;
     }
+    edgeModes();
   }
   modesEl.addEventListener('click', function (e) {
     var b = e.target.closest('.mode');
@@ -385,26 +404,36 @@
   }
 
   /* ---------- moving + opening ---------- */
-  function move(dir, user) {
+  // tilt: 'hold' keeps the stick over until release (key or finger still down), 'tap' springs back
+  function move(dir, user, tilt) {
     if (busy || !list.length) return;
     var c = cols(), i = sel;
     if (dir === 'left') i = sel - 1;
     if (dir === 'right') i = sel + 1;
     if (dir === 'up') i = sel - c;
     if (dir === 'down') i = sel + c;
-    tiltStick(dir);
+    if (tilt !== 'none') tiltStick(dir, tilt === 'hold');
     if (i < 0 || i >= list.length) { beep(160, null, 0.06, 'sawtooth'); return; }
     select(i, { user: user });
     if (grid.contains(document.activeElement)) tiles()[sel].focus({ preventScroll: true });
   }
-  function tiltStick(dir) {
-    var m = { up: 'translate(0,-6px)', down: 'translate(0,6px)', left: 'translate(-7px,0)', right: 'translate(7px,0)' };
-    var b = $('ball');
-    b.style.transform = m[dir] || '';
+  /* the stick is a photograph per direction (assets/img/stick.webp); a tilt swaps the frame */
+  var stick = $('stick'), heldKey = null;
+  function tiltStick(dir, hold) {
+    stick.dataset.tilt = dir;
     clearTimeout(tiltStick.t);
-    tiltStick.t = setTimeout(function () { b.style.transform = ''; }, 140);
+    if (!hold) tiltStick.t = setTimeout(centreStick, 150);
   }
-  function press(b) { b.classList.add('is-down'); setTimeout(function () { b.classList.remove('is-down'); }, 120); }
+  function centreStick() {
+    clearTimeout(tiltStick.t);
+    heldKey = null;
+    delete stick.dataset.tilt;
+  }
+  function press(b) {
+    b.classList.add('is-down');
+    clearTimeout(b.upT);
+    b.upT = setTimeout(function () { b.classList.remove('is-down'); }, 140);
+  }
   function flashReady(big, small, ms) {
     $('ready-big').textContent = big;
     $('ready-small').textContent = small;
@@ -473,10 +502,11 @@
     });
   }
   function insertCoin() {
-    var coin = $('coin');
-    coin.classList.remove('is-drop');
-    void coin.offsetWidth;
-    if (!reduce) coin.classList.add('is-drop');
+    // the coin entry's lamp flashes when a coin is taken (assets/img/slot.webp, lit frame)
+    var slot = $('slot');
+    slot.classList.add('is-lit');
+    clearTimeout(insertCoin.t);
+    insertCoin.t = setTimeout(function () { slot.classList.remove('is-lit'); }, 650);
     beep(988, 1319, 0.12);
     lastFocus = document.activeElement;
     setTimeout(function () {
@@ -499,8 +529,19 @@
   $('contact').addEventListener('click', function (e) { if (e.target === this) closeContact(); });
 
   /* ---------- controls ---------- */
+  // like a real stick: it goes over when pushed and springs back when let go
   document.querySelectorAll('.stick button').forEach(function (b) {
-    b.addEventListener('click', function () { wake(); move(b.dataset.dir, true); });
+    b.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      wake();
+      move(b.dataset.dir, true, 'hold');
+    });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) { b.addEventListener(ev, centreStick); });
+    b.addEventListener('click', function (e) {
+      if (e.detail) return;               // pointer clicks already moved on pointerdown
+      wake();
+      move(b.dataset.dir, true, 'tap');   // Enter / Space on the focused direction
+    });
   });
   $('btn-a').addEventListener('click', function () { wake(); if ($('contact').hidden) confirm(); });
   $('btn-b').addEventListener('click', function () { wake(); press(this); if (!closeContact()) setMode(mode + 1); });
@@ -525,12 +566,16 @@
     var t = e.target;
     if (t && t.closest && t.closest('button, .foot a, .retry') && (key === 'enter' || key === ' ')) return;
     var dir = KEYS[key];
-    if (dir) { e.preventDefault(); move(dir, true); return; }
+    if (dir) { e.preventDefault(); heldKey = key; move(dir, true, 'hold'); return; }
     if (key === 'enter' || key === ' ' || key === 'z') { e.preventDefault(); confirm(); return; }
     if (key === 'q') setMode(mode - 1);
     if (key === 'e') setMode(mode + 1);
     if (key === 'c') insertCoin();
   });
+  addEventListener('keyup', function (e) {
+    if ((e.key || '').toLowerCase() === heldKey) centreStick();
+  });
+  addEventListener('blur', centreStick);
 
   /* ---------- attract mode after 14s idle ---------- */
   var idleT = null, demoT = null;

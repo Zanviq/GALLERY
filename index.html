@@ -82,20 +82,20 @@
     </main>
   </div>
 
+  <!-- the joystick, buttons and coin entry are photographs (assets/img/*.webp sprite sheets); input swaps the frame -->
   <div class="panel" role="group" aria-label="조작판">
-    <div class="stick">
-      <div class="stick__base"></div>
-      <div class="stick__ball" id="ball"></div>
+    <div class="stick" id="stick">
+      <span class="stick__photo" aria-hidden="true"></span>
       <button class="u" type="button" data-dir="up" aria-label="위"></button>
       <button class="d" type="button" data-dir="down" aria-label="아래"></button>
       <button class="l" type="button" data-dir="left" aria-label="왼쪽"></button>
       <button class="r" type="button" data-dir="right" aria-label="오른쪽"></button>
     </div>
     <div class="btns">
-      <button class="pbtn" id="btn-a" type="button"><i></i>A 입장</button>
-      <button class="pbtn pbtn--b" id="btn-b" type="button"><i></i>B 분류</button>
+      <button class="pbtn" id="btn-a" type="button"><i aria-hidden="true"></i>A 입장</button>
+      <button class="pbtn pbtn--b" id="btn-b" type="button"><i aria-hidden="true"></i>B 분류</button>
     </div>
-    <button class="slot" id="slot" type="button"><span class="coin" id="coin"></span><span class="slot__plate"><span></span></span>문의</button>
+    <button class="slot" id="slot" type="button"><span class="slot__plate" aria-hidden="true"></span>문의</button>
   </div>
 
   <footer class="foot" id="foot">
