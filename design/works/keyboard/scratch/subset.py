@@ -4,7 +4,8 @@
 
 font-src-dir holds WantedSansVariable.ttf and Archivo.ttf (Archivo[wdth,wght]).
 Writes works/keyboard/fonts/wanted-sans.woff2 and archivo.woff2.
-Re-run after changing any Korean copy in index.html or js/*.js.
+Re-run after changing any Korean copy in index.html or js/*.js. Wanted Sans keeps wght 400-1000,
+Archivo keeps wght 400-900 and wdth 100-125 (the poster numerals use 125).
 """
 import os
 import re
@@ -64,7 +65,7 @@ def run(src, dst, text_chars, axes=None):
 
 
 run(os.path.join(SRC, 'WantedSansVariable.ttf'), os.path.join(out_dir, 'wanted-sans.woff2'), chars,
-    axes={'wght': (400, 900)})
+    axes={'wght': (400, 1000)})
 latin = ''.join(sorted(set(ascii_set + '₩×°–—‘’“”…←↑→↓')))
 run(os.path.join(SRC, 'Archivo.ttf'), os.path.join(out_dir, 'archivo.woff2'), latin,
-    axes={'wght': (400, 800), 'wdth': (100, 125)})
+    axes={'wght': (400, 900), 'wdth': (100, 125)})

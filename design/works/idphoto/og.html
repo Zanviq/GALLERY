@@ -6,46 +6,34 @@
 <link rel="stylesheet" href="../../../works/idphoto/css/fonts.css">
 <style>
   html, body { margin: 0; }
-  body { width: 1200px; height: 630px; overflow: hidden; background: #B9D3EA; color: #101214; position: relative; }
-  .word { position: absolute; left: 70px; top: 176px; font: 400 98px/1 'Song Myung'; letter-spacing: -0.01em; }
-  .sub { position: absolute; left: 74px; top: 316px; font: 500 28px/1.45 'Noto Sans KR'; }
-  .small { position: absolute; left: 74px; top: 446px; font: 500 21px/1.5 'Noto Sans KR'; }
-  .rule { position: absolute; left: 74px; top: 426px; width: 64px; height: 3px; background: #101214; }
-  svg { position: absolute; left: 604px; top: 135px; width: 540px; height: 360px; overflow: visible; }
+  body { width: 1200px; height: 630px; overflow: hidden; background: #B9D3EA; color: #101214; position: relative; font-family: 'Noto Sans KR', sans-serif; }
+  .word { position: absolute; left: 64px; top: 44px; font: 400 150px/1 'Song Myung'; letter-spacing: -0.02em; }
+  .sub { position: absolute; left: 68px; top: 248px; width: 420px; font: 500 27px/1.55 'Noto Sans KR'; }
+  .small { position: absolute; left: 68px; top: 470px; width: 400px; padding-top: 16px; border-top: 3px solid #101214; font: 500 21px/1.5 'Noto Sans KR'; }
+  .sheet { position: absolute; left: 576px; top: 226px; width: 564px; aspect-ratio: 152.4 / 101.6; background: #fff;
+    box-shadow: 0 1px 2px rgb(16 18 20 / .2), 0 18px 40px -22px rgb(16 18 20 / .5); }
+  .cuts { position: absolute; left: 4.068%; top: 5.709%; width: 91.864%; height: 88.583%; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); }
+  .cuts img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .trim i { position: absolute; }
+  .trim .h { left: 0; right: 0; border-top: 1px dashed rgb(16 18 20 / .5); }
+  .trim .v { top: 0; bottom: 0; border-left: 1px dashed rgb(16 18 20 / .5); }
 </style>
 </head>
 <body>
 <div class="word">정면사진관</div>
-<div class="sub">여권, 주민등록증, 운전면허,<br>비자, 취업용 반명함.</div>
-<div class="rule"></div>
-<div class="small">규격은 저희가 외우고 있습니다.</div>
-<svg id="sheet" viewBox="0 0 152.4 101.6" aria-hidden="true"></svg>
-<script type="module">
-  import { SITTERS, shapes, toSVG, landmarks } from '../../../works/idphoto/js/sitter.js';
-  import { byId } from '../../../works/idphoto/js/formats.js';
-  const F = byId('passport'), sp = SITTERS[0], L = landmarks(sp);
-  const s = 0.34, eyeTop = 20;
-  const cy = L.eyeY - (eyeTop - F.h / 2) / s;
-  const person = toSVG(shapes(sp));
-  const mx = (152.4 - 4 * F.w) / 2, my = (101.6 - 2 * F.h) / 2;
-  let out = `<defs><clipPath id="c"><rect width="${F.w}" height="${F.h}"/></clipPath>
-    <filter id="sh" x="-5%" y="-5%" width="110%" height="115%"><feDropShadow dx="0" dy="1.6" stdDeviation="1.8" flood-color="#101214" flood-opacity=".32"/></filter></defs>`;
-  out += `<rect width="152.4" height="101.6" fill="#FFFFFF" filter="url(#sh)"/>`;
-  for (let r = 0; r < 2; r++) for (let c = 0; c < 4; c++) {
-    out += `<g transform="translate(${mx + c * F.w} ${my + r * F.h})" clip-path="url(#c)"><rect width="${F.w}" height="${F.h}" fill="#FFFFFF"/>` +
-      `<g transform="translate(${F.w / 2} ${F.h / 2}) scale(${s}) translate(0 ${-cy})">${person}</g></g>`;
-  }
-  const bw = 4 * F.w, bh = 2 * F.h, d = [], t = [];
-  for (let r = 0; r <= 2; r++) { const y = my + r * F.h; d.push(`M${mx} ${y}H${mx + bw}`); t.push(`M${mx - 3} ${y}H${mx - 0.8}M${mx + bw + 0.8} ${y}H${mx + bw + 3}`); }
-  for (let c = 0; c <= 4; c++) { const x = mx + c * F.w; d.push(`M${x} ${my}V${my + bh}`); t.push(`M${x} ${my - 3}V${my - 0.8}M${x} ${my + bh + 0.8}V${my + bh + 3}`); }
-  out += `<path d="${d.join('')}" stroke="#101214" stroke-width=".22" stroke-dasharray="1 .8" fill="none"/>`;
-  out += `<path d="${t.join('')}" stroke="#101214" stroke-width=".22" fill="none"/>`;
-  // the trimmer has run the first line and rests at its end
-  out += `<path d="M0 ${my}H${152.4 - 6}" stroke="#101214" stroke-width=".4"/>`;
-  out += `<circle cx="${152.4 - 6}" cy="${my}" r="2.1" fill="#FFFFFF" stroke="#101214" stroke-width=".4"/><circle cx="${152.4 - 6}" cy="${my}" r=".6" fill="#101214"/>`;
-  out += `<text x="${mx}" y="${101.6 - (my - 3) / 2 + 0.1}" font-family="Noto Sans KR" font-weight="500" font-size="1.9" dominant-baseline="middle" fill="#101214">정면사진관   여권 3.5 × 4.5 cm   8컷</text>`;
-  document.getElementById('sheet').innerHTML = out;
-  document.fonts.ready.then(() => document.body.setAttribute('data-ready', ''));
+<div class="sub">여권, 주민등록증, 운전면허,<br>비자, 취업용 반명함.<br>앉아서 5분, 손에 쥐기까지 15분.</div>
+<div class="small">규격마다 다르게 잽니다.</div>
+<div class="sheet">
+  <div class="cuts" id="cuts"></div>
+  <div class="trim">
+    <i class="h" style="top:5.709%"></i><i class="h" style="top:50%"></i><i class="h" style="top:94.291%"></i>
+    <i class="v" style="left:4.068%"></i><i class="v" style="left:27.034%"></i><i class="v" style="left:50%"></i><i class="v" style="left:72.966%"></i><i class="v" style="left:95.932%"></i>
+  </div>
+</div>
+<script>
+  const cuts = document.getElementById('cuts');
+  for (let i = 0; i < 8; i++) { const im = new Image(); im.src = '../../../works/idphoto/img/license-400.webp'; im.alt = ''; cuts.append(im); }
+  Promise.all([document.fonts.ready, ...[...cuts.querySelectorAll('img')].map((i) => i.decode())]).then(() => document.body.setAttribute('data-ready', ''));
 </script>
 </body>
 </html>

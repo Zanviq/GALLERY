@@ -4,9 +4,7 @@
     "title": "가락 65",
     "type": "internal",
     "url": "keyboard/",
-    "tags": [
-      "landing", "webgl", "3d", "audio", "brand"
-    ],
+    "tags": ["landing", "brand", "typography"],
     "thumbnail": "thumbnails/keyboard.webp",
     "year": 2026
   },
@@ -15,9 +13,7 @@
     "title": "너울 2027",
     "type": "internal",
     "url": "festival/",
-    "tags": [
-      "landing", "typography", "audio", "animation", "brand"
-    ],
+    "tags": ["landing", "typography", "audio", "animation", "brand"],
     "thumbnail": "thumbnails/festival.webp",
     "year": 2026
   },
@@ -26,9 +22,7 @@
     "title": "담금 DAMGEUM",
     "type": "internal",
     "url": "perfume/",
-    "tags": [
-      "landing", "webgl", "3d", "animation", "brand"
-    ],
+    "tags": ["landing", "brand", "typography"],
     "thumbnail": "thumbnails/perfume.webp",
     "year": 2026
   },
@@ -37,9 +31,7 @@
     "title": "물길",
     "type": "internal",
     "url": "startup/",
-    "tags": [
-      "landing", "canvas", "animation", "brand"
-    ],
+    "tags": ["landing", "canvas", "animation", "brand"],
     "thumbnail": "thumbnails/startup.webp",
     "year": 2026
   },
@@ -48,9 +40,7 @@
     "title": "또렷안경",
     "type": "internal",
     "url": "optician/",
-    "tags": [
-      "landing", "interaction", "svg", "typography", "brand"
-    ],
+    "tags": ["landing", "interaction", "svg", "typography", "brand"],
     "thumbnail": "thumbnails/optician.webp",
     "year": 2026
   },
@@ -59,9 +49,7 @@
     "title": "남겨 둔 불",
     "type": "internal",
     "url": "curtain/",
-    "tags": [
-      "interaction", "webgl", "physics", "canvas"
-    ],
+    "tags": ["interaction", "webgl", "physics", "canvas"],
     "thumbnail": "thumbnails/curtain.webp",
     "year": 2026
   },
@@ -70,9 +58,7 @@
     "title": "늦깎이 FS",
     "type": "internal",
     "url": "futsal/",
-    "tags": [
-      "landing", "interaction", "svg", "animation"
-    ],
+    "tags": ["landing", "interaction", "svg", "animation"],
     "thumbnail": "thumbnails/futsal.webp",
     "year": 2026
   },
@@ -81,9 +67,7 @@
     "title": "칼퇴 결재",
     "type": "internal",
     "url": "stamp/",
-    "tags": [
-      "game", "mobile", "canvas", "audio", "interaction"
-    ],
+    "tags": ["game", "mobile", "canvas", "audio", "interaction"],
     "thumbnail": "thumbnails/stamp.webp",
     "year": 2026
   },
@@ -92,9 +76,7 @@
     "title": "사뿐",
     "type": "internal",
     "url": "quiet-floors/",
-    "tags": [
-      "promo", "interaction", "svg", "animation", "audio"
-    ],
+    "tags": ["promo", "interaction", "svg", "animation", "audio"],
     "thumbnail": "thumbnails/quiet-floors.webp",
     "year": 2026
   },
@@ -103,9 +85,7 @@
     "title": "부엉재천문대",
     "type": "internal",
     "url": "observatory/",
-    "tags": [
-      "landing", "interaction", "canvas", "brand"
-    ],
+    "tags": ["landing", "interaction", "canvas", "brand"],
     "thumbnail": "thumbnails/observatory.webp",
     "year": 2026
   },
@@ -114,9 +94,7 @@
     "title": "색모래 병",
     "type": "internal",
     "url": "sand/",
-    "tags": [
-      "interaction", "mobile", "canvas", "physics", "animation"
-    ],
+    "tags": ["interaction", "mobile", "canvas", "physics", "animation"],
     "thumbnail": "thumbnails/sand.webp",
     "year": 2026
   },
@@ -125,9 +103,7 @@
     "title": "정면사진관",
     "type": "internal",
     "url": "idphoto/",
-    "tags": [
-      "landing", "interaction", "canvas", "svg", "brand"
-    ],
+    "tags": ["landing", "brand", "typography"],
     "thumbnail": "thumbnails/idphoto.webp",
     "year": 2026
   },
@@ -136,9 +112,7 @@
     "title": "점멸",
     "type": "internal",
     "url": "cinema/",
-    "tags": [
-      "promo", "interaction", "canvas", "brand"
-    ],
+    "tags": ["promo", "interaction", "canvas", "brand"],
     "thumbnail": "thumbnails/cinema.webp",
     "year": 2026
   }

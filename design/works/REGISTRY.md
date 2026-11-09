@@ -7,9 +7,9 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 
 | slug | what | signature | palette | fonts |
 |---|---|---|---|---|
-| keyboard | 가락 65, keyboard brand | Three.js keyboard typing along, exploded view, colourways | warm grey + mustard | Wanted Sans, Archivo |
+| keyboard | 가락 65, keyboard brand | (rev. 11-10) product photography, parts flat lay, blank keycaps | 진달래 pink #F6A3C2 field, case #D12F6B, ink #2E0A1A | Wanted Sans, Archivo |
 | festival | 너울 2027, music festival | kinetic variable-font lineup, WebAudio band, timetable/tickets | vermilion / ultramarine / yellow | Anybody, Hahmlet, IBM Plex Sans KR |
-| perfume | 담금, perfume atelier | WebGL liquid pool + glass bottle, notes cylinder | honey / amber | Hahmlet, Newsreader, IBM Plex Sans KR |
+| perfume | 담금, perfume atelier | (rev. 11-10) still-life photography, four scent spreads | 청매 #a9c25a field, plaster #eef1ef, 먹 #15191b | Hahmlet, Newsreader, IBM Plex Sans KR |
 | startup | 물길, marine cleanup startup | pinned nautical chart story, boat drawing | sea white / navy / sand / orange | Hahmlet, IBM Plex Sans KR |
 | (home) | arcade select screen | | orange / yellow / dark | Galmuri11 |
 

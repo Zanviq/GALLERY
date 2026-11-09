@@ -1,0 +1,248 @@
+{
+ "passport": {
+  "photo": "p1",
+  "format": "passport",
+  "mode": "rule",
+  "head": 34.0,
+  "crown": 3.3,
+  "chin": 37.3,
+  "eye": 23.8,
+  "ratio": 0.53,
+  "px_per_mm": 23.41,
+  "crop": [
+   484,
+   175,
+   1304,
+   1228
+  ],
+  "backdrop_sample": [
+   246,
+   245,
+   245
+  ]
+ },
+ "idcard": {
+  "photo": "p2",
+  "format": "idcard",
+  "mode": "rule",
+  "head": 34.0,
+  "crown": 3.3,
+  "chin": 37.3,
+  "eye": 24.6,
+  "ratio": 0.5,
+  "px_per_mm": 35.0,
+  "crop": [
+   290,
+   172,
+   1516,
+   1748
+  ],
+  "backdrop_sample": [
+   236,
+   236,
+   238
+  ]
+ },
+ "license": {
+  "photo": "p3",
+  "format": "license",
+  "mode": "rule",
+  "head": 34.0,
+  "crown": 3.3,
+  "chin": 37.3,
+  "eye": 23.6,
+  "ratio": 0.53,
+  "px_per_mm": 28.09,
+  "crop": [
+   408,
+   404,
+   1392,
+   1668
+  ],
+  "backdrop_sample": [
+   149,
+   192,
+   216
+  ]
+ },
+ "visa": {
+  "photo": "p4",
+  "format": "visa",
+  "mode": "rule",
+  "head": 31.4,
+  "crown": 3.3,
+  "chin": 34.7,
+  "eye": 30.1,
+  "ratio": 0.53,
+  "px_per_mm": 35.67,
+  "crop": [
+   7,
+   222,
+   1791,
+   2006
+  ],
+  "backdrop_sample": [
+   250,
+   251,
+   253
+  ]
+ },
+ "job": {
+  "photo": "r2",
+  "format": "job",
+  "mode": "rule",
+  "head": 26.0,
+  "crown": 3.3,
+  "chin": 29.3,
+  "eye": 22.9,
+  "ratio": 0.53,
+  "px_per_mm": 34.5,
+  "crop": [
+   382,
+   171,
+   1416,
+   1551
+  ],
+  "backdrop_sample": [
+   184,
+   212,
+   225
+  ]
+ },
+ "job-before": {
+  "photo": "p5",
+  "format": "job",
+  "mode": "rule",
+  "head": 26.0,
+  "crown": 3.3,
+  "chin": 29.3,
+  "eye": 22.9,
+  "ratio": 0.53,
+  "px_per_mm": 34.5,
+  "crop": [
+   382,
+   171,
+   1416,
+   1551
+  ],
+  "backdrop_sample": [
+   185,
+   213,
+   225
+  ]
+ },
+ "ready-clothes-no": {
+  "photo": "b1",
+  "format": "passport",
+  "mode": "loose",
+  "head": 25.5,
+  "crown": 6.5,
+  "px_per_mm": 31.22,
+  "crop": [
+   348,
+   49,
+   1440,
+   1454
+  ],
+  "backdrop_sample": [
+   248,
+   245,
+   246
+  ]
+ },
+ "ready-clothes-ok": {
+  "photo": "p1",
+  "format": "passport",
+  "mode": "loose",
+  "head": 25.5,
+  "crown": 6.5,
+  "px_per_mm": 31.22,
+  "crop": [
+   348,
+   49,
+   1440,
+   1454
+  ],
+  "backdrop_sample": [
+   246,
+   244,
+   244
+  ]
+ },
+ "ready-fringe-no": {
+  "photo": "b3",
+  "format": "passport",
+  "mode": "loose",
+  "head": 25.5,
+  "crown": 6.5,
+  "px_per_mm": 37.45,
+  "crop": [
+   245,
+   254,
+   1555,
+   1939
+  ],
+  "backdrop_sample": [
+   150,
+   191,
+   216
+  ]
+ },
+ "ready-fringe-ok": {
+  "photo": "p3",
+  "format": "passport",
+  "mode": "loose",
+  "head": 25.5,
+  "crown": 6.5,
+  "px_per_mm": 37.45,
+  "crop": [
+   245,
+   254,
+   1555,
+   1939
+  ],
+  "backdrop_sample": [
+   146,
+   190,
+   215
+  ]
+ },
+ "ready-glasses-no": {
+  "photo": "b2",
+  "format": "passport",
+  "mode": "loose",
+  "head": 25.5,
+  "crown": 6.5,
+  "px_per_mm": 43.92,
+  "crop": [
+   130,
+   55,
+   1668,
+   2031
+  ],
+  "backdrop_sample": [
+   249,
+   250,
+   252
+  ]
+ },
+ "ready-glasses-ok": {
+  "photo": "p4",
+  "format": "passport",
+  "mode": "loose",
+  "head": 25.5,
+  "crown": 6.5,
+  "px_per_mm": 43.92,
+  "crop": [
+   130,
+   55,
+   1668,
+   2031
+  ],
+  "backdrop_sample": [
+   249,
+   250,
+   252
+  ]
+ }
+}
