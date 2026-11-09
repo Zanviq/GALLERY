@@ -4,6 +4,32 @@ Every work in `works/<slug>/` is built by one agent working alone, in parallel w
 This file holds the rules that apply to all of them. `design/works/REGISTRY.md` holds each work's
 concept, palette and fonts, and lists what is already taken.
 
+## 00. The owner's third review (2026-11-10). Read this first; it adds to §0.
+
+The generated-image direction works: "대체로 이미지와 디자인이 매우 잘 뽑혔다". What the owner liked
+and disliked, and what it means for every work from now on:
+
+- **Liked most:** 너울 2027 (`works/festival/`) for its feel, and as homepages 물길
+  (`works/startup/`), 사뿐 (`works/quiet-floors/`) and 정면사진관 (`works/idphoto/`). The film
+  stills of 점멸 (`works/cinema/`) were singled out as well made. Study these before designing.
+- **Deleted for having no clear message:** 겹 리소 인쇄실 and 집채만 한 그림자 ("전달력이 부족하고
+  필요가 없어 보인다"). So: **the first view must say what this is, for whom, and why, at a glance.**
+  A visitor who reads only the hero must be able to say what the page is selling or announcing.
+- **Games need tension** (칼퇴 결재 lacked it): time pressure that is visible, stakes, escalation,
+  a cost for mistakes, a final crunch, a result that invites one more round.
+- **Interactions need a payoff** (색모래 병 "효과가 별로 없다"): the effect must be striking on the
+  first try, not after learning it.
+- **Images must match the design, not just be good photos.** 늦깎이 FS's film-look photos clashed with
+  the page and read like eerie "spirit photos". Choose the photographic look (film or crisp digital,
+  light, colour, grain) for the page's concept. Film grain, faded stock, dim light and motion blur
+  are not a default; use them only when the concept is film.
+- **Generated images sitting on a page colour must match it exactly or be cut out to alpha.** On the
+  home, photos of the joystick and buttons kept their own background and looked pasted on.
+- **Always re-take the thumbnail and OG image from the finished page.** The owner checks the home.
+- **Think as a designer.** Set the grid first (columns, margins, baseline), then hierarchy, UI and
+  UX. When design is the purpose the page need not be practical: a sculpture exhibition poster,
+  a type specimen, a manifesto are all welcome. Poster-like and editorial beats app-like.
+
 ## 0. The owner's second review (2026-11-09). Read this first; it overrides anything below.
 
 After seeing the first batch, the owner said:

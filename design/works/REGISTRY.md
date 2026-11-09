@@ -31,7 +31,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | 12 | cinema | 홍보 · desktop+mobile | 가상 독립영화 개봉 | 흑백 프레임이 찍힌 밀착 인화지를 넘기며 자막으로 줄거리를 읽는 예고편 (사진 대신 그래픽 프레임) | 흑백 #000 / #FFF / 회색, 자막 노랑 #FFE13B (한국 극장 자막) | Diphylleia, LINE Seed Sans KR (subset renamed Jeommyeol Sans) | registered |
 | 13 | sparkling | 홍보 · desktop+mobile | 깻잎 탄산수 출시 | 병뚜껑을 끌어 따면 기포가 터져 오름, 흔들면 더 끓음 (Canvas 입자) | 들깻잎 진녹 #1E4D2B, 기포 흰색 #FFFFFF, 병 유리 물빛 #9FD8CF | Bagel Fat One, S-Core Dream | parked |
 | 14 | adopt | 홍보 · mobile-only | 유기묘 입양 캠페인 | 일러스트 고양이 프로필을 넘기며 성격 맞추기 (SVG 생성 고양이) | 발바닥 분홍 #F5C2CC, 차콜 #2A2A2E, 흰색 | Gaegu, Elice DX Neolli | parked |
-| 15 | marathon | 홍보 · desktop+mobile | 가상 도시 하프마라톤 | 코스 고도 프로필을 긁으면 주자가 이동, 목표 기록 → 구간 페이스표, 내 배번표 미리보기 | 일렉트릭 블루 #0047FF, 흰색, 검정, 결승 테이프 적 (배번표·기록계) | Gasoek One, KoddiUD OnGothic | planned |
+| 15 | marathon | 홍보 · desktop+mobile | 가상 도시 하프마라톤 | (2026-11-10 재기획) 포스터형 대회 안내: 거대한 21.0975, 코스 선 지도, 고도 차트, 생성 사진. 체험 요소 없음 | 일렉트릭 블루 #0047FF, 흰색, 검정, 결승 테이프 적 (배번표·기록계) | Gasoek One, KoddiUD OnGothic | building |
 | 16 | jamo | 게임 · desktop+mobile | 한글 자모 조립 퍼즐 (독창 규칙) | 흩어진 자모 타일을 끌어 음절로 모아 단서 낱말 완성 | 칠판 녹색 #1E3B2F, 분필 흰색 #F2F2EE, 분필 노랑 #F7E26B · 분홍 #F4A6C1 · 하늘 #9CC9F5 | Orbit | deleted |
 | 17 | stamp | 게임 · mobile-first | 결재 도장 찍기 타이밍 게임 | 컨베이어로 지나가는 서류에 한 번 터치로 도장, 정확도·연속 판정 | 사무 용지 흰색, 인주 적 #C8102E, 먹지 청 #1F3A93 | East Sea Dokdo, Hi Melody | registered |
 | 18 | lostfound | 게임 · desktop+mobile | 분실물 센터 추리 퍼즐 | 단서를 읽고 물건과 주인을 짝짓는 논리 퍼즐 (격자 소거) | 사물함 철판 #5B6770, 꼬리표 흰색, 마커 검정, 형광 꼬리표 #39D98A | Nanum Pen Script (subset renamed Kkoripyo Pen), Poor Story | deleted |
@@ -39,6 +39,19 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | 20 | curtain | 인터랙션 · desktop+mobile | 무대 커튼 | 천 시뮬레이션(Verlet): 커튼을 끌어 열고, 당기면 찢어짐 | 에메랄드 벨벳 #0D5C47, 검정, 은빛 술 | Grandiflora One | registered |
 | 21 | shadowplay | 인터랙션 · desktop+mobile | 종이 그림자극 | 광원을 끌면 종이 인형 그림자가 실시간으로 늘고 줄어듦 (2D 가시 다각형), 장면 꾸미기 | 청사진 프러시안 블루 #10335A, 흰색 | Moirai One, Gamja Flower | deleted |
 | 22 | sand | 인터랙션 · mobile-only | 색모래 병 | 폰을 기울여 색모래를 부어 층 쌓기, 흔들면 섞임 (falling-sand) | 원색 모래층(마젠타·코발트·라임·노랑·흰색), 검은 유리 | Black And White Picture | registered |
+
+## Third-review batch (2026-11-10, BRIEF §00): 2 homepages, 2 promos, 1 game
+
+| slug | category · platform | concept | signature | palette | fonts | status |
+|---|---|---|---|---|---|---|
+| nighttrain | 홈페이지 · desktop+mobile | 밤차: 야간 침대열차 스타트업 (가상 도시 간) | 출발 시각표를 타이포그래피로, 선 노선도, 생성 사진 | agent picks with reason | Gowun Batang, Orbit | building |
+| ramen | 홈페이지 · desktop+mobile | 작은 식품 스타트업의 새 봉지라면 | 맛마다 재료 색 면, 포장 앞면을 평면 타이포로, 생성 음식 사진 | one field per flavour from its ingredient | Black Han Sans, Gowun Dodum | building |
+| sculpture | 홍보 · desktop+mobile | 가상 조각가 개인전 (가상 시립미술관) | 전시 포스터 + 도록식 작품 목록, 생성 전시 사진 | one identity colour + black/white | Noto Serif KR (+ Latin) | building |
+| marathon | (row 15 above, re-planned) | | | | | building |
+| ticketing | 게임 · desktop+mobile | 광클: 콘서트 티켓팅 (가상 예매처·가수·공연장) | 20:00:00 오픈 → 대기열 → 사라지는 좌석 지도 → 결제 타이머 → 티켓 | agent picks with reason | Pretendard (subset renamed) (+ numeral face) | building |
+
+Revisions also running: curtain (clear message: theatre reopening; photographic velvet), sand (striking effect; photographed bottle).
+Not revised after the third review (owner liked or did not flag them): startup, quiet-floors, optician, observatory, festival.
 
 ## Heavy works (the owner's real programs and internal tools; built last)
 
