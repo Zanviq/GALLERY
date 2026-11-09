@@ -37,7 +37,7 @@ Status: planned → building → reviewed → registered (in data/works.json).
 | 18 | lostfound | 게임 · desktop+mobile | 분실물 센터 추리 퍼즐 | 단서를 읽고 물건과 주인을 짝짓는 논리 퍼즐 (격자 소거) | 사물함 철판 #5B6770, 꼬리표 흰색, 마커 검정, 형광 꼬리표 #39D98A | Nanum Pen Script (subset renamed Kkoripyo Pen), Poor Story | registered |
 | 19 | paperboat | 게임 · desktop+mobile | 빗물 도랑의 종이배 | 종이배를 좌우로 몰아 낙엽·하수구 피하기, 3D를 그림책 인쇄처럼 바꾸는 후처리 필수 | 젖은 아스팔트 회색, 종이 흰색, 잉크 청흑, 강조 1색 (금지 목록 밖) | Yeon Sung | planned |
 | 20 | curtain | 인터랙션 · desktop+mobile | 무대 커튼 | 천 시뮬레이션(Verlet): 커튼을 끌어 열고, 당기면 찢어짐 | 에메랄드 벨벳 #0D5C47, 검정, 은빛 술 | Grandiflora One | registered |
-| 21 | shadowplay | 인터랙션 · desktop+mobile | 종이 그림자극 | 광원을 끌면 종이 인형 그림자가 실시간으로 늘고 줄어듦 (2D 가시 다각형), 장면 꾸미기 | 청사진 프러시안 블루 #10335A, 흰색 | Moirai One, Gamja Flower | planned |
+| 21 | shadowplay | 인터랙션 · desktop+mobile | 종이 그림자극 | 광원을 끌면 종이 인형 그림자가 실시간으로 늘고 줄어듦 (2D 가시 다각형), 장면 꾸미기 | 청사진 프러시안 블루 #10335A, 흰색 | Moirai One, Gamja Flower | registered |
 | 22 | sand | 인터랙션 · mobile-only | 색모래 병 | 폰을 기울여 색모래를 부어 층 쌓기, 흔들면 섞임 (falling-sand) | 원색 모래층(마젠타·코발트·라임·노랑·흰색), 검은 유리 | Black And White Picture | registered |
 
 ## Heavy works (the owner's real programs and internal tools; built last)

@@ -160,5 +160,14 @@
     "tags": ["game", "interaction", "svg", "typography"],
     "thumbnail": "thumbnails/lostfound.webp",
     "year": 2026
+  },
+  {
+    "slug": "shadowplay",
+    "title": "집채만 한 그림자",
+    "type": "internal",
+    "url": "shadowplay/",
+    "tags": ["interaction", "canvas", "animation", "demo"],
+    "thumbnail": "thumbnails/shadowplay.webp",
+    "year": 2026
   }
 ]
