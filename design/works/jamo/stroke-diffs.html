@@ -1,0 +1,13 @@
+<!doctype html><meta charset="utf-8"><body style="background:#1E3B2F;margin:0">
+<canvas id="c" width="1200" height="520"></canvas>
+<script type="module">
+import { glyph, strokeDiff } from '/jamo/js/chalk.js'; // dev view of every added stroke (not deployed)
+await document.fonts.load('48px Orbit', 'ㄱ');
+const ctx = document.getElementById('c').getContext('2d');
+const pairs = [['ㄱ','ㅋ'],['ㄴ','ㄷ'],['ㄷ','ㅌ'],['ㅁ','ㅂ'],['ㅂ','ㅍ'],['ㅅ','ㅈ'],['ㅈ','ㅊ'],['ㅏ','ㅑ'],['ㅓ','ㅕ'],['ㅗ','ㅛ'],['ㅜ','ㅠ']];
+pairs.forEach(([a,b],i)=>{
+  const x = (i%6)*190+10, y = Math.floor(i/6)*250+10, T=160;
+  ctx.drawImage(glyph(b,T,T,'#F2F2EE',3),x,y,T,T);
+  const d = strokeDiff(a,b,T,T,'#F7E26B',3); if (d) ctx.drawImage(d.canvas,x,y,T,T);
+});
+</script>

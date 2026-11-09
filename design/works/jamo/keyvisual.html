@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>획 하나 차이 key visual</title>
+<!-- Build tool, not deployed. Rendered at 1200x630 (og) and 1200x1200 (square study) by scripts/cdp.mjs.
+     Uses the game's own chalk renderer so the plate is drawn with the same material as the board. -->
+<style>
+  @font-face { font-family: 'Orbit'; src: url('/jamo/fonts/orbit.woff2') format('woff2'); }
+  html, body { margin: 0; background: #1E3B2F; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<script type="module">
+import { glyph, strokeDiff, chalkStroke, chalkify, loopPoints, drawHaze, rng } from '/jamo/js/chalk.js';
+const W = innerWidth, H = innerHeight;
+const C = { chalk: '#F2F2EE', dim: '#B4C3BA', sky: '#9CC9F5', yellow: '#F7E26B', pink: '#F4A6C1', board: '#1E3B2F' };
+await document.fonts.load('64px Orbit', '획하나차이자모를모아낱말을쓰는칠판퍼즐ㄱㅅㅈㅊ');
+const cv = document.getElementById('c');
+const dpr = 2;
+cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px';
+const ctx = cv.getContext('2d');
+ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+ctx.fillStyle = C.board; ctx.fillRect(0, 0, W, H);
+const hz = document.createElement('canvas'); hz.width = W; hz.height = H;
+drawHaze(hz.getContext('2d'), W, H, { seed: 23 });
+ctx.drawImage(hz, 0, 0, W, H);
+
+function frame(x, y, s, seed) {
+  const j = () => (rng(seed++)() - 0.5) * 2.4;
+  const sides = [[[x - 3, y + j()], [x + s + 3, y + j()]], [[x + s + j(), y - 3], [x + s + j(), y + s + 3]],
+    [[x + s + 3, y + s + j()], [x - 3, y + s + j()]], [[x + j(), y + s + 3], [x + j(), y - 3]]];
+  sides.forEach((p, k) => chalkStroke(ctx, p, { width: 3, color: C.chalk, alpha: 0.85, seed: seed + k * 11, gaps: 0.12 }));
+  for (let px = x + 6; px < x + s - 6; px += 11) chalkStroke(ctx, [[px, y + s * 0.58], [Math.min(px + 5, x + s - 6), y + s * 0.58]], { width: 1.8, alpha: 0.4, seed: px, gaps: 0 });
+}
+function jamo(ch, from, x, y, s, seed) {
+  ctx.drawImage(glyph(ch, 200, 200, C.chalk, seed), x, y, s, s);
+  if (from && from !== ch) { const d = strokeDiff(from, ch, 200, 200, C.yellow, seed); if (d) ctx.drawImage(d.canvas, x, y, s, s); }
+}
+function text(t, x, y, size, color, strength = 0.55) {
+  // written in the same chalk as the marks: draw, then let the board's tooth show through
+  const c = document.createElement('canvas');
+  c.width = Math.ceil(t.length * size * 1.05 * dpr); c.height = Math.ceil(size * 1.6 * dpr);
+  const k = c.getContext('2d', { willReadFrequently: true });
+  k.scale(dpr, dpr);
+  k.font = `${size}px Orbit`; k.fillStyle = '#fff'; k.textBaseline = 'alphabetic';
+  k.shadowColor = 'rgba(255,255,255,.5)'; k.shadowBlur = size * 0.04;
+  k.fillText(t, 2, size * 1.2);
+  chalkify(k, c.width, c.height, color, t.length + size, strength);
+  ctx.drawImage(c, x - 2, y - size * 1.2, c.width / dpr, c.height / dpr);
+}
+
+const wide = W / H > 1.4;
+const pad = wide ? 64 : 72;
+// title and one line
+text('획 하나 차이', pad, pad + 58, wide ? 64 : 76, C.chalk);
+text('자모를 모아 낱말을 쓰는 칠판 퍼즐', pad, pad + (wide ? 104 : 126), wide ? 24 : 28, C.dim, 0.25);
+
+// the family ㅅ ㅈ ㅊ: one stroke more each time, the new stroke in yellow
+const s = wide ? 150 : 210, gap = wide ? 26 : 34;
+const fx = wide ? pad : pad, fy = wide ? H - pad - s : 330;
+[['ㅅ', 'ㅅ'], ['ㅈ', 'ㅅ'], ['ㅊ', 'ㅈ']].forEach(([ch, from], i) => {
+  const x = fx + i * (s + gap);
+  frame(x, fy, s, 100 + i * 9);
+  jamo(ch, from, x + s * 0.12, fy + s * 0.05, s * 0.76, 7 + i);
+});
+
+// the solved word, circled the way a teacher marks 100 points
+const bs = wide ? 168 : 200, bx = wide ? W - pad - bs * 2 - 18 : W - pad - bs * 2 - 18, by = wide ? H / 2 - bs / 2 + 20 : H - pad - bs - 30;
+[['칠', 0], ['판', 1]].forEach(([ch, i]) => {
+  const x = bx + i * (bs + 18);
+  frame(x, by, bs, 300 + i * 5);
+  ctx.drawImage(glyph(ch, 200, 152, C.chalk, 30 + i), x, by, bs, bs);
+});
+const cx = bx + bs + 9, cy = by + bs / 2;
+chalkStroke(ctx, loopPoints(cx, cy, (bs + 9 + 26) / 1.1, (bs / 2 + 22) / 1.1, { seed: 77, flower: true }), { width: 4, color: C.pink, alpha: 0.95, seed: 78, gaps: 0.06 });
+
+text('zanviq gallery', W - pad - 150, H - 30, 18, C.dim, 0.2);
+document.title = 'ready';
+</script>
+</body>
+</html>

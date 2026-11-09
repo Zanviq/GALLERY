@@ -43,5 +43,23 @@
     "tags": ["landing", "interaction", "svg", "typography", "brand"],
     "thumbnail": "thumbnails/optician.webp",
     "year": 2026
+  },
+  {
+    "slug": "jamo",
+    "title": "획 하나 차이",
+    "type": "internal",
+    "url": "jamo/",
+    "tags": ["game", "typography", "interaction", "canvas"],
+    "thumbnail": "thumbnails/jamo.webp",
+    "year": 2026
+  },
+  {
+    "slug": "laundry",
+    "title": "뽀득 셀프 빨래방",
+    "type": "internal",
+    "url": "laundry/",
+    "tags": ["landing", "interaction", "canvas", "physics", "mobile", "brand"],
+    "thumbnail": "thumbnails/laundry.webp",
+    "year": 2026
   }
 ]

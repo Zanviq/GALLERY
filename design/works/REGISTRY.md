@@ -20,7 +20,7 @@ Status: planned → building → reviewed → registered (in data/works.json).
 | 1 | optician | 홈페이지 · desktop+mobile | 동네 안경원 + 렌즈 가공실 | 한글 시력표를 렌즈 휠(디옵터)로 맞추면 흐림이 걷힘, 적록 이색 검사, 선 얼굴에 테 폭·다리 길이 맞추기 (SVG/CSS) | 검사실 흰색 #FFFFFF, 검정 #111316, 이색 검사 적 #D0021B · 녹 #00A05A (적록 이색 검사 그대로) | Gothic A1 | registered |
 | 2 | observatory | 홈페이지 · desktop+mobile | 가상 도시의 시립 천문대 | 날짜·시각을 돌려 맞추는 회전 성도판(planisphere), 오늘 밤 볼 대상 목록 (Canvas) | 검정 #000 + 암적응용 적색광 #FF4436 / #A3141B / #3D0709, 다른 색 없음 (천문대의 붉은 손전등) | Nanum Myeongjo, Nanum Gothic Coding | planned |
 | 3 | riso | 홈페이지 · desktop+mobile | 리소그래프 인쇄소 | 잉크 판을 끌어 겹치면 곱하기 혼색·핀트 어긋남·입자, 드럼 순서 바꾸기, 견적 (Canvas/SVG blend) | 흰 종이 #FFFFFF, 형광 핑크 #FF48B0, 블루 #0078BF, 옐로 #FFE800 (실제 리소 드럼 잉크, 2차색은 겹칠 때만) | Black Han Sans, Gowun Dodum | planned |
-| 4 | laundry | 홈페이지 · mobile-first | 셀프 빨래방 체인 | 지점별 기계 현황판(가상 실시간), 기계 누르면 남은 시간, 빨래가 굴러가는 드럼 (Canvas 2D) | 세탁실 타일 민트 #BEE9DA, 스테인리스 #C5CCD2, 그래파이트 #1F2428, 기계 LED 녹 #12B76A · 적 #F04438 | Jua, Nanum Square Round | planned |
+| 4 | laundry | 홈페이지 · mobile-first | 셀프 빨래방 체인 | 지점별 기계 현황판(가상 실시간), 기계 누르면 남은 시간, 빨래가 굴러가는 드럼 (Canvas 2D) | 세탁실 타일 민트 #BEE9DA, 스테인리스 #C5CCD2, 그래파이트 #1F2428, 기계 LED 녹 #12B76A · 적 #F04438 | Jua, Nanum Square Round | registered |
 | 5 | idphoto | 홈페이지 · desktop+mobile | 증명사진관 | 규격 맞추기: 그림으로 된 모델(또는 브라우저 안에서만 쓰는 카메라)에 여권 규격 가이드, 셔터 플래시, 8컷 인화지 재단선 | 증명사진 하늘색 배경 #B9D3EA, 플래시 흰색 #FFFFFF, 검정 #101214 | Song Myung, Noto Sans KR | planned |
 | 6 | futsal | 홈페이지 · desktop+mobile | 동네 여자 풋살 클럽 | 전술판: 선수 5명·공을 끌고 침투 화살표를 그리면 재생 (SVG) | 실내 코트 블루 #1C4FA0, 클럽 클라렛 #761C3C, 라인 흰색 (코트 바닥 + 유니폼) | Do Hyeon, Sunflower | planned |
 | 7 | shoemaker | 홈페이지 · desktop+mobile | 맞춤 구두 공방 | 발 본뜨기: 발 윤곽을 그리면 길이·볼 너비·라스트 치수 → 갑피 패턴 조각으로 변형 (SVG) | 옥스블러드 #3D0C17 / #6B1A2A, 재단 초크 회색 #E3E6E8, 흰 초크 선 (구두약, 재단 초크) | Gowun Batang, Nanum Barun Gothic | planned |
@@ -32,7 +32,7 @@ Status: planned → building → reviewed → registered (in data/works.json).
 | 13 | sparkling | 홍보 · desktop+mobile | 깻잎 탄산수 출시 | 병뚜껑을 끌어 따면 기포가 터져 오름, 흔들면 더 끓음 (Canvas 입자) | 들깻잎 진녹 #1E4D2B, 기포 흰색 #FFFFFF, 병 유리 물빛 #9FD8CF | Bagel Fat One, S-Core Dream | planned |
 | 14 | adopt | 홍보 · mobile-only | 유기묘 입양 캠페인 | 일러스트 고양이 프로필을 넘기며 성격 맞추기 (SVG 생성 고양이) | 발바닥 분홍 #F5C2CC, 차콜 #2A2A2E, 흰색 | Gaegu, Elice DX Neolli | planned |
 | 15 | marathon | 홍보 · desktop+mobile | 가상 도시 하프마라톤 | 코스 고도 프로필을 긁으면 주자가 이동, 목표 기록 → 구간 페이스표, 내 배번표 미리보기 | 일렉트릭 블루 #0047FF, 흰색, 검정, 결승 테이프 적 (배번표·기록계) | Gasoek One, KoddiUD OnGothic | planned |
-| 16 | jamo | 게임 · desktop+mobile | 한글 자모 조립 퍼즐 (독창 규칙) | 흩어진 자모 타일을 끌어 음절로 모아 단서 낱말 완성 | 칠판 녹색 #1E3B2F, 분필 흰색 #F2F2EE, 분필 노랑 #F7E26B · 분홍 #F4A6C1 · 하늘 #9CC9F5 | Orbit | planned |
+| 16 | jamo | 게임 · desktop+mobile | 한글 자모 조립 퍼즐 (독창 규칙) | 흩어진 자모 타일을 끌어 음절로 모아 단서 낱말 완성 | 칠판 녹색 #1E3B2F, 분필 흰색 #F2F2EE, 분필 노랑 #F7E26B · 분홍 #F4A6C1 · 하늘 #9CC9F5 | Orbit | registered |
 | 17 | stamp | 게임 · mobile-first | 결재 도장 찍기 타이밍 게임 | 컨베이어로 지나가는 서류에 한 번 터치로 도장, 정확도·연속 판정 | 사무 용지 흰색, 인주 적 #C8102E, 먹지 청 #1F3A93 | East Sea Dokdo, Hi Melody | planned |
 | 18 | lostfound | 게임 · desktop+mobile | 분실물 센터 추리 퍼즐 | 단서를 읽고 물건과 주인을 짝짓는 논리 퍼즐 (격자 소거) | 사물함 철판 #5B6770, 꼬리표 흰색, 마커 검정, 형광 꼬리표 #39D98A | Nanum Pen Script, Poor Story | planned |
 | 19 | paperboat | 게임 · desktop+mobile | 빗물 도랑의 종이배 | 종이배를 좌우로 몰아 낙엽·하수구 피하기, 3D를 그림책 인쇄처럼 바꾸는 후처리 필수 | 젖은 아스팔트 회색, 종이 흰색, 잉크 청흑, 강조 1색 (금지 목록 밖) | Yeon Sung | planned |

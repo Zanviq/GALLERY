@@ -94,7 +94,11 @@ not be banned or already used; report it.
 - Works at `/<slug>/` and `/works/<slug>/`.
 - Look at your own phone captures at 2x zoom before reporting. A past work passed every script
   check but had a margin label sitting on top of the first letter of a line at 390px wide.
-- Each work invents its own town/place names. Already taken: 여울시, 초롱골, 돋보기길 (optician).
+- Each work invents its own town/place names. Already taken: 여울시, 초롱골, 돋보기길 (optician);
+  새물시, 느릅마루, 종달샘, 빗물터, 솔바위 (laundry).
+- Font licences: if a family's OFL declares a Reserved Font Name (NAVER's NanumSquare/Round/Neo,
+  some foundry builds), a subset counts as a modified version, so rename the subset family in the
+  font file and CSS (laundry did this). Google Fonts builds usually have no RFN; check the OFL text.
 
 ## 6. Tools that already exist
 
@@ -103,6 +107,9 @@ not be banned or already used; report it.
 - puppeteer-core: `<scratchpad>/perfume/pp/node_modules/puppeteer-core`. Capture script you can copy:
   `design/works/perfume/pp-shots.mjs` (viewports, scrolling, clicks, console capture).
   Launch args that work here: `--enable-unsafe-swiftshader --use-angle=swiftshader`.
+- Faster captures: `design/works/jamo/scripts/cdp.mjs` drives Chrome over CDP with no dependencies
+  (about 10 s a run here, against about 30 s just to load puppeteer-core). Copy it into your own
+  `design/works/<slug>/scripts/` and adapt.
 - Python with fontTools + brotli: `<scratchpad>/fontenv/Scripts/python.exe`.
 - Google Fonts subset download by text: see `design/works/startup/scripts/fonts.py`.
 - Run Python with `-I`. Multi-line `python -c` breaks in this shell: write a script file instead.
