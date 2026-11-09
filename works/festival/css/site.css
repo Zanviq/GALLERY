@@ -23,13 +23,13 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "Plex KR";
+  font-family: "Neoul Sans";
   src: url("../fonts/plex-kr-400.woff2") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
-  font-family: "Plex KR";
+  font-family: "Neoul Sans";
   src: url("../fonts/plex-kr-600.woff2") format("woff2");
   font-weight: 600;
   font-display: swap;
@@ -58,9 +58,9 @@
   --day-on-ink: var(--vermilion);
 
   /* type */
-  --f-lat: "Anybody", "Plex KR", system-ui, sans-serif;
-  --f-ko: "Hahmlet", "Plex KR", serif;
-  --f-ui: "Plex KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-lat: "Anybody", "Neoul Sans", system-ui, sans-serif;
+  --f-ko: "Hahmlet", "Neoul Sans", serif;
+  --f-ui: "Neoul Sans", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   --t-xs: 0.8125rem;
   --t-sm: 0.9375rem;
   --t-base: 1.0625rem;

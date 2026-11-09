@@ -104,7 +104,7 @@ export function drawPlate(canvas) {
       }
       ctx.fillStyle = rgba(ink, 0.22);
       ctx.fillRect(gx, top - 4, colw * 40, 0.8);
-      f('400 12.5px "Plex KR", sans-serif');
+      f('400 12.5px "Damgeum Sans", sans-serif');
       ctx.fillStyle = rgba(ink, 0.75);
       ctx.textAlign = 'left';
       ctx.fillText('담근 날', gx + colw * 0.5 - 8, top - 44);
@@ -197,7 +197,7 @@ export function drawPlate(canvas) {
         ctx.fillStyle = rgba(ink, 0.3);
         ctx.fillRect(18, cy, 10, 0.8);
       }
-      f('400 11.5px "Plex KR", sans-serif');
+      f('400 11.5px "Damgeum Sans", sans-serif');
       ctx.fillStyle = rgba(ink, 0.7);
       ctx.fillText('일째', 0, top - 20);
     }

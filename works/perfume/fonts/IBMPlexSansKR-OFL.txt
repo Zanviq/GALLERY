@@ -1,4 +1,5 @@
 Copyright © 2017 IBM Corp. with Reserved Font Name "Plex"
+The plex-kr-*.woff2 files beside this licence are modified versions (subsets) of IBM Plex Sans KR, renamed "Damgeum Sans" because "Plex" is a Reserved Font Name.
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 

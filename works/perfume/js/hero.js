@@ -394,10 +394,10 @@ function drawLabel(canvas, scent) {
   c.font = 'italic 300 34px Newsreader, serif';
   c.fillText(scent.latin, W / 2, 414);
   c.fillRect(W / 2 - 18, 456, 36, 1.5);
-  c.font = '400 19px "Plex KR", sans-serif';
+  c.font = '400 19px "Damgeum Sans", sans-serif';
   c.fillText(scent.conc.replace('오 드 퍼퓸', 'eau de parfum').replace('엑스트레', 'extrait'), W / 2, 500);
   c.fillText('50 ml', W / 2, 530);
-  c.font = '400 16px "Plex KR", sans-serif';
+  c.font = '400 16px "Damgeum Sans", sans-serif';
   c.fillStyle = 'rgba(42,33,24,.78)';
   c.fillText('담근 날 2026. 9. 14', W / 2, 584);
   c.fillText('거른 날 2026. 10. 25', W / 2, 610);

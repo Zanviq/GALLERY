@@ -3,8 +3,8 @@
 @font-face { font-family: 'Newsreader'; src: url('../fonts/newsreader.woff2') format('woff2'); font-weight: 300 400; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Newsreader'; src: url('../fonts/newsreader-italic.woff2') format('woff2'); font-weight: 250 400; font-style: italic; font-display: swap; }
 @font-face { font-family: 'Hahmlet'; src: url('../fonts/hahmlet.woff2') format('woff2'); font-weight: 200 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Plex KR'; src: url('../fonts/plex-kr-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Plex KR'; src: url('../fonts/plex-kr-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Damgeum Sans'; src: url('../fonts/plex-kr-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Damgeum Sans'; src: url('../fonts/plex-kr-500.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
 
 /* Registered so the whole page can ease into a new scent */
 @property --night { syntax: '<color>'; inherits: true; initial-value: #231206; }
@@ -23,7 +23,7 @@
   /* type */
   --f-display: 'Newsreader', 'Hahmlet', 'Nanum Myeongjo', 'AppleMyungjo', Batang, serif;
   --f-text: 'Hahmlet', 'Nanum Myeongjo', 'AppleMyungjo', Batang, serif;
-  --f-ui: 'Plex KR', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  --f-ui: 'Damgeum Sans', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
   --t-hero: clamp(2.75rem, 1.6rem + 5.6vw, 6.5rem);
   --t-h2: clamp(2.125rem, 1.5rem + 2.9vw, 4rem);
   --t-h3: clamp(1.4375rem, 1.3rem + 0.5vw, 1.875rem);
