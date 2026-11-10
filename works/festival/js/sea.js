@@ -115,7 +115,8 @@ export class Sea {
   }
 
   wake() {
-    if (!this.ok || this.reduced || this.raf) return;
+    // reduced motion keeps the swell: it only moves with sound the visitor turned on
+    if (!this.ok || this.raf) return;
     if (!this.band || !this.band.playing) return;
     this.raf = requestAnimationFrame(this.loop);
   }

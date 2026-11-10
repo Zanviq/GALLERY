@@ -36,7 +36,7 @@ and usable without instruction: the loupe already sits on frame 1 and the screen
    - Feedback: magnified frames inside the loupe, live. Screen swaps to the new frame the moment the
      index changes (no tween), subtitle swaps with it. Grain on the screen moves while the frame
      changes and settles 0.8s after the last change.
-   - Release: loupe glides 160ms to the centre of the current frame (reduced motion: jumps).
+   - Release: loupe glides 160ms to the centre of the current frame (reduced motion too).
 2. **Scroll the strip** (< 900px): native scroll (finger, trackpad, wheel, scrollbar).
    - Rules: current frame = frame nearest the scroller centre; `scroll-snap-type: x mandatory`, one
      snap point per frame.
@@ -53,7 +53,7 @@ and usable without instruction: the loupe already sits on frame 1 and the screen
 
 ```
 [idle on frame n] --drag start--> [dragging] --pointer up--> [settling 160ms] --> [idle on frame m]
-[idle] --key / button / row--> [idle on frame m]            (loupe glides; reduced: jumps)
+[idle] --key / button / row--> [idle on frame m]            (loupe glides; reduced: glides one frame, fades in for longer seeks)
 [idle] --넘겨 보기--> [playing] --last frame | any input | off-screen | tab hidden--> [idle]
 [any] --resize across 900px--> same frame, other layout
 ```
@@ -68,11 +68,15 @@ No-JS: the sheet is replaced by a note and the transcript list (plain text) stay
 
 - Loupe glide 160ms ease-out; screen frame change is a cut (film does not crossfade inside a shot).
 - Poster: on first view, once the dark version has decoded and the page is still at the top, the
-  lit window goes dark (900ms), then on 260ms, off 220ms, on. Once only. Reduced motion: the dark
-  version is never loaded; the poster stays lit.
+  lit window goes dark (900ms), then on 260ms, off 220ms, on. Once only. Same under reduced motion
+  (at most three changes in any second, one small window: under the 3-flashes-per-second limit).
 - Grain on the screen: 12fps overlay, only while frames are changing or playing; stops when the
-  section is off-screen or the tab is hidden; never under reduced motion (the stills carry their own).
-- Reduced motion overall: no glide, no grain movement, no poster blink. Frames step as cuts.
+  section is off-screen or the tab is hidden. Reduced motion: 8fps.
+- Reduced motion overall (revised 2026-11-10, BRIEF §000 "calmer, not still"; the owner's machine has
+  animation effects off and singled out the blink): the blink, the grain, the one-frame loupe glide
+  and the small transcript transitions stay. Dropped: smooth scrolling (page and phone strip) and the
+  loupe's long slide across the sheet on a seek or a new strip, which becomes a 200ms fade-in at the
+  new frame.
 
 ## Edge cases
 

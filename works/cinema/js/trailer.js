@@ -156,9 +156,12 @@ export function initTrailer(root) {
   function settle() {
     cancelAnimationFrame(settleAnim);
     const target = frameCenter(n);
-    if (reduced()) {
+    // reduced motion keeps the short glide (a release, the next frame) but drops the long slide
+    // across the sheet (a seek, a new strip): the loupe moves there and fades in
+    if (reduced() && Math.hypot(target[0] - loupePos[0], target[1] - loupePos[1]) > STRIP.pitch * 1.2) {
       loupePos = target;
       placeLoupe();
+      if (loupeEl.animate) loupeEl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, easing: 'ease-out' });
       return;
     }
     const from = loupePos.slice();
@@ -264,20 +267,21 @@ export function initTrailer(root) {
   }
 
   function liveGrain() {
-    if (reduced()) return;
     grainUntil = performance.now() + 800;
     if (grainLoop) return;
     let last = 0;
+    // reduced motion: the grain still moves, a little slower (8 fps instead of 12)
+    const every = reduced() ? 120 : 80;
     const tick = (t) => {
       if (!visible || document.hidden || t > grainUntil) {
         grainLoop = 0;
         showScreen(true);
         return;
       }
-      if (t - last > 80) {
+      if (t - last > every) {
         last = t;
         const ctx = paintScreen();
-        grain(ctx, screenCanvas.width, screenCanvas.height, (t / 80) | 0, 0.12);
+        grain(ctx, screenCanvas.width, screenCanvas.height, (t / every) | 0, 0.12);
       }
       grainLoop = requestAnimationFrame(tick);
     };

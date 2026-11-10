@@ -126,10 +126,9 @@ export class Dock {
       for (const ev of this.band.events) {
         if (ev.time > this.lastEvent && ev.time <= now) {
           this.lastEvent = ev.time;
-          if (!this.reduced) {
-            this.lights.forEach((l, i) => l.classList.toggle('is-on', i === ev.step));
-            this.markNow(ev.step);
-          }
+          // the step lights run under reduced motion too (a small light, not movement)
+          this.lights.forEach((l, i) => l.classList.toggle('is-on', i === ev.step));
+          this.markNow(ev.step);
         }
       }
       this.raf = requestAnimationFrame(loop);

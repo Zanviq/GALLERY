@@ -307,8 +307,7 @@ b { font-weight: 600; }
 .facts dd { font-family: var(--f-lat); font-weight: 700; font-stretch: 70%; font-size: 1.75rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .facts div:last-child dd { font-family: var(--f-ui); font-weight: 600; font-size: var(--t-lg); line-height: 1.4; padding-top: .2em; }
 .hero__hint { font-size: var(--t-sm); line-height: 1.6; font-weight: 600; justify-self: end; max-width: 26em; }
-.hint-still { display: none; }
-@media (prefers-reduced-motion: reduce) { .hint-motion { display: none; } .hint-still { display: inline; } }
+.hint-still { display: none; } /* the poster now answers a hand under reduced motion too, so the motion hint always shows */
 
 /* ---------- lead ---------- */
 .lead {
@@ -682,16 +681,12 @@ b { font-weight: 600; }
   .foot { padding-bottom: calc(var(--s-9) + 24px); }
 }
 
-/* ---------- reduced motion: a still poster + the plain list ---------- */
+/* ---------- reduced motion: calmer, not still (BRIEF §000) ----------
+   The poster, the tide, the day wipe, the step lights, the map line and the small colour
+   transitions all stay. Dropped: smooth scrolling here; in kinetic.js the scroll-speed skew,
+   and the rows fade instead of folding when the day changes. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; }
-  .prow { will-change: auto; }
-  .js .poster__plain {
-    position: static !important; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal;
-    margin-top: var(--s-6);
-  }
-  .dock__steps { display: none; }
 }
 
 @media print {

@@ -67,7 +67,7 @@ export class KineticPoster {
     this.measureEl.setAttribute('aria-hidden', 'true');
     Object.assign(this.measureEl.style, { position: 'absolute', visibility: 'hidden', left: '0', top: '0', whiteSpace: 'nowrap', pointerEvents: 'none' });
     el.appendChild(this.measureEl);
-    if (!reduced) this.bindInputs();
+    this.bindInputs();
   }
 
   // ---------- inputs ----------
@@ -92,7 +92,8 @@ export class KineticPoster {
     const end = () => { this.pointer.active = false; this.wake(); };
     host.addEventListener('touchend', end, { passive: true });
     host.addEventListener('touchcancel', end, { passive: true });
-    window.addEventListener('scroll', () => {
+    // the scroll-speed skew is scroll-linked motion: the one part of the poster dropped under reduced motion
+    if (!this.reduced) window.addEventListener('scroll', () => {
       const now = performance.now();
       const dt = Math.max(8, now - this.lastScroll.t);
       const dy = window.scrollY - this.lastScroll.y;
@@ -277,9 +278,11 @@ export class KineticPoster {
   applyTransforms(force) {
     const W = this.width;
     for (const r of this.rows) {
-      const sx = (W / r.width) * r.reveal;
+      // reduced motion: a row never folds to nothing and back (a large scale); it fades instead
+      const sx = (W / r.width) * (this.reduced ? 1 : r.reveal);
       r.sx = sx;
-      if (this.reduced || force) {
+      if (this.reduced) r.el.style.opacity = r.reveal < 0.999 ? r.reveal.toFixed(3) : '';
+      if (force) {
         r.el.style.transform = `scale(${(W / r.width).toFixed(4)}, 1)`;
         continue;
       }
@@ -296,7 +299,7 @@ export class KineticPoster {
   // ---------- day change ----------
   setDay(dayId, animate) {
     if (dayId === this.day && !this.trans) return Promise.resolve();
-    if (this.reduced || !animate || !this.visible) {
+    if (!animate || !this.visible) {
       this.trans = null;
       this.build(dayId);
       return Promise.resolve();
@@ -316,7 +319,7 @@ export class KineticPoster {
 
   // ---------- frame loop ----------
   wake() {
-    if (this.reduced || this.raf) return;
+    if (this.raf) return;
     this.last = performance.now();
     this.raf = requestAnimationFrame(this.frame);
   }

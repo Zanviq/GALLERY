@@ -405,9 +405,10 @@ html:not(.js) .reel-wrap, html:not(.js) .screen { display: none; }
   :root { --gut: 16px; }
 }
 
+/* reduced motion: calmer, not still (BRIEF §000). Only smooth scrolling goes; the poster blink,
+   the grain and the small transitions stay (long loupe slides become a fade in trailer.js). */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .script__list button, .script summary::after { transition: none; }
 }
 
 .screen__desc { color: var(--g-400); font-size: 15px; line-height: 1.7; margin-top: 14px; max-width: 32em; min-height: 3.4em; }

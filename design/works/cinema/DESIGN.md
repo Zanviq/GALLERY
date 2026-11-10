@@ -20,7 +20,8 @@ the page was a canvas drawing; all of them are gone.
 - **Added**: a proper main poster as the hero. Generated key art (the dark building, one lit window,
   은재 under the stop's lamp) with HTML type set on it: cast line, tagline, vertical title, festival
   line, release date and billing block. It is laid out in container units so it scales as one sheet.
-  On first view the window goes dark and blinks on twice (one-off; never under reduced motion).
+  On first view the window goes dark and blinks on twice (one-off; also under reduced motion since
+  2026-11-10, see INTERACTION.md "Motion").
 - **Added**: a full-width still (the two at the bus stop, with its yellow subtitle) between the trailer
   and the press note, and a portrait still in the press note.
 - **More room**: sections 168px apart (104 on phones), headings 48px, list rows looser, the

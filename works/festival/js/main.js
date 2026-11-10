@@ -14,6 +14,8 @@ const capture = params.has('capture');
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (capture) root.classList.add('capture');
 if (params.get('capture') === 'og') root.classList.add('capture-og');
+// Reduced motion means calmer, not still (BRIEF §000): everything below keeps moving under it,
+// except smooth scrolling (site.css) and the lineup's scroll-speed skew (kinetic.js).
 if (reduced) root.classList.add('rm');
 
 // ---------- small helpers ----------
@@ -129,7 +131,8 @@ function setDay(next) {
   tickets && tickets.syncDay(day);
   dock && dock.dayChanged();
 
-  const animate = !reduced && heroVisible && typeof wipe.animate === 'function';
+  // reduced motion keeps the wipe (a colour edge, not a moving object); only scroll-linked motion is dropped
+  const animate = heroVisible && typeof wipe.animate === 'function';
   if (!animate) {
     if (wipeAnim) { wipeAnim.cancel(); wipeAnim = null; }
     applyDayTokens(day);
@@ -200,12 +203,12 @@ function drawPans() {
 }
 function routeReveal() {
   const m = document.querySelector('.map__mask-path');
-  if (!m || reduced || !('IntersectionObserver' in window)) { if (m) m.style.strokeDashoffset = '0'; return; }
+  if (!m || !('IntersectionObserver' in window)) { if (m) m.style.strokeDashoffset = '0'; return; }
   m.style.strokeDashoffset = '1';
   const io = new IntersectionObserver((e) => {
     if (!e[0].isIntersecting) return;
     io.disconnect();
-    m.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 1200, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' });
+    m.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: reduced ? 900 : 1200, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' });
   }, { threshold: 0.4 });
   io.observe(m.closest('svg'));
 }

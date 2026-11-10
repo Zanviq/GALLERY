@@ -1,12 +1,11 @@
 import { initTrailer } from './trailer.js';
 
-const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 // The poster: on first view the lit window goes dark, then blinks on twice, the way the mother
-// signalled every night. Once only, only near the top, never under reduced motion.
+// signalled every night. Once only, only near the top. It runs under reduced motion too
+// (BRIEF §000: calmer, not still): one small window, under two flashes in any second.
 function poster() {
   const box = document.querySelector('[data-poster]');
-  if (!box || reduced) return;
+  if (!box) return;
   const off = box.querySelector('.poster__off');
   const small = window.innerWidth * (window.devicePixelRatio || 1) < 1100;
   off.src = small ? off.dataset.offSmall : off.dataset.off;
