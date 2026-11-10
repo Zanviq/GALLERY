@@ -1,0 +1,34 @@
+# 깊은쪽 《물 빼는 날》 — images
+
+Eight generations with `gemini-3-pro-image` (2K), all used: seven text-to-image, one edit pass. No people, no
+hands, no text in any image. Each was checked at full size; the edit pass removed maker's badges from the
+amplifiers, piano and drum head, and a last tiny mark on the bass drum head was inpainted in
+`scripts/prep_images.py`. Raw files and `prompts.jsonl` stay in the scratch folder (`<scratchpad>/record/img/`).
+
+Processing (`scripts/prep_images.py`): turquoise hues pulled toward 180° (the `--vinyl` hue), other hues mostly
+desaturated (wood, rust, pliers handles, warm work lights), whites lifted to neutral. Crisp daylight digital
+look throughout, no grain (the concept is a tiled room in daylight, not film).
+
+| file | used in | prompt (final) |
+|---|---|---|
+| `vinyl-*.webp` (from vinyl-1) | turntable, hero | Overhead product photograph taken perfectly straight down with a long lens: one 12-inch vinyl LP record pressed in solid opaque turquoise vinyl, a deep clean sea-green turquoise, lying flat and centred on matte black velvet. The round centre label is plain blank white paper with nothing printed on it, and the small spindle hole in the middle shows the black velvet. Fine concentric grooves, three or four slightly glossier narrow rings where tracks separate, a smooth run-out area near the label. Soft, even light from a large overhead softbox, only a faint broad sheen, true colour. Crisp digital studio photograph, the whole disc in frame with a black margin all around. No text, no numbers, no logos, no hands. |
+| `arm-*.webp` (from arm-1) | turntable tonearm | Overhead product photograph taken perfectly straight down: a turntable tonearm assembly lying alone on a flat, evenly lit, pure chroma-key green background. A straight brushed-aluminium arm tube running diagonally, a silver aluminium headshell with a small silver cartridge and stylus at the lower-left end, a round brushed-steel counterweight at the upper-right end, the round silver pivot base with its small lift lever beside it. All parts silver and steel, no black parts. Diffuse shadowless light, crisp digital studio photograph, the whole assembly in frame with green margin around it. No text, no numbers, no logos, no hands. |
+| `cover-*.webp` (from cover-1) | sleeve (hero) | Photograph of the deep end of an empty, drained indoor public swimming pool, taken from the dry pool floor facing the end wall: small square turquoise ceramic tiles with thin white grout lines covering wall and floor, a chrome ladder descending the wall slightly off-centre, one black tiled lane line running along the floor towards the wall, a shallow puddle on the floor reflecting cool daylight from high windows above. Calm, frontal, nearly symmetrical composition. Crisp digital medium-format photograph, clean natural daylight, true colours, no grain. No people, no text, no numbers, no depth markings, no logos. |
+| (room-1, not used directly) | — | Wide photograph of a drained indoor public swimming pool used as a recording room, seen from the pool edge looking down along the empty basin: on the turquoise tiled floor of the deep end stand a drum kit with plain unbranded drum heads, a bass amplifier and a guitar amplifier with plain grilles, an electric guitar resting on a stand, a small electric piano on a stand, several microphone stands, and black cables snaking across the tiles. Cool daylight falls from high windows along one wall onto the white-grouted turquoise tiles. Nobody is there; the instruments are resting between takes. Crisp digital photograph, true colours, no grain. No people, no text, no numbers, no logos, no brand names. |
+| `room-*.webp` (room-2 = edit of room-1) | story | Edit this photograph. Remove every logo, badge, brand nameplate and printed mark from the two amplifiers, the bass drum head, the electric piano and the guitar headstock, leaving plain unmarked surfaces (plain black tolex, plain grille cloth, a plain white drum head, a plain black piano lid). Change the guitar to a plain, generic solid-body electric guitar in natural wood with a simple unbranded headstock. Keep everything else exactly the same: the drained pool, the turquoise tiles, the light, the composition, the cables. No people, no text. |
+| `stack-*.webp` (from stack-1, 4:5 crop) | 청록반 500장 | Close-up photograph of a short stack of freshly pressed 12-inch records in solid opaque turquoise vinyl resting on a steel spindle on a stainless steel work table at a small record pressing plant. Seen from slightly above at an angle, the stacked disc edges show as thin turquoise layers, the top record shows fine grooves and a blank white centre label with no printing. Cool clean daylight from a window, crisp digital photograph, true colours, shallow depth of field, plain pale grey background. No people, no hands, no text, no numbers, no logos. |
+| `test-*.webp` (from test-1) | 만든 사람 | Overhead photograph taken straight down: a black vinyl test-pressing record with a plain blank white label, pulled halfway out of a plain white paper inner sleeve, lying on the white ceramic tiles at the edge of a drained swimming pool beside a strip of turquoise tiles, with a short pencil next to it. Clean cool daylight, crisp digital photograph, true colours. No people, no hands, no writing, no text, no numbers, no logos. |
+| `night-*.webp` (from night-1) | 발매 공연 | Photograph of a drained indoor public swimming pool in the blue hour, seen from the spectator gallery: the empty turquoise-tiled basin, at the deep end a single microphone stand and two small speaker cabinets waiting on the tiled floor, a few plain white work lights on stands, deep blue dusk light in the high windows. Calm, still, nobody there. Crisp digital photograph, true colours, no grain. No people, no text, no numbers, no logos. |
+
+## Cut-outs
+
+- **Record** (`prep_images.py vinyl`): the disc is found by threshold + `cv2.fitEllipse` (it came out 0.3 % elliptical),
+  warped to a true circle, cut to alpha with an anti-aliased edge and an open spindle hole. The light baked into
+  the photo is flattened (low-pass of V minus its radial mean), so the picture can rotate without its highlight
+  rotating; the fixed sheen is a CSS layer above it that never turns. The vinyl's median hue/saturation/value is
+  mapped to `#00A3A1`; the paper label is neutral white, and the printed label (band, side letter, title,
+  SRG-001 · 33⅓) is HTML type laid on it with `multiply`, so it turns with the record.
+- **Tonearm** (`prep_images.py arm`): chroma key on G − max(R, B), despill, metal neutralised, cropped. In the
+  1200 px export the pivot is at (926, 182) and the stylus under the cartridge front at (28, 733): 148.5° and
+  1053.6 px apart; `css/site.css` and `js/turntable.js` use those numbers.
+- The sleeve is not a photographed object: it is a white square with the cover photograph and type set in HTML.

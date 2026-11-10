@@ -189,7 +189,7 @@ not be banned or already used; report it.
   check but had a margin label sitting on top of the first letter of a line at 390px wide.
 - Each work invents its own town/place names. Already taken: 여울시, 초롱골, 돋보기길 (optician);
   새물시, 느릅마루, 종달샘, 빗물터, 솔바위 (laundry); 미리내구, 등사로 (riso);
-  물굽이시, 모래뜸 (futsal); 겹뜰시, 나란히마을, 볕뉘로 (quiet-floors); 솔메시, 부엉재 (observatory); 볕드리시, 맞바라기길 (idphoto); 숫돌시, 밀랍길, 숫돌천 (shoemaker); 소리개시, 은막로, 영사실길, 필름통길, 나무의자길 (cinema); 갈래시, 들락여객, 너머들, 옹달내 (lostfound); 모롱시, 모롱역, 너덜샘로, 모롱중앙시장, 모롱초등학교, 모롱시외버스터미널, 모롱동부목욕탕 (sculpture); 높바람시, 마파람시, 달무리, 고요목, 이슬재, 차고지길 (nighttrain); 김오름시, 냄비골길 (ramen); 메아리시, 앞줄티켓 (ticketing); 곧은내시, 곧은내, 남둑길, 북둑길, 시청로, 시민광장, 시청다리, 둑머리다리, 갈대숲다리, 물레다리, 새벽다리 (marathon); 백열극장, 빈터시, 쪽문길, 극단 백열, 극단 낮은지붕, 몸짓모임 아홉걸음 (curtain).
+  물굽이시, 모래뜸 (futsal); 겹뜰시, 나란히마을, 볕뉘로 (quiet-floors); 솔메시, 부엉재 (observatory); 볕드리시, 맞바라기길 (idphoto); 숫돌시, 밀랍길, 숫돌천 (shoemaker); 소리개시, 은막로, 영사실길, 필름통길, 나무의자길 (cinema); 갈래시, 들락여객, 너머들, 옹달내 (lostfound); 모롱시, 모롱역, 너덜샘로, 모롱중앙시장, 모롱초등학교, 모롱시외버스터미널, 모롱동부목욕탕 (sculpture); 높바람시, 마파람시, 달무리, 고요목, 이슬재, 차고지길 (nighttrain); 김오름시, 냄비골길 (ramen); 메아리시, 앞줄티켓 (ticketing); 곧은내시, 곧은내, 남둑길, 북둑길, 시청로, 시민광장, 시청다리, 둑머리다리, 갈대숲다리, 물레다리, 새벽다리 (marathon); 백열극장, 빈터시, 쪽문길, 극단 백열, 극단 낮은지붕, 몸짓모임 아홉걸음 (curtain); 잔물시, 잔물역, 물받이로, 옛 잔물시립 실내수영장, 회전구, 바늘길, 줄눈구, 타일길, 소리골 레코드, 깊은쪽 (record).
 - Font licences: if a family's OFL declares a Reserved Font Name, a subset counts as a modified
   version, so rename the subset family in the font file's name table AND in every CSS/JS/canvas
   reference (laundry did this). This applies to EVERY Nanum family including the Google Fonts builds
