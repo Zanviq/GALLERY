@@ -80,11 +80,11 @@ export function clink() {
   burst(t, { type: 'highpass', freq: 3000, peak: 0.08, decay: 0.015 });
 }
 
-/** A sheet arriving on the tray. */
-export function slide() {
+/** A sheet arriving on the tray; pace 1 .. 2.4 (배속): a faster tray gives a brighter, shorter swish. */
+export function slide(pace = 1) {
   if (!ready()) return;
   const t = ctx.currentTime + 0.001;
-  burst(t, { type: 'bandpass', freq: 1700, q: 0.6, peak: 0.035, attack: 0.06, decay: 0.16 });
+  burst(t, { type: 'bandpass', freq: 1500 + 420 * (pace - 1), q: 0.6, peak: 0.035, attack: 0.05 / Math.sqrt(pace), decay: 0.17 / Math.sqrt(pace) });
 }
 
 /** One notch of the stepped tray. */
@@ -110,27 +110,10 @@ export function bell() {
   tone(t + 0.18, { f0: 1318.5, peak: 0.1, attack: 0.004, decay: 1.4 });
 }
 
-/** A wrong stamp or a missed document: a short dull double knock, low and flat. */
+/** A slip (wrong place, a miss, 반려 stamped): a short dull double knock, low and flat. */
 export function buzz() {
   if (!ready()) return;
   const t = ctx.currentTime + 0.001;
   tone(t, { f0: 196, f1: 174.6, peak: 0.16, attack: 0.004, decay: 0.09, type: 'triangle' });
   tone(t + 0.11, { f0: 146.8, f1: 130.8, peak: 0.16, attack: 0.004, decay: 0.13, type: 'triangle' });
-}
-
-/** 17:59:30 and the 긴급 document: the desk phone's two short rings. */
-export function alarm() {
-  if (!ready()) return;
-  const t = ctx.currentTime + 0.01;
-  for (const s of [0, 0.16]) {
-    tone(t + s, { f0: 1480, peak: 0.07, attack: 0.003, decay: 0.09, type: 'square' });
-    tone(t + s, { f0: 1975, peak: 0.035, attack: 0.003, decay: 0.08, type: 'square' });
-  }
-}
-
-/** The wall clock's second hand in the last 30 seconds; louder in the last 10. */
-export function tock(last = false) {
-  if (!ready()) return;
-  const t = ctx.currentTime + 0.001;
-  burst(t, { type: 'bandpass', freq: last ? 1500 : 1100, q: 3, peak: last ? 0.16 : 0.08, decay: 0.025 });
 }

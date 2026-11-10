@@ -130,6 +130,8 @@ kbd {
 .clock-time span.colon { width: .3em; }
 .clock-left { font-size: 15px; color: var(--carbon-soft); margin-top: 2px; }
 .clock.last .clock-left { color: var(--carbon); text-decoration: underline 2px; text-underline-offset: 3px; }
+/* the last ten seconds: the clock turns solid, like a stamped box (a state, not an event) */
+.clock.last .clock-time { padding: 0 6px; border-radius: 3px; background: var(--carbon); color: var(--paper); }
 .hud-btns { display: flex; gap: 8px; }
 .hud-btns .btn { gap: 6px; white-space: nowrap; }
 
@@ -186,7 +188,6 @@ kbd {
   transform-origin: 50% 100%;
 }
 .stamp img { display: block; width: 100%; height: 100%; -webkit-user-drag: none; }
-.stamp.down { transform: translate(-50%, var(--drop)); }
 
 .tray {
   position: relative;
@@ -195,12 +196,16 @@ kbd {
   overflow: hidden;
   box-shadow: inset 0 3px 0 var(--carbon-faint), inset 0 -3px 0 var(--carbon-faint);
 }
-.belt { position: absolute; inset: 0; }
+/* the documents sit still on the belt; the belt slides (one composited transform a frame) */
+.belt { position: absolute; inset: 0; will-change: transform; }
+/* the rail ticks: one period wider than the tray, slid with a transform as the tray runs */
 .ticks {
   position: absolute;
-  left: 0; right: 0; bottom: 3px;
+  left: 0; bottom: 3px;
+  width: calc(100% + var(--u) * 50);
   height: 12px;
   pointer-events: none;
+  will-change: transform;
   background-image:
     repeating-linear-gradient(to right, var(--carbon-line) 0 1.5px, transparent 1.5px calc(var(--u) * 50)),
     repeating-linear-gradient(to right, var(--carbon-faint) 0 1px, transparent 1px calc(var(--u) * 10));
@@ -222,56 +227,26 @@ kbd {
 .notch-top { top: 0; border-top: 9px solid var(--carbon); border-bottom-width: 0; }
 .notch-bottom { bottom: 0; border-bottom: 9px solid var(--carbon); border-top-width: 0; }
 
-/* time left until 18:00, as a rule that shortens; thicker in the last 30 seconds */
-.timebar { flex: none; height: 4px; margin: 10px var(--gutter) 0; background: var(--carbon-faint); }
-.timebar span { display: block; height: 100%; background: var(--carbon); transform-origin: 0 50%; }
-.app.crunch .timebar { height: 8px; }
-.app[data-state="lesson"] .timebar span, .app[data-state="lesson"] .pile { visibility: hidden; }
-.app.crunch .clock-time { padding: 0 6px; border-radius: 3px; background: var(--carbon); color: var(--paper); }
-.memo.shout { text-decoration: underline 3px; text-underline-offset: 6px; }
+/* the time rule is the speed ramp: a wedge whose height at each moment is the tray speed then
+   (clip-path set from the curve in main.js); carbon fills it towards 18:00, and the number beside
+   it is the speed now, as 배속 */
+.pace { flex: none; display: flex; align-items: flex-end; gap: 10px; margin: 10px var(--gutter) 0; }
+.timebar { flex: 1 1 auto; height: 16px; background: rgb(31 58 147 / .22); overflow: hidden; }
+.timebar span { display: block; height: 100%; background: var(--carbon); transform-origin: 0 50%; transform: scaleX(0); will-change: transform; }
+.pace-now { flex: none; font-size: 15px; line-height: 1; color: var(--carbon-soft); white-space: nowrap; }
+.pace-now b { font-weight: 400; font-size: 21px; color: var(--carbon); font-variant-numeric: tabular-nums; margin-right: 1px; }
+.app[data-state="lesson"] .pace { visibility: hidden; }
 
-/* the 미결 pile: every missed or spoiled document lands here, and the stack rises */
-.pile {
-  position: absolute;
-  left: var(--gutter);
-  bottom: 0;
-  width: clamp(48px, calc(var(--aim-x) - var(--imp) / 2 - var(--gutter) - 14px), 92px);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-.pile-label { font-size: 15px; line-height: 1.1; color: var(--carbon-soft); white-space: nowrap; margin-bottom: 5px; }
-.pile-label b { display: inline-block; font-family: var(--f-hand); font-weight: 400; font-size: 30px; line-height: .9; color: var(--carbon); }
-.pile-stack { display: flex; flex-direction: column-reverse; border-bottom: 2px solid var(--carbon); }
-.pile-sheet {
-  display: block;
-  height: 6px;
-  margin-top: 1px;
-  background: var(--paper) var(--scan) 0 0 / 600px auto;
-  border: 1px solid var(--carbon-line);
-  transform: translateX(var(--o, 0)) rotate(var(--r, 0deg));
-}
-.pile[data-level="mid"] .pile-label, .pile[data-level="high"] .pile-label { color: var(--carbon); }
-.pile[data-level="high"] .pile-label b { text-decoration: underline 2px; text-underline-offset: 3px; }
-.pile.bump .pile-label b { animation: pile-bump .45s ease-out; }
-@keyframes pile-bump { from { transform: scale(1.7) rotate(-6deg); } }
-.doc.leaving { z-index: 5; pointer-events: none; }
-
-/* a wrong stamp or a miss: the tray knocks and flashes carbon (no knock with reduced motion) */
-.desk.oops .tray { animation: oops-knock .26s linear; }
-.desk.oops .tray::after {
-  content: "";
+/* a slip: one quick carbon flash over the tray (opacity only; the tray never moves) */
+.flash {
   position: absolute;
   inset: 0;
   z-index: 4;
   pointer-events: none;
-  background: rgb(31 58 147 / .14);
+  opacity: 0;
+  background: rgb(31 58 147 / .12);
   box-shadow: inset 0 0 0 4px var(--carbon);
-  animation: oops-flash .42s ease-out forwards;
 }
-.desk.oops .feed-word { text-decoration: line-through 3px; }
-@keyframes oops-knock { 20% { transform: translateX(-6px); } 45% { transform: translateX(5px); } 70% { transform: translateX(-2px); } }
-@keyframes oops-flash { from { opacity: 1; } to { opacity: 0; } }
 
 /* ---------------------------------------------------------------- documents (1em = 1/100 of a document width) */
 .doc {
@@ -282,6 +257,7 @@ kbd {
   font-size: var(--u);
   will-change: transform;
   transform-origin: 50% 50%;
+  contain: layout style;
 }
 .sheet {
   position: absolute;
@@ -295,38 +271,9 @@ kbd {
 .sheet-a { left: -32em; box-shadow: 1px 0 0 var(--carbon-line), .5em .6em 0 -.3em var(--carbon-faint); z-index: 1; }
 .doc-ganin .sheet-a { transition: transform .35s cubic-bezier(.3,.7,.3,1) .15s; }
 .doc-ganin.split .sheet-a { transform: translateX(-4em) rotate(-.6deg); }
-.lines { position: absolute; left: 0; top: 0; width: 100em; height: 130em; fill: none; stroke: var(--carbon); overflow: visible; }
-.lines path, .lines rect { vector-effect: none; }
-.lines .pen { stroke-linecap: round; stroke-linejoin: round; }
-.lines .marker { stroke-linecap: round; stroke-linejoin: round; }
-.lines.ink { z-index: 1; }
-.t {
-  position: absolute;
-  left: calc(var(--u) * var(--x));
-  top: calc(var(--u) * var(--y));
-  font-size: calc(var(--u) * var(--s));
-  line-height: 1.15;
-  white-space: nowrap;
-}
-.t-c { transform: translateX(-50%); }
-.t-r { transform: translateX(-100%); }
-.t.soft { color: var(--carbon-soft); }
-.t.title { letter-spacing: .08em; }
-.t.hand { font-family: var(--f-hand); line-height: 1; }
-.t.big { transform: translateX(-50%) rotate(-11deg); letter-spacing: .04em; }
-.doc-banryeo .t.big { opacity: .92; }
+/* the printed form, the pen and the marker: drawn once per sheet onto this canvas (docs.js) */
+.face { position: absolute; left: 0; top: 0; width: 100em; height: 130em; }
 .imp { position: absolute; z-index: 2; pointer-events: none; mix-blend-mode: multiply; }
-.tape {
-  position: absolute;
-  left: calc(var(--u) * var(--x));
-  top: calc(var(--u) * var(--y));
-  width: calc(var(--u) * var(--w));
-  height: calc(var(--u) * 6.8);
-  background: #FFFFFF;
-  border: 1px solid rgb(31 58 147 / .3);
-  box-shadow: 0 calc(var(--u) * .5) 0 rgb(31 58 147 / .12);
-  transform: rotate(-1.4deg);
-}
 .mark {
   position: absolute;
   z-index: 3;
@@ -340,6 +287,7 @@ kbd {
   animation: mark .16s ease-out;
 }
 @keyframes mark { from { opacity: 0; transform: translateX(-50%) rotate(var(--r, 0deg)) scale(.85); } }
+@keyframes mark-fade { from { opacity: 0; } }
 .air-mark {
   position: absolute;
   left: 0; top: 0;
@@ -350,6 +298,7 @@ kbd {
   margin: calc(var(--imp) * .7) 0 0 calc(var(--u) * -10);
   white-space: nowrap;
   pointer-events: none;
+  will-change: transform;
 }
 
 /* ---------------------------------------------------------------- feed + press */
@@ -370,14 +319,12 @@ kbd {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.feed-word.pop { animation: pop .18s ease-out; }
-@keyframes pop { from { transform: translateY(3px) rotate(-3deg); opacity: .3; } }
+.feed-word:is([data-kind="miss"], [data-kind="wrong"], [data-kind="twice"], [data-kind="late"], [data-kind="air"], [data-kind="banHit"]) { text-decoration: line-through 3px; }
 .feed-counts { display: flex; gap: 14px; flex: none; }
 .feed-counts > div { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.05; }
 .feed-counts dt { font-size: 14px; color: var(--carbon-soft); }
 .feed-counts dd { font-size: 23px; white-space: nowrap; }
 .mult { display: inline-block; margin-left: .2em; font-size: .85em; }
-.mult.bump { animation: pile-bump .45s ease-out; }
 .skip { align-self: flex-end; margin: auto var(--gutter) 6px; }
 .skip[hidden] + .press { margin-top: auto; }
 .press {
@@ -546,6 +493,15 @@ kbd {
 .log-off-sub { margin-top: 6px; font-size: 19px; color: var(--carbon-soft); }
 .log-off.late + .log-off-sub { color: var(--carbon); }
 .log-next { margin-top: 14px; font-size: 19px; text-wrap: pretty; }
+/* the round's speed ramp: the longest clean run filled, each slip a cross */
+.log-speed { margin: 14px 0 0; }
+.log-curve { display: block; width: 100%; height: auto; overflow: visible; }
+.log-curve .ramp { fill: var(--carbon-faint); }
+.log-curve .run { fill: var(--carbon); }
+.log-curve .edge { fill: none; stroke: var(--carbon); stroke-width: 1.5; }
+.log-curve .base { fill: none; stroke: var(--carbon); stroke-width: 2; }
+.log-curve .slip { fill: none; stroke: var(--carbon); stroke-width: 1.6; stroke-linecap: round; }
+.log-speed-cap { display: flex; justify-content: space-between; gap: 12px; margin-top: 4px; font-size: 15px; color: var(--carbon-soft); text-shadow: none; }
 .cover-stakes { margin-top: 10px; }
 
 /* ---------------------------------------------------------------- wider screens */
@@ -618,10 +574,10 @@ kbd {
   .score-table caption { text-align: left; font-size: 16px; color: var(--carbon-soft); padding-bottom: 2px; }
   .score-table th { text-align: left; font-weight: 400; padding: 2px 0; border-bottom: 1px solid var(--carbon-line); }
   .score-table td { text-align: right; padding: 2px 0; border-bottom: 1px solid var(--carbon-line); }
+  .rules-pace { margin-top: 18px; font-size: 17px; line-height: 1.3; text-wrap: pretty; }
   .rules .record { margin-top: 10px; color: var(--carbon-soft); }
-  .pile-label { font-size: 18px; }
-  .pile-label b { font-size: 40px; }
-  .pile-sheet { height: 8px; }
+  .pace-now { font-size: 16px; }
+  .pace-now b { font-size: 24px; }
   .memo { padding-top: 14px; font-size: 30px; }
   .feed { padding-top: 8px; }
   .feed-word { font-size: 40px; }
@@ -644,14 +600,13 @@ kbd {
   .panel { padding-top: 56px; }
 }
 
+/* reduced motion: calmer, not still. The tray runs exactly as normal and the stamp still drops;
+   the marker words fade in instead of popping */
 @media (prefers-reduced-motion: reduce) {
   .btn { transition: none; }
-  .mark, .feed-word.pop { animation: none; }
-  .doc-ganin .sheet-a { transition: none; }
+  .mark { animation-name: mark-fade; animation-duration: .2s; }
   .btn:active { transform: none; }
   .opts summary::before { transition: none; }
-  .desk.oops .tray { animation: none; }
-  .pile.bump .pile-label b, .mult.bump { animation: none; }
 }
 
 /* narrow phones: the HUD has the gallery badge on its left, so it gets compact */
@@ -672,6 +627,20 @@ kbd {
   .feed-counts { gap: 20px; }
   .feed-counts dt { font-size: 15px; }
   .feed-counts dd { font-size: 27px; }
+}
+
+/* short phones (360 x 740 and the like): a tighter poster, so 결재 시작 sits inside the first view */
+@media (max-width: 599px) and (max-height: 780px) {
+  .panel { padding-top: 64px; }
+  .cover-paper { padding-top: 22px; }
+  .cover-title { font-size: clamp(70px, 21vw, 96px); }
+  .cover-stamp { width: clamp(72px, 21vw, 104px); }
+  .cover-time { margin-top: 12px; font-size: 17px; }
+  .cover-body { margin-top: 20px; }
+  .cover-note { margin-bottom: 14px; font-size: 24px; }
+  .cover-how { font-size: 18px; }
+  .cover-stakes { margin-top: 6px; }
+  .cover-body .cover-actions { margin-top: 18px; }
 }
 
 @media (max-width: 459px) {

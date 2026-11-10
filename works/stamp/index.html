@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>칼퇴 결재 | 18시 전에 도장 찍기</title>
-<meta name="description" content="(주)한칸물산 총무팀 구도담 대리가 되어, 트레이로 지나가는 결재 서류에 한 번에 도장을 찍는 타이밍 게임이에요. 결재란, 정정인, 간인, 반려까지 75초 안에.">
+<meta name="description" content="(주)한칸물산 총무팀 구도담 대리가 되어, 트레이로 지나가는 결재 서류에 한 번에 도장을 찍는 타이밍 게임이에요. 결재란, 정정인, 간인, 반려까지 75초, 트레이는 점점 빨라져요.">
 <meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website">
 <meta property="og:title" content="칼퇴 결재">
-<meta property="og:description" content="지나가는 결재 서류에 한 번에 꾹. 18시까지 75초, 도장 타이밍 게임.">
+<meta property="og:description" content="지나가는 결재 서류에 한 번에 꾹. 18시까지 75초, 트레이는 점점 빨라져요. 도장 타이밍 게임.">
 <meta property="og:image" content="https://gallery.zanviq.dev/og/stamp.png">
 <meta property="og:url" content="https://gallery.zanviq.dev/stamp/">
 <meta name="twitter:card" content="summary_large_image">
@@ -49,7 +49,7 @@
       </li>
       <li>
         <svg class="mini" viewBox="0 0 120 44" aria-hidden="true"><use href="#mini-banryeo"/></svg>
-        <p><b>그냥 보내기</b> 반려, 앞 칸 서명이 빠진 서류, 금액을 수정테이프로 고친 서류.</p>
+        <p><b>반려</b> 찍지 말고 그냥 보내요.</p>
       </li>
     </ol>
     <table class="score-table">
@@ -57,27 +57,28 @@
       <tbody>
         <tr><th scope="row">정확</th><td>100</td></tr>
         <tr><th scope="row">조금 비뚤</th><td>40</td></tr>
-        <tr><th scope="row">그냥 보내기</th><td>60</td></tr>
-        <tr><th scope="row">잘못 찍음</th><td>-50, 미결로</td></tr>
-        <tr><th scope="row">놓침</th><td>미결로</td></tr>
-        <tr><th scope="row">18시에 남은 미결</th><td>1장에 -100</td></tr>
-        <tr><th scope="row">5번 연속마다</th><td>배율 +1 (최대 4배)</td></tr>
+        <tr><th scope="row">반려 지킴</th><td>60</td></tr>
+        <tr><th scope="row">6번 연속마다</th><td>배율 +1 (최대 4배)</td></tr>
       </tbody>
     </table>
+    <p class="rules-pace">트레이는 18시가 가까울수록 점점 빨라져요. 1.0배속에서 시작해 마지막엔 2.4배속. 위의 띠가 두꺼워지는 만큼이에요.</p>
     <p class="record" id="aside-record"></p>
   </aside>
 
   <main class="desk" id="desk">
-    <div class="timebar" aria-hidden="true"><span id="timebar"></span></div>
+    <div class="pace" aria-hidden="true">
+      <div class="timebar" id="timebar-ramp"><span id="timebar"></span></div>
+      <p class="pace-now"><b id="pace">1.0</b>배속</p>
+    </div>
     <p class="memo" id="memo"></p>
     <div class="stage" id="stage" aria-hidden="true">
       <div class="stamp-zone">
-        <div class="pile" id="pile" data-level="low"><p class="pile-label">미결 <b id="pile-n">0</b>장</p><div class="pile-stack" id="pile-stack"></div></div>
         <div class="stamp" id="stamp"><img src="./img/seal-240.webp" width="240" height="801" alt="" decoding="async" draggable="false"></div>
       </div>
       <div class="tray" id="tray">
         <div class="belt" id="belt"></div>
         <div class="ticks" id="ticks"></div>
+        <div class="flash" id="flash"></div>
         <div class="aim" id="aim"><span class="notch notch-top"></span><span class="ring"></span><span class="notch notch-bottom"></span></div>
       </div>
     </div>
@@ -108,12 +109,12 @@
       <div class="cover-body">
         <p class="cover-note">구 대리, 과장이랑 나는 워크숍 간다. 도장 맡기고 가니까 6시 전에 결재 다 찍어 둬.<span class="cover-sign">부장 도상훈</span></p>
         <p class="cover-how">트레이로 지나가는 서류마다 알맞은 자리에 도장을 한 번에 찍어요. 칸이 도장 밑 점선 원에 들어올 때 누르면 돼요.</p>
-        <p class="cover-how cover-stakes">놓치거나 잘못 찍은 서류는 미결로 쌓여요. 18시에 미결이 남으면 야근이에요.</p>
+        <p class="cover-how cover-stakes">트레이는 18시가 가까울수록 점점 빨라져요. 마지막 몇 초는 처음보다 두 배 넘게 빨라요.</p>
         <div class="cover-actions">
           <button class="btn btn-primary" id="btn-start" type="button">결재 시작</button>
           <button class="btn" id="btn-lesson" type="button">연습부터 하기</button>
         </div>
-        <p class="cover-first" id="cover-first">처음이면 연습 서류 여덟 장이 먼저 와요. 언제든 건너뛸 수 있어요.</p>
+        <p class="cover-first" id="cover-first">처음이면 연습 서류 여섯 장이 먼저 와요. 언제든 건너뛸 수 있어요.</p>
         <details class="opts">
           <summary><span class="opts-label">설정</span> <span class="opts-state" id="opts-state">보통 속도, 소리 켬</span></summary>
           <fieldset class="options">
@@ -164,6 +165,10 @@
       <div class="log-out">
         <p class="log-off" id="log-off"></p>
         <p class="log-off-sub" id="log-off-sub"></p>
+        <figure class="log-speed">
+          <svg class="log-curve" id="log-curve" viewBox="0 0 300 58" role="img" aria-label="트레이 속도"></svg>
+          <figcaption class="log-speed-cap"><span>17:58:45 1.0배속</span><span>18:00 <span id="log-pace-end">2.4배속</span></span></figcaption>
+        </figure>
       </div>
       <p class="log-total"><span>점수</span> <b id="log-score">0</b> <span class="log-best" id="log-best"></span></p>
       <p class="log-comment" id="log-comment" hidden></p>

@@ -51,6 +51,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | ticketing | 게임 · desktop+mobile | 광클: 콘서트 티켓팅 (가상 예매처 앞줄티켓, 공연 3개 = 난이도 3단계) | 20:00:00 오픈 → 대기열 → 사라지는 좌석 지도(canvas) → 결제 타이머 → 티켓 | wristband pink #FF4F9A (+ #FF97C2, #FFCFE3 by grade), black, white, ash #E4E4E7 | Pretendard subset renamed Apjul Sans (deliberate exception to the §2 ban: it imitates a real booking UI) + Big Shoulders Display | registered |
 
 Revisions done: curtain (theatre reopening, photographic velvet), sand (photographed bottle, fine sand, windowsill finish).
+Fourth review (BRIEF §000): futsal deleted; keyboard keycaps + switch sound back ("쳐 보세요"); perfume liquid pool back (WebGL2); curtain ambient air + tungsten flicker; stamp back to the old continuous rules, tension = tray speed 1.0→2.4배속; festival, cinema, quiet-floors, observatory, sand, ticketing keep motion under reduce; nighttrain, ramen, sculpture, marathon, ticketing, perfume images now object-only.
 Not revised after the third review (owner liked or did not flag them): startup, quiet-floors, optician, observatory, festival.
 
 ## Heavy works (the owner's real programs and internal tools; built last)

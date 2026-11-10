@@ -11,7 +11,7 @@ seal candidates, three paper attempts (two returned no image).
 |---|---|---|---|
 | `seal-240.webp` | 240 x 801, 21 KB | seal A, cut out | the stamp over the tray (CSS width = impression diameter) |
 | `seal-stand-360.webp` | 360 x 798, 22 KB | seal A, cut out with its own contact shadow | the cover poster |
-| `paper-1200.webp` | 1200 x 1618, 36 KB | paper B, graded | every document sheet (a random 240 x 323-unit patch each), the dialogs, the 미결 pile |
+| `paper-1200.webp` | 1200 x 1618, 36 KB | paper B, graded | every document sheet (a random 240 x 323-unit patch each) and the dialogs |
 
 ## Seal A (used): red-resin 도장
 

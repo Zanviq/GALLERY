@@ -1,11 +1,12 @@
 // Dependency-free capture and check runner over the Chrome DevTools Protocol (dev tool, not deployed).
-// Needs a headless Chrome started with --remote-debugging-port=9347 (CDP_PORT). Every run gets a fresh
+// Needs a headless Chrome started with --remote-debugging-port=9364 (or CDP_PORT). Every run gets a fresh
 // browser context (empty localStorage).
 //   node cdp.mjs <url> <W>x<H>[@dpr] [mobile] [reduced|motion] [nostore] op op ...
 //   (motion forces prefers-reduced-motion: no-preference, for machines whose OS asks for reduce)
-// ops: wait=ms | shot=f.png | webp=f.webp | full=f.png | click=sel | focus=sel | key=Key | type=text
+// ops: wait=ms | shot=f.png | webp=f.webp | scaled=f.png,0.75 | full=f.png | click=sel | focus=sel | key=Key | type=text
 //      eval=js | log=js | store=json (sets jamo.v1 and reloads) | reload=ms
 //      drag=x1,y1,x2,y2 | dragsel=from>to[@top|@bottom] | tap=x,y | tapsel=sel[@top|@bottom]
+//      throttle=N (CPU slowdown, 1 = off) | waitfor=js (polls every 250 ms, up to 120 s)
 //      touchdrag=from>to[@top|@bottom] | resize=WxH
 import { writeFileSync } from 'fs';
 
@@ -17,7 +18,7 @@ while (rest.length && /^(mobile|reduced|motion|nostore)$/.test(rest[0])) flags.a
 const mobile = flags.has('mobile');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const ver = await (await fetch('http://127.0.0.1:' + (process.env.CDP_PORT || 9347) + '/json/version')).json();
+const ver = await (await fetch('http://127.0.0.1:' + (process.env.CDP_PORT || 9364) + '/json/version')).json();
 const ws = new WebSocket(ver.webSocketDebuggerUrl);
 await new Promise((r, j) => { ws.onopen = r; ws.onerror = j; });
 let nextId = 1;
@@ -85,6 +86,7 @@ async function evaluate(expression) {
 }
 async function center(sel, where) {
   return evaluate(`(() => { const e = document.querySelector(${JSON.stringify(sel)}); if (!e) return null;
+    e.scrollIntoView({ block: 'nearest' });
     const r = e.getBoundingClientRect(); const w = ${JSON.stringify(where || '')};
     return [r.left + r.width / 2, w === 'top' ? r.top + r.height * 0.3 : w === 'bottom' ? r.top + r.height * 0.8 : r.top + r.height / 2]; })()`);
 }
@@ -142,8 +144,15 @@ for (const op of rest) {
     return p && dy ? [p[0], p[1] + Number(dy)] : p;
   };
   if (k === 'wait') await sleep(Number(v));
+  else if (k === 'throttle') await cmd('Emulation.setCPUThrottlingRate', { rate: Number(v) });
+  else if (k === 'waitfor') { const t0 = Date.now(); while (Date.now() - t0 < 120000 && !(await evaluate(v))) await sleep(250); }
   else if (k === 'shot') await shot(v);
   else if (k === 'webp') await shot(v, 'webp');
+  else if (k === 'scaled') { // scaled=file.png,0.75 : the viewport captured at a scale (e.g. 1600x840 -> 1200x630)
+    const [f, sc] = v.split(',');
+    const { data } = await cmd('Page.captureScreenshot', { format: f.endsWith('.webp') ? 'webp' : 'png', quality: f.endsWith('.webp') ? 82 : undefined, clip: { x: 0, y: 0, width: W, height: H, scale: Number(sc) } });
+    writeFileSync(f, Buffer.from(data, 'base64'));
+  }
   else if (k === 'full') await shot(v, 'png', true);
   else if (k === 'click') { const p = await center(v); if (p) await click(p[0], p[1]); else console.log('[click] missing', v); }
   else if (k === 'focus') await evaluate(`document.querySelector(${JSON.stringify(v)})?.focus()`);
@@ -151,7 +160,7 @@ for (const op of rest) {
   else if (k === 'type') await cmd('Input.insertText', { text: v });
   else if (k === 'eval') { const r = await evaluate(v); if (r && r.error) console.log('[eval error]', r.error); }
   else if (k === 'log') console.log('[log]', JSON.stringify(await evaluate(v)));
-  else if (k === 'store') { await evaluate(`localStorage.setItem('stamp.v1', ${JSON.stringify(v)})`); await go(url); }
+  else if (k === 'store') { await evaluate(`localStorage.setItem(${JSON.stringify(process.env.STORE_KEY || 'stamp.v2')}, ${JSON.stringify(v)})`); await go(url); }
   else if (k === 'reload') { await go(url); await sleep(Number(v) || 0); }
   else if (k === 'resize') { const [a, b] = v.split('x').map(Number); W = a; H = b; await metrics(); await sleep(300); }
   else if (k === 'drag') { const [a, b, c, d] = v.split(',').map(Number); await drag(a, b, c, d); }

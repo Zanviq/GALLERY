@@ -1,6 +1,6 @@
 // 칼퇴 결재: the game loop, judging, lesson, round and the work log.
-import { makeImpression, hitStyle, rng } from './ink.js';
-import { buildDoc, ROW_Y, BOXES, scribble } from './docs.js';
+import { makeImpression, impressionBox, hitStyle, rng } from './ink.js';
+import { buildDoc, paintSome, paintDoc, ROW_Y, BOXES, scribble } from './docs.js';
 import { SEAL_RIM, SEAL_GLYPHS, SEAL_CLIP_R } from './seal-data.js';
 import * as sfx from './audio.js';
 
@@ -16,21 +16,31 @@ const live = $('live');
 const clockEl = $('clock');
 const clockLeft = $('clock-left');
 const pressBtn = $('press');
-const pileEl = $('pile');
-const pileStack = $('pile-stack');
 const timebar = $('timebar');
+const paceEl = $('pace');
+const flashEl = $('flash');
+const feedWord = $('feed-word');
 const sheets = { cover: $('cover'), pause: $('pause'), log: $('log') };
 
 // ---------------------------------------------------------------- storage (optional)
-const KEY = 'stamp.v1';
+// v2: the tray no longer switches to step mode by itself, so a step setting saved under v1 (where
+// reduced motion turned it on) is not carried over. Sound, pace and the finished lesson are.
+const KEY = 'stamp.v2';
 let store = {};
-try { store = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { store = {}; }
+try {
+  const raw = localStorage.getItem(KEY);
+  if (raw) store = JSON.parse(raw) || {};
+  else {
+    const old = JSON.parse(localStorage.getItem('stamp.v1') || '{}') || {};
+    for (const k of ['sound', 'slow', 'lessonDone']) if (k in old) store[k] = old[k];
+  }
+} catch (e) { store = {}; }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { /* records live for this visit only */ } }
 
 const reduceMQ = matchMedia('(prefers-reduced-motion: reduce)');
 const settings = {
   slow: !!store.slow,
-  step: typeof store.step === 'boolean' ? store.step : reduceMQ.matches,
+  step: store.step === true, // opt-in only, never a default (also not under reduced motion)
   sound: typeof store.sound === 'boolean' ? store.sound : true,
 };
 sfx.setMuted(!settings.sound);
@@ -79,51 +89,56 @@ function layout() {
   s.setProperty('--drop', geo.drop + 'px');
 }
 
-// ---------------------------------------------------------------- game state
+// ---------------------------------------------------------------- the speed curve
+// The tension is the tray itself: it starts at half a document width a second and ends at 1.2,
+// rising along a geometric curve (the same share faster every second, felt as a steady build,
+// no steps). The player sees it as 배속, 1.0 at 17:58:45 and 2.4 at 18:00.
 const ROUND = 75;
-const CRUNCH_AT = ROUND - 30; // the last 30 seconds on the clock
-const URGENT_AT = 54; // when the 긴급 document reaches the stamp
-const SPEED_PTS = [[0, 55], [15, 62], [30, 71], [45, 80], [60, 92], [75, 104]]; // units per real second
-const PILE_MAX = 12; // sheets drawn on the 미결 pile (the count keeps going)
-const PILE_MIN = 7; // minutes of overtime per document left on the pile at 18:00
+const V0 = 50, V1 = 120; // units (1/100 of a document width) per second
+const curve = (t) => V0 * Math.pow(V1 / V0, Math.min(1, Math.max(0, t / ROUND)));
+const paceAt = (t) => curve(t) / V0;
+// the ramp drawn for it (time rule, work log): thickness 12% at the start, full at 18:00, curve between
+const rampH = (t) => 0.12 + 0.88 * (curve(t) - V0) / (V1 - V0);
+const SPIN = 0.5; // seconds for the tray to get up to speed from rest (start, after a pause, after the lesson stop)
+const ease = (x) => x * x * (3 - 2 * x);
+
+// ---------------------------------------------------------------- game state
 const G = {
   state: 'cover', prev: null, mode: 'round',
-  offset: 0, v: 0, docs: [], nextX: 0, elapsed: 0, last: 0, grace: 0, stepAcc: 0,
+  offset: 0, v: 0, spin: 0, docs: [], nextX: 0, elapsed: 0, last: 0, grace: 0, stepAcc: 0,
   readyT: 0, closeT: 0, cooldown: 0, rand: rng(1), lastKind: [], seen: new Set(),
-  streak: 0, maxStreak: 0, score: 0, done: 0, pile: 0, queued: 0, crunch: false, urgentDone: false, memoT: 0,
-  c: null, lesson: null, clockSec: -1, nextDoc: null, raf: 0, roundKey: 'normal',
+  streak: 0, maxStreak: 0, score: 0, done: 0, runFrom: 0, best: null, slips: [], fast: null,
+  c: null, lesson: null, clockSec: -1, paceShown: -1, nextDoc: null, raf: 0, roundKey: 'normal',
 };
 const freshCounts = () => ({ perfect: 0, good: 0, miss: 0, wrong: 0, twice: 0, late: 0, air: 0, banKept: 0, banHit: 0 });
-// the clock runs faster in the last 30 seconds: 1x up to 17:59:30, then up to 1.3x
-const timeScale = () => (G.mode === 'round' ? 1 + 0.3 * Math.max(0, Math.min(1, (G.elapsed - CRUNCH_AT) / 12)) : 1);
 G.c = freshCounts();
 
 const q10 = (x) => Math.ceil((x - 2) / 10) * 10 + 2; // world x with targets on the 10-unit grid
-const lerpPts = (pts, t) => {
-  if (t <= pts[0][0]) return pts[0][1];
-  for (let i = 1; i < pts.length; i++) {
-    if (t <= pts[i][0]) { const [t0, v0] = pts[i - 1], [t1, v1] = pts[i]; return v0 + ((v1 - v0) * (t - t0)) / (t1 - t0); }
-  }
-  return pts[pts.length - 1][1];
-};
 function stepInterval() {
-  const base = G.mode === 'lesson' ? 0.34 : 0.25 - 0.07 * Math.min(1, G.elapsed / ROUND);
-  return base * (settings.slow && G.mode !== 'lesson' ? 1.3 : 1);
+  // the opt-in stepped tray ticks faster along the same curve: 0.25 s a notch down to about 0.18 s
+  if (G.mode === 'lesson') return 0.34;
+  return 0.25 * Math.pow(V0 / V1, 0.4 * Math.min(1, G.elapsed / ROUND)) * (settings.slow ? 1.3 : 1);
 }
 function speedNow() {
   if (G.mode === 'lesson') return 36;
-  return lerpPts(SPEED_PTS, G.elapsed) * (settings.slow ? 0.7 : 1);
+  return curve(G.elapsed) * (settings.slow ? 0.7 : 1);
 }
 function effSpeed() { return settings.step ? 10 / stepInterval() : G.v; }
 function tolerance() {
   if (settings.step) return { p: 0.6, g: 10.5 };
+  // the windows widen in units as the tray speeds up, so they stay humane in time
+  // (정확 ±56 ms at the start, ±45 ms at 18:00; 조금 비뚤 ±140 ms down to ±79 ms)
   const v = effSpeed();
   return { p: Math.max(2.8, v * 0.045), g: Math.min(Math.max(7, v * 0.11), 9.5) };
 }
 
 // ---------------------------------------------------------------- documents on the belt
-function addDoc(spec, worldX) {
-  const d = buildDoc(spec, G.rand);
+// Each sheet is painted once onto its own canvas. A new document arrives well to the right of the
+// tray, so its painting is spread over the next frames (PAINT_MS a frame) instead of costing one.
+const PAINT_MS = 2.5;
+function addDoc(spec, worldX, now = false) {
+  const d = buildDoc(spec, G.rand, geo.u);
+  if (now) paintSome(d);
   d.worldX = worldX;
   d.rot = (G.rand() - 0.5) * 0.7;
   d.resolved = false;
@@ -138,31 +153,31 @@ function addDoc(spec, worldX) {
   placeDoc(d);
   return d;
 }
+const airMarks = [];
 function clearDocs() {
   for (const d of G.docs) d.el.remove();
   G.docs = [];
-  stageEl.querySelectorAll('.doc.leaving').forEach((n) => n.remove());
-  belt.querySelectorAll('.air-mark').forEach((n) => n.remove());
+  for (const m of airMarks.splice(0)) m.el.remove();
 }
+// Documents sit still on the belt at their world position; the belt itself slides (one transform a
+// frame for the whole tray, see render). placeDoc runs when a document is added and after a resize.
 function placeDoc(d) {
-  const x = geo.aimX + (d.worldX - G.offset) * geo.u;
-  d.sx = x;
+  const x = geo.aimX + d.worldX * geo.u;
   d.el.style.transform = `translate3d(${x.toFixed(2)}px, ${geo.top}px, 0) rotate(${d.rot.toFixed(2)}deg)`;
+  d.sx = x - G.offset * geo.u;
 }
 
-// g1/g2 결재 one or two 칸, jj 정정인, gn 간인, br 반려,
-// ns 결재 with a missing signature, tp 결재 with a correction-taped amount (both: send back unstamped)
+// the mix by arrival time; gaps are in units, so documents come more often as the tray speeds up
 const PHASES = [
-  { until: 15, gap: [22, 40], w: { g1: 100 } },
-  { until: 30, gap: [18, 34], w: { g1: 62, jj: 26, ns: 12 } },
-  { until: CRUNCH_AT, gap: [14, 30], w: { g1: 38, jj: 16, gn: 16, br: 10, ns: 10, tp: 10 } },
-  { until: 99, gap: [8, 20], w: { g1: 26, g2: 16, jj: 14, gn: 14, br: 8, ns: 11, tp: 11 } },
+  { until: 15, gap: [16, 32], w: { g1: 100 } },
+  { until: 35, gap: [14, 30], w: { g1: 68, jj: 32 } },
+  { until: 55, gap: [12, 28], w: { g1: 44, jj: 20, gn: 20, br: 16 } },
+  { until: 99, gap: [10, 24], w: { g1: 30, g2: 18, jj: 18, gn: 18, br: 16 } },
 ];
-const HOLD_KINDS = ['br', 'ns', 'tp'];
 function pickSpec(ph) {
   const w = { ...ph.w };
   const [a, b] = G.lastKind;
-  if (HOLD_KINDS.includes(a)) for (const k of HOLD_KINDS) delete w[k]; // never two send-backs in a row
+  if (a === 'br') delete w.br; // never two 반려 in a row
   if (a && a === b && a !== 'g1') delete w[a];
   const total = Object.values(w).reduce((s, x) => s + x, 0);
   let r = G.rand() * total, k = 'g1';
@@ -170,39 +185,18 @@ function pickSpec(ph) {
   G.lastKind = [k, a];
   if (k === 'g1') return { kind: 'gyeoljae', boxes: [Math.floor(G.rand() * 3)] };
   if (k === 'g2') { const s = Math.floor(G.rand() * 2); return { kind: 'gyeoljae', boxes: [s, s + 1] }; }
-  if (k === 'ns') return { kind: 'gyeoljae', boxes: [1 + Math.floor(G.rand() * 2)], flaw: 'nosign' };
-  if (k === 'tp') return { kind: 'gyeoljae', boxes: [Math.floor(G.rand() * 3)], flaw: 'tape' };
   if (k === 'jj') return { kind: 'jeongjeong' };
   if (k === 'gn') return { kind: 'ganin' };
   return { kind: 'banryeo' };
 }
-// a document back from the 미결 pile: a clean copy to stamp again
-function againSpec(tArrive) {
-  const r = G.rand();
-  if (r < 0.6 || tArrive < 30) return { kind: 'gyeoljae', boxes: [Math.floor(G.rand() * 3)], again: true };
-  return { kind: r < 0.8 ? 'jeongjeong' : 'ganin', again: true };
-}
 function spawnRound() {
   const ahead = (geo.bw - geo.aimX) / geo.u + 140;
   while (G.nextX < G.offset + ahead) {
-    const v = Math.max(20, G.v);
-    const tArrive = G.elapsed + (G.nextX + 50 - G.offset) / (v * timeScale());
+    const v = Math.max(20, speedNow());
+    const tArrive = G.elapsed + (G.nextX + 50 - G.offset) / v;
     if (tArrive > ROUND + 2) { G.nextX = Infinity; break; }
     const ph = PHASES.find((p) => tArrive < p.until);
-    let spec;
-    if (!G.urgentDone && tArrive >= URGENT_AT) {
-      G.urgentDone = true;
-      spec = { kind: 'gyeoljae', boxes: [2], urgent: true };
-      G.lastKind = ['g1', G.lastKind[0]];
-    } else if (G.pile - G.queued > 0 && G.rand() < Math.min(0.55, 0.2 + 0.08 * (G.pile - G.queued))) {
-      // the pile feeds back onto the tray, so a good run can clear it; the sheet leaves the pile
-      // when its copy slides into view (render)
-      spec = againSpec(tArrive);
-      G.queued++;
-      G.lastKind = ['g1', G.lastKind[0]];
-    } else {
-      spec = pickSpec(ph);
-    }
+    const spec = pickSpec(ph);
     const ext0 = spec.kind === 'ganin' ? -32 : 0;
     const x = q10(G.nextX - ext0);
     addDoc(spec, x);
@@ -213,21 +207,41 @@ function spawnRound() {
 
 // ---------------------------------------------------------------- HUD
 const fmt = (n) => n.toLocaleString('ko-KR');
+function clockText(sec) {
+  const total = 17 * 3600 + 58 * 60 + 45 + Math.max(0, Math.min(ROUND, Math.floor(sec)));
+  const hh = Math.floor(total / 3600), mm = Math.floor((total % 3600) / 60), ss = total % 60;
+  return `${hh}:${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`;
+}
 function setClock(sec) {
   const s = Math.max(0, Math.min(ROUND, Math.floor(sec)));
   if (s === G.clockSec) return;
   G.clockSec = s;
-  const total = 17 * 3600 + 58 * 60 + 45 + s;
-  const hh = Math.floor(total / 3600), mm = Math.floor((total % 3600) / 60), ss = total % 60;
-  const str = `${hh}:${String(mm).padStart(2, '0')}:${String(ss).padStart(2, '0')}`;
-  clockEl.innerHTML = [...str].map((ch) => `<span${ch === ':' ? ' class="colon"' : ''}>${ch}</span>`).join('');
+  const str = clockText(s);
+  if (clockEl.children.length !== str.length) {
+    clockEl.innerHTML = [...str].map((ch) => `<span${ch === ':' ? ' class="colon"' : ''}>${ch}</span>`).join('');
+  } else {
+    for (let i = 0; i < str.length; i++) if (clockEl.children[i].textContent !== str[i]) clockEl.children[i].textContent = str[i];
+  }
   const left = ROUND - s;
   clockLeft.textContent = left > 0 ? `퇴근까지 ${left}초` : '퇴근';
   $('clock-wrap').classList.toggle('last', left <= 10 && left > 0);
-  // in the last 30 seconds the wall clock ticks out loud, and it ticks faster as time speeds up
-  if (G.crunch && G.state === 'playing' && left > 0) sfx.tock(left <= 10);
 }
-function mult() { return 1 + Math.min(3, Math.floor(G.streak / 5)); }
+// the time rule fills towards 18:00 along the speed ramp; the number beside it is the speed now
+function setBar(t) {
+  timebar.style.transform = `scaleX(${Math.min(1, t / ROUND).toFixed(4)})`;
+  const p = Math.round(paceAt(t) * 10);
+  if (p !== G.paceShown) { G.paceShown = p; paceEl.textContent = (p / 10).toFixed(1); }
+}
+function rampPolygon() {
+  // the wedge of the time rule: its height at each moment is the tray speed then
+  const pts = [];
+  for (let i = 0; i <= 24; i++) {
+    const x = i / 24;
+    pts.push(`${(x * 100).toFixed(2)}% ${(100 - rampH(x * ROUND) * 100).toFixed(2)}%`);
+  }
+  return `polygon(${pts.join(', ')}, 100% 100%, 0% 100%)`;
+}
+function mult() { return 1 + Math.min(3, Math.floor(G.streak / 6)); }
 function hud() {
   $('streak').textContent = G.streak;
   const m = mult();
@@ -241,43 +255,38 @@ function memo(text, lesson = false) {
   memoText = text;
   memoEl.textContent = text;
   memoEl.classList.toggle('lesson', lesson);
-  memoEl.classList.remove('shout');
   if (lesson && text) live.textContent = text;
-}
-// a line that holds the memo for a moment (the 다음: hints wait), read out by the live region
-function shout(text, sec) {
-  memo(text);
-  memoEl.classList.add('shout');
-  G.memoT = sec;
-  live.textContent = text;
 }
 const WORDS = {
   perfect: '정확!', good: '조금 비뚤', miss: '빗나감', wrong: '엉뚱한 칸', twice: '두 번 찍음',
-  late: '놓침', air: '헛도장', banKept: '반려 지킴', banHit: '찍으면 안 돼요',
+  late: '놓침', air: '헛도장', banKept: '반려 지킴', banHit: '반려인데!',
 };
 const SAY = {
   perfect: '정확', good: '조금 비뚤', miss: '빗나감', wrong: '엉뚱한 칸에 찍음', twice: '같은 칸에 두 번 찍음',
-  late: '놓침', air: '헛도장', banKept: '찍지 않고 잘 보냄', banHit: '찍으면 안 되는 서류에 찍음',
+  late: '놓침', air: '헛도장', banKept: '반려 서류를 깨끗하게 보냄', banHit: '반려 서류에 찍음',
 };
-const FLAW = { banryeo: '반려인데!', nosign: '서명 빠짐!', tape: '수정테이프!' };
-const FLAW_SAY = { banryeo: '반려', nosign: '서명 빠짐', tape: '수정테이프' };
-const RETURNED = ['miss', 'wrong', 'twice', 'banHit'];
 function feed(kind, extra = '') {
-  const w = $('feed-word');
-  w.textContent = WORDS[kind] + (extra ? ` ${extra}` : '');
-  w.dataset.kind = kind;
-  w.classList.remove('pop');
-  void w.offsetWidth;
-  w.classList.add('pop');
+  feedWord.textContent = WORDS[kind] + (extra ? ` ${extra}` : '');
+  feedWord.dataset.kind = kind;
+  // Web Animations, so no forced reflow to restart a CSS animation
+  feedWord.animate(reduceMQ.matches
+    ? [{ opacity: 0.35 }, { opacity: 1 }]
+    : [{ transform: 'translateY(3px) rotate(-3deg)', opacity: 0.3 }, { transform: 'none', opacity: 1 }],
+  { duration: 180, easing: 'ease-out' });
+}
+// a slip: one quick carbon flash on the tray and a dull knock; the tray itself never jolts
+function slipCue(kind) {
+  if (kind !== 'air') sfx.buzz();
+  flashEl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, easing: 'ease-out' });
 }
 
 // ---------------------------------------------------------------- marks on paper
-function addMark(d, x, kind, y = 41, text = WORDS[kind]) {
+function addMark(d, x, kind, y = 41) {
   // on a contract the word goes over both pages, so it is not cut at the seam
   const sheet = d.kind === 'ganin' ? { el: d.el, x0: 0 } : sheetFor(d, x);
   const m = document.createElement('span');
   m.className = `mark mark-${kind}`;
-  m.textContent = text;
+  m.textContent = WORDS[kind];
   m.style.setProperty('--x', (x - sheet.x0).toFixed(1));
   m.style.setProperty('--y', y);
   m.style.setProperty('--r', ((G.rand() - 0.5) * 8).toFixed(1) + 'deg');
@@ -287,14 +296,49 @@ function sheetFor(d, x) {
   if (d.sheets.length === 1) return d.sheets[0];
   return x < 68 ? d.sheets.find((s) => s.x0 < 0) : d.sheets.find((s) => s.x0 === 0);
 }
+// ---------------------------------------------------------------- ink, drawn off the main thread
+// Each impression is generated pixel by pixel (pressure, fibre, smear): a few ms of work that would
+// cost the tray a frame, so a worker draws it and the canvas on the paper is filled when it arrives
+// (within the stamp's 60 ms descent). Without workers or OffscreenCanvas it is drawn in place.
+let inkWorker = null, inkId = 0;
+const inkWaiting = new Map();
+try {
+  if (typeof OffscreenCanvas === 'function' && 'transferToImageBitmap' in OffscreenCanvas.prototype) {
+    inkWorker = new Worker(new URL('./ink-worker.js', import.meta.url), { type: 'module' });
+    inkWorker.onmessage = (e) => {
+      const w = inkWaiting.get(e.data.id);
+      if (!w) return;
+      inkWaiting.delete(e.data.id);
+      w(e.data.bmp || null);
+    };
+    inkWorker.onerror = () => {
+      inkWorker = null;
+      for (const w of inkWaiting.values()) w(null);
+      inkWaiting.clear();
+    };
+  }
+} catch (e) { inkWorker = null; }
+function inkInto(o, count) {
+  const { n } = impressionBox(o);
+  const out = [];
+  for (let i = 0; i < count; i++) { const c = document.createElement('canvas'); c.width = c.height = n; out.push(c); }
+  const fill = (src) => { for (const c of out) c.getContext('2d').drawImage(src, 0, 0); };
+  if (!inkWorker) { fill(makeImpression(o).canvas); return out; }
+  const id = ++inkId;
+  inkWaiting.set(id, (bmp) => { if (bmp) { fill(bmp); bmp.close(); } else fill(makeImpression(o).canvas); });
+  inkWorker.postMessage({ id, o });
+  return out;
+}
 function impress(d, lx, ly, quality) {
   const st = hitStyle(G.rand, quality, settings.step ? 0 : effSpeed());
   const size = geo.imp;
-  const { canvas, pad } = makeImpression({
-    size, dpr: Math.min(3, devicePixelRatio || 1), seed: Math.floor(G.rand() * 1e9),
+  const o = {
+    size, dpr: Math.min(2, devicePixelRatio || 1), seed: Math.floor(G.rand() * 1e9),
     press: st.press, tilt: st.tilt, tiltAngle: st.tiltAngle, rot: st.rot,
     smear: st.smear * geo.u, smearAngle: (-d.rot * Math.PI) / 180,
-  });
+  };
+  const { pad } = impressionBox(o);
+  const [canvas, copy] = inkInto(o, d.kind === 'ganin' ? 2 : 1);
   const half = (size / 2 + pad) / geo.u;
   const place = (sheet, c, seam) => {
     c.className = 'imp';
@@ -307,71 +351,11 @@ function impress(d, lx, ly, quality) {
   };
   if (d.kind === 'ganin') {
     // the same impression on both pages; each page shows the half it carries
-    const copy = document.createElement('canvas');
-    copy.width = canvas.width; copy.height = canvas.height;
-    copy.getContext('2d').drawImage(canvas, 0, 0);
     place(d.sheets.find((s) => s.x0 < 0), canvas);
     place(d.sheets.find((s) => s.x0 === 0), copy, 68);
   } else {
     place(d.sheets[0], canvas);
   }
-}
-
-// ---------------------------------------------------------------- the 미결 pile and the mistake cue
-function renderPile(bump = false) {
-  const n = Math.min(PILE_MAX, Math.max(0, G.pile));
-  while (pileStack.children.length < n) {
-    const s = document.createElement('i');
-    s.className = 'pile-sheet';
-    s.style.setProperty('--o', ((Math.random() - 0.5) * 7).toFixed(1) + 'px');
-    s.style.setProperty('--r', ((Math.random() - 0.5) * 3).toFixed(1) + 'deg');
-    pileStack.appendChild(s);
-  }
-  while (pileStack.children.length > n) pileStack.lastChild.remove();
-  $('pile-n').textContent = Math.max(0, G.pile);
-  pileEl.dataset.level = G.pile >= 8 ? 'high' : G.pile >= 4 ? 'mid' : 'low';
-  if (bump) { pileEl.classList.remove('bump'); void pileEl.offsetWidth; pileEl.classList.add('bump'); }
-}
-// a spoiled or missed document goes back on the 미결 pile: it leaves the tray and lands there
-function returnDoc(d) {
-  if (G.mode !== 'round' || d.gone) return;
-  d.gone = true;
-  d.resolved = true;
-  const i = G.docs.indexOf(d);
-  if (i >= 0) G.docs.splice(i, 1);
-  G.pile++;
-  const el = d.el;
-  const sr = stageEl.getBoundingClientRect();
-  const pr = pileStack.getBoundingClientRect();
-  const x0 = d.sx, y0 = tray.offsetTop + geo.top;
-  const from = `translate3d(${x0.toFixed(1)}px, ${y0}px, 0) rotate(${d.rot.toFixed(2)}deg)`;
-  el.style.transform = from;
-  el.classList.add('leaving');
-  stageEl.appendChild(el);
-  const done = () => { el.remove(); renderPile(true); };
-  if (reduceMQ.matches) {
-    el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 260, delay: 160, fill: 'forwards' }).onfinish = done;
-    return;
-  }
-  // land the shrunken sheet on top of the stack (it scales about its centre)
-  const s = Math.max(0.12, (pr.width + 8) / geo.dw);
-  const X = pr.left - sr.left + pr.width / 2 - geo.dw / 2;
-  const Y = pr.top - sr.top - geo.dw * 0.65 * s - geo.dw * 0.65;
-  el.animate([
-    { transform: from, opacity: 1 },
-    { transform: `translate3d(${x0.toFixed(1)}px, ${(y0 - geo.dw * 0.08).toFixed(1)}px, 0) rotate(${(d.rot - 3).toFixed(2)}deg)`, opacity: 1, offset: 0.3 },
-    { transform: `translate3d(${X.toFixed(1)}px, ${Y.toFixed(1)}px, 0) rotate(-8deg) scale(${s.toFixed(3)})`, opacity: 0.85, offset: 0.92 },
-    { transform: `translate3d(${X.toFixed(1)}px, ${Y.toFixed(1)}px, 0) rotate(-8deg) scale(${s.toFixed(3)})`, opacity: 0 },
-  ], { duration: 640, easing: 'cubic-bezier(.45,0,.6,1)', fill: 'forwards' }).onfinish = done;
-}
-let oopsT = 0;
-function oops(loud = true) {
-  if (loud) sfx.buzz();
-  desk.classList.remove('oops');
-  void desk.offsetWidth;
-  desk.classList.add('oops');
-  clearTimeout(oopsT);
-  oopsT = setTimeout(() => desk.classList.remove('oops'), 420);
 }
 
 // ---------------------------------------------------------------- judging
@@ -406,14 +390,11 @@ function press(t) {
     return outcome('air', null);
   }
   const p = localPoint(d, off);
-  if (d.hold) {
-    // 반려, or a flaw the player should have caught: the stamp spoils it
+  if (d.kind === 'banryeo') {
     impress(d, p.x, p.y, 0);
     sfx.thump(0);
-    if (!d.dirty) { d.dirty = true; addMark(d, p.x, 'banHit', 44, FLAW[d.flaw || 'banryeo']); }
-    outcome('banHit', d);
-    returnDoc(d);
-    return;
+    if (!d.dirty) { d.dirty = true; addMark(d, p.x, 'banHit', 44); }
+    return outcome('banHit', d);
   }
   const T = tolerance();
   let open = null, done = null;
@@ -440,21 +421,24 @@ function press(t) {
   addMark(d, p.x, kind);
   if (d.kind === 'ganin' && (kind === 'perfect' || kind === 'good')) d.el.classList.add('split');
   outcome(kind, d, open && (kind === 'good' || kind === 'miss') ? (early ? '(일찍)' : '(늦게)') : '');
-  if (RETURNED.includes(kind)) returnDoc(d);
   checkResolved(d);
 }
 function airMark(off) {
-  const m = document.createElement('span');
-  m.className = 'air-mark';
-  m.textContent = WORDS.air;
-  m.dataset.x = off;
-  belt.appendChild(m);
-  m.style.transform = `translate(${geo.aimX}px, ${geo.aimY}px)`;
-  setTimeout(() => m.remove(), 900);
+  const el = document.createElement('span');
+  el.className = 'air-mark';
+  el.textContent = WORDS.air;
+  belt.appendChild(el);
+  const m = { el, x: off };
+  airMarks.push(m);
+  placeAir(m);
+  setTimeout(() => { el.remove(); const i = airMarks.indexOf(m); if (i >= 0) airMarks.splice(i, 1); }, 900);
+}
+function placeAir(m) {
+  m.el.style.transform = `translate3d(${(geo.aimX + m.x * geo.u).toFixed(1)}px, ${geo.aimY}px, 0)`;
 }
 function checkResolved(d) {
   if (d.resolved) return;
-  if (d.hold || d.targets.every((t) => t.status)) {
+  if (d.kind === 'banryeo' || d.targets.every((t) => t.status)) {
     d.resolved = true;
     if (G.mode === 'round') { G.done++; hud(); }
     if (G.mode === 'lesson') lessonResolved(d);
@@ -463,32 +447,42 @@ function checkResolved(d) {
 function outcome(kind, d, extra = '') {
   const good = kind === 'perfect' || kind === 'good' || kind === 'banKept';
   feed(kind, extra);
-  if (!good) oops(kind !== 'air');
+  if (!good) slipCue(kind);
   if (G.mode === 'lesson') { G.lesson.last = kind; G.lesson.extra = extra; live.textContent = SAY[kind]; return; }
   G.c[kind]++;
+  // the last 20 seconds, the fast stretch: which way the slips lean, for the tip on the work log
+  if (G.elapsed >= ROUND - 20) {
+    if (!good) G.fast.slips++;
+    if (kind === 'late' || extra === '(늦게)') G.fast.late++;
+    else if (extra === '(일찍)') G.fast.early++;
+  }
   if (good) {
     const before = mult();
+    if (G.streak === 0) G.runFrom = G.elapsed;
     G.streak++;
     G.maxStreak = Math.max(G.maxStreak, G.streak);
+    if (G.streak > G.best.n) G.best = { n: G.streak, from: G.runFrom, to: G.elapsed };
     const base = kind === 'perfect' ? 100 : kind === 'good' ? 40 : 60;
-    G.score += base * mult() * (d && d.urgent ? 2 : 1);
-    if (mult() > before) { sfx.tap2(); const mEl = $('mult'); mEl.classList.remove('bump'); void mEl.offsetWidth; mEl.classList.add('bump'); }
+    G.score += base * mult();
+    if (mult() > before) {
+      sfx.tap2();
+      if (!reduceMQ.matches) $('mult').animate([{ transform: 'scale(1.6) rotate(-6deg)' }, { transform: 'none' }], { duration: 420, easing: 'ease-out' });
+    }
   } else {
     G.streak = 0;
-    if (RETURNED.includes(kind)) G.score = Math.max(0, G.score - 50);
+    G.slips.push(G.elapsed);
   }
   hud();
-  const pileNote = RETURNED.includes(kind) || kind === 'late' ? ` 미결 ${G.pile + 1}장.` : '';
-  live.textContent = `${SAY[kind]}.${pileNote} 연속 ${G.streak}.`;
+  live.textContent = `${SAY[kind]}. 연속 ${G.streak}.`;
 }
 function sweep() {
   const T = tolerance();
-  for (const d of [...G.docs]) {
+  for (const d of G.docs) {
     if (d.resolved) continue;
     const lx = G.offset - d.worldX;
-    if (d.hold) {
+    if (d.kind === 'banryeo') {
       if (lx > 100) {
-        if (!d.dirty) outcome('banKept', d, d.flaw ? `(${FLAW_SAY[d.flaw]})` : '');
+        if (!d.dirty) outcome('banKept', d);
         checkResolved(d);
       }
       continue;
@@ -498,7 +492,6 @@ function sweep() {
         tg.status = 'late';
         addMark(d, tg.u, 'late', 40);
         outcome('late', d);
-        if (G.mode === 'round') { returnDoc(d); break; }
       }
     }
     checkResolved(d);
@@ -507,12 +500,8 @@ function sweep() {
 
 // ---------------------------------------------------------------- the stamp object
 function dropStamp() {
-  if (reduceMQ.matches) {
-    stampEl.classList.add('down');
-    setTimeout(() => stampEl.classList.remove('down'), 120);
-    return;
-  }
-  // a resin seal is rigid: it travels down, rests a beat on the paper and lifts, no squash
+  // a resin seal is rigid: it travels down, rests a beat on the paper and lifts, no squash.
+  // The same under reduced motion: this is the game's one essential movement.
   stampEl.animate([
     { transform: 'translate(-50%, 0)' },
     { transform: `translate(-50%, ${geo.drop}px)`, offset: 0.26 },
@@ -529,8 +518,6 @@ const LESSON = [
   { spec: { kind: 'jeongjeong' }, memo: '숫자를 고친 서류엔 정정인. 두 줄 그은 숫자 한가운데에.' },
   { spec: { kind: 'ganin' }, memo: '계약서 두 장엔 간인. 겹친 이음매에 반씩 걸치게.' },
   { spec: { kind: 'banryeo' }, memo: '반려 서류는 찍지 말고 그냥 보내요.' },
-  { spec: { kind: 'gyeoljae', boxes: [1], flaw: 'nosign' }, memo: '담당 칸 서명이 빠졌어요. 앞 칸이 비어 있으면 찍지 말고 보내요.' },
-  { spec: { kind: 'gyeoljae', boxes: [0], flaw: 'tape' }, memo: '금액을 수정테이프로 고쳤어요. 이것도 찍지 말고 보내요.' },
 ];
 function startLesson() {
   closeSheets();
@@ -548,8 +535,14 @@ function lessonSpawn() {
   const ext0 = step.spec.kind === 'ganin' ? -32 : 0;
   L.doc = addDoc(step.spec, q10(G.offset + (geo.bw - geo.aimX) / geo.u + 8 - ext0));
   L.last = null;
-  $('feed-word').textContent = '';
+  feedWord.textContent = '';
   memo(step.memo, true);
+}
+// the first lesson document glides to a stop with its 칸 in the ring (speed falls with the distance left)
+function lessonStopAt() {
+  const L = G.lesson, s = LESSON[L.i];
+  if (!s || !s.stop || L.wait > 0 || !L.doc || L.doc.resolved || L.doc.targets[0].status) return null;
+  return L.doc.worldX + L.doc.targets[0].u;
 }
 function lessonTick(dt) {
   const L = G.lesson;
@@ -561,17 +554,18 @@ function lessonTick(dt) {
     }
     return true;
   }
-  const step = LESSON[L.i];
-  if (step.stop && L.doc && !L.doc.resolved && !L.doc.targets[0].status) {
-    const at = L.doc.worldX + L.doc.targets[0].u;
-    if (G.offset >= at) { G.offset = at; if (!L.hold) { L.hold = true; memo('지금 꾹!', true); } return false; }
+  const at = lessonStopAt();
+  if (at != null && G.offset >= at - 0.2) {
+    G.offset = at;
+    if (!L.hold) { L.hold = true; memo('지금 꾹!', true); }
+    return false;
   }
   return true;
 }
 function lessonResolved(d) {
   const L = G.lesson;
   if (d !== L.doc) return;
-  const kinds = d.hold ? [d.dirty ? 'banHit' : 'banKept'] : d.targets.map((t) => t.status);
+  const kinds = d.kind === 'banryeo' ? [d.dirty ? 'banHit' : 'banKept'] : d.targets.map((t) => t.status);
   const ok = kinds.every((k) => k === 'perfect' || k === 'good' || k === 'banKept');
   L.hold = false;
   if (ok) {
@@ -579,10 +573,10 @@ function lessonResolved(d) {
     memo(anyGood ? '조금 비뚤었지만 통과. 한가운데를 노려 봐요.' : '좋아요, 정확해요!', true);
     L.i++; L.tries = 0;
     L.wait = 1.2;
-    if (L.i >= LESSON.length) memo('연습 끝! 놓치거나 잘못 찍은 서류는 미결로 쌓여요. 18시까지 75초.', true);
+    if (L.i >= LESSON.length) memo('연습 끝! 이제 진짜 결재예요. 18시가 가까울수록 트레이가 빨라져요.', true);
   } else {
     const k = kinds.find((x) => !(x === 'perfect' || x === 'good' || x === 'banKept'));
-    const why = k === 'banHit' ? '이 서류는 깨끗하게 보내야 해요.'
+    const why = k === 'banHit' ? '반려 서류는 깨끗하게 둬야 해요.'
       : k === 'late' ? '도장을 안 찍고 지나갔어요.'
       : k === 'wrong' ? '동그라미 친 칸이 아니에요.'
       : L.extra === '(일찍)' ? '조금 일찍 찍었어요. 칸이 점선 원 한가운데 올 때!'
@@ -604,25 +598,16 @@ function finishLesson() {
 function resetBoard(mode) {
   clearDocs();
   G.mode = mode;
-  G.offset = 0; G.elapsed = 0; G.grace = 0; G.stepAcc = 0; G.cooldown = 0;
+  G.offset = 0; G.elapsed = 0; G.grace = 0; G.stepAcc = 0; G.cooldown = 0; G.spin = 0;
   G.streak = 0; G.maxStreak = 0; G.score = 0; G.done = 0; G.c = freshCounts();
+  G.runFrom = 0; G.best = { n: 0, from: 0, to: 0 }; G.slips = []; G.fast = { slips: 0, late: 0, early: 0 };
   G.rand = rng((Math.random() * 1e9) | 0);
-  G.lastKind = []; G.nextDoc = null; G.clockSec = -1; G.signed = false;
-  G.pile = 0; G.queued = 0; G.crunch = false; G.urgentDone = false; G.memoT = 0;
-  app.classList.remove('crunch');
-  desk.classList.remove('oops');
-  stampEl.classList.remove('down');
-  $('feed-word').textContent = '';
-  renderPile();
-  timebar.style.transform = '';
+  G.lastKind = []; G.nextDoc = null; G.clockSec = -1; G.paceShown = -1; G.signed = false;
+  feedWord.textContent = '';
   hud();
+  setBar(0);
   G.v = speedNow();
-}
-function startCrunch() {
-  G.crunch = true;
-  app.classList.add('crunch');
-  shout('마지막 30초! 시계가 빨라져요.', 2.4);
-  sfx.alarm();
+  render(); // the belt back at zero before the first document of the round is placed
 }
 function startRound() {
   closeSheets();
@@ -633,15 +618,14 @@ function startRound() {
   spawnRound();
   setClock(0);
   G.readyT = 1.3;
-  memo('준비. 18시까지 75초.');
-  live.textContent = '결재 시작. 18시까지 75초.';
+  memo('준비. 18시까지 75초, 트레이는 점점 빨라져요.');
+  live.textContent = '결재 시작. 18시까지 75초, 트레이는 점점 빨라져요.';
   setState('ready');
   focusPress();
 }
 function nextLabel() {
-  if (G.memoT > 0) return;
   const T = tolerance();
-  const d = G.docs.find((x) => !x.resolved && (x.hold ? G.offset - x.worldX <= 100 : x.targets.some((t) => !t.status && G.offset - x.worldX - t.u <= T.g)));
+  const d = G.docs.find((x) => !x.resolved && (x.kind === 'banryeo' ? G.offset - x.worldX <= 100 : x.targets.some((t) => !t.status && G.offset - x.worldX - t.u <= T.g)));
   if (d && d !== G.nextDoc) {
     G.nextDoc = d;
     const first = !G.seen.has(d.kind + (d.targets.length > 1 ? '2' : ''));
@@ -652,15 +636,13 @@ function nextLabel() {
 function endRound() {
   setState('closing');
   G.closeT = 1.1;
-  // copies from the pile still on the tray at 18:00 are still 미결
-  for (const d of G.docs) if (d.again && d.entered && !d.resolved) G.pile++;
-  renderPile(true);
-  memo(G.pile ? `18:00. 미결 ${G.pile}장…` : '18:00. 퇴근!');
+  memo('18:00. 퇴근!');
   sfx.bell();
-  live.textContent = G.pile ? `18시예요. 미결 ${G.pile}장이 남았어요.` : '18시예요. 미결 없이 퇴근해요.';
+  live.textContent = '18시예요. 업무 일지가 나왔어요.';
 }
 
 // ---------------------------------------------------------------- frame loop
+// Per frame: transforms and a few text nodes only. No layout reads, no forced reflow.
 let inFrame = false;
 function frame(t) {
   inFrame = true;
@@ -678,13 +660,11 @@ function step(t) {
     if (G.readyT <= 0) { setState('playing'); G.seen = new Set(); }
   } else if (G.state === 'playing') {
     if (move) {
-      G.elapsed += dt * timeScale();
-      if (!G.crunch && G.elapsed >= CRUNCH_AT) startCrunch();
+      G.elapsed += dt;
       setClock(G.elapsed);
-      timebar.style.transform = `scaleX(${Math.max(0, 1 - G.elapsed / ROUND).toFixed(4)})`;
+      setBar(G.elapsed);
       if (G.elapsed >= ROUND) { endRound(); }
     }
-    if (G.memoT > 0) G.memoT -= dt;
   } else if (G.state === 'lesson') {
     if (move) move = lessonTick(dt);
   } else if (G.state === 'closing') {
@@ -692,15 +672,26 @@ function step(t) {
     G.v *= Math.pow(0.02, dt);
     if (G.closeT <= 0) { showLog(); render(); return; }
   }
-  if (move && (G.state === 'playing' || G.state === 'lesson' || G.state === 'closing')) {
-    if (G.state !== 'closing') G.v = speedNow();
+  if (!move) {
+    // at rest (ready, resume grace, the lesson stop): the tray starts again from zero, smoothly
+    G.v = 0;
+    G.spin = 0;
+  } else if (G.state === 'playing' || G.state === 'lesson' || G.state === 'closing') {
+    if (G.state !== 'closing') {
+      G.spin = Math.min(1, G.spin + dt / SPIN);
+      G.v = speedNow() * ease(G.spin);
+      if (G.state === 'lesson') {
+        const at = lessonStopAt();
+        if (at != null) G.v = Math.min(G.v, Math.max(0, at - G.offset) * 4.5);
+      }
+    }
     if (settings.step && G.state !== 'closing') {
       G.stepAcc += dt;
       const iv = stepInterval();
       while (G.stepAcc >= iv) {
         G.stepAcc -= iv;
         G.offset += 10;
-        if (G.state === 'lesson') { const s = LESSON[G.lesson.i]; if (s && s.stop && G.lesson.doc) { const at = G.lesson.doc.worldX + G.lesson.doc.targets[0].u; if (G.offset > at && !G.lesson.doc.targets[0].status) G.offset = at; } }
+        if (G.state === 'lesson') { const at = lessonStopAt(); if (at != null && G.offset > at) G.offset = at; }
         sfx.tick();
       }
     } else {
@@ -710,25 +701,29 @@ function step(t) {
     if (G.state === 'lesson') sweep();
   }
   render();
+  paintAhead(performance.now());
 }
 const isRunning = () => ['ready', 'playing', 'lesson', 'closing'].includes(G.state);
+function paintAhead(t0) {
+  const deadline = t0 + PAINT_MS;
+  for (const d of G.docs) {
+    if (d.painted) continue;
+    if (!paintSome(d, deadline)) return;
+  }
+}
 function render() {
   for (let i = G.docs.length - 1; i >= 0; i--) {
     const d = G.docs[i];
-    placeDoc(d);
+    d.sx = geo.aimX + (d.worldX - G.offset) * geo.u;
+    if (!d.painted && d.sx < geo.bw + geo.u * 6) paintSome(d); // never show a sheet half drawn
     if (d.sx < -geo.dw * 1.4 - 40 && (d.resolved || G.mode !== 'round')) { d.el.remove(); G.docs.splice(i, 1); }
-    else if (!d.entered && d.sx < geo.bw) {
-      d.entered = true;
-      if (G.state !== 'cover') sfx.slide();
-      if (d.again && G.mode === 'round') { G.pile--; G.queued--; renderPile(); }
-      if (d.urgent && G.state === 'playing') { shout('잠깐만요! 긴급 서류예요. 부장 칸, 점수 두 배.', 2.6); sfx.alarm(); }
-    }
+    else if (!d.entered && d.sx < geo.bw) { d.entered = true; if (G.state !== 'cover') sfx.slide(G.mode === 'round' ? paceAt(G.elapsed) : 1); }
   }
+  // the rail ticks ride with the tray (a transform, so no repaint)
+  belt.style.transform = `translate3d(${(-G.offset * geo.u).toFixed(2)}px, 0, 0)`;
+  // the rail ticks repeat every 50 units, so they slide by the remainder
   const period = geo.u * 50;
-  ticksEl.style.backgroundPosition = `${(-(G.offset * geo.u) % period).toFixed(2)}px 0`;
-  belt.querySelectorAll('.air-mark').forEach((m) => {
-    m.style.transform = `translate(${(geo.aimX + (Number(m.dataset.x) - G.offset) * geo.u).toFixed(1)}px, ${geo.aimY}px)`;
-  });
+  ticksEl.style.transform = `translate3d(${(-((G.offset * geo.u) % period)).toFixed(2)}px, 0, 0)`;
 }
 function loop() {
   if (!inFrame && !G.raf && isRunning()) { G.last = performance.now(); G.raf = requestAnimationFrame(frame); }
@@ -785,46 +780,76 @@ function goHome() {
 }
 
 // ---------------------------------------------------------------- work log
+// the round's speed ramp as a small chart: your longest clean run filled in, each slip a cross
+function speedChart() {
+  const W = 300, base = 54, top = 46;
+  const X = (t) => ((t / ROUND) * W).toFixed(1);
+  const Y = (t) => (base - top * rampH(t)).toFixed(1);
+  const edge = (a, b, n) => {
+    let d = '';
+    for (let i = 0; i <= n; i++) { const t = a + ((b - a) * i) / n; d += `${i ? 'L' : 'M'}${X(t)} ${Y(t)}`; }
+    return d;
+  };
+  const all = edge(0, ROUND, 30);
+  let svg = `<path class="ramp" d="${all}L${W} ${base}L0 ${base}Z"/>`;
+  const b = G.best;
+  if (b.n >= 2 && b.to > b.from) svg += `<path class="run" d="${edge(b.from, b.to, 12)}L${X(b.to)} ${base}L${X(b.from)} ${base}Z"/>`;
+  svg += `<path class="edge" d="${all}"/><path class="base" d="M0 ${base}H${W}"/>`;
+  const x = G.slips.map((t) => { const cx = Number(X(t)), cy = Number(Y(t)) - 6; return `M${cx - 3} ${cy - 3}l6 6m0-6l-6 6`; }).join('');
+  if (x) svg += `<path class="slip" d="${x}"/>`;
+  return svg;
+}
 function showLog() {
   setState('log');
   const c = G.c;
-  const pile = Math.max(0, G.pile);
-  const final = Math.max(0, G.score - pile * 100);
-  const returned = c.miss + c.wrong + c.twice + c.banHit;
   const rows = [
     ['결재 처리', `${G.done}건`],
     ['정확', `${c.perfect}번`],
     ['조금 비뚤', `${c.good}번`],
-    ['반려 지킴', `${c.banKept}장`],
-    ['잘못 찍어 반송', `${returned}장`],
-    ['놓침', `${c.late}장`],
+    ['빗나감', `${c.miss + c.wrong + c.twice}번`],
+    ['놓침', `${c.late}번`],
     ['헛도장', `${c.air}번`],
+    ['반려 지킴', `${c.banKept}장`],
+    ['반려에 찍음', `${c.banHit}장`],
     ['최고 연속', `${G.maxStreak}번`],
-    ['남은 미결', pile ? `${pile}장, -${fmt(pile * 100)}점` : '0장'],
   ];
   $('log-rows').innerHTML = rows.map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('');
-  // the headline: what time 구 대리 actually gets to leave
-  const out = 18 * 60 + pile * PILE_MIN;
-  $('log-off').textContent = pile ? `${Math.floor(out / 60)}:${String(out % 60).padStart(2, '0')} 퇴근` : '18:00 칼퇴!';
-  $('log-off-sub').textContent = pile ? `미결 ${pile}장, 야근 ${pile * PILE_MIN}분` : '미결 0장';
-  $('log-off').classList.toggle('late', pile > 0);
+  // the headline: how far up the speed ramp the longest clean run went
+  const b = G.best, slips = G.slips.length;
+  const topPace = paceAt(ROUND).toFixed(1);
+  const runToEnd = slips > 0 && b.n >= 6 && G.streak === b.n;
+  let off, sub;
+  if (b.n === 0) { off = '18:00 퇴근'; sub = '오늘은 제자리에 찍은 도장이 없어요.'; }
+  else if (!slips) { off = '18:00 칼퇴!'; sub = `${topPace}배속까지 한 장도 안 놓쳤어요.`; }
+  else if (runToEnd) { off = `${topPace}배속 완주!`; sub = `${clockText(b.from)}부터 18시까지 연속 ${b.n}번.`; }
+  else { off = `${paceAt(b.to).toFixed(1)}배속에서 끊김`; sub = `최고 연속 ${b.n}번, ${clockText(b.from)}부터 ${clockText(b.to)}까지.`; }
+  $('log-off').textContent = off;
+  $('log-off-sub').textContent = sub;
+  $('log-curve').innerHTML = speedChart();
+  $('log-curve').setAttribute('aria-label', `트레이 속도: 1.0배속에서 ${topPace}배속까지 점점 빨라짐. 가장 긴 연속은 ${b.n}번${b.n ? `, ${paceAt(b.from).toFixed(1)}배속에서 ${paceAt(b.to).toFixed(1)}배속까지` : ''}. 실수 ${slips}번.`);
+  $('log-pace-end').textContent = `${topPace}배속`;
   const now = new Date();
   $('log-date').textContent = `${now.getFullYear()}. ${now.getMonth() + 1}. ${now.getDate()}.`;
   $('log-mode').textContent = { normal: '보통 속도', slow: '느긋하게', step: '칸칸이 이동' }[G.roundKey];
-  $('log-score').textContent = fmt(final);
+  $('log-score').textContent = fmt(G.score);
   store.best = store.best || {};
   const prev = store.best[G.roundKey];
-  const isNew = !prev || final > prev.score;
-  if (isNew && final > 0) { store.best[G.roundKey] = { score: final, streak: G.maxStreak }; save(); }
+  const isNew = !prev || G.score > prev.score;
+  if (isNew && G.score > 0) { store.best[G.roundKey] = { score: G.score, streak: G.maxStreak }; save(); }
   const best = store.best[G.roundKey];
-  $('log-best').textContent = isNew && final > 0 ? '새 기록' : best ? `최고 ${fmt(best.score)}` : '';
-  $('log-best').classList.toggle('is-new', isNew && final > 0);
-  // one line that points at the next round
-  $('log-next').textContent = pile
-    ? `미결 ${pile}장만 없었으면 칼퇴, 점수 +${fmt(pile * 100)}.`
-    : !isNew && best ? `최고 기록까지 ${fmt(best.score - final + 1)}점.`
-    : G.maxStreak < 15 ? `연속 ${(Math.floor(G.maxStreak / 5) + 1) * 5}번이면 배율 ×${Math.min(4, Math.floor(G.maxStreak / 5) + 2)}.`
-    : '내일도 칼퇴.';
+  $('log-best').textContent = isNew && G.score > 0 ? '새 기록' : best ? `최고 ${fmt(best.score)}` : '';
+  $('log-best').classList.toggle('is-new', isNew && G.score > 0);
+  // one line that points at the next round: a timing tip from the fast stretch, the gap to the
+  // record, or the next multiplier
+  const f = G.fast;
+  const m = Math.floor(G.maxStreak / 6);
+  $('log-next').textContent = f.late >= f.early + 2
+    ? `마지막 20초에 늦게 찍은 게 ${f.late}번. 빨라질수록 한 박자 일찍 꾹.`
+    : f.early >= f.late + 2
+      ? `마지막 20초에 일찍 찍은 게 ${f.early}번. 빨라져도 칸이 원 한가운데 올 때 꾹.`
+      : !isNew && best ? `최고 기록까지 ${fmt(best.score - G.score + 1)}점.`
+      : G.maxStreak < 18 ? `연속 ${(m + 1) * 6}번이면 배율 ×${Math.min(4, m + 2)}.`
+      : '내일도 칼퇴.';
   $('log-sign').setAttribute('d', scribble(rng(7), 4, 5, 52, 17));
   $('log-confirm').innerHTML = '';
   $('log-comment').hidden = true;
@@ -847,15 +872,14 @@ function signLog() {
   cell.appendChild(canvas);
   sfx.thump(1);
   const c = G.c;
-  const pile = Math.max(0, G.pile);
   const judged = c.perfect + c.good + c.miss + c.wrong + c.twice + c.late + c.banKept + c.banHit + c.air;
   const acc = judged ? (c.perfect + c.good * 0.6 + c.banKept) / judged : 0;
   const text = judged === 0 ? '오늘 결재가 한 장도 없네. 내일 보자.'
-    : !pile && acc >= 0.85 ? '완벽해. 내일부터 도장은 구 대리 담당.'
-    : !pile ? '미결 없이 칼퇴. 잘했어.'
-    : pile <= 2 ? `미결 ${pile}장은 내일 아침에 먼저 해.`
-    : pile <= 5 ? '미결이 꽤 쌓였네. 내일 일찍 와.'
-    : '책상에 미결이 산더미야. 칸부터 보고 찍자.';
+    : acc >= 0.9 ? '완벽해. 내일부터 도장은 구 대리 담당.'
+    : acc >= 0.75 ? '깔끔하네. 칼퇴 인정.'
+    : G.fast.slips >= 3 && G.fast.slips >= G.slips.length * 0.6 ? '막판에 빨라지니 흔들렸지? 그래도 퇴근!'
+    : acc >= 0.5 ? '몇 장은 다시 찍자. 그래도 퇴근!'
+    : '칸부터 보고 찍자. 내일 일찍 와.';
   const cm = $('log-comment');
   cm.textContent = text;
   cm.hidden = false;
@@ -907,7 +931,7 @@ function coverScene() {
   a.resolved = true;
   addDoc({ kind: 'ganin' }, q10(80));
   addDoc({ kind: 'jeongjeong' }, q10(220));
-  for (const d of G.docs) d.entered = true;
+  for (const d of G.docs) { d.entered = true; paintSome(d); }
   render();
 }
 
@@ -972,9 +996,15 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) pause
 let rz = 0;
 addEventListener('resize', () => {
   cancelAnimationFrame(rz);
-  rz = requestAnimationFrame(() => { layout(); render(); });
+  rz = requestAnimationFrame(() => {
+    const u = geo.u;
+    layout();
+    if (geo.u !== u) for (const d of G.docs) paintDoc(d, geo.u); // keep the print sharp at the new size
+    for (const d of G.docs) placeDoc(d);
+    for (const m of airMarks) placeAir(m);
+    render();
+  });
 });
-reduceMQ.addEventListener('change', () => { if (typeof store.step !== 'boolean') { settings.step = reduceMQ.matches; syncOptions(); } });
 
 // ---------------------------------------------------------------- boot
 async function boot() {
@@ -984,10 +1014,16 @@ async function boot() {
       new Promise((r) => setTimeout(r, 1500)),
     ]);
   } catch (e) { /* system fallback */ }
+  // fonts that arrive after the 1.5 s wait: paint the waiting documents again with them
+  if (document.fonts && !(document.fonts.check('10px "Hi Melody"') && document.fonts.check('10px "East Sea Dokdo"'))) {
+    document.fonts.ready.then(() => { for (const d of G.docs) paintDoc(d, geo.u); });
+  }
+  $('timebar-ramp').style.clipPath = rampPolygon();
   layout();
   syncOptions();
   showRecords();
   setClock(0);
+  setBar(0);
   coverScene();
   coverSeal();
   hud();
@@ -997,4 +1033,4 @@ async function boot() {
 boot();
 
 // for automated checks only (no effect on play)
-window.__stamp = { G, geo, settings, press: (t) => press(t ?? performance.now()), startRound, startLesson, renderPile };
+window.__stamp = { G, geo, settings, curve, ROUND, V0, V1, tolerance, press: (t) => press(t ?? performance.now()), startRound, startLesson };

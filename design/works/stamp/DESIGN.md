@@ -5,9 +5,43 @@ A timing game set in the fictional (주)한칸물산. Everyone senior is away at
 outgoing tray. Built without UXKIN references (not connected); the direction comes from the
 subject itself: a Korean 결재 document is blue-black print on white with one red seal.
 
-## Revision 2026-11-10 (owner review)
+## Revision 2 (2026-11-10, owner's fourth review)
 
-What changed and why:
+The owner: "이전의 연속성이 사라지고 뚝뚝 끊기는 느낌이 너무 싫다. 내가 말한 긴장감은 속도를 점점
+올리라는 의미였다." Their Windows reports `prefers-reduced-motion: reduce`, and the game turned its
+step mode on by itself under that, so the tray ticked in jumps; the revision's extra rules (미결
+pile, flawed documents, a clock that jumped to 1.3x, phone rings, a tray that knocked on mistakes)
+interrupted the flow on top.
+
+- **The flow and the rules are the original ones again**: 결재, 두 칸, 정정인, 간인, 반려; 6 in a
+  row raises the multiplier. No pile, no send-back flaws, no clock jump, no crunch events.
+- **Tension is the speed.** The tray runs 0.50 → 1.20 document widths a second along a geometric
+  curve (`0.5 x 2.4^(t/75)`): the same share faster every second, no steps, clearly fast at the end.
+  It spins up from rest over 0.5 s and glides to a stop at 18:00. Shown as 배속 (1.0 → 2.4) beside
+  the time rule, which is now a wedge drawn from the same curve (thin to thick) that fills towards
+  18:00. The clock turns solid carbon in the last ten seconds.
+- **Slips** get one quick carbon flash over the tray (opacity, 300 ms), a struck-through word and a
+  low knock. The tray never moves sideways.
+- **Never a step mode by default**, also not under reduced motion; 칸칸이 이동 stays as a setting.
+  The storage key moved to `stamp.v2`, so a step setting saved by the old default is dropped.
+  Reduced motion keeps the tray and the seal exactly as they are and only calms the marker words.
+- **Kept from the first revision**: the photographed seal, the paper scan, the time rule (now the
+  ramp), the poster cover, the contrast fixes and the work log, whose lines are rewritten for the
+  old rules plus the speed (headline: how far up the ramp the longest clean run went; the round's
+  ramp as a small chart with that run filled and each slip crossed; a timing tip from the last 20
+  seconds).
+- **Smoothness.** Each sheet is painted once onto its own canvas (form, print, pen, marker) over
+  the paper while still off to the right, at most 2.5 ms a frame; the belt slides as one composited
+  layer; ink impressions are drawn in a worker; the frame loop reads no layout. Full perfect-play
+  rounds with 4x CPU throttling in headless Chrome (scripts/bot.js): 1440 px, motion on: frame
+  callback 0.4 ms p50 / 1.1 ms p95, rAF interval p95 8.5 ms, 15 of 13,181 frames over 34 ms;
+  390 px phone, reduced motion: 0.4 / 0.9 ms, p95 8.4 ms, 5 of 15,309 over 34 ms (the machine is
+  shared with other agents' Chromes). Before the change the same check had document builds of
+  ~13 ms and impressions of 17–32 ms on the main thread, and a long frame every second.
+
+## Revision 1 (2026-11-10, owner's third review)
+
+What changed and why (the tension items in the last bullet were replaced by Revision 2):
 
 - **The stamp is a photograph.** The owner pointed at the red SVG stamp over the tray as an
   AI-looking 3D object. It is now a generated photograph of a real red-resin 도장 with dark
@@ -33,7 +67,7 @@ What changed and why:
 - **Tension** (owner: "게임의 긴장감이 부족하다"): a time rule under the HUD, a clock that speeds up
   in the last 30 seconds, a 미결 pile that rises with every miss or spoiled stamp, two flawed
   documents to catch, a 긴급 interruption and a result that tells you what time you leave.
-  Full rules in INTERACTION.md.
+  All but the time rule and the result were removed again in Revision 2.
 
 ## Idea in one line
 
@@ -115,16 +149,16 @@ sheet is left-aligned too.
 Two photographs (generated, see IMAGES.md): the red-resin seal, cut out to alpha, used over the
 tray and standing on the cover; and a scanned sheet of office paper under every document and
 dialog. No icon set. Code draws only what is type or form: the seal face carved as SVG paths
-(구도담, round), form rules, marker circles and scribbles, correction tape strips, the 미결 pile as
-stacked slips of the same paper scan, the time rule. Favicon is the seal face. Impressions are
-generated on canvas per stamp (pressure, partial rim, speckle, smear) and multiplied into the paper.
+(구도담, round), form rules, marker circles and scribbles,
+the time rule as a speed ramp, the speed chart on the work log. Favicon is the seal face.
+Impressions are generated on canvas per stamp (pressure, partial rim, speckle, smear) in a worker
+and multiplied into the paper.
 
 ## Motion
 
-- The tray moves at the round's speed; the stamp drops in 60ms, rests 30ms and lifts in 140ms.
-- A returned document lifts off the tray and lands on the 미결 pile (640ms); a mistake knocks the
-  tray sideways (260ms) under a carbon flash (420ms). Reduced motion keeps the flash, fades the
-  returned sheet in place and never knocks.
-- Reduced motion: the tray advances in discrete steps (a ticking conveyor); stamp has no drop
-  travel, the impression just appears; no shake anywhere, ever.
+- The tray moves continuously along the speed curve (spin-up 0.5 s, glide to a stop at 18:00); the
+  stamp drops in 60ms, rests 30ms and lifts in 140ms.
+- A slip: one carbon flash over the tray (300 ms, opacity only). No knock, no shake, ever.
+- Reduced motion: the same tray, the same seal drop; marker words fade in instead of popping. The
+  stepped tray exists only as the opt-in setting 칸칸이 이동.
 - Everything stops on pause, blur and hidden tab.

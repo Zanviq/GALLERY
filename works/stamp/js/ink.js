@@ -39,6 +39,12 @@ function valueNoise(rand, g) {
 
 const smooth = (e0, e1, x) => { const t = Math.max(0, Math.min(1, (x - e0) / (e1 - e0))); return t * t * (3 - 2 * t); };
 
+/** The size makeImpression(o) will draw: pad in CSS px and the square backing store n in device px. */
+export function impressionBox(o) {
+  const pad = Math.ceil(o.size * 0.1 + (o.smear || 0));
+  return { pad, n: Math.max(8, Math.ceil((o.size + pad * 2) * (o.dpr || 1))) };
+}
+
 /**
  * Draw one impression.
  * @param {object} o
@@ -51,7 +57,7 @@ const smooth = (e0, e1, x) => { const t = Math.max(0, Math.min(1, (x - e0) / (e1
  *   smear  drag length in CSS px (paper moving under the stamp)
  *   smearAngle direction of the drag on the paper, radians
  *   rot    rotation of the seal, radians
- * @returns {{canvas: HTMLCanvasElement, pad: number}} pad = CSS px around the face on each side
+ * @returns {{canvas: HTMLCanvasElement | OffscreenCanvas, pad: number}} pad = CSS px around the face on each side
  */
 export function makeImpression(o) {
   paths();
@@ -60,7 +66,8 @@ export function makeImpression(o) {
   const pad = Math.ceil(size * 0.1 + smear);
   const css = size + pad * 2;
   const N = Math.max(8, Math.ceil(css * dpr));
-  const canvas = document.createElement('canvas');
+  // in the ink worker (js/ink-worker.js) there is no document: draw on an OffscreenCanvas
+  const canvas = typeof document === 'undefined' ? new OffscreenCanvas(N, N) : document.createElement('canvas');
   canvas.width = canvas.height = N;
   const g = canvas.getContext('2d', { willReadFrequently: true });
   const k = (size * dpr) / 100;

@@ -1,6 +1,8 @@
 // The paperwork. Every document is 100 x 130 units (1 unit = 1/100 of its width) and keeps its
 // target on the stamp row (y = 28). Target centres sit at 0.08 + 0.1k of the width (48, 58, 68, 88)
 // so the stepped tray can line each one up exactly with the ring.
+// Each sheet is drawn once onto its own canvas (form rules, print, pen and marker) over the scanned
+// paper, so a document arriving on the tray costs one canvas, not forty text boxes to lay out.
 export const DOC_H = 130;
 export const ROW_Y = 28;
 export const BOXES = [38, 58, 78]; // 결재란 칸 left edges, 20 wide
@@ -94,14 +96,15 @@ function strike(rand, x0, x1, y) {
   return `M${n1(x0)} ${n1(y - 1 + s)}L${n1(x1)} ${n1(y - 1 - s)}M${n1(x0 + 0.6)} ${n1(y + 1.2 + s)}L${n1(x1 - 0.4)} ${n1(y + 1.1 - s)}`;
 }
 
-// ---------------------------------------------------------------- markup helpers
-
+// ---------------------------------------------------------------- drawing ops
+// The helpers return one encoded drawing op each, so the documents below can be written as plain
+// string sums; paintSome() decodes them in order (rules, then print, then ink).
+const OP = '\u0001';
+const op = (...a) => OP + JSON.stringify(a);
 // text at (x, y) in document units, size in units; a = 'l' | 'c' | 'r'
-const T = (x, y, s, text, cls = '', a = 'l') =>
-  `<span class="t ${cls} t-${a}" style="--x:${x};--y:${y};--s:${s}">${text}</span>`;
-const svg = (body, cls = '') => `<svg class="lines ${cls}" viewBox="0 0 100 130" aria-hidden="true" focusable="false">${body}</svg>`;
-const L = (d, w = 0.35, cls = '') => `<path class="${cls}" d="${d}" stroke-width="${w}"/>`;
-const R = (x, y, w, h, sw = 0.55) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" stroke-width="${sw}"/>`;
+const T = (x, y, s, text, cls = '', a = 'l') => op('t', x, y, s, text, cls, a);
+const L = (d, w = 0.35, cls = '') => op('p', d, w, cls);
+const R = (x, y, w, h, sw = 0.55) => op('r', x, y, w, h, sw);
 
 function docNo(rand) {
   return `한칸-1109-${String(10 + Math.floor(rand() * 89))}`;
@@ -125,19 +128,14 @@ function footer(rand) {
 
 // ---------------------------------------------------------------- documents
 
-// o.flaw: 'nosign' (a 칸 before the circled one was never signed) or 'tape' (the amount was
-// changed with correction tape instead of a 정정인): both must go back unstamped.
-// o.urgent: a 긴급 note in marker. o.again: back from the 미결 pile, marked 재상신.
-function gyeoljaeDoc(rand, boxes, banned, o = {}) {
+function gyeoljaeDoc(rand, boxes, banned) {
   const form = banned ? FORMS[0] : pick(rand, FORMS);
-  let [subject, line2, amount] = banned ? [banned[0], '자세한 내용은 붙임 참조', '미정'] : pick(rand, form.items);
-  if (o.flaw === 'tape' && amount === '없음') amount = '58,000원';
+  const [subject, line2, amount] = banned ? [banned[0], '자세한 내용은 붙임 참조', '미정'] : pick(rand, form.items);
   const who = pick(rand, PEOPLE), dept = pick(rand, DEPTS);
-  // already signed: every 칸 before the first circled one (one of them left blank on a 'nosign')
+  // already signed: every 칸 before the first circled one
   const first = boxes.length ? Math.min(...boxes) : 1;
-  let signed = [];
+  const signed = [];
   for (let i = 0; i < first; i++) signed.push(i);
-  if (o.flaw === 'nosign') signed.splice(Math.floor(rand() * signed.length), 1);
   const ab = approvalBlock(rand, banned ? [0] : signed, boxes, !!banned);
   const title = form.title.length === 1
     ? T(18, 21.6, 8.2, form.title[0], 'title', 'c')
@@ -145,19 +143,11 @@ function gyeoljaeDoc(rand, boxes, banned, o = {}) {
   let lines = ab.lines + R(5, 42, 93, 24, 0.55) + L('M5 50H98M5 58H98M22 42V66', 0.35) + R(5, 70, 93, 42, 0.45) + L('M5 118H98', 0.3);
   let text = title + ab.text;
   text += T(13.5, 43.6, 4.2, '기안자', '', 'c') + T(25, 43.4, 4.6, `${who} (${dept})`);
-  text += T(13.5, 51.6, 4.2, '금액', '', 'c');
-  if (o.flaw === 'tape') {
-    // a strip of correction tape over the printed figure, a new figure written on it in pen
-    const w = amount.length * 3.3 + 5;
-    text += `<span class="tape" style="--x:24;--y:50.7;--w:${n1(w)}"></span>`;
-    text += T(25.5, 50.3, 6, amount.replace(/^\d/, (dg) => String((Number(dg) % 9) + 1)), 'hand pen');
-  } else {
-    text += T(25, 51.4, 4.6, amount);
-  }
+  text += T(13.5, 51.6, 4.2, '기안일', '', 'c') + T(25, 51.4, 4.6, '2026. 11. 9.');
   text += T(13.5, 59.6, 4.2, '제목', '', 'c') + T(25, 59.4, 4.6, subject);
   text += T(9, 73.5, 4.2, banned ? '아래와 같이 건의하오니 검토 바랍니다.' : '아래와 같이 시행하고자 하오니 결재 바랍니다.');
   text += T(9, 81, 4.2, `1. 내용: ${line2}`);
-  text += T(9, 88, 4.2, '2. 기안일: 2026. 11. 9.');
+  text += T(9, 88, 4.2, `2. 금액: ${amount}`);
   text += T(9, 95, 4.2, `3. 담당: ${dept} ${who}`);
   text += T(9, 103, 4, '붙임 1부. 끝.', 'soft');
   text += footer(rand);
@@ -166,12 +156,7 @@ function gyeoljaeDoc(rand, boxes, banned, o = {}) {
     text += T(52, 63, 26, '반려', 'hand big', 'c');
     text += T(74, 98, 8.5, banned[1], 'hand', 'c');
   }
-  if (o.urgent) {
-    text += T(5, 2.2, 8.4, '긴급', 'hand');
-    marks += L('M4.5 11.4C10 10.6 16 10.9 21.5 10.4', 0.9, 'marker');
-  }
-  const html = `<div class="sheet">${svg(lines)}${text}${svg(marks, 'ink')}</div>`;
-  return { html, targets: boxes.map((i) => ({ u: BOXES[i] + 10, box: i })) };
+  return { sheets: [{ cls: '', ops: lines + text + marks }], targets: boxes.map((i) => ({ u: BOXES[i] + 10, box: i })) };
 }
 
 function money(v) { return v.toLocaleString('ko-KR'); }
@@ -204,8 +189,7 @@ function jeongjeongDoc(rand) {
   text += T(9, 99, 4.2, '위와 같이 계산합니다. (부가세 포함)');
   text += T(9, 106.5, 4.2, `공급자 ${vendor}`);
   text += footer(rand);
-  const html = `<div class="sheet">${svg(lines)}${text}${svg(marks, 'ink')}</div>`;
-  return { html, targets: [{ u: 58 }] };
+  return { sheets: [{ cls: '', ops: lines + text + marks }], targets: [{ u: 58 }] };
 }
 
 function ganinDoc(rand) {
@@ -227,25 +211,127 @@ function ganinDoc(rand) {
   aText += T(10, 50, 4.4, '제2조 (범위)') + T(10, 56.5, 3.9, '본사 사무실 3개 층 전체', 'soft');
   aText += T(10, 68, 4.4, '제3조 (금액)') + T(10, 74.5, 3.9, '월 1,980,000원 (부가세 별도)', 'soft');
   aText += T(10, 86, 4, '다음 장에 이어집니다.', 'soft');
-  const html =
-    `<div class="sheet sheet-b">${svg(bLines)}${bText}${svg(bMarks, 'ink')}</div>` +
-    `<div class="sheet sheet-a">${svg(aLines)}${aText}</div>`;
-  return { html, targets: [{ u: 68 }], ext0: -32 }; // the seam is the right edge of page 1
+  return {
+    sheets: [{ cls: 'sheet-b', ops: bLines + bText + bMarks }, { cls: 'sheet-a', ops: aLines + aText }],
+    targets: [{ u: 68 }], ext0: -32, // the seam is the right edge of page 1
+  };
+}
+
+// ---------------------------------------------------------------- painting
+
+const CARBON = '#1F3A93';
+const SOFT = 'rgba(31, 58, 147, 0.8)';
+const UI = '"Hi Melody", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif';
+const HAND = '"East Sea Dokdo", "Hi Melody", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif';
+let metrics = null;
+// ascent and descent of both faces (per px of size), to set each line where CSS would
+function fontMetrics(g) {
+  if (metrics) return metrics;
+  const m = {};
+  for (const [k, fam] of [['ui', UI], ['hand', HAND]]) {
+    g.font = `100px ${fam}`;
+    const t = g.measureText('한');
+    m[k] = { a: (t.fontBoundingBoxAscent ?? 85) / 100, d: (t.fontBoundingBoxDescent ?? 20) / 100 };
+  }
+  const ready = typeof document === 'undefined' || !document.fonts
+    || (document.fonts.check('10px "Hi Melody"') && document.fonts.check('10px "East Sea Dokdo"'));
+  if (ready) metrics = m; // keep only real metrics; fallback ones are measured again next time
+  return m;
+}
+function textWidth(g, text, ls) {
+  if (!ls) return g.measureText(text).width;
+  let w = 0;
+  for (const ch of text) w += g.measureText(ch).width + ls;
+  return w;
+}
+function fillText(g, text, x, y, ls) {
+  if (!ls) { g.fillText(text, x, y); return; }
+  for (const ch of text) { g.fillText(ch, x, y); x += g.measureText(ch).width + ls; }
+}
+
+const DPR = () => Math.min(2.5, (typeof devicePixelRatio === 'number' && devicePixelRatio) || 1);
+function drawOp(g, o, k, M, st) {
+  if (o[0] === 't') {
+    const [, x, y, s, text, cls, a] = o;
+    const hand = cls.includes('hand'), big = cls.includes('big');
+    const px = s * k, lh = (hand ? 1 : 1.15) * px;
+    const fm = hand ? M.hand : M.ui;
+    const ls = (big ? 0.04 : cls.includes('title') ? 0.08 : 0) * px;
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    const font = `${px.toFixed(2)}px ${hand ? HAND : UI}`;
+    if (font !== st.font) { g.font = font; st.font = font; } // setting a font string is the slow part
+    g.fillStyle = cls.includes('soft') ? SOFT : CARBON;
+    const w = textWidth(g, text, ls);
+    const top = y * k;
+    const base = top + (lh - (fm.a + fm.d) * px) / 2 + fm.a * px; // the baseline inside a CSS line box
+    if (big) {
+      // the 반려 across the page: centred on (x, middle of its line), turned -11 degrees
+      g.globalAlpha = 0.92;
+      g.translate(x * k, top + lh / 2);
+      g.rotate((-11 * Math.PI) / 180);
+      fillText(g, text, -w / 2, base - top - lh / 2, ls);
+      g.globalAlpha = 1;
+    } else {
+      fillText(g, text, x * k - (a === 'c' ? w / 2 : a === 'r' ? w : 0), base, ls);
+    }
+  } else {
+    const round = o[0] === 'p' && (o[3] === 'pen' || o[3] === 'marker');
+    g.setTransform(k, 0, 0, k, 0, 0);
+    g.strokeStyle = CARBON;
+    g.lineCap = round ? 'round' : 'butt';
+    g.lineJoin = round ? 'round' : 'miter';
+    if (o[0] === 'p') { g.lineWidth = o[2]; g.stroke(new Path2D(o[1])); }
+    else { g.lineWidth = o[5]; g.strokeRect(o[1], o[2], o[3], o[4]); }
+  }
+}
+
+/** Size every sheet's canvas for u CSS px per unit and queue its ops; paintSome() draws them. */
+export function startPaint(d, u) {
+  const k = u * DPR();
+  for (const s of d.sheets) {
+    s.face.width = Math.round(100 * k);
+    s.face.height = Math.round(130 * k);
+    s.k = k;
+    s.queue = s.ops.split(OP).filter(Boolean);
+    s.qi = 0;
+    s.st = { font: '' };
+  }
+  d.painted = false;
+}
+/** Draw queued ops until the clock passes deadline (performance.now() ms); true once all are drawn.
+ *  The game spreads a document over a few frames while it is still off to the right of the tray. */
+export function paintSome(d, deadline = Infinity) {
+  for (const s of d.sheets) {
+    if (!s.queue || s.qi >= s.queue.length) continue;
+    const g = s.face.getContext('2d');
+    const M = fontMetrics(g);
+    while (s.qi < s.queue.length) {
+      drawOp(g, JSON.parse(s.queue[s.qi++]), s.k, M, s.st);
+      if (performance.now() > deadline) { g.setTransform(1, 0, 0, 1, 0, 0); return false; }
+    }
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    s.queue = null;
+  }
+  d.painted = true;
+  return true;
+}
+/** Paint (or repaint, after a resize or late fonts) every sheet of a document at once. */
+export function paintDoc(d, u) {
+  startPaint(d, u);
+  paintSome(d);
 }
 
 /**
- * spec: { kind: 'gyeoljae', boxes: [i...], flaw?: 'nosign' | 'tape', urgent?: true }
- *     | { kind: 'jeongjeong' } | { kind: 'ganin' } | { kind: 'banryeo' }; any spec may carry again: true
- * returns { kind, el, sheets: [{el, x0}], ext0, ext1, targets, label, hold, flaw, urgent, again }
- * hold = the document must go back without a stamp (반려, or a flaw). A flawed document is labelled
- * like a clean one on purpose: spotting the flaw is the player's job.
+ * spec: { kind: 'gyeoljae', boxes: [i...] } | { kind: 'jeongjeong' } | { kind: 'ganin' } | { kind: 'banryeo' }
+ * u: CSS px per document unit; when given, the sheets are sized and queued for painting
+ *   (call paintSome / paintDoc), otherwise call paintDoc(d, u) before showing it
+ * returns { kind, el, sheets: [{el, x0, face, ops}], ext0, ext1, targets, label, painted }
  */
-export function buildDoc(spec, rand) {
+export function buildDoc(spec, rand, u) {
   let built, label;
   if (spec.kind === 'gyeoljae') {
-    built = gyeoljaeDoc(rand, spec.boxes, null, spec);
+    built = gyeoljaeDoc(rand, spec.boxes, null);
     label = spec.boxes.length > 1 ? `${spec.boxes.map((i) => BOX_NAMES[i]).join(', ')} 두 칸` : `${BOX_NAMES[spec.boxes[0]]} 칸`;
-    if (spec.urgent) label = `긴급, ${label}`;
   } else if (spec.kind === 'banryeo') {
     built = gyeoljaeDoc(rand, [], pick(rand, BANNED));
     label = '반려, 찍지 말고 보내기';
@@ -258,17 +344,20 @@ export function buildDoc(spec, rand) {
   }
   const el = document.createElement('div');
   el.className = `doc doc-${spec.kind}`;
-  el.innerHTML = built.html;
-  const sheets = [...el.querySelectorAll('.sheet')].map((s) => ({ el: s, x0: s.classList.contains('sheet-a') ? -32 : 0 }));
-  if (spec.again) {
-    // back from the pile: 재상신 in marker, low on the page that carries the target
-    sheets.find((s) => s.x0 === 0).el.insertAdjacentHTML('beforeend', T(94, spec.kind === 'ganin' ? 111.4 : 103.6, 6.4, '재상신', 'hand', 'r'));
-  }
-  return {
+  const sheets = built.sheets.map((sh) => {
+    const s = document.createElement('div');
+    s.className = sh.cls ? `sheet ${sh.cls}` : 'sheet';
+    const face = document.createElement('canvas');
+    face.className = 'face';
+    s.appendChild(face);
+    el.appendChild(s);
+    return { el: s, x0: sh.cls === 'sheet-a' ? -32 : 0, face, ops: sh.ops };
+  });
+  const d = {
     kind: spec.kind, el, sheets, label,
     ext0: built.ext0 || 0, ext1: 100,
     targets: built.targets.map((t) => ({ ...t, status: null })),
-    hold: spec.kind === 'banryeo' || !!spec.flaw,
-    flaw: spec.flaw || null, urgent: !!spec.urgent, again: !!spec.again,
   };
+  if (u) startPaint(d, u);
+  return d;
 }

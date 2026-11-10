@@ -28,7 +28,7 @@
   <div class="left">
     <h1 class="og-title">칼퇴 결재</h1>
     <p class="og-sub">지나가는 결재 서류에<br>한 번에 꾹.</p>
-    <p class="og-note">18시까지 75초, 미결이 남으면 야근</p>
+    <p class="og-note">18시까지 75초, 트레이는 점점 빨라져요</p>
     <p class="og-co">(주)한칸물산 총무팀, 도장 타이밍 게임</p>
   </div>
   <div class="right" id="right">
@@ -36,7 +36,7 @@
   </div>
 </div>
 <script type="module">
-  import { buildDoc } from '../../../works/stamp/js/docs.js';
+  import { buildDoc, paintDoc } from '../../../works/stamp/js/docs.js';
   import { makeImpression, rng } from '../../../works/stamp/js/ink.js';
   await document.fonts.ready;
   const tray = document.getElementById('tray');
@@ -49,7 +49,8 @@
   const top = 12;
   const docs = [];
   function put(spec, x, rot) {
-    const d = buildDoc(spec, rand);
+    const d = buildDoc(spec, rand, u);
+    paintDoc(d, u);
     d.el.style.transform = `translate(${x}px, ${top}px) rotate(${rot}deg)`;
     belt.appendChild(d.el);
     docs.push(d);
