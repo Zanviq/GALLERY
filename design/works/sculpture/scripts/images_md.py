@@ -1,6 +1,8 @@
 """Write design/works/sculpture/IMAGES.md from the scratch prompts.jsonl (which image file each prompt made).
 
     python -I design/works/sculpture/scripts/images_md.py <scratch>/sculpture/gen/prompts.jsonl
+Note: the "Objects instead of people (2026-11-10)" section of IMAGES.md was appended separately
+(from <scratch>/people-a/prompts.jsonl); a re-run of this script drops it.
 """
 import json
 import pathlib
@@ -19,12 +21,12 @@ USED = {
     'g07-threshold.jpg': ('(discarded)', 'too close to the step block; replaced by g16'),
     'g08-detail.jpg': ('img/detail-*.webp', 'surface detail of 〈셋째 단〉'),
     'g09-visitor.jpg': ('(base, discarded)', 'the model blurred the visitor\'s face; fixed in g13'),
-    'g10-studio.jpg': ('img/studio-*.webp', 'the artist grinding in the studio'),
+    'g10-studio.jpg': ('replaced 2026-11-10 by img/workshop-*.webp (people-a/sc-studio.jpg)', 'the artist grinding in the studio'),
     'g11-glass.jpg': ('img/glass-*.webp', 'crushed bottle glass, sorted'),
     'g12-room.jpg': ('(base, discarded)', 'rubbings read like letters; fixed in g14'),
-    'g13-visitor-edit.jpg': ('img/visitor-*.webp', 'edit of g09: blur removed, head turned away'),
+    'g13-visitor-edit.jpg': ('replaced 2026-11-10 by img/line-*.webp (people-a/sc-line.jpg)', 'edit of g09: blur removed, head turned away'),
     'g14-room-edit.jpg': ('img/room-*.webp (full bleed)', 'edit of g12: white frames, oval worn areas only'),
-    'g15-survey.jpg': ('img/survey-*.webp', 'the artist measuring a worn market stair'),
+    'g15-survey.jpg': ('replaced 2026-11-10 by img/stair-*.webp (people-a/sc-survey3.jpg)', 'the artist measuring a worn market stair'),
     'g16-threshold.jpg': ('img/threshold-*.webp', '〈뒷문 문턱〉, second attempt'),
 }
 

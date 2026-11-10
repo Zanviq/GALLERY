@@ -1,5 +1,7 @@
 # 밤차 — IMAGES.md
 
+2026-11-10: 사람이 나오는 사진 여덟 장(플랫폼, 독서, 찻잔을 든 손, 승무원, 도착, 창업자 셋)을 사물 사진으로 바꿨다 (BRIEF §000). 새 사진과 프롬프트는 맨 아래 "사람 대신 사물" 에 있다.
+
 모델 `gemini-3-pro-image`, `<scratchpad>/tools/gen_image.py`. 생성 14회, 사용 13장. 원본은 스크래치패드
 `nighttrain/gen/`, 보정과 내보내기는 `scripts/grade.py` (주황·노랑 채도 줄임, 약하게 차갑게, 가장 어두운 그림자를 `#1B2F6E` 쪽으로).
 모든 이미지를 원본 크기로 확인했다: 얼굴, 손가락(찻잔·책·담요를 든 손), 글자 같은 낙서. 플랫폼 사진의 객차 아래쪽에 읽을 수 없는
@@ -16,7 +18,7 @@ Interior photograph of a compact private sleeper-train cabin at night, for a you
 
 ## 2. C-platform → `img/platform-*.webp`
 
-- 쓰인 곳: 하룻밤 22:40 (밤 플랫폼)
+- 쓰인 곳: 버림 (2026-11-10 사람 사진 → 사물 사진, 아래 "사람 대신 사물" 참고). 원래 자리: 하룻밤 22:40 (밤 플랫폼)
 - 비율 3:2, 크기 2K, 참조: 없음
 
 ```
@@ -34,7 +36,7 @@ The same sleeper cabin as in the reference photograph (same grey felt walls, sam
 
 ## 4. E-attendant → `img/attendant-*.webp`
 
-- 쓰인 곳: 하룻밤 06:30 (승무원)
+- 쓰인 곳: 버림 (2026-11-10 사람 사진 → 사물 사진, 아래 "사람 대신 사물" 참고). 원래 자리: 하룻밤 06:30 (승무원)
 - 비율 4:5, 크기 2K, 참조: C-platform.jpg
 
 ```
@@ -52,7 +54,7 @@ The same sleeper train interior design as in the reference photograph (same ligh
 
 ## 6. G-arrival → `img/arrival-*.webp`
 
-- 쓰인 곳: 하룻밤 07:05 (아침 도착)
+- 쓰인 곳: 버림 (2026-11-10 사람 사진 → 사물 사진, 아래 "사람 대신 사물" 참고). 원래 자리: 하룻밤 07:05 (아침 도착)
 - 비율 3:2, 크기 2K, 참조: C-platform.jpg
 
 ```
@@ -61,7 +63,7 @@ Photograph of passengers stepping off a sleeper train onto a station platform at
 
 ## 7. D-tea → `img/tea-*.webp`
 
-- 쓰인 곳: 하룻밤 23:30 (차 한 잔)
+- 쓰인 곳: 버림 (2026-11-10 사람 사진 → 사물 사진, 아래 "사람 대신 사물" 참고). 원래 자리: 하룻밤 23:30 (차 한 잔)
 - 비율 4:5, 크기 2K, 참조: A-cabin-night.jpg
 
 ```
@@ -70,7 +72,7 @@ Close photograph of a passenger's two hands holding a plain white ceramic cup of
 
 ## 8. P1-founder → `img/founder-yoon-*.webp`
 
-- 쓰인 곳: 회사: 윤도경
+- 쓰인 곳: 버림 (2026-11-10 사람 사진 → 사물 사진, 아래 "사람 대신 사물" 참고). 원래 자리: 회사: 윤도경
 - 비율 4:5, 크기 1K, 참조: C-platform.jpg
 
 ```
@@ -79,7 +81,7 @@ Environmental portrait of a co-founder of a small sleeper-train company, for the
 
 ## 9. P2-founder → `img/founder-seo-*.webp`
 
-- 쓰인 곳: 회사: 서하린
+- 쓰인 곳: 버림 (2026-11-10 사람 사진 → 사물 사진, 아래 "사람 대신 사물" 참고). 원래 자리: 회사: 서하린
 - 비율 4:5, 크기 1K, 참조: P1-founder.jpg
 
 ```
@@ -97,7 +99,7 @@ The same sleeper train interior design as in the reference photograph (same ligh
 
 ## 11. P3-founder → `img/founder-ma-*.webp`
 
-- 쓰인 곳: 회사: 마준우
+- 쓰인 곳: 버림 (2026-11-10 사람 사진 → 사물 사진, 아래 "사람 대신 사물" 참고). 원래 자리: 회사: 마준우
 - 비율 4:5, 크기 1K, 참조: P1-founder.jpg
 
 ```
@@ -115,7 +117,7 @@ The same sleeper train interior design as in the reference photograph (same ligh
 
 ## 13. F-reading → `img/reading-*.webp`
 
-- 쓰인 곳: 하룻밤 23:05 (독서등 아래)
+- 쓰인 곳: 버림 (2026-11-10 사람 사진 → 사물 사진, 아래 "사람 대신 사물" 참고). 원래 자리: 하룻밤 23:05 (독서등 아래)
 - 비율 4:5, 크기 2K, 참조: H2-double.jpg
 
 ```
@@ -129,4 +131,98 @@ Photograph inside the same two-berth sleeper cabin as in the reference photograp
 
 ```
 The same single sleeper cabin as in the reference photograph (same light grey wool felt walls, same pale ash-wood ledge, same matte black swing-arm reading lamp, same white bed linen and deep blue wool blanket), photographed from the other end: standing at the window end and looking back toward the cabin door. We see the made bed running along the wall on one side, and beside the door a small built-in corner washbasin cabinet in pale grey with a round white basin, a small mirror and a hook with a folded white towel; the sliding door is closed. Evening, the reading lamp is on and gives soft neutral warm-white light, the cabin is clean and well lit. Photographed at eye level with a 28mm lens on a medium-format digital camera, clean, well exposed, true colours, calm and inviting, like an architectural photograph of a small hotel room. No people. No text, no signs, no logos, no numbers.
+```
+
+## 사람 대신 사물 (2026-11-10)
+
+생성 9회(편집 2회 포함). 원본은 스크래치패드 `people-a/`, 보정과 내보내기는 같은 `scripts/grade.py`. 사람이 있던 사진은 원래 사진을 `--ref` 로 넣고 사람만 지우는 편집으로 만들어 빛과 색을 그대로 두었다. 창업자 셋은 같은 파란 객차 옆면과 철제 수레 위에 각자 맡은 일의 물건을 놓은 정물 세 장이다. 모두 원본 크기로 확인했다: 사람·손 없음, 글자나 눈금처럼 읽히는 표시 없음(윤도경 도구와 마준우 쇠자·스톱워치의 눈금은 편집으로 지웠다). 도착 사진의 객차 아래쪽 작은 표기는 예전 사진과 같은 수준이며 읽히지 않는다.
+
+### nt-platform.jpg → `img/platform-door-*.webp` (하룻밤 22:40)
+
+- 빈 밤 플랫폼, 열린 객차 문과 발판. C-platform 에서 사람 셋을 지운 편집
+- 비율 3:2, 크기 2K, 참조: C-platform.jpg
+
+```
+Edit this photograph, keeping the train, the coaches, the lit windows, the platform, the canopy, the lights, the camera position, the framing and the colour exactly as they are. Remove all three people: the two travellers with bags and the uniformed attendant by the door, together with their shadows, and fill in the clean concrete platform, the white edge line and the blue coach side behind them so nothing of them remains. The platform is now empty. The coach door stays open with warm-white light from inside falling on the platform, and a small black folding boarding step stands on the platform right below the open door, ready for the first passengers. The result must look like an ordinary, unretouched photograph. No people anywhere, no text, no signs, no numbers, no logos.
+```
+
+### nt-reading.jpg → `img/bunk-book-*.webp` (하룻밤 23:05)
+
+- 2인실 아래 침대, 켜진 독서등과 엎어 둔 책. F-reading 에서 사람을 지운 편집
+- 비율 4:5, 크기 2K, 참조: F-reading.jpg
+
+```
+Edit this photograph, keeping the cabin, the bunk above, the window, the reading lamp and its light, the table, the bedding colours, the camera position, the framing and the colour exactly as they are. Remove the woman completely: nobody is in the bed. The white duvet and the deep blue wool blanket are folded back diagonally from the pillow, the white pillow keeps a soft dent where a head rested, and an open paperback book lies face down on the white sheet under the lamp light, its plain pale grey cover blank with no title, no letters and no picture. The black reading lamp stays on. The result must look like an ordinary, unretouched photograph of the cabin a moment after someone stepped out. No people, no hands, no text, no logos, no numbers.
+```
+
+### nt-tea.jpg → `img/tea-cup-*.webp` (하룻밤 23:30)
+
+- 창가 선반의 김 나는 찻잔과 티백 접시. D-tea 에서 손과 소매를 지운 편집
+- 비율 4:5, 크기 2K, 참조: D-tea.jpg
+
+```
+Edit this photograph, keeping the window, the night outside, the ash-wood window ledge, the black reading lamp and its light, the pillow, the deep blue blanket, the camera position, the framing and the colour exactly as they are. Remove the two hands, the arm and the grey knit sleeve completely, so no part of a person remains. The plain white ceramic cup of hot barley tea now stands alone on the ledge in the same place, with thin steam rising from it; next to it a small round white saucer holding a used tea bag folded in a white paper napkin. Where the sleeve was, we see the white pillow and the soft deep blue wool blanket on the bed. The result must look like an ordinary, unretouched photograph. No people, no hands, no text, no logos, no pattern on the cup.
+```
+
+### nt-morning.jpg → `img/morning-tray-*.webp` (하룻밤 06:30)
+
+- 새벽 창가 선반의 아침 차와 빵, 수건, 세면도구 주머니 (승무원 사진 대신)
+- 비율 4:5, 크기 2K, 참조: B-cabin-dawn.jpg
+
+```
+Photograph in the same sleeper cabin as the reference photograph (same light grey felt walls, same pale ash-wood ledge, same window with the frosted fields outside at first light, same white bedding and deep blue wool blanket), at half past six in the morning, for a young rail company's website. A closer view, standing beside the bed and looking down at the pale ash-wood ledge under the window: the morning service set out on it. A plain white ceramic teapot and a plain white cup of tea, two small round plain bread rolls on a small white plate, a neatly folded white hand towel, and a small light grey felt pouch with a white toothbrush and a small plain white tube. At the lower edge of the frame, a corner of the white duvet and the deep blue blanket. Soft cool daylight from the window, the reading lamp switched off. Photographed with a 50mm lens on a medium-format digital camera, clean, well exposed, natural colours, crisp, calm. No people, no hands. No text, no labels, no logos, no numbers, no pattern anywhere.
+```
+
+### nt-arrival.jpg → `img/arrival-empty-*.webp` (하룻밤 07:05)
+
+- 아침 햇빛의 빈 플랫폼과 열린 문. G-arrival 에서 사람과 그림자, 표지판을 지운 편집
+- 비율 3:2, 크기 2K, 참조: G-arrival.jpg
+
+```
+Edit this photograph, keeping the train, the open coach doors, the platform, the canopy, the morning sunlight, the city in the distance, the camera position, the framing and the colour exactly as they are. Remove every person: the uniformed attendant, the man stretching, the man with the paper cup and the two men walking with bags, together with all of their shadows, and fill in the sunlit concrete platform, the white edge line and the blue coach behind them so nothing of them remains. Remove the person visible through the coach window as well. The platform is now empty in the low morning light, the coach doors still open. Also remove the blue sign board on the right post so it is a plain grey post. The result must look like an ordinary, unretouched photograph. No people anywhere, no text, no signs, no numbers, no logos.
+```
+
+### nt-yoon.jpg → (nt-yoon2 의 바탕, 세 정물의 --ref)
+
+- 윤도경의 정비 도구 첫 판. 게이지 판에 글자 같은 각인이 있어 편집했다
+- 비율 4:5, 크기 1K, 참조: P1-founder.jpg
+
+```
+Still-life photograph in the same place, light, lens and colour as the reference photograph: the flat side of the same deep blue railway coach with one thin white line fills the whole background, slightly out of focus, in soft even overcast daylight in a rail depot. There is no person in this photograph. In the foreground, filling the lower half of the frame, the flat top of a plain grey steel workshop trolley, and on it the tools of the man who keeps the coaches running: a neatly folded dark grey cotton work jacket, a pair of worn tan leather work gloves laid on the jacket, a long steel torque wrench, a flat steel wheel-profile gauge plate, and a small steel tape measure. Arranged simply, slightly off centre, seen from standing height at a gentle downward angle. Medium-format digital, 85mm lens, crisp, well exposed, true colours, calm. No people, no hands. No text, no engraving, no logos, no numbers, no scale markings readable as digits.
+```
+
+### nt-yoon2.jpg → `img/kit-yoon-*.webp` (회사: 윤도경)
+
+- 회색 작업복, 작업 장갑, 토크 렌치, 바퀴 게이지, 줄자
+- 비율 4:5, 크기 1K, 참조: nt-yoon.jpg
+
+```
+Edit this photograph, keeping the blue coach background, the light, the grey steel trolley, the folded grey work jacket, the camera position, the framing and the colour exactly as they are. Change only these things: the leather work gloves become worn dark grey canvas work gloves; the flat steel gauge plate becomes completely plain brushed steel with two holes and no engraving, no stamped marks, no letters and no numbers at all; the torque wrench handle is plain polished steel with no markings or scale; the small tape measure case is plain brushed steel with no label. The result must look like an ordinary, unretouched photograph. No people, no hands, no text, no logos, no numbers.
+```
+
+### nt-seo.jpg → `img/kit-seo-*.webp` (회사: 서하린)
+
+- 흰 시트와 베갯잇, 파란 담요, 개어 놓은 제복, 찻주전자와 찻잔
+- 비율 4:5, 크기 1K, 참조: nt-yoon.jpg
+
+```
+Still-life photograph in exactly the same place, light, lens, framing and colour as the reference photograph: the same flat deep blue railway coach side with one thin white line in the background, slightly out of focus, soft even overcast daylight, and the same grey steel workshop trolley in the foreground. Only the objects on the trolley change. Now on it lie the things of the woman who runs the cabins: a neat stack of folded crisp white bed sheets and two white pillowcases, topped by a folded deep blue wool blanket, the same deep blue as the coach; beside the stack a folded deep blue uniform jacket with plain dark buttons, and a plain white ceramic teapot with one plain white cup. Arranged simply, slightly off centre, seen from standing height at a gentle downward angle. Medium-format digital, crisp, well exposed, true colours, calm. No people, no hands. No text, no labels, no badges, no embroidery, no logos, no numbers.
+```
+
+### nt-ma.jpg → (nt-ma2 의 바탕)
+
+- 마준우의 시각표 작업 첫 판. 쇠자·연필·스톱워치에 숫자와 글자가 있어 편집했다
+- 비율 4:5, 크기 1K, 참조: nt-yoon.jpg
+
+```
+Still-life photograph in exactly the same place, light, lens, framing and colour as the reference photograph: the same flat deep blue railway coach side with one thin white line in the background, slightly out of focus, soft even overcast daylight, and the same grey steel workshop trolley in the foreground. Only the objects on the trolley change. Now on it lie the things of the man who plans the timetable: a few loose sheets of pale graph paper with a hand-drawn train diagram in pencil, only straight diagonal pencil lines crossing the faint grid, with no numbers, no letters and no writing anywhere; a plain steel ruler with no markings; a mechanical pencil and an eraser; a pair of thin black-rimmed glasses folded on top of the sheets; and a plain round steel stopwatch with a blank white face and no numerals. Arranged simply, slightly off centre, seen from standing height at a gentle downward angle. Medium-format digital, crisp, well exposed, true colours, calm. No people, no hands. No text, no digits, no labels, no logos.
+```
+
+### nt-ma2.jpg → `img/kit-ma-*.webp` (회사: 마준우)
+
+- 연필 운행선을 그린 모눈종이, 안경, 연필, 쇠자, 지우개, 스톱워치
+- 비율 4:5, 크기 1K, 참조: nt-ma.jpg
+
+```
+Edit this photograph, keeping the blue coach background, the light, the grey steel trolley, the black-rimmed glasses, the eraser, the camera position, the framing and the colour exactly as they are. Change only these things: the sheets become plain white paper with a faint pale grey grid, and on the top sheet a hand-drawn train timetable diagram in soft pencil: about a dozen thin straight diagonal pencil lines running in two directions and crossing each other in a regular pattern across the grid, with no numbers, no letters and no writing at all. The steel ruler becomes completely plain brushed steel with no scale marks and no numbers. The wooden pencil and the mechanical pencil are plain, with no printing. The stopwatch face is plain white with only two thin black hands, no numerals, no tick marks, no printing. The result must look like an ordinary, unretouched photograph. No people, no hands, no text, no digits, no logos.
 ```

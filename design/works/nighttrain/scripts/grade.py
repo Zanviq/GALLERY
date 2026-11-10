@@ -25,20 +25,21 @@ SRC = os.path.join(os.environ.get('LOCALAPPDATA', ''), 'Temp', 'claude', '7e6ff0
 NIGHT = np.array([0x1B, 0x2F, 0x6E], dtype=np.float32) / 255
 
 # name: (source, crop box in source px or None, widths, warm-taming strength)
+# Sources under ../../people-a/ (scratchpad/people-a) are the object-centred replacements of 2026-11-10 (no people; BRIEF §000).
 SET = {
     'cabin-night': ('A-cabin-night.jpg', None, (1200, 720), 0.45),
     'cabin-single': ('A2-single.jpg', None, (1600, 800), 0.45),
     'cabin-double': ('H2-double.jpg', None, (1600, 800), 0.45),
     'cabin-four': ('I-couchette.jpg', None, (1600, 800), 0.45),
-    'platform': ('C-platform.jpg', None, (1600, 800), 0.5),
-    'reading': ('F-reading.jpg', None, (1200, 720), 0.45),
-    'tea': ('D-tea.jpg', None, (1200, 720), 0.45),
     'dawn': ('B-cabin-dawn.jpg', None, (1600, 800), 0.3),
-    'attendant': ('E-attendant.jpg', None, (1200, 720), 0.4),
-    'arrival': ('G-arrival.jpg', None, (1600, 800), 0.6),
-    'founder-yoon': ('P1-founder.jpg', None, (720, 400), 0.3),
-    'founder-seo': ('P2-founder.jpg', None, (720, 400), 0.3),
-    'founder-ma': ('P3-founder.jpg', None, (720, 400), 0.3),
+    'platform-door': ('../../people-a/nt-platform.jpg', None, (1600, 800), 0.5),
+    'bunk-book': ('../../people-a/nt-reading.jpg', None, (1200, 720), 0.45),
+    'tea-cup': ('../../people-a/nt-tea.jpg', None, (1200, 720), 0.45),
+    'morning-tray': ('../../people-a/nt-morning.jpg', None, (1200, 720), 0.45),
+    'arrival-empty': ('../../people-a/nt-arrival.jpg', None, (1600, 800), 0.6),
+    'kit-yoon': ('../../people-a/nt-yoon2.jpg', None, (720, 400), 0.3),
+    'kit-seo': ('../../people-a/nt-seo.jpg', None, (720, 400), 0.3),
+    'kit-ma': ('../../people-a/nt-ma2.jpg', None, (720, 400), 0.3),
 }
 
 

@@ -13,7 +13,7 @@ one thing.
 
 Inspected at full size: block edges straight, no duplicated parts, no text-like marks. Known
 quirks left in: the worn hollows are a little whiter and smoother than the rest of the stone
-(read as finer polishing); the visitor in g13 shows part of a profile.
+(read as finer polishing).
 
 ## g01-step.jpg
 
@@ -97,7 +97,7 @@ Museum installation photograph for an exhibition catalogue, in the same museum a
 
 ## g10-studio.jpg
 
-- Used as: img/studio-*.webp
+- Used as: replaced on 2026-11-10 (showed a person; see "Objects instead of people" below). Was img/studio-*.webp
 - What: the artist grinding in the studio
 - Aspect 3:2, refs: g02-step-edit.jpg
 
@@ -137,7 +137,7 @@ Wide installation view of one gallery room in the same museum, same material and
 
 ## g15-survey.jpg
 
-- Used as: img/survey-*.webp
+- Used as: replaced on 2026-11-10 (showed a person; see "Objects instead of people" below). Was img/survey-*.webp
 - What: the artist measuring a worn market stair
 - Aspect 3:2, refs: g10-studio.jpg
 
@@ -147,7 +147,7 @@ Documentary photograph, same sculptor as in the reference photo (short black hai
 
 ## g13-visitor-edit.jpg
 
-- Used as: img/visitor-*.webp
+- Used as: replaced on 2026-11-10 (showed a person; see "Objects instead of people" below). Was img/visitor-*.webp
 - What: edit of g09: blur removed, head turned away
 - Aspect 3:2, refs: g09-visitor.jpg
 
@@ -173,4 +173,73 @@ Edit this photograph, keeping the room, the light, the camera position and both 
 
 ```text
 Museum installation photograph for an exhibition catalogue, in the same white skylit museum as the second reference photo, pale grey polished concrete floor, even soft daylight. One small sculpture lies alone on the floor: a slim, low bar the size of an old classroom door threshold, only 12 cm tall, 22 cm deep and 96 cm long, so it is long and thin like a short beam, not a block. It is made of the hand-ground white terrazzo of the first reference photo: bright white cement with small angular chips of green bottle glass. Its narrow top has one long, shallow, smooth groove worn into the middle by forty years of children stepping over it, faintly glossy, lowering the top edge in a gentle curve about 2 cm deep. The camera looks down at about 40 degrees from a standing position, close, so the bar runs diagonally across the middle of the frame with plenty of floor around it; no wall, no skylight in frame. Medium-format digital, neutral white balance, crisp focus, soft contact shadow. No people, no text, no labels, no other objects.
+```
+
+## Objects instead of people (2026-11-10)
+
+The owner asked for as few generated people as possible (BRIEF §000), so the three photographs
+with the artist or a visitor were replaced: 6 generations, sources in the scratchpad `people-a/`,
+exported with `tools/img_prep.py` at q76 in the same widths. Each edit keeps the original frame and
+light and removes the person. Inspected at full size: no people or hands, no text-like marks.
+Known quirk: the stair photograph went through three edit passes, so the terrazzo grain is a
+little softer and flatter than in the other documentary shots; it reads fine at its display size.
+
+### sc-studio.jpg
+
+- Used as: img/workshop-*.webp
+- What: edit of g10: the sculptor removed; the grinder, ear defenders and mask rest on the half-ground slab
+- Aspect 3:2, refs: g10-studio.jpg
+
+```text
+Edit this photograph, keeping the workshop, the block walls, the open roll-up door and the overcast daylight, the shelves of grinding stones, the buckets, the wet floor, the trestles and the long white terrazzo block with green glass chips exactly as they are, with the same camera position, framing and colour. Remove the sculptor completely, with her apron, boots, gloves, ear defenders and mask, and fill in the wet concrete floor, the trestle and the open door behind where she stood so nothing of her remains. The hand-held wet stone grinder now rests on top of the block at the edge of the half-ground area, switched off, its thin water hose trailing down to the floor in loose loops. A grey rubber apron hangs from a hook on the left block wall, and a pair of ear defenders and a white dust mask lie on the dry end of the block. The block's top stays half ground smooth and wet, half still rough with grey slurry. The result must look like an ordinary, unretouched documentary photograph. No people, no hands, no text, no logos, no brand names.
+```
+
+### sc-survey.jpg
+
+- Used as: (base for sc-survey2)
+- What: g15 stairwell without the artist; the free-standing pin of the gauge looked wrong
+- Aspect 3:2, refs: g15-survey.jpg
+
+```text
+Documentary photograph of the same old market stairwell as in the reference photograph (same worn grey terrazzo steps with deep smooth dips worn into the middle of each step, same peeling pale green walls, same high window with daylight), but nobody is there: the person in the reference is gone. The camera is a little lower and closer, looking straight up the flight. A long aluminium straightedge lies across the third step, bridging its worn dip, and a small steel depth gauge stands upright in the deepest point of the dip, its rod touching the stone. A clipboard with blank white paper and a pencil lies on the step above, and a worn canvas tool bag sits on the bottom step at the right edge of the frame. Daylight from the high window, a little dust in the air, crisp 35 mm digital, neutral colour, honest. No people, no hands, no signs, no posters, no text, no numbers, no logos, no scale markings readable as digits.
+```
+
+### sc-survey2.jpg
+
+- Used as: (base for sc-survey3)
+- What: gauge redrawn, but it floated above the straightedge like a cross
+- Aspect 3:2, refs: sc-survey.jpg
+
+```text
+Edit this photograph, keeping the stairwell, the worn terrazzo steps, the peeling green walls, the window, the clipboard, the pencil, the tool bag, the long aluminium straightedge, the light, the camera position, the framing and the colour exactly as they are. Remove the thin free-standing steel pin with the round cap and the small T-shaped steel piece standing on the straightedge, and fill in the stone behind them. Now the straightedge simply lies across the worn step, resting on the two unworn ends, so the curved gap between its straight lower edge and the smooth worn dip below it is clearly visible in the middle. In that gap, at the deepest point, a small plain steel depth gauge stands upright: a narrow flat crossbar resting on top of the straightedge and a thin steel rod hanging down from it through the gap until it touches the bottom of the dip. The gauge is plain brushed steel with no markings. The result must look like an ordinary, unretouched documentary photograph. No people, no hands, no text, no numbers, no logos.
+```
+
+### sc-survey3.jpg
+
+- Used as: img/stair-*.webp
+- What: final: the straightedge across the worn step shows the depth as a gap; clipboard, pencil, tool bag
+- Aspect 3:2, refs: sc-survey2.jpg
+
+```text
+Edit this photograph, keeping the stairwell, the worn terrazzo steps, the peeling green walls, the window, the clipboard, the pencil, the tool bag, the long aluminium straightedge, the light, the camera position, the framing and the colour exactly as they are. Remove the cross-shaped steel gauge completely (its upright bar, its crossbar and its thin rod) and fill in the stone and the stair behind it so nothing of it remains. The straightedge lies flat across the worn step, resting on its two unworn ends, and the empty curved gap between its straight lower edge and the smooth worn dip below it is clearly visible in the middle. The result must look like an ordinary, unretouched documentary photograph. No people, no hands, no text, no numbers, no logos.
+```
+
+### sc-visitor.jpg
+
+- Used as: (discarded)
+- What: edit of g13 with the visitor removed; the terrazzo came out smeared
+- Aspect 3:2, refs: g13-visitor-edit.jpg
+
+```text
+Edit this photograph, keeping the white skylit gallery, the pale grey polished concrete floor, the light, the line of white terrazzo step-blocks with green glass chips and their worn dips, the camera position, the framing and the colour exactly as they are. Remove the visitor in the charcoal coat completely, together with his shadow, and fill in the blocks, the gaps between them and the floor where he stood, so the second and third blocks are whole and every block shows its own worn dip, each a different depth. The room is empty. The result must look like an ordinary, unretouched museum catalogue photograph. No people, no wall text, no labels, no signage.
+```
+
+### sc-line.jpg
+
+- Used as: img/line-*.webp
+- What: 〈2번 출구, 열네 단〉 from the side, empty room (replaces the visitor view)
+- Aspect 3:2, refs: g04-exit.jpg, g08-detail.jpg
+
+```text
+Museum installation photograph for an exhibition catalogue: the same installation, the same room and the same light as the first reference photo, photographed from a different position. A diagonal view from beside the line of fourteen blocks, camera at standing eye level a little to one side of the first block, so the row of blocks runs from the lower left corner toward the far right of the frame and recedes into the room. Each block is hand-ground white terrazzo, exactly the material of the second reference photo: bright white cement with crisp, sharply cut angular chips of green bottle glass, wet-ground to a matte satin finish, every chip clean-edged and in focus. Each block has one soft worn dip in the middle of its top running into its front edge, the depth different on every block, deepest on the nearest blocks. White walls, wide frosted skylight, pale grey polished concrete floor, soft contact shadows. Medium-format digital, perspective-corrected verticals, neutral white balance, crisp focus from front to back. The room is empty. No people, no wall text, no labels, no signage, no other objects.
 ```

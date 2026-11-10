@@ -96,6 +96,8 @@ amber, gold, purple, gradients).
 
 16 Gemini generations (see IMAGES.md): crisp, neutral museum photography in one white skylit
 gallery for the works, and overcast documentary daylight for the survey, the studio and the glass.
+No people (2026-11-10, BRIEF §000): the survey, studio and visitor views were redone as the stair
+with the straightedge, the workshop with the tools on the half-ground slab, and the empty room.
 No grain, no film look, matching the flat poster. Exported to webp q76 at 2–3 widths with `srcset`;
 everything below the poster is `loading="lazy"`. The whole page is about 0.9 MB of images and
 0.15 MB of fonts.
