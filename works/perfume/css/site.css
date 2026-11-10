@@ -109,6 +109,14 @@ figcaption {
 }
 .bar__nav a:hover { text-decoration: underline; }
 
+/* ---------- the plum field, alive: js/pool.js draws the liquid, the flat colour stays underneath ---------- */
+.hero, .visit { position: relative; isolation: isolate; }
+.pool {
+  position: absolute; inset: 0; z-index: -1; display: block; width: 100%; height: 100%;
+  opacity: 0; transition: opacity 1.2s ease; pointer-events: none;
+}
+.pool.is-on { opacity: 1; }
+
 /* ---------- hero: the plum field ---------- */
 .hero { background: var(--plum); color: var(--ink); }
 .hero__grid {
@@ -134,7 +142,26 @@ figcaption {
 .season { padding-block: var(--sec) 0; }
 .season__text { grid-column: 2 / 11; font: 300 var(--t-statement)/1.6 var(--f-text); letter-spacing: -0.01em; }
 .season__row { margin-top: clamp(72px, 9vw, 144px); }
-.season__row figcaption { max-width: 30em; margin-left: auto; text-align: right; }
+.season__row figcaption { max-width: 40em; margin-left: auto; text-align: right; }
+
+/* the four bottles answer: point at one and it says what is steeped in it; click goes to its spread */
+.row { --pad: 4.25rem; --top: 0.46; position: relative; padding-bottom: var(--pad); }
+.row picture { display: block; }
+.pick {
+  --cx: var(--x); --w: 13%;
+  position: absolute; top: calc((100% - var(--pad)) * var(--top)); bottom: 0; left: calc(var(--cx) - var(--w) / 2); width: var(--w);
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+  text-decoration: none; color: var(--ink);
+}
+.pick__name { padding-top: 6px; font: 400 1.0625rem/1.5 var(--f-text); white-space: nowrap; }
+.pick__more {
+  height: 1.5rem; white-space: nowrap; color: var(--ink-2);
+  font: 400 var(--t-micro)/1.5rem var(--f-ui);
+  opacity: 0; transition: opacity var(--t-fast);
+}
+.pick:hover .pick__name, .pick:focus-visible .pick__name { text-decoration: underline; text-underline-offset: 0.3em; }
+.pick:hover .pick__more, .pick:focus-visible .pick__more { opacity: 1; }
+.pick:focus-visible { outline-offset: 0; }
 
 /* ---------- scents ---------- */
 .scents { padding-block: 0 var(--sec); }
@@ -167,7 +194,7 @@ figcaption {
 .step__num { display: block; margin-bottom: 8px; font: italic 300 2.5rem/1 var(--f-latin); color: var(--ink); font-variant-numeric: lining-nums; }
 .step__title { font: 400 1.3125rem/1.4 var(--f-text); }
 .step__text { margin-top: 8px; max-width: 30em; color: var(--ink-2); }
-.atelier__hands { grid-column: 8 / 13; }
+.atelier__fill { grid-column: 8 / 13; }
 .atelier__room { margin-top: clamp(96px, 12vw, 192px); }
 
 /* ---------- visit: the plum field again ---------- */
@@ -244,7 +271,7 @@ figcaption {
   .atelier__title { grid-column: 1 / 8; }
   .atelier__story { grid-column: 1 / 10; }
   .steps { grid-column: 1 / 8; }
-  .atelier__hands { grid-column: 9 / 13; }
+  .atelier__fill { grid-column: 9 / 13; }
   .visit__info { grid-column: 1 / 7; }
   .visit__book { grid-column: 1 / 11; }
   .foot__name { grid-column: 1 / 5; }
@@ -257,19 +284,22 @@ figcaption {
   :root { --bar-h: 64px; }
   .wrap > *, .hero__text, .hero__photo, .hero__facts, .season__text, .scent__photo, .scent__text,
   .scent--flip .scent__photo, .scent--flip .scent__text, .atelier__title, .atelier__story, .steps,
-  .atelier__hands, .visit__info, .visit__book, .foot__name, .foot__addr, .foot__nav { grid-column: 1 / -1; }
+  .atelier__fill, .visit__info, .visit__book, .foot__name, .foot__addr, .foot__nav { grid-column: 1 / -1; }
   .hero__grid { min-height: 0; grid-template-rows: none; padding-top: calc(var(--bar-h) + 40px); }
   .hero__text, .hero__photo, .hero__facts { grid-row: auto; }
   .hero__text { gap: 28px; }
   .hero__photo { margin-top: 12px; }
   .season__row figcaption { text-align: left; margin-left: 0; }
+  .row { --pad: 2.5rem; --top: 0.42; }
+  .pick { --cx: var(--xm); --w: 20%; }
+  .pick__more { display: none; }
   .scent { row-gap: 36px; }
   .scent__photo, .scent__text { grid-row: auto; }
   .scent__name { margin-top: 16px; }
   .step { grid-template-columns: minmax(0, 1fr); }
   .step__day { grid-row: auto; display: flex; align-items: baseline; gap: 6px; margin-bottom: 12px; padding: 0; }
   .step__num { display: inline; margin: 0; font-size: 2.25rem; }
-  .atelier__hands { margin-top: 56px; }
+  .atelier__fill { margin-top: 56px; }
   .foot__grid { row-gap: 24px; }
 }
 @media (max-width: 400px) {

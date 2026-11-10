@@ -1,10 +1,24 @@
-# 담금 DAMGEUM — design system (revision of 2026-11-09)
+# 담금 DAMGEUM — design system (revision of 2026-11-09, amended 2026-11-10)
 
 A fictional perfume house in an invented town (가온시 장독골) that steeps each scent's raw material
 in alcohol for forty days and fills every bottle by hand. The site is its homepage
 (gallery.zanviq.dev/perfume/). Tokens live at the top of `works/perfume/css/site.css`.
 
-## What changed in this revision, and why
+## Amendment of 2026-11-10 (owner's fourth review, BRIEF §000)
+
+- **The moving background is back.** "3번도 적당한 움직이는 배경이어서 좋았다. 다시 돌려놔줘." The
+  first version's liquid pool is ported (without three.js and without the 3D bottle) into
+  `js/pool.js` and laid under both 청매 fields: the field is now the surface of the steeping
+  liquid, slowly moving, with a drifting caustic net; the hero one can be stirred. It averages to
+  the flat `--plum`, so the palette, grid and contrast below are unchanged. It keeps moving, slower,
+  under reduced motion. Details in INTERACTION.md.
+- **The row of four answers.** Names under each bottle; hover or focus adds what is steeped in it
+  and the month; each bottle links to its spread.
+- **No people in the photographs.** The hands photograph (day 42) is replaced by an object-only
+  still life of the bottle just filled, funnel still in its neck (IMAGES.md).
+- Fonts re-subset for the new copy (still Hahmlet, Newsreader, Damgeum Sans = renamed Plex).
+
+## What changed in the 2026-11-09 revision, and why
 
 The owner called the first version's 3D bottle on a blurred amber background unnatural and
 AI-looking (BRIEF §0). So:
@@ -21,7 +35,7 @@ AI-looking (BRIEF §0). So:
   pulls the page back to honey. The four are now 유월 (green plum, June), 누룩 (rice, November),
   오미 (omija, September), 먹 (ink, January): each is steeped in its own season.
 - **Interaction:** none beyond reading, three anchor links and the small visit booking form (which
-  sends nothing and says so). No animation; nothing to switch off for reduced motion.
+  sends nothing and says so). (Superseded on 2026-11-10: see the amendment above.)
 
 ## Idea
 
@@ -71,7 +85,8 @@ body 16–17px. `word-break: keep-all`; `text-wrap: balance` on headings. No cap
 3. **Scents** ×4: photograph in six columns, text block aligned to its bottom edge in four, alternating
    sides. Number, huge name, Latin name, one line, a three-row notes table, strength, season, prices.
 4. **Atelier**: heading + story, the steeping shelf full width, the five steps (day number in
-   Newsreader italic) beside the hands photograph, then the smelling room full width.
+   Newsreader italic) beside the day-42 still life (the bottle just filled), then the smelling room
+   full width.
 5. **Visit** (plum field): address with the fictional-address note, directions, hours; booking form
    directly on the field (no card).
 6. **Footer** (ink).
@@ -87,9 +102,10 @@ Rules (hairlines) appear only in the two small tables (scent notes, visit facts)
 
 ## Files
 
-- `works/perfume/`: `index.html`, `css/site.css`, `js/main.js` (booking only), `fonts/` (5 woff2 +
-  licences), `img/` (19 webp + 3 favicons).
+- `works/perfume/`: `index.html`, `css/site.css`, `js/main.js` (fields + booking), `js/pool.js`
+  (the liquid surface, WebGL2), `fonts/` (5 woff2 + licences), `img/` (19 webp + 3 favicons).
 - `design/works/perfume/`: `DESIGN.md`, `IMAGES.md`, `INTERACTION.md`, `contrast.py`,
   `subset_fonts.py`, `scripts/grade.py` (photo grading), `scripts/make_icons.py` (favicons from the
-  Hahmlet 담 glyph), `scripts/cdp.mjs` (capture/check runner, `CDP_PORT` env), `pp-shots.mjs`
+  Hahmlet 담 glyph), `scripts/cdp.mjs` (capture/check runner on port 9362, `CDP_PORT` env; flags
+  `motion` / `reduced` / `nogl`, ops `hover`, `sweep`, `scroll`), `pp-shots.mjs`
   (older puppeteer runner kept because BRIEF §6 points other works at it).

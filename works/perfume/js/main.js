@@ -1,7 +1,27 @@
-// 담금: the visit booking (nothing is sent or stored). The rest of the page is static.
+// 담금: the living plum fields (js/pool.js) and the visit booking (nothing is sent or stored).
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+/* ---------- the plum fields: a slow liquid surface; the hero one can be stirred ---------- */
+
+const reduceMQ = matchMedia('(prefers-reduced-motion: reduce)');
+const pools = [];
+const poolEls = $$('[data-pool]');
+if (poolEls.length && 'IntersectionObserver' in window) {
+  import('./pool.js').then(({ createPool }) => {
+    for (const c of poolEls) {
+      const stir = c.dataset.pool === 'stir';
+      const p = createPool(c, { host: c.parentElement, interactive: stir, reduced: reduceMQ.matches, quiet: stir ? 0 : 0.35 });
+      if (p) pools.push(p); else c.remove();
+    }
+    if (/[?&]capture/.test(location.search)) window.__pools = pools; // capture hook
+  }).catch(() => poolEls.forEach((c) => c.remove()));
+}
+// reduced motion keeps the liquid moving, only slower and with smaller rings
+reduceMQ.addEventListener('change', (e) => pools.forEach((p) => p.setReduced(e.matches)));
+
+/* ---------- booking ---------- */
 
 const book = $('[data-book]');
 const daysEl = $('[data-days]');

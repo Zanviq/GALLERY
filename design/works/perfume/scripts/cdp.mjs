@@ -1,22 +1,25 @@
 // Dependency-free capture and check runner over the Chrome DevTools Protocol (dev tool, not deployed).
-// Needs a headless Chrome started with --remote-debugging-port=9333. Every run gets a fresh
-// browser context (empty localStorage).
-//   node cdp.mjs <url> <W>x<H>[@dpr] [mobile] [reduced] [nostore] op op ...
+// Needs a headless Chrome started with --remote-debugging-port=9362 (CDP_PORT overrides). Every run
+// gets a fresh browser context (empty localStorage).
+//   node cdp.mjs <url> <W>x<H>[@dpr] [mobile] [reduced|motion] [nostore] [nogl] op op ...
+// This machine reports prefers-reduced-motion: reduce by default, so pass 'motion' to emulate
+// no-preference and 'reduced' to force reduce. 'nogl' makes getContext('webgl2') return null.
 // ops: wait=ms | shot=f.png | webp=f.webp | full=f.png | click=sel | focus=sel | key=Key | type=text
 //      eval=js | log=js | store=json (sets jamo.v1 and reloads) | reload=ms
 //      drag=x1,y1,x2,y2 | dragsel=from>to[@top|@bottom] | tap=x,y | tapsel=sel[@top|@bottom]
-//      touchdrag=from>to[@top|@bottom] | resize=WxH
+//      touchdrag=from>to[@top|@bottom] | resize=WxH | hover=sel | sweep=x1,y1,x2,y2 (mouse moves,
+//      no button) | scroll=y (instant)
 import { writeFileSync } from 'fs';
 
 const [, , url, size, ...rest] = process.argv;
 const m = /^(\d+)x(\d+)(?:@([\d.]+))?$/.exec(size);
 let [W, H, DPR] = [Number(m[1]), Number(m[2]), Number(m[3] || 1)];
 const flags = new Set();
-while (rest.length && /^(mobile|reduced|nostore)$/.test(rest[0])) flags.add(rest.shift());
+while (rest.length && /^(mobile|reduced|motion|nostore|nogl)$/.test(rest[0])) flags.add(rest.shift());
 const mobile = flags.has('mobile');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const ver = await (await fetch(`http://127.0.0.1:${process.env.CDP_PORT || 9333}/json/version`)).json();
+const ver = await (await fetch(`http://127.0.0.1:${process.env.CDP_PORT || 9362}/json/version`)).json();
 const ws = new WebSocket(ver.webSocketDebuggerUrl);
 await new Promise((r, j) => { ws.onopen = r; ws.onerror = j; });
 let nextId = 1;
@@ -65,9 +68,14 @@ async function metrics() {
 }
 await metrics();
 if (flags.has('reduced')) await cmd('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+if (flags.has('motion')) await cmd('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'no-preference' }] });
 if (flags.has('nostore')) {
   await cmd('Page.addScriptToEvaluateOnNewDocument', { source: `(() => { const deny = () => { throw new DOMException('denied', 'SecurityError'); };
     Object.defineProperty(window, 'localStorage', { get: deny }); Object.defineProperty(window, 'sessionStorage', { get: deny }); })();` });
+}
+if (flags.has('nogl')) {
+  await cmd('Page.addScriptToEvaluateOnNewDocument', { source: `(() => { const g = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (t, o) { return /webgl/.test(t) ? null : g.call(this, t, o); }; })();` });
 }
 async function go(u) {
   const p = new Promise((r) => { loaded = r; });
@@ -150,6 +158,12 @@ for (const op of rest) {
   else if (k === 'log') console.log('[log]', JSON.stringify(await evaluate(v)));
   else if (k === 'store') { await evaluate(`localStorage.setItem('jamo.v1', ${JSON.stringify(v)})`); await go(url); }
   else if (k === 'reload') { await go(url); await sleep(Number(v) || 0); }
+  else if (k === 'hover') { const p = await target(v); if (p) await cmd('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p[0], y: p[1], button: 'none', buttons: 0 }); else console.log('[hover] missing', v); }
+  else if (k === 'sweep') {
+    const [a, b, c, d] = v.split(',').map(Number);
+    for (let i = 0; i <= 24; i++) { await cmd('Input.dispatchMouseEvent', { type: 'mouseMoved', x: a + (c - a) * i / 24, y: b + (d - b) * i / 24, button: 'none', buttons: 0 }); await sleep(16); }
+  }
+  else if (k === 'scroll') { await evaluate('document.documentElement.style.scrollBehavior="auto";scrollTo(0,' + Number(v) + ')'); await sleep(400); }
   else if (k === 'resize') { const [a, b] = v.split('x').map(Number); W = a; H = b; await metrics(); await sleep(300); }
   else if (k === 'drag') { const [a, b, c, d] = v.split(',').map(Number); await drag(a, b, c, d); }
   else if (k === 'tap') { const [x, y] = v.split(',').map(Number); await touch('touchStart', [[x, y]]); await touch('touchEnd', []); }

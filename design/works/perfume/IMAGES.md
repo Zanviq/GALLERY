@@ -4,18 +4,30 @@ All photographs are generated with `gemini-3-pro-image` through `<scratchpad>/to
 (2K), then graded with `scripts/grade.py` and cropped/exported with `<scratchpad>/tools/img_prep.py`
 (webp q88). Raw files and `prompts.jsonl` stay in the scratch folder `perfume-rev/raw/`.
 
-10 generations in total, 9 used. Rejected: the first 누룩 shot (`04-nuruk`): a text-like
+12 generations in total, 9 used. Rejected: the first 누룩 shot (`04-nuruk`): a text-like
 engraving appeared on the bottle base, and the opaque milky liquid read as lotion, not perfume. It
 was regenerated as an almost clear, faintly hazy liquid.
+
+**2026-11-10, owner's fourth review (BRIEF §000: as few people as possible, objects at the
+centre).** `08-hands` (a woman's two hands filling a bottle) was the only image with a person in it.
+It is replaced by `12-fill`, an object-only still life that says the same thing (day 42, filling one
+bottle at a time): the bottle just filled, the glass funnel still in its neck, the porcelain cap
+lying beside it, the beaker with the last of the liquid and a glass rod, on the same window ledge.
+`11-fill` was the first take (ref `01-hero`); it had a faceted paper cone that read as an odd object
+and a stray green light patch on the wall, so `12-fill` is an edit pass of it (ref `11-fill`) that
+removes both. Raw files of this round are in the scratch folder `perfume-rev/r2/raw/`; `12-fill`
+was copied to `perfume-rev/raw/12-fill.jpg` for `scripts/grade.py`. `hands-1200/700.webp` are
+deleted from `works/perfume/img/`.
 
 Consistency: `01-hero` fixes the bottle (thick clear rectangular glass, rounded corners, short
 matte white porcelain cap, no label). Every other shot passes it (and `02-row` for the four liquids)
 as `--ref`. All shots share one set: cool grey-white lime plaster, overcast window light from the
 left, medium-format colour-negative look.
 
-Inspected at full size: bottle bases (only faint, illegible mould marks remain), both hands in
-`08-hands` (four fingers visible on each, thumbs hidden behind the beaker and the bottle; natural
-knuckles and nails), tags on the shelf jars (blank), smelling strips (blank).
+Inspected at full size: bottle bases (only faint, illegible mould marks remain), tags on the
+shelf jars (blank), smelling strips (blank); in `12-fill` the funnel stem sits inside the neck, the
+beaker has no printed scale, no text anywhere. No image on the page shows a person, a face or a
+hand.
 
 Grading (`scripts/grade.py`): saturation 0.88–0.96 and a small black lift on all; `10-visit` was
 shot warm (beige wall, honey wood) and gets a cool white-balance shift (r 0.92, b 1.06) and
@@ -29,7 +41,7 @@ saturation 0.78 so it sits with the plaster series.
 | `05-nuruk` | nuruk-1200 / 700 | 01-hero, 02-row | No.02 누룩: rice and a broken nuruk cake. |
 | `06-omi` | omi-1200 / 700 | 01-hero, 02-row | No.03 오미: dried omija, rosebuds, a glass of the infusion. |
 | `07-meok` | meok-1200 / 700 | 01-hero, 02-row | No.04 먹: inkstone, ink stick, wet pebble. |
-| `08-hands` | hands-1200 / 700 | 01-hero | Day 42: the perfumer fills a bottle (hands only). |
+| `12-fill` (edit of `11-fill`) | fill-1200 / 700 | 01-hero → 11-fill | Day 42: the bottle just filled, funnel still in its neck (replaces `08-hands`). |
 | `09-shelf` | shelf-1600 / 800 (crop 60,200–1990,1500: drops the honey-coloured rose jar) | 02-row | The steeping shelf. |
 | `10-visit` | visit-1600 / 800 | 02-row | The smelling room. |
 
@@ -59,9 +71,17 @@ The two reference photographs show the bottle design and the photographic style.
 
 The two reference photographs show the bottle design and the photographic style. Make a new photograph with exactly that bottle and its proportions (the thick clear glass body almost as wide as it is tall, softly rounded corners, short matte white porcelain cap, completely plain glass with no label, no text, no letters, no embossing anywhere), holding a near-black dark grey liquid that turns translucent smoky grey at its edges, filled two thirds, as in the fourth bottle of the row. The bottle stands at the left of the same cool grey-white plaster table top. To its right: a plain rectangular black inkstone of dark slate with a little pool of freshly ground ink in its well, a worn black ink stick resting across it (plain, no characters, no gold decoration), and a smooth wet black river pebble beside them with a few drops of water on the plaster. Soft overcast window light from the left, gentle shadows. Medium-format colour negative film, 80mm lens, camera a little above, off-centre composition with generous empty plaster around the objects. Fine film grain, muted true colours, nothing glossy.
 
-### 08-hands
+### 11-fill (ref 01-hero; first take, not used as is)
 
-The reference photograph shows the bottle design and the photographic style. New photograph: a close view of a perfumer's two hands at work, filling one of these bottles (same thick clear glass, same matte white porcelain cap lying on the table beside it, no label, no text) through a small clear glass funnel, pouring a pale yellow-green liquid from a small glass laboratory beaker. The hands belong to a woman of about fifty: short plain unpainted nails, slightly dry knuckles, natural anatomy with five fingers on each hand, the cuffs of a washed grey linen work shirt rolled to the forearm. Only hands and forearms are in frame, no face. They work on the same cool grey-white plaster table top under soft overcast window light from the left. Medium-format colour negative film, 80mm lens, camera a little above, calm composition with empty plaster around the hands. Fine film grain, muted true colours.
+The reference photograph shows the bottle design and the photographic style. New still-life photograph, no people and no hands anywhere: the moment just after a bottle has been filled. On the same cool grey-white lime-plaster window ledge, with the plain window frame at the far left and soft overcast daylight coming from it, stands exactly the bottle from the reference (thick clear glass block with softly rounded corners, completely plain glass, no label, no text, no letters, no engraving), now filled two thirds with the same pale yellow-green liquid, its neck still open with a small clear glass funnel resting in it. Its matte white porcelain cap lies on its side on the ledge in front. Just behind and to the right, a small clear glass laboratory beaker without any printed markings holds the last finger of the same pale green liquid, and a thin glass stirring rod lies across the ledge beside it. A single folded white paper filter cone, slightly stained pale green at its tip, rests flat near the beaker. A faint green refraction of the liquid falls on the plaster. Medium-format colour negative film, 80mm lens, camera a little above ledge height, calm off-centre composition with generous empty plaster wall above. Fine natural film grain, muted true colours, real glass with small imperfections, nothing glossy, nothing rendered.
+
+### 12-fill (edit pass, ref 11-fill): used
+
+Edit this photograph and keep everything else exactly as it is (same bottle with the glass funnel in its neck, same porcelain cap lying in front, same beaker, same glass rod, same light, framing, film grain and colours). Only two changes: remove the white-and-green faceted paper cone on the right completely, leaving plain plaster ledge where it was; and remove the green patch of light on the plaster wall at the far left beside the window frame, so that wall is plain even grey-white plaster. No people, no hands, no text.
+
+### 08-hands (retired 2026-11-10)
+
+Prompt kept in `perfume-rev/raw/prompts.jsonl`; the image showed a woman's hands and is no longer on the page.
 
 ### 09-shelf
 

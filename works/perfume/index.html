@@ -40,6 +40,7 @@
 <main id="main" tabindex="-1">
 
   <section class="hero" id="top" aria-labelledby="hero-title">
+    <canvas class="pool" data-pool="stir" aria-hidden="true"></canvas>
     <div class="wrap hero__grid">
       <div class="hero__text">
         <h1 class="hero__title" id="hero-title"><span>마흔 날을</span> <span>담가 둔 향</span></h1>
@@ -57,11 +58,19 @@
       <h2 class="sr-only" id="season-title">담그는 때</h2>
       <p class="season__text">해마다 제철에 한 번씩 담급니다. 유월에는 풋매실을, 구월에는 오미자를, 십일월에는 햅쌀과 누룩을, 일월에는 먹을. 다 팔리면 다음 철을 기다립니다.</p>
       <figure class="season__row">
-        <picture>
-          <source media="(max-width: 759px)" srcset="./img/row-tight-900.webp" width="900" height="600">
-          <img src="./img/row-800.webp" srcset="./img/row-1600.webp 1600w, ./img/row-800.webp 800w" sizes="min(100vw, 1440px)" width="1600" height="893" alt="같은 유리병 네 개가 회벽 선반에 나란히 서 있습니다. 왼쪽부터 연둣빛, 희뿌연 빛, 석류빛, 먹빛 향수가 담겨 있습니다." loading="lazy" decoding="async">
-        </picture>
-        <figcaption>왼쪽부터 유월, 누룩, 오미, 먹. 병은 모두 같고, 안에 담근 것만 다릅니다.</figcaption>
+        <div class="row">
+          <picture>
+            <source media="(max-width: 759px)" srcset="./img/row-tight-900.webp" width="900" height="600">
+            <img src="./img/row-800.webp" srcset="./img/row-1600.webp 1600w, ./img/row-800.webp 800w" sizes="min(100vw, 1440px)" width="1600" height="893" alt="같은 유리병 네 개가 회벽 선반에 나란히 서 있습니다. 왼쪽부터 연둣빛, 희뿌연 빛, 석류빛, 먹빛 향수가 담겨 있습니다." loading="lazy" decoding="async">
+          </picture>
+          <ul class="row__picks" aria-label="병마다 담근 것">
+            <li><a class="pick" href="#yuwol" style="--x: 20.9%; --xm: 14%"><span class="pick__name">유월</span> <span class="pick__more">풋매실과 쑥 · 6월</span></a></li>
+            <li><a class="pick" href="#nuruk" style="--x: 40.4%; --xm: 39.1%"><span class="pick__name">누룩</span> <span class="pick__more">햅쌀과 누룩 · 11월</span></a></li>
+            <li><a class="pick" href="#omi" style="--x: 59.6%; --xm: 64.1%"><span class="pick__name">오미</span> <span class="pick__more">오미자와 장미 · 9월</span></a></li>
+            <li><a class="pick" href="#meok" style="--x: 78.8%; --xm: 89.1%"><span class="pick__name">먹</span> <span class="pick__more">먹과 젖은 돌 · 1월</span></a></li>
+          </ul>
+        </div>
+        <figcaption>병은 모두 같고, 안에 담근 것만 다릅니다. 병이나 이름을 누르면 그 향으로 넘어갑니다.</figcaption>
       </figure>
     </div>
   </section>
@@ -71,7 +80,7 @@
       <h2 class="sr-only" id="scents-title">네 가지 향</h2>
     </div>
 
-    <article class="scent wrap" aria-labelledby="yuwol-name">
+    <article class="scent wrap" id="yuwol" aria-labelledby="yuwol-name">
       <figure class="scent__photo">
         <img src="./img/yuwol-700.webp" srcset="./img/yuwol-1200.webp 1200w, ./img/yuwol-700.webp 700w" sizes="(min-width: 760px) min(46vw, 680px), 100vw" width="1200" height="1490" alt="회벽 탁자 위의 연둣빛 향수 병과, 흰 사발에 수북한 풋매실, 매실잎이 달린 가지와 쑥 한 줄기." loading="lazy" decoding="async">
       </figure>
@@ -89,7 +98,7 @@
       </div>
     </article>
 
-    <article class="scent scent--flip wrap" aria-labelledby="nuruk-name">
+    <article class="scent scent--flip wrap" id="nuruk" aria-labelledby="nuruk-name">
       <figure class="scent__photo">
         <img src="./img/nuruk-700.webp" srcset="./img/nuruk-1200.webp 1200w, ./img/nuruk-700.webp 700w" sizes="(min-width: 760px) min(46vw, 680px), 100vw" width="1200" height="1490" alt="회벽 창턱 위의 거의 맑은 향수 병과, 흰 종지에 담긴 햅쌀, 한쪽이 떨어져 나간 둥근 누룩." loading="lazy" decoding="async">
       </figure>
@@ -107,7 +116,7 @@
       </div>
     </article>
 
-    <article class="scent wrap" aria-labelledby="omi-name">
+    <article class="scent wrap" id="omi" aria-labelledby="omi-name">
       <figure class="scent__photo">
         <img src="./img/omi-700.webp" srcset="./img/omi-1200.webp 1200w, ./img/omi-700.webp 700w" sizes="(min-width: 760px) min(46vw, 680px), 100vw" width="1200" height="1490" alt="석류빛 향수 병과 같은 색 오미자 술 한 잔, 흰 접시에 담긴 말린 오미자와 분홍 장미 봉오리 세 개." loading="lazy" decoding="async">
       </figure>
@@ -125,7 +134,7 @@
       </div>
     </article>
 
-    <article class="scent scent--flip wrap" aria-labelledby="meok-name">
+    <article class="scent scent--flip wrap" id="meok" aria-labelledby="meok-name">
       <figure class="scent__photo">
         <img src="./img/meok-700.webp" srcset="./img/meok-1200.webp 1200w, ./img/meok-700.webp 700w" sizes="(min-width: 760px) min(46vw, 680px), 100vw" width="1200" height="1490" alt="먹빛 향수 병 옆에 놓인 벼루와 먹, 물방울이 맺힌 검은 조약돌." loading="lazy" decoding="async">
       </figure>
@@ -186,9 +195,9 @@
           <p class="step__text">깔때기로 한 병씩 채우고, 라벨에 담근 날과 거른 날을 손으로 적습니다.</p>
         </li>
       </ol>
-      <figure class="atelier__hands">
-        <img src="./img/hands-700.webp" srcset="./img/hands-1200.webp 1200w, ./img/hands-700.webp 700w" sizes="(min-width: 760px) min(38vw, 560px), 100vw" width="1200" height="1490" alt="회색 리넨 셔츠를 입은 조향사의 두 손. 한 손으로 작은 비커를 기울여 깔때기로 연둣빛 향수를 붓고, 다른 손으로 병을 잡고 있습니다." loading="lazy" decoding="async">
-        <figcaption>42일째, 깔때기로 한 병씩 채웁니다.</figcaption>
+      <figure class="atelier__fill">
+        <img src="./img/fill-700.webp" srcset="./img/fill-1200.webp 1200w, ./img/fill-700.webp 700w" sizes="(min-width: 760px) min(38vw, 560px), 100vw" width="1200" height="1490" alt="회벽 창턱 위에 연둣빛 향수를 막 채운 병이 서 있습니다. 병 입구에는 유리 깔때기가 꽂혀 있고, 흰 사기 뚜껑은 앞에 눕혀 있습니다. 뒤의 작은 비커에 남은 향수가 조금 담겨 있습니다." loading="lazy" decoding="async">
+        <figcaption>42일째. 깔때기로 한 병씩 채우고, 비커에 남은 것은 다음 병에 붓습니다.</figcaption>
       </figure>
     </div>
 
@@ -199,6 +208,7 @@
   </section>
 
   <section class="visit" id="visit" aria-labelledby="visit-title">
+    <canvas class="pool" data-pool="calm" aria-hidden="true"></canvas>
     <div class="wrap visit__grid">
       <div class="visit__info">
         <h2 class="visit__title" id="visit-title">작업실에서 맡아 보세요</h2>
