@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>훨훨 2027 — 제5회 하늬강 정월 연날리기 | 2월 20–21일 바람둔치</title>
+<meta name="description" content="정월 대보름 주말, 하늬강 바람둔치에서 연을 만들고 띄우고 겨룹니다. 2027년 2월 20일(토)–21일(일), 입장 무료. 마지막 날 다섯 시에는 다 같이 액막이연의 줄을 끊습니다.">
+<meta name="theme-color" content="#59B7F0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="훨훨 2027 — 하늬강 정월 연날리기">
+<meta property="og:description" content="2027년 2월 20–21일, 하늬강 바람둔치. 연 만들기 공방, 방패연 겨루기, 대보름 액막이연 날리기. 입장 무료.">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/kite.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://gallery.zanviq.dev/kite/">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+<link rel="preload" href="./fonts/jua.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/hanui-text-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./img/field-1400.webp" as="image" imagesrcset="./img/field-800.webp 800w, ./img/field-1400.webp 1400w, ./img/field-2400.webp 2400w" imagesizes="100vw">
+<link rel="stylesheet" href="./css/site.css">
+<script type="module" src="./js/main.js"></script>
+<script src="/shared/back.js" data-position="bottom-left" data-theme="dark" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header class="top" id="top">
+  <a class="mark" href="#hero" aria-label="훨훨 2027, 맨 위로"><span aria-hidden="true">훨훨</span><span class="mark__year" aria-hidden="true">2027</span></a>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">메뉴</button>
+  <nav class="nav" id="nav" aria-label="페이지 안 이동">
+    <ul>
+      <li><a href="#days">이틀</a></li>
+      <li><a href="#kites">연</a></li>
+      <li><a href="#match">연싸움</a></li>
+      <li><a href="#akmagi">액막이연</a></li>
+      <li><a href="#way">오시는 길</a></li>
+      <li><a href="#bring">오기 전에</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+<section class="hero" id="hero" aria-labelledby="hero-title">
+  <img class="hero__field" src="./img/field-1400.webp" srcset="./img/field-800.webp 800w, ./img/field-1400.webp 1400w, ./img/field-2400.webp 2400w" sizes="100vw" width="1400" height="336" alt="">
+  <canvas class="scene hero__scene" data-scene="hero" aria-hidden="true"></canvas>
+
+  <div class="hero__name">
+    <h1 class="hero__title" id="hero-title">훨훨<span class="sr"> 2027</span></h1>
+    <p class="hero__edition">제5회 하늬강 정월 연날리기</p>
+  </div>
+
+  <div class="hero__sky" data-sky="hero" aria-hidden="true"></div>
+
+  <div class="hero__date">
+    <p class="hero__days"><span class="hero__day"><b>2.20</b> 토</span> <span class="hero__day"><b>2.21</b> 일</span></p>
+    <p class="hero__moon">2027년, 21일이 정월대보름</p>
+  </div>
+
+  <ul class="hero__facts">
+    <li><b>하늬강 바람둔치</b></li>
+    <li>10:00–17:00, 일요일은 17:30까지</li>
+    <li>누구나, 입장 무료</li>
+    <li>하늬역에서 셔틀 10분</li>
+  </ul>
+
+  <div class="hero__side">
+    <p class="hero__lede">정월 대보름 주말, 강가 풀밭에서 연을 만들고 띄우고 겨룹니다. 연이 없어도, 처음이어도 됩니다. 마지막 날 다섯 시에는 다 같이 줄을 끊어 한 해의 액을 날려 보냅니다.</p>
+    <a class="btn" href="#days">이틀 동안 하는 일</a>
+  </div>
+
+  <div class="wind" id="wind">
+    <p class="wind__label">이 화면의 바람</p>
+    <p class="wind__now"><span class="wind__name" data-wind-name>산들바람</span> <span class="wind__speed">초속 <span data-wind-speed>3.8</span>m</span></p>
+    <p class="wind__note" data-wind-note>커서를 휘저으면 돌풍이 붑니다.</p>
+    <div class="wind__ctl">
+      <button class="chip" type="button" data-gust>바람 불기</button>
+      <button class="chip" type="button" data-sound aria-pressed="false">바람 소리 <span class="chip__state" data-sound-state>꺼짐</span></button>
+    </div>
+  </div>
+</section>
+
+<section class="days" id="days" aria-labelledby="days-title">
+  <div class="head">
+    <h2 class="head__title" id="days-title">이틀 동안</h2>
+    <p class="head__lede">토요일은 만들고 띄우고 겨루는 날, 일요일 정월대보름은 겨루기 결승과 액막이연으로 끝나는 날입니다. 날리기 마당과 연 빌려 주는 곳은 이틀 내내 엽니다.</p>
+  </div>
+
+  <div class="days__grid">
+    <div class="day">
+      <h3 class="day__head"><span class="day__date">2.20</span> <span class="day__wd">토요일</span></h3>
+      <ol class="runs">
+        <li><span class="runs__time">10:00</span><span class="runs__what">날리기 마당, 연 빌려 주는 곳 열림</span><span class="runs__more">17:00까지. 둔치 가운데</span></li>
+        <li><span class="runs__time">10:00</span><span class="runs__what">방패연 공방 1회</span><span class="runs__more">13:00, 15:00에 한 번씩 더. 공방 천막</span></li>
+        <li><span class="runs__time">10:30</span><span class="runs__what">꼬리연 공방</span><span class="runs__more">11:30, 14:00, 15:30. 어린이 마당</span></li>
+        <li><span class="runs__time">11:00</span><span class="runs__what">어린이 연 마당</span><span class="runs__more">16:00까지. 꼬리연 날리기, 얼레 감기</span></li>
+        <li><span class="runs__time">12:00</span><span class="runs__what">연싸움 참가 신청 마감</span><span class="runs__more">본부 천막. 64명이 차면 일찍 닫습니다</span></li>
+        <li><span class="runs__time">13:00</span><span class="runs__what">연싸움 예선</span><span class="runs__more">16:30까지. 64명에서 16명으로. 겨루기 마당</span></li>
+      </ol>
+    </div>
+    <div class="day day--moon">
+      <h3 class="day__head"><span class="day__date">2.21</span> <span class="day__wd">일요일, 정월대보름</span></h3>
+      <ol class="runs">
+        <li><span class="runs__time">10:00</span><span class="runs__what">날리기 마당, 연 빌려 주는 곳 열림</span><span class="runs__more">17:30까지</span></li>
+        <li><span class="runs__time">10:00</span><span class="runs__what">방패연 공방</span><span class="runs__more">13:00에 한 번 더. 공방 천막</span></li>
+        <li><span class="runs__time">11:00</span><span class="runs__what">연싸움 본선</span><span class="runs__more">16강부터 4강까지. 13:30에 끝납니다</span></li>
+        <li><span class="runs__time">14:30</span><span class="runs__what">연싸움 결승</span><span class="runs__more">둑 위에서 보세요</span></li>
+        <li><span class="runs__time">15:00</span><span class="runs__what">액막이연 받기, 적기</span><span class="runs__more">먹 천막. 흰 방패연 300개</span></li>
+        <li class="runs--end"><span class="runs__time">17:00</span><span class="runs__what">줄 끊기</span><span class="runs__more">북이 세 번 울리면 다 같이</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="make">
+    <figure class="make__photo">
+      <img src="./img/workshop-1600.webp" srcset="./img/workshop-900.webp 900w, ./img/workshop-1600.webp 1600w" sizes="(min-width: 1024px) 58vw, 100vw" width="1600" height="760" loading="lazy" alt="회색 펠트 깔개 위에 놓인 쪼갠 대나무 살, 한지 묶음, 접칼, 풀 그릇과 붓, 무명실 뭉치, 가운데 구멍을 뚫은 방패연 틀">
+      <figcaption>공방 천막의 탁자. 살은 미리 쪼개 두고, 깎고 붙이는 일은 직접 합니다.</figcaption>
+    </figure>
+    <div class="make__text">
+      <h3 class="make__title">연 만들기 공방</h3>
+      <dl class="facts">
+        <div><dt>방패연</dt><dd>중학생부터. 2시간, 한 회 24명. 재료비 8,000원</dd></div>
+        <div><dt>꼬리연</dt><dd>다섯 살부터, 어른과 함께. 40분, 한 회 30명. 재료비 2,000원</dd></div>
+        <div><dt>신청</dt><dd>회차 30분 전부터 공방 천막 앞에서 받습니다. 미리 받는 신청은 없습니다</dd></div>
+      </dl>
+      <h3 class="make__title">연 빌려 주는 곳</h3>
+      <p>가오리연과 꼬리연 400개를 얼레와 함께 빌려 드립니다. 이름이나 전화번호는 적지 않습니다. 천막 번호표를 받아 가고, 연을 돌려줄 때 번호표를 냅니다. 무료입니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="kites" id="kites" aria-labelledby="kites-title">
+  <div class="head">
+    <h2 class="head__title" id="kites-title">띄우는 연</h2>
+    <p class="head__lede">바람둔치에서 볼 연과 얼레입니다. 모두 대나무 살에 한지를 붙여 만들고, 줄은 무명실을 씁니다. 공방에서 만들거나 빌려서 날릴 수 있습니다.</p>
+  </div>
+
+  <article class="kite kite--chima">
+    <figure class="kite__fig"><img data-kite="chima" src="./img/chima-900.webp" srcset="./img/chima-520.webp 520w, ./img/chima-900.webp 900w" sizes="(min-width: 1024px) 34vw, 70vw" width="900" height="1278" loading="lazy" alt="흰 한지 방패연. 위쪽에 검은 동그라미, 아래쪽 4분의 1은 붉게 칠했고 가운데에 둥근 구멍이 뚫려 있다"></figure>
+    <div class="kite__text">
+      <h3 class="kite__name">방패연</h3>
+      <p class="kite__sub">먹꼭지 치마연</p>
+      <p>가운데 뚫린 방구멍으로 바람이 빠져, 센 바람에도 버티고 줄을 당기고 풀어 마음대로 몹니다. 연싸움에 쓰는 연입니다.</p>
+      <dl class="spec">
+        <div><dt>크기</dt><dd>가로 44, 세로 66cm</dd></div>
+        <div><dt>살</dt><dd>대나무 다섯 대</dd></div>
+        <div><dt>방구멍</dt><dd>지름 10cm</dd></div>
+        <div><dt>꼬리</dt><dd>없음</dd></div>
+        <div><dt>누구에게</dt><dd>날려 본 사람, 겨루기 참가자</dd></div>
+      </dl>
+    </div>
+  </article>
+
+  <article class="kite kite--banda">
+    <figure class="kite__fig"><img data-kite="banda" src="./img/banda-520.webp" width="520" height="737" loading="lazy" alt="흰 한지 방패연. 윗변에 검은 반달을 칠했다"></figure>
+    <div class="kite__text">
+      <h3 class="kite__name">반달연</h3>
+      <p>방패연과 같은 몸에 머리만 검은 반달로 칠했습니다. 겨루기에서는 치마연 편과 반달연 편으로 나눕니다.</p>
+      <dl class="spec">
+        <div><dt>크기</dt><dd>가로 44, 세로 66cm</dd></div>
+        <div><dt>꼬리</dt><dd>없음</dd></div>
+      </dl>
+    </div>
+  </article>
+
+  <article class="kite kite--gaori">
+    <figure class="kite__fig"><img data-kite="gaori" src="./img/gaori-900.webp" srcset="./img/gaori-480.webp 480w, ./img/gaori-900.webp 900w" sizes="(min-width: 1024px) 24vw, 60vw" width="900" height="1042" loading="lazy" alt="붉게 물들인 한지 마름모 연. 세로 대나무 한 대와 활처럼 휜 가로 대나무 한 대"></figure>
+    <div class="kite__text">
+      <h3 class="kite__name">가오리연</h3>
+      <p>꼬리 한 줄이 중심을 잡아 줘서 처음 날리는 사람도 금방 띄웁니다. 연 빌려 주는 곳에 가장 많습니다.</p>
+      <dl class="spec">
+        <div><dt>크기</dt><dd>가로 50, 세로 60cm</dd></div>
+        <div><dt>살</dt><dd>대나무 두 대</dd></div>
+        <div><dt>꼬리</dt><dd>한지 3m</dd></div>
+        <div><dt>누구에게</dt><dd>처음 날리는 사람, 초등학생부터</dd></div>
+      </dl>
+    </div>
+  </article>
+
+  <article class="kite kite--kkori">
+    <figure class="kite__fig"><img data-kite="kkori" src="./img/kkori-480.webp" width="480" height="486" loading="lazy" alt="가장자리를 먹으로 두른 흰 한지 마름모 연"></figure>
+    <div class="kite__text">
+      <h3 class="kite__name">꼬리연</h3>
+      <p>작고 가벼워서 실바람에도 뜹니다. 긴 꼬리가 바람을 그대로 보여 줍니다. 어린이 공방에서 만듭니다.</p>
+      <dl class="spec">
+        <div><dt>크기</dt><dd>가로세로 40cm</dd></div>
+        <div><dt>꼬리</dt><dd>한지 6m</dd></div>
+        <div><dt>누구에게</dt><dd>다섯 살부터</dd></div>
+      </dl>
+    </div>
+  </article>
+
+  <article class="kite kite--eolle">
+    <figure class="kite__fig"><img src="./img/eolle-1000.webp" srcset="./img/eolle-600.webp 600w, ./img/eolle-1000.webp 1000w" sizes="(min-width: 1024px) 46vw, 90vw" width="1000" height="591" loading="lazy" alt="무명실을 두껍게 감은 육각형 나무 얼레와 긴 손잡이"></figure>
+    <div class="kite__text">
+      <h3 class="kite__name">육모얼레</h3>
+      <p>여섯 모로 짠 얼레는 한 바퀴에 줄이 많이 감겨, 줄을 빨리 풀고 감아야 하는 겨루기에 씁니다. 빌려 주는 연에는 작은 납작얼레가 딸려 갑니다.</p>
+      <dl class="spec">
+        <div><dt>나무</dt><dd>소나무</dd></div>
+        <div><dt>감긴 줄</dt><dd>무명실 150m</dd></div>
+      </dl>
+    </div>
+  </article>
+</section>
+
+<section class="match" id="match" aria-labelledby="match-title">
+  <div class="head head--dark">
+    <h2 class="head__title" id="match-title">연싸움</h2>
+    <p class="head__lede">방패연 두 개가 줄을 걸어 먼저 끊는 쪽이 이기는 겨루기입니다. 토요일 예선, 일요일 본선과 결승. 구경은 둑 위에서 합니다.</p>
+  </div>
+  <ul class="match__nums">
+    <li><b>3분</b><span>한 판</span></li>
+    <li><b>20m</b><span>두 사람 사이</span></li>
+    <li><b>64명</b><span>참가, 열네 살부터</span></li>
+  </ul>
+  <ol class="rules">
+    <li><h3>신청</h3><p>2월 20일 토요일 낮 12시까지 본부 천막에서 받습니다. 먼저 온 64명, 참가비는 없습니다.</p></li>
+    <li><h3>연과 줄</h3><p>겨루기 연과 줄은 대회가 똑같이 나눠 줍니다. 판마다 한 사람은 치마연, 한 사람은 반달연을 듭니다. 줄은 무명실 150m. 유리가루를 먹인 줄, 낚싯줄, 쇠줄은 쓸 수 없습니다.</p></li>
+    <li><h3>한 판</h3><p>두 사람이 20m 떨어져 서서 30초 안에 연을 띄웁니다. 심판이 깃발을 올리면 3분 동안 겨룹니다.</p></li>
+    <li><h3>이기는 법</h3><p>상대의 줄을 끊으면 이깁니다. 3분 안에 끊기지 않으면 더 높이 띄운 쪽이 이깁니다. 연이 땅이나 강에 닿으면 집니다.</p></li>
+    <li><h3>장갑</h3><p>장갑을 끼지 않으면 겨룰 수 없습니다. 팽팽한 줄에 손이 베입니다.</p></li>
+    <li><h3>바람</h3><p>초속 8m가 넘는 흔들바람이 불면 겨루기를 멈추고, 바람이 잦아들 때까지 기다립니다.</p></li>
+  </ol>
+  <p class="match__prize">우승하면 육모얼레와 이름을 새긴 방패연을 드립니다. 끊겨 날아간 연은 운영진이 거둬 옵니다.</p>
+</section>
+
+<section class="akmagi" id="akmagi" aria-labelledby="akmagi-title">
+  <canvas class="scene akmagi__scene" data-scene="akmagi" aria-hidden="true"></canvas>
+  <div class="akmagi__sky" data-sky="akmagi" aria-hidden="true"></div>
+  <div class="akmagi__text">
+    <p class="akmagi__when">2월 21일 일요일, 정월대보름</p>
+    <h2 class="akmagi__title" id="akmagi-title">다섯 시에 줄을 끊습니다</h2>
+    <p class="akmagi__lede">대보름날 연에 이름과 ‘송액영복’(액을 보내고 복을 맞는다)을 적어 띄운 뒤 줄을 끊어 보내면, 한 해의 나쁜 일이 연과 함께 멀리 간다고 믿었습니다. 훨훨이라는 이름도 여기서 왔습니다.</p>
+    <ol class="steps">
+      <li><span class="steps__time">15:00</span><p>먹 천막에서 흰 방패연을 받습니다. 300개, 한 사람에 하나.</p></li>
+      <li><span class="steps__time">16:40</span><p>그때까지 붓과 먹으로 이름과 바라는 일을 적습니다.</p></li>
+      <li><span class="steps__time">16:45</span><p>날리기 마당에서 다 같이 띄웁니다.</p></li>
+      <li><span class="steps__time">17:00</span><p>북이 세 번 울리면 줄을 끊습니다.</p></li>
+    </ol>
+    <p class="akmagi__note">끊어 보낸 연은 강 건너 갈대밭에 내려앉습니다. 다음 날 아침 하늬연보존회가 모두 거둡니다. 그래서 액막이연은 한지와 대나무, 무명실로만 만들고, 비닐 연은 끊지 않습니다.</p>
+  </div>
+</section>
+
+<section class="way" id="way" aria-labelledby="way-title">
+  <div class="head">
+    <h2 class="head__title" id="way-title">오시는 길</h2>
+    <p class="head__lede">바람둔치는 하늬강 남쪽 둑 아래 넓은 풀밭입니다. 하늬역에서 셔틀이 다니고, 둑길을 따라 걸어와도 됩니다.</p>
+  </div>
+  <div class="way__grid">
+    <figure class="map">
+      <svg viewBox="0 0 1000 620" role="img" aria-labelledby="map-title map-desc">
+        <title id="map-title">바람둔치 배치도</title>
+        <desc id="map-desc">위쪽에 하늬강이 흐르고, 그 아래 남쪽 둑길과 둑 아래 바람둔치가 있습니다. 둑길 위에 서쪽부터 본부 천막, 공방 천막, 먹 천막, 연 빌려 주는 곳이 늘어서 있습니다. 둑 아래 서쪽 끝이 겨루기 마당, 가운데가 날리기 마당, 동쪽이 어린이 마당입니다. 둔치 주차장과 셔틀 정류장은 동쪽 끝에 있고, 하늬역은 둑길을 따라 동쪽으로 걸어서 25분입니다. 바람은 대개 북서쪽에서 붑니다.</desc>
+        <g class="map__wind" transform="translate(60 34)">
+          <path d="M0 0 L 34 22"/>
+          <path d="M20 21 L 34 22 L 29 9"/>
+        </g>
+        <text class="map__label map__label--small" x="110" y="52">바람은 대개 북서쪽에서</text>
+        <g class="map__river">
+          <path d="M-10 92 C 220 62, 420 142, 640 114 S 900 62, 1010 96 L 1010 196 C 900 166, 760 222, 620 208 S 300 156, -10 192 Z"/>
+        </g>
+        <text class="map__label map__label--river" x="60" y="152">하늬강</text>
+        <path class="map__levee" d="M-10 262 C 260 240, 520 280, 760 258 S 940 248, 1010 256"/>
+        <path class="map__levee map__levee--thin" d="M-10 276 C 260 254, 520 294, 760 272 S 940 262, 1010 270"/>
+        <text class="map__label map__label--small" x="20" y="242">둑길</text>
+        <text class="map__label map__label--small" x="990" y="240" text-anchor="end">하늬역까지 걸어서 25분 →</text>
+        <g class="map__tents">
+          <rect x="150" y="252" width="34" height="24"/>
+          <rect x="360" y="256" width="34" height="24"/>
+          <rect x="520" y="260" width="34" height="24"/>
+          <rect x="700" y="255" width="34" height="24"/>
+        </g>
+        <text class="map__label map__label--small" x="167" y="316" text-anchor="middle">본부 천막</text>
+        <text class="map__label map__label--small" x="377" y="316" text-anchor="middle">공방 천막</text>
+        <text class="map__label map__label--small" x="537" y="316" text-anchor="middle">먹 천막</text>
+        <text class="map__label map__label--small" x="717" y="316" text-anchor="middle">연 빌려 주는 곳</text>
+        <g class="map__zones">
+          <rect class="zone" x="40" y="346" width="210" height="210"/>
+          <rect class="zone zone--key" x="290" y="346" width="370" height="210"/>
+          <rect class="zone" x="700" y="346" width="150" height="150"/>
+          <rect class="zone zone--park" x="878" y="330" width="112" height="140"/>
+        </g>
+        <text class="map__label" x="58" y="388">겨루기<tspan x="58" dy="1.15em">마당</tspan></text>
+        <text class="map__label" x="308" y="388">날리기<tspan x="308" dy="1.15em">마당</tspan></text>
+        <text class="map__label" x="716" y="388">어린이<tspan x="716" dy="1.15em">마당</tspan></text>
+        <text class="map__label map__label--small" x="894" y="366">둔치<tspan x="894" dy="1.2em">주차장</tspan></text>
+        <circle class="map__stop" cx="934" cy="512" r="11"/>
+        <text class="map__label map__label--small" x="990" y="556" text-anchor="end">셔틀 정류장</text>
+      </svg>
+      <figcaption>둑길 위 천막 넷, 둑 아래 마당 셋. 축제장 안에서는 연줄 아래로 지나가지 않게 둑길로 다닙니다.</figcaption>
+    </figure>
+    <div class="way__text">
+      <p class="addr">하늬시 연살로 41<br>하늬강 바람둔치</p>
+      <p class="addr__note">가상 서비스입니다. 실제 주소가 아닙니다.</p>
+      <dl class="facts">
+        <div><dt>셔틀</dt><dd>하늬역 2번 출구 앞에서 9:30부터 18:30까지 15분마다. 10분 걸리고 무료입니다.</dd></div>
+        <div><dt>걸어서</dt><dd>하늬역에서 하늬강 둑길을 따라 25분.</dd></div>
+        <div><dt>차</dt><dd>둔치 주차장 300대는 오전에 찹니다. 하늬시청 주차장에 세우고 시청 앞에서 셔틀(20분마다)을 타세요.</dd></div>
+        <div><dt>자전거</dt><dd>둑길로 와서 본부 천막 옆 보관대에 세웁니다.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="bring" id="bring" aria-labelledby="bring-title">
+  <div class="head">
+    <h2 class="head__title" id="bring-title">오기 전에</h2>
+    <p class="head__lede">2월의 강가는 바람이 차고, 아침에는 땅이 얼어 있습니다. 연은 없어도 됩니다.</p>
+  </div>
+  <div class="bring__grid">
+    <div class="bring__col">
+      <h3 class="bring__title">챙길 것</h3>
+      <ul class="list">
+        <li><b>장갑</b>연줄에 손이 베이지 않게. 겨루기에 나가려면 꼭 있어야 합니다.</li>
+        <li><b>귀를 덮는 모자와 목도리</b>둔치에는 바람을 막을 데가 없습니다.</li>
+        <li><b>미끄럽지 않은 신발</b>오전에는 풀밭이 얼어 있습니다.</li>
+        <li><b>따뜻한 물</b>본부 천막에서 보리차를 채워 드립니다.</li>
+        <li><b>집에 있는 연과 얼레</b>이름표를 붙여 오세요. 끊어져 날아가도 찾아 드립니다.</li>
+      </ul>
+    </div>
+    <div class="bring__col">
+      <h3 class="bring__title">두고 올 것</h3>
+      <ul class="list">
+        <li><b>비닐 연과 낚싯줄</b>끊어지면 새와 강에 그대로 남습니다.</li>
+        <li><b>드론</b>축제장 하늘은 연이 씁니다.</li>
+        <li><b>쥐불놀이 깡통과 폭죽</b>마른 풀밭이라 불을 쓰지 않습니다.</li>
+      </ul>
+      <h3 class="bring__title">날씨에 따라</h3>
+      <ul class="list">
+        <li><b>눈이나 비</b>공방은 천막 안에서 그대로 열고, 날리기와 겨루기는 그칠 때까지 기다립니다.</li>
+        <li><b>흔들바람</b>초속 8m가 넘으면 겨루기를 멈춥니다.</li>
+        <li><b>실바람</b>바람이 약하면 운영진이 달리며 띄우는 법을 알려 드립니다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <p class="foot__mark" aria-hidden="true">훨훨</p>
+  <div class="foot__text">
+    <p>훨훨 2027, 제5회 하늬강 정월 연날리기<br>2027년 2월 20일–21일, 하늬강 바람둔치</p>
+    <p>주최 하늬시, 주관 하늬연보존회</p>
+    <p class="foot__fine">가상 축제입니다. zanviq gallery 작품.</p>
+  </div>
+</footer>
+
+<noscript><style>.wind__ctl,.wind__note{display:none}</style></noscript>
+</body>
+</html>

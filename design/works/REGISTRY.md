@@ -66,7 +66,7 @@ as an ambient layer and never covers the information. Fonts and Latin faces belo
 | camera | 제품 소개 · desktop+mobile | 방금 1: 즉석카메라 브랜드 방금의 첫 카메라 (레몬색 몸체, 셔터 하나, 필름 10장) | 셔터를 누르면 플래시·모터 소리, 인화지가 나와 사물 사진으로 현상됨 | camera-body lemon #FFE14D field, black #000000 (lens, band), white #FFFFFF (print borders) | Do Hyeon (comma from Sunflower via unicode-range), Sunflower | registered |
 | lamp | 제품 소개 · desktop+mobile | 이슥: 2인 디자인 스튜디오 곁방의 첫 책상 스탠드 (ㄱ자, 다이얼 하나로 밝기 5단계 + 2700/4000/5600K) | 디머 다이얼·색온도: 같은 책상 장면 사진(2700K/4000K/5600K, 밝기 단계)이 교차되고 스위치 소리 | room black #0B0C0E, white #FFFFFF, text #E8EAED, steel #9EA5AD (bead-blasted body); warmth only inside the 2700K photo | MaruBuri (subset renamed Gyeotbang Serif) + Hanken Grotesk (figures) | registered |
 | record | 홍보 · desktop+mobile | 깊은쪽 《물 빼는 날》 첫 LP (소리골 레코드, 2027-03-12), 물 뺀 시립 수영장에서 녹음 | 회전하는 판에 바늘을 내리면 면마다 합성 음악 일부, 트랙 목록이 따라 켜짐 | pressed turquoise vinyl / pool tile #00A3A1, black #000000, white; grey #3E4545 on white, #A3ADAD on black | Moirai One, Nanum Barun Gothic (subset renamed Gipeun Sans) | registered |
-| kite | 홍보 · desktop+mobile | invented winter kite festival on a river field (정월 연날리기) | 포인터가 바람이 되어 연 꼬리·연줄이 흔들림 (연 사진 컷아웃 + 코드 꼬리), 평소에도 잔바람 | open-sky blue #59B7F0 field, black, white, kite red accent | Jua, Freesentation (+ Rubik if needed) | building |
+| kite | 홍보 · desktop+mobile | 훨훨 2027: 제5회 하늬강 정월 연날리기 (2027-02-20~21, 하늬강 바람둔치, 무료) | 포인터가 바람이 되어 연 꼬리·연줄이 흔들림 (연 사진 컷아웃 + 코드 꼬리), 평소에도 잔바람 | open-sky blue #59B7F0, ink #0B0C0D, paper #FFFFFF, kite red #D7142C (치마, 액막이연 field) | Jua, Freesentation (subset renamed Hanui Text) | registered |
 | coffee | 홈페이지 · desktop+mobile | 사흘 커피 로스터스: 월·목에 볶고 사흘 쉬게 한 뒤 파는 동네 로스터리와 열 자리 카페 (뭉근시 불땀길 7) | 추출 방식을 고르고 분쇄 다이얼을 돌리면 그라인더 소리와 입자 크기, 레시피(원두·물·시간) | dried coffee-cherry (cascara) #5E1224 field, white #FFFFFF, black #0B0B0C | RIDIBatang (subset renamed Saheul Batang) + Libre Caslon Text (numbers) | registered |
 
 ## Heavy works (the owner's real programs and internal tools; built last)
@@ -87,5 +87,5 @@ as an ambient layer and never covers the information. Fonts and Latin faces belo
 ## Fonts in use (one work each)
 
 Galmuri11 (home) · Wanted Sans, Archivo (keyboard) · Anybody, Hahmlet, IBM Plex Sans KR (festival,
-perfume, startup) · Newsreader (perfume) · Spoqa Han Sans Neo (marathon) · SUIT (curtain) · Moirai One, Nanum Barun Gothic (record) · RIDIBatang, Libre Caslon Text (coffee) · MaruBuri, Hanken Grotesk (lamp) · Do Hyeon, Sunflower (camera) · and every Korean family assigned in the tables above.
+perfume, startup) · Newsreader (perfume) · Spoqa Han Sans Neo (marathon) · SUIT (curtain) · Moirai One, Nanum Barun Gothic (record) · RIDIBatang, Libre Caslon Text (coffee) · MaruBuri, Hanken Grotesk (lamp) · Do Hyeon, Sunflower (camera) · Jua, Freesentation (kite) · and every Korean family assigned in the tables above.
 Latin faces added by works (record here): Schibsted Grotesk (sculpture), Big Shoulders Display (ticketing)
