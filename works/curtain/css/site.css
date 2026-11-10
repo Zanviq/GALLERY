@@ -92,10 +92,110 @@ img { display: block; max-width: 100%; height: auto; }
   background: var(--house);
 }
 
-.set { position: absolute; inset: 0; z-index: 0; }
+.set {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  container-type: size;
+  /* where the bulb sits in the photograph (object-fit: cover), so light can be laid over it.
+     Resolved in the children, against this box: --dw/--dh are the drawn photo's size. */
+  --ar: 2.0243;            /* photo width / height */
+  --opx: 0.66;             /* object-position */
+  --opy: 0.5;
+  --ubx: 0.6583;           /* bulb centre in the photo, 0..1 */
+  --uby: 0.342;
+  --bulb: 0.026;           /* bulb width / photo width */
+  --dw: max(100cqw, 100cqh * var(--ar));
+  --dh: max(100cqh, 100cqw / var(--ar));
+  --bx: calc((100cqw - var(--dw)) * var(--opx) + var(--dw) * var(--ubx));
+  --by: calc((100cqh - var(--dh)) * var(--opy) + var(--dh) * var(--uby));
+  --flicker: 9.7s;
+}
 .set picture, .set__photo { position: absolute; inset: 0; width: 100%; height: 100%; }
 .set__photo { object-fit: cover; object-position: 66% 50%; }
 html.js:not(.no-cloth) .stage:not(.is-ready) .set { visibility: hidden; }
+
+/* The bulb is tungsten: it never strobes, it breathes, and now and then the filament dips twice
+   (about 0.1 s each, well under three a second). The room in the photograph dims with it; the glow
+   over the bulb and the line of light under the hem follow the same clock. */
+@keyframes room {
+  0%, 100% { opacity: 1; }
+  14% { opacity: 0.965; }
+  27% { opacity: 1; }
+  41% { opacity: 0.975; }
+  58% { opacity: 0.99; }
+  59.2% { opacity: 0.9; }
+  60.4% { opacity: 0.975; }
+  61.4% { opacity: 0.93; }
+  63.5% { opacity: 1; }
+  78% { opacity: 0.96; }
+  90% { opacity: 1; }
+}
+@keyframes tungsten {
+  0%, 100% { opacity: 1; }
+  14% { opacity: 0.84; }
+  27% { opacity: 1; }
+  41% { opacity: 0.88; }
+  58% { opacity: 0.96; }
+  59.2% { opacity: 0.56; }
+  60.4% { opacity: 0.9; }
+  61.4% { opacity: 0.68; }
+  63.5% { opacity: 1; }
+  78% { opacity: 0.86; }
+  90% { opacity: 1; }
+}
+.set__photo, .lamp, .spill::before { animation: var(--flicker) ease-in-out infinite both; }
+.set__photo { animation-name: room; }
+.lamp, .spill::before { animation-name: tungsten; }
+.stage.is-away .set__photo, .stage.is-away .lamp, .stage.is-away .spill::before { animation-play-state: paused; }
+
+.lamp {
+  position: absolute;
+  left: var(--bx);
+  top: var(--by);
+  width: calc(var(--dw) * var(--bulb) * 7);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(246 250 248 / 0.5), rgb(232 241 238 / 0.2) 30%, rgb(220 232 228 / 0.07) 62%, rgb(220 232 228 / 0));
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* before the eye adjusts: only the pool round the bulb, then the light reaches the walls */
+.falloff, .falloff::before, .falloff::after { position: absolute; inset: 0; pointer-events: none; }
+.falloff::before, .falloff::after { content: ''; transition: opacity 1.6s cubic-bezier(0.3, 0.5, 0.3, 1) 0.2s; }
+.falloff::before {
+  background: radial-gradient(circle at var(--bx) var(--by), rgb(0 0 0 / 0) calc(var(--dw) * var(--bulb) * 2), rgb(0 0 0 / 0.45) calc(var(--dw) * var(--bulb) * 8));
+}
+.falloff::after {
+  background: radial-gradient(circle at var(--bx) var(--by), rgb(0 0 0 / 0) calc(var(--dw) * var(--bulb) * 7), rgb(0 0 0 / 0.6) calc(var(--dw) * var(--bulb) * 17));
+  transition-duration: 3.8s;
+  transition-delay: 0.6s;
+}
+.stage.is-lit .falloff::before, .stage.is-lit .falloff::after { opacity: 0; }
+
+/* the stage light seen under the hem of the closed curtain (it flickers in ::before, and fades
+   out as a whole once the stage is open) */
+.spill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+.spill::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(calc(var(--dw) * 0.34) 100% at var(--bx) 100%, rgb(226 236 232 / 0.4), rgb(226 236 232 / 0.12) 48%, rgb(226 236 232 / 0) 80%);
+}
+.stage.is-lit .spill { opacity: 0; }
+html:not(.js) .falloff, html.no-cloth .falloff, html:not(.js) .spill, html.no-cloth .spill { display: none; }
+/* without the curtain the announcement stands on the photo itself: no glow behind its type */
+html:not(.js) .stage .lamp, html.no-cloth .stage .lamp { display: none; }
 
 .poster {
   position: absolute;
@@ -284,8 +384,10 @@ html:not(.js) .bill, html.no-cloth .bill { text-shadow: 0 0 24px #000; }
 .show__text { max-width: 30em; margin-top: 16px; font-size: 19px; line-height: 1.75; color: var(--ink-2); }
 
 .light { align-items: center; }
-.light__photo { grid-column: 1 / span 5; }
-.light__photo img { width: 100%; }
+.light__photo { grid-column: 1 / span 5; position: relative; --flicker: 8.3s; }
+.light__photo img { width: 100%; animation: room var(--flicker) ease-in-out infinite both; }
+.lamp--close { left: 50%; top: 42.5%; width: 62%; }
+.light__photo.is-away img, .light__photo.is-away .lamp { animation-play-state: paused; }
 .light__text { grid-column: 7 / -1; }
 .light__text p { max-width: 30em; margin-top: 22px; font-size: 19px; line-height: 1.8; color: var(--ink-2); }
 .light__text .sec__title { margin-bottom: 40px; }
@@ -334,6 +436,7 @@ html:not(.js) .bill, html.no-cloth .bill { text-shadow: 0 0 24px #000; }
 }
 
 @media (max-aspect-ratio: 1/1) {
+  .set { --opx: 0.62; }
   .set__photo { object-position: 62% 50%; }
   .poster { padding-top: clamp(24px, 4vh, 48px); }
   .poster__date { font-size: clamp(104px, 30vw, 200px); }
@@ -358,6 +461,8 @@ html:not(.js) .bill, html.no-cloth .bill { text-shadow: 0 0 24px #000; }
 }
 
 @media (max-aspect-ratio: 3/5) {
+  /* stage-tall.webp: 1020x2040, the lamp in the lower half */
+  .set { --ar: 0.5; --opx: 0.5; --opy: 1; --ubx: 0.5489; --uby: 0.6705; --bulb: 0.073; }
   .set__photo { object-position: 50% 100%; }
   .after { top: var(--after-top, auto); bottom: auto; }
 }
@@ -366,10 +471,17 @@ html:not(.js) .bill, html.no-cloth .bill { text-shadow: 0 0 24px #000; }
   .nav a[href="#visit"] { display: none; }
 }
 
+/* reduced motion: calmer, not still. Smooth scrolling goes; the lamp keeps breathing on a slower
+   clock and the stage light spreads more slowly. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .stage.is-ready .cloth { transition: none; }
+  .set { --flicker: 13.1s; }
+  .light__photo { --flicker: 11.3s; }
+  .falloff::before { transition-duration: 2.2s; }
+  .falloff::after { transition-duration: 4.6s; }
 }
 
-/* captures for the gallery thumbnail and share image */
+/* captures for the gallery thumbnail and share image: no badge, the lamp at full */
 html.capture [data-gallery-back] { display: none !important; }
+html.capture .set__photo, html.capture .lamp, html.capture .spill::before { animation: none; }
+html.capture .falloff::before, html.capture .falloff::after { transition: none; }

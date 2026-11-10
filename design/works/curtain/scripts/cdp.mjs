@@ -1,10 +1,10 @@
 // Dependency-free capture and check runner over the Chrome DevTools Protocol (dev tool, not deployed).
-// Needs a headless Chrome started with --remote-debugging-port=9333. Every run gets a fresh
+// Needs a headless Chrome started with --remote-debugging-port=9363 (or CDP_PORT). Every run gets a fresh
 // browser context (empty localStorage).
 //   node cdp.mjs <url> <W>x<H>[@dpr] [mobile] [reduced] [nostore] op op ...
 // ops: wait=ms | shot=f.png | webp=f.webp | full=f.png | click=sel | focus=sel | key=Key | type=text
 //      eval=js | log=js | store=json (sets jamo.v1 and reloads) | reload=ms
-//      drag=x1,y1,x2,y2 | dragsel=from>to[@top|@bottom] | tap=x,y | tapsel=sel[@top|@bottom]
+//      drag=x1,y1,x2,y2 | hover=x1,y1,x2,y2[,n,ms] | dragsel=from>to[@top|@bottom] | tap=x,y | tapsel=sel[@top|@bottom]
 //      touchdrag=from>to[@top|@bottom] | resize=WxH
 import { writeFileSync } from 'fs';
 
@@ -16,7 +16,7 @@ while (rest.length && /^(mobile|reduced|nostore|nojs)$/.test(rest[0])) flags.add
 const mobile = flags.has('mobile');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const ver = await (await fetch('http://127.0.0.1:9467/json/version')).json();
+const ver = await (await fetch(`http://127.0.0.1:${process.env.CDP_PORT || 9363}/json/version`)).json();
 const ws = new WebSocket(ver.webSocketDebuggerUrl);
 await new Promise((r, j) => { ws.onopen = r; ws.onerror = j; });
 let nextId = 1;
@@ -154,6 +154,14 @@ for (const op of rest) {
   else if (k === 'reload') { await go(url); await sleep(Number(v) || 0); }
   else if (k === 'resize') { const [a, b] = v.split('x').map(Number); W = a; H = b; await metrics(); await sleep(300); }
   else if (k === 'drag') { const [a, b, c, d] = v.split(',').map(Number); await drag(a, b, c, d); }
+  else if (k === 'hover') {
+    // a mouse passing over without a button: x1,y1,x2,y2[,steps[,ms between]]
+    const [a, b, c, d, n = 16, gap = 16] = v.split(',').map(Number);
+    for (let i = 0; i <= n; i++) {
+      await cmd('Input.dispatchMouseEvent', { type: 'mouseMoved', x: a + (c - a) * i / n, y: b + (d - b) * i / n, button: 'none', buttons: 0 });
+      await sleep(gap);
+    }
+  }
   else if (k === 'tap') { const [x, y] = v.split(',').map(Number); await touch('touchStart', [[x, y]]); await touch('touchEnd', []); }
   else if (k === 'tapsel') { const p = await target(v); if (p) { await touch('touchStart', [p]); await touch('touchEnd', []); } else console.log('[tap] missing', v); }
   else if (k === 'dragsel' || k === 'touchdrag') {

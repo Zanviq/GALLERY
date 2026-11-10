@@ -13,9 +13,14 @@ const base = process.argv[2] || 'http://127.0.0.1:8000';
 
 const scene = (reach, high) => `(() => {
   const C = window.__curtain, c = C.cu, L = c.L;
+  C.stop();                      // freeze the frame 0.75 s into the pull, the same every time
+  c.air = 0;
+  c.settle(400);
   c.grab('hand', L.W / 2 + 48, L.H * ${high});
   c.move('hand', L.W * ${reach}, L.H * ${high - 0.03});
   C.run(0.75);
+  // the stage as it looks once the eye has adjusted (capture mode skips the ~4 s spread)
+  document.querySelector('[data-stage]').classList.add('is-lit');
 })()`;
 
 const shots = [

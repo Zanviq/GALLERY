@@ -44,6 +44,30 @@ export class Cloth {
     this.damp = 0.985;
     this.iters = 8;
     this.quiet = 0;
+    this.motion = 0;                // largest squared distance any point moved in the last step (px)
+    this._px = new Float32Array(n);
+    this._py = new Float32Array(n);
+    // house air: a slow draught moves the hanging cloth a little at rest. `air` scales it (0 is
+    // still), `airRate` slows its clock. Strength is in px/s², set so the hem drifts a few px.
+    this.air = 1;
+    this.airRate = 1;
+    this.airT = 0;
+    this.airA = 30;
+    // per column: where the swell is along the panel (as sin/cos) and how much the seam pulls it;
+    // per row: how much more the lower cloth moves than the heading
+    this._ax = new Float32Array(nx);
+    this._sinS = new Float32Array(nx);
+    this._cosS = new Float32Array(nx);
+    this._edge = new Float32Array(nx);
+    for (let i = 0; i < nx; i++) {
+      const s = i / (nx - 1);
+      this._sinS[i] = Math.sin(s * 5.3);
+      this._cosS[i] = Math.cos(s * 5.3);
+      this._edge[i] = s ** 6;
+    }
+    this._rowH = new Float32Array(ny);
+    for (let j = 0; j < ny; j++) this._rowH[j] = (j / (ny - 1)) ** 1.6;
+    this._shut = 1;
   }
 
   idx(p, i, j) { return p * this.per + j * this.nx + i; }
@@ -142,12 +166,85 @@ export class Cloth {
 
   releaseAll() { for (const id of [...this.grabs.keys()]) this.release(id); }
 
+  /**
+   * A hand passing over the cloth without holding it: the cloth near the pointer takes on a little
+   * of its speed, the hem and the lead edge most, the heading hardly at all. (vx, vy) is the
+   * pointer's speed in px per step. The cloth's own speed is eased toward that, never added to,
+   * so a long sweep stirs the curtain without throwing it open.
+   */
+  brush(px, py, vx, vy, gain = 1) {
+    const { x, y, ox, oy, held, nx, ny } = this;
+    const R = this.L.phone ? 90 : 140, R2 = R * R, cap = 1.6 * gain;
+    const tx = Math.max(-cap, Math.min(cap, vx * 0.12 * gain));
+    const ty = Math.max(-cap, Math.min(cap, vy * 0.04 * gain));
+    let hit = false;
+    for (let p = 0; p < 2; p++) {
+      for (let j = 1; j < ny; j++) {
+        const row = j / (ny - 1);
+        for (let i = 0; i < nx; i++) {
+          const k = this.idx(p, i, j);
+          if (held[k]) continue;
+          const d2 = (x[k] - px) ** 2 + (y[k] - py) ** 2;
+          if (d2 > R2) continue;
+          const w = Math.min(1, (1 - Math.sqrt(d2) / R) ** 2 * (0.25 + 0.75 * row * row) * (1 + 1.2 * (i / (nx - 1)) ** 4));
+          const v0x = x[k] - ox[k], v0y = y[k] - oy[k];
+          ox[k] = x[k] - (v0x + (tx - v0x) * 0.35 * w);
+          oy[k] = y[k] - (v0y + (ty - v0y) * 0.2 * w);
+          hit = true;
+        }
+      }
+    }
+    if (hit) this.quiet = 0;
+    return hit;
+  }
+
+  /** A tap or a click on the cloth: the velvet dents in, drawing the cloth around it inward. */
+  poke(px, py, gain = 1) {
+    const { x, y, ox, held, nx, ny } = this;
+    const R = this.L.phone ? 110 : 170, R2 = R * R;
+    for (let p = 0; p < 2; p++) {
+      for (let j = 1; j < ny; j++) {
+        for (let i = 0; i < nx; i++) {
+          const k = this.idx(p, i, j);
+          if (held[k]) continue;
+          const dx = px - x[k], d2 = dx * dx + (y[k] - py) ** 2;
+          if (d2 > R2) continue;
+          const w = 1 - Math.sqrt(d2) / R;
+          ox[k] -= Math.max(-3, Math.min(3, dx * 0.06 * w * gain));
+        }
+      }
+    }
+    this.quiet = 0;
+  }
+
+  /**
+   * The draught, as a sideways acceleration per column for one row height. Both panels drift the
+   * same way with a small lag between them, a slower swell runs across each panel (the folds
+   * gather and ease as it passes), and now and then the lead edges ease apart near the floor, so
+   * a thin line of the lit stage shows through the seam.
+   */
+  airAt(p, out) {
+    const T = this.airT, nx = this.nx, { _sinS: sn, _cosS: cs, _edge: edge } = this;
+    const A = this.airA * this.air * Math.max(0.6, (this.L.hem - this.L.top) / 800);
+    const gust = 0.7 + 0.3 * Math.sin(T * 0.37 + 1.3) * Math.sin(T * 0.21 + 0.4);
+    const ph = p === 0 ? 0 : 0.7;
+    const sway = 0.72 * Math.sin(T * 0.93 + ph) + 0.28 * Math.sin(T * 0.53 + 2.1 + ph);
+    const seam = Math.max(0, Math.sin(T * 0.44 + 0.9)) ** 3 * (0.65 + 0.35 * Math.sin(T * 0.17)) * this._shut;
+    const sg = p === 0 ? 1 : -1;                // +s (toward the lead edge) in screen x
+    // swell = 0.4 sin(wT + 2ph - 5.3 s), expanded so no column needs its own sine
+    const w = T * 1.21 + ph * 2, sw = 0.4 * Math.sin(w), cw = 0.4 * Math.cos(w);
+    const base = A * gust * sway, ripple = A * gust * sg, pull = A * sg * 1.3 * seam;
+    for (let i = 0; i < nx; i++) out[i] = base + ripple * (sw * cs[i] - cw * sn[i]) - pull * edge[i];
+  }
+
   // ---- simulation ----------------------------------------------------------------------------
 
   step(dt) {
     const { x, y, ox, oy, held, nx, ny, L } = this;
     const damp = this.damp, gdt = this.g * dt * dt;
     let moving = 0;
+    this._px.set(x);
+    this._py.set(y);
 
     for (let p = 0; p < 2; p++) {
       const a = this.anim[p];
@@ -166,10 +263,21 @@ export class Cloth {
     this.ringW[0] = handOn[0] ? 0.3 : 0;
     this.ringW[1] = handOn[1] ? 0.3 : 0;
 
+    const airy = this.air > 0;
+    if (airy) {
+      this.airT += dt * this.airRate;
+      // the seam only parts while the panels still meet
+      const lead0 = this.leadS(0), lead1 = this.leadS(1);
+      this._shut = Math.max(0, Math.min(1, (Math.min(lead0, lead1) / this.S - 0.8) / 0.2));
+    }
+    const ax = this._ax, dt2 = dt * dt, rowH = this._rowH;
+
     // integrate
     for (let p = 0; p < 2; p++) {
       const sticky = !handOn[p] && this.rope[p] === null;
+      if (airy) this.airAt(p, ax);
       for (let j = 0; j < ny; j++) {
+        const hj = rowH[j] * dt2;
         for (let i = 0; i < nx; i++) {
           const k = this.idx(p, i, j);
           if (held[k]) continue;
@@ -180,9 +288,7 @@ export class Cloth {
             if (i > 0 && !sticky) x[k] += vx * 0.9;
             continue;
           }
-          const v2 = vx * vx + vy * vy;
-          if (v2 > moving) moving = v2;
-          x[k] += vx;
+          x[k] += vx + (airy ? ax[i] * hj : 0);
           y[k] += vy + gdt;
         }
       }
@@ -226,6 +332,14 @@ export class Cloth {
     this.hang();
     for (let k = 0; k < this.n; k++) if (y[k] > L.floor) { y[k] = L.floor; ox[k] = x[k] - (x[k] - ox[k]) * 0.5; }
 
+    // how far the cloth really moved (the stored speeds near the hem include sag that hang()
+    // takes back every step, so they never reach zero)
+    const { _px: px, _py: py } = this;
+    for (let k = 0; k < this.n; k++) {
+      const d2 = (x[k] - px[k]) ** 2 + (y[k] - py[k]) ** 2;
+      if (d2 > moving) moving = d2;
+    }
+    this.motion = moving;
     if (moving < 0.0016 && !this.grabs.size) this.quiet++;
     else this.quiet = 0;
   }
@@ -334,14 +448,16 @@ export class Cloth {
 
   isQuiet() { return this.quiet > 30 && !this.travelling(); }
 
-  /** Run without drawing until the cloth comes to rest (reduced motion, resize). */
+  /** Run without drawing until the cloth comes to rest (first layout, resize). */
   settle(maxSteps = 600) {
-    const d = this.damp;
+    const d = this.damp, a = this.air;
     this.damp = 0.8;
+    this.air = 0;                                       // still air, so it can come to rest
     for (let s = 0; s < maxSteps; s++) {
       this.step(1 / 60);
       if (s > 20 && this.isQuiet()) break;
     }
     this.damp = d;
+    this.air = a;
   }
 }

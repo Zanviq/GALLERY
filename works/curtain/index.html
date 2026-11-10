@@ -47,6 +47,10 @@
         <source media="(max-aspect-ratio: 3/5)" srcset="./img/stage-tall.webp" width="1020" height="2040">
         <img class="set__photo" src="./img/stage-2000.webp" srcset="./img/stage-1200.webp 1200w, ./img/stage-2000.webp 2000w" sizes="100vw" width="2000" height="988" alt="">
       </picture>
+      <!-- light laid over the photograph: the room before the eye adjusts, the bulb's glow, the line under the hem -->
+      <span class="falloff" aria-hidden="true"></span>
+      <span class="lamp" aria-hidden="true"></span>
+      <span class="spill" aria-hidden="true"></span>
       <div class="poster" aria-hidden="true">
         <p class="poster__season">재개관 시즌 〈남겨 둔 불〉</p>
         <p class="poster__date">3.12</p>
@@ -123,8 +127,9 @@
   </section>
 
   <section class="sec sec--house light" id="light" aria-labelledby="light-title">
-    <figure class="light__photo">
+    <figure class="light__photo" data-close-up>
       <img src="./img/bulb-1000.webp" srcset="./img/bulb-600.webp 600w, ./img/bulb-1000.webp 1000w" sizes="(min-width: 900px) 40vw, 100vw" width="1000" height="1135" loading="lazy" decoding="async" alt="철망 안에서 빛나는 투명한 전구. 주위는 온통 어둡다.">
+      <span class="lamp lamp--close" aria-hidden="true"></span>
     </figure>
     <div class="light__text">
       <h2 class="sec__title" id="light-title">1,159일 동안<br>켜 둔 불</h2>

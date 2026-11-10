@@ -18,12 +18,26 @@ const status = document.querySelector('[data-status]');
 const reducedQuery = matchMedia('(prefers-reduced-motion: reduce)');
 let reduced = reducedQuery.matches;
 
+// Reduced motion keeps every movement here, calmer: more damping (the cloth follows without
+// swinging), weaker air on a slower clock, a slower rope and a smaller tease.
+const MOTION = {
+  full: { damp: 0.985, air: 1, airRate: 1, rope: 2.4, brush: 1, tease: [0.93, 1.3, 1.8] },
+  calm: { damp: 0.94, air: 0.8, airRate: 0.8, rope: 3.2, brush: 0.5, tease: [0.955, 1.9, 2.6] },
+};
+const still = params.has('still');            // debugging: no house air
+let M = reduced ? MOTION.calm : MOTION.full;
+
 let renderer = null;
 let cu = null;
 let L = null;
-let running = false, last = 0, acc = 0;
+let lamp = null;
+let running = false, last = 0, acc = 0, lastDraw = 0, busyUntil = 0;
+let idleGap = 31;                              // ms between frames while only the air moves the cloth
+let iters = 8;                                 // solver passes while a hand or the rope works it
 let visible = true;
 let isOpen = false;
+let lit = false;
+let fadeShown = -1;
 let touched = false;
 let teaseTimer = 0;
 
@@ -61,16 +75,27 @@ function light() {
     : { spot: [W * 0.66, H * 0.26, W * 0.5, H * 0.72], base: 0.46, gain: 0.76 };
 }
 
+function tune() {
+  M = reduced ? MOTION.calm : MOTION.full;
+  if (!cu) return;
+  cu.damp = M.damp;
+  cu.air = still ? 0 : M.air;
+  cu.airRate = M.airRate;
+}
+
 function build(keep) {
   const was = cu ? cu.openness() : 0;
+  const t = cu ? cu.airT : 0;
   L = layout();
+  lamp = light();
   cu = new Cloth(L);
-  cu.damp = reduced ? 0.8 : 0.985;
-  if (L.phone) cu.iters = 7;
+  tune();
+  cu.airT = t;
+  iters = L.phone ? 7 : 8;
+  cu.iters = iters;
   renderer.resize(L.W, L.H, L.dpr);
   cu.settle(200);
   if (keep && was > 0.5) { cu.travel(0, 0.01); cu.settle(600); }
-  cu.damp = reduced ? 0.8 : 0.985;
   // how far the gathered cloth reaches in from each side: the poster keeps clear of it
   const stack = L.side + (cu.nx - 1) * cu.minD[cu.ny - 1];
   stage.style.setProperty('--stack', Math.max(0, Math.round(stack)) + 'px');
@@ -83,10 +108,14 @@ function build(keep) {
 // ---- drawing and state --------------------------------------------------------------------
 
 function draw() {
-  renderer.draw(cu, light());
+  renderer.draw(cu, lamp);
   const f = cu.openness();
   const fade = Math.max(0, Math.min(1, 1 - (f - 0.15) / 0.22));   // a peek keeps the announcement
-  bill.style.opacity = fade.toFixed(3);
+  const shown = Math.round(fade * 200) / 200;
+  if (shown !== fadeShown) { fadeShown = shown; bill.style.opacity = String(shown); }
+  // once the stage is properly in view, its light reaches out from the bulb (site.css)
+  if (!lit && f > 0.3) { lit = true; stage.classList.add('is-lit'); }
+  else if (lit && f < 0.04) { lit = false; stage.classList.remove('is-lit'); }
   // the bill's button goes with the bill; once it has faded the stage's own controls take over
   const away = fade < 0.05;
   if (away !== !after.hidden) {
@@ -120,13 +149,20 @@ function frame(now) {
   if (document.hidden || !visible) { running = false; cu.releaseAll(); return; }
   acc += Math.min(0.05, (now - last) / 1000);
   last = now;
-  let steps = 0;
-  while (acc >= STEP && steps < 3) { cu.step(STEP); acc -= STEP; steps++; }
-  if (steps === 3) acc = 0;
-  if (steps) draw();
-  if (cu.isQuiet()) { running = false; return; }
+  // full rate while a hand, the rope or a swing moves the cloth; the air alone gets ~30 fps
+  const busy = cu.grabs.size > 0 || cu.travelling() || cu.motion > 0.36 || now < busyUntil;
+  if (busy || now - lastDraw >= idleGap) {
+    cu.iters = busy ? iters : 5;               // fewer solver passes for the air alone
+    let steps = 0;
+    while (acc >= STEP && steps < 4) { cu.step(STEP); acc -= STEP; steps++; }
+    if (steps === 4) acc = 0;
+    if (steps) { draw(); lastDraw = now; }
+  }
+  if (cu.air === 0 && cu.isQuiet()) { running = false; return; }
   requestAnimationFrame(frame);
 }
+
+function stir(ms = 1200) { busyUntil = performance.now() + ms; wake(); }
 
 // ---- hands --------------------------------------------------------------------------------
 
@@ -135,6 +171,9 @@ function local(e) {
   return [e.clientX - r.left, e.clientY - r.top];
 }
 
+const downs = new Map();       // where and when each hand took hold, to tell a tap from a pull
+let hover = null;
+
 canvas.addEventListener('pointerdown', (e) => {
   if (e.button > 0 || !cu) return;
   const [x, y] = local(e);
@@ -142,6 +181,7 @@ canvas.addEventListener('pointerdown', (e) => {
   if (e.pointerType === 'mouse') e.preventDefault();
   try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* optional */ }
   canvas.classList.add('is-holding');
+  downs.set(e.pointerId, { x, y, t: performance.now(), far: 0 });
   stopTease();
   wake();
 });
@@ -149,20 +189,37 @@ canvas.addEventListener('pointerdown', (e) => {
 canvas.addEventListener('pointermove', (e) => {
   if (!cu) return;
   const [x, y] = local(e);
-  if (cu.grabs.has(e.pointerId)) { cu.move(e.pointerId, x, y); wake(); return; }
-  if (e.pointerType === 'mouse') canvas.classList.toggle('can-grab', cu.hit(x, y) >= 0);
+  if (cu.grabs.has(e.pointerId)) {
+    const d = downs.get(e.pointerId);
+    if (d) d.far = Math.max(d.far, Math.hypot(x - d.x, y - d.y));
+    cu.move(e.pointerId, x, y);
+    wake();
+    return;
+  }
+  if (e.pointerType === 'touch') return;
+  // a hand passing over the curtain stirs the hem and the seam
+  if (hover) {
+    const ms = Math.max(4, Math.min(100, e.timeStamp - hover[2])), per = 1000 / 60 / ms;
+    if (cu.brush(x, y, (x - hover[0]) * per, (y - hover[1]) * per, M.brush)) stir();
+  }
+  hover = [x, y, e.timeStamp];
+  canvas.classList.toggle('can-grab', cu.hit(x, y) >= 0);
 });
 
 function end(e) {
   if (!cu || !cu.grabs.has(e.pointerId)) return;
   cu.release(e.pointerId);
+  const d = downs.get(e.pointerId);
+  downs.delete(e.pointerId);
+  // a tap or a click without a pull: the velvet dents where it was touched
+  if (d && e.type === 'pointerup' && d.far < 8 && performance.now() - d.t < 400) cu.poke(d.x, d.y, M.brush);
   if (!cu.grabs.size) canvas.classList.remove('is-holding');
-  wake();
+  stir();
 }
 canvas.addEventListener('pointerup', end);
 canvas.addEventListener('pointercancel', end);
 canvas.addEventListener('lostpointercapture', end);
-canvas.addEventListener('pointerleave', () => canvas.classList.remove('can-grab'));
+canvas.addEventListener('pointerleave', () => { canvas.classList.remove('can-grab'); hover = null; });
 
 // ---- the traveller rope -------------------------------------------------------------------
 
@@ -170,9 +227,8 @@ function pull(to) {
   if (!cu) return;
   stopTease();
   cu.releaseAll();
-  cu.travel(to, 2.4);
-  if (reduced) { cu.settle(900); draw(); return; }
-  wake();
+  cu.travel(to, M.rope);
+  stir(M.rope * 1000 + 1500);
 }
 
 openBtn.addEventListener('click', () => pull(0));
@@ -180,33 +236,48 @@ closeBtn.addEventListener('click', () => pull(1));
 
 /** Once, a few seconds in: the lead edges part a hand's width and fall back, showing a line of light. */
 function tease() {
-  if (reduced || touched || !cu || cu.openness() > 0.02) return;
+  if (touched || !cu || cu.openness() > 0.02) return;
   touched = true;
-  cu.travel(0.93, 1.3, 'out');
-  const back = () => { if (cu.openness() < 0.2) cu.travel(1, 1.8); };
-  cu.anim[0].then = back;
-  wake();
+  const [to, out, back] = M.tease;
+  cu.travel(to, out, 'out');
+  cu.anim[0].then = () => { if (cu.openness() < 0.2) cu.travel(1, back); };
+  stir((out + back) * 1000 + 1500);
 }
 function stopTease() { touched = true; clearTimeout(teaseTimer); }
 
 // ---- lifecycle ----------------------------------------------------------------------------
 
+// the CSS lamps (the bulb on the stage, the light under the hem, the close-up) pause with the page
+const closeUp = document.querySelector('[data-close-up]');
+let closeUpSeen = false;
+function lampsAway() {
+  stage.classList.toggle('is-away', document.hidden || !visible);
+  if (closeUp) closeUp.classList.toggle('is-away', document.hidden || !closeUpSeen);
+}
+
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { if (cu) cu.releaseAll(); running = false; }
-  else if (cu && !cu.isQuiet()) wake();
+  else wake();
+  lampsAway();
 });
 
 if ('IntersectionObserver' in window) {
   new IntersectionObserver((entries) => {
     visible = entries[entries.length - 1].isIntersecting;
-    if (visible && cu && !cu.isQuiet()) wake();
+    lampsAway();
+    if (visible) wake();
   }).observe(stage);
+  if (closeUp) {
+    new IntersectionObserver((entries) => {
+      closeUpSeen = entries[entries.length - 1].isIntersecting;
+      lampsAway();
+    }).observe(closeUp);
+  }
 }
 
 reducedQuery.addEventListener('change', (e) => {
   reduced = e.matches;
-  if (cu) cu.damp = reduced ? 0.8 : 0.985;
-  if (reduced) stopTease();
+  tune();
 });
 
 let resizeTimer = 0, lastSize = '';
@@ -218,6 +289,7 @@ window.addEventListener('resize', () => {
     lastSize = size;
     running = false;
     build(true);
+    wake();
   }, 160);
 });
 
@@ -231,16 +303,20 @@ function start(image) {
   if (!renderer) { fail(); return; }
   if (renderer.kind === 'webgl') {
     canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); running = false; });
-    canvas.addEventListener('webglcontextrestored', () => { renderer.restore(); draw(); });
+    canvas.addEventListener('webglcontextrestored', () => { renderer.restore(); draw(); wake(); });
   }
   lastSize = stage.clientWidth + 'x' + stage.clientHeight;
   build(false);
   stage.classList.add('is-ready');
+  if (renderer.kind === '2d') idleGap = 48;      // the fallback draws cell by cell: ~20 fps at rest
   if (params.has('capture') || params.has('debug')) {
-    window.__curtain = { get cu() { return cu; }, draw, wake, pull, tease, run(sec) { for (let i = 0; i < sec * 60; i++) cu.step(STEP); draw(); } };
-  } else if (!reduced) {
-    teaseTimer = setTimeout(tease, 2600);
+    window.__curtain = {
+      get cu() { return cu; }, get running() { return running; }, stop() { running = false; },
+      draw, wake, pull, tease, run(sec) { for (let i = 0; i < sec * 60; i++) cu.step(STEP); draw(); },
+    };
   }
+  if (!params.has('capture')) teaseTimer = setTimeout(tease, reduced ? 3000 : 2600);
+  wake();
 }
 
 const img = new Image();

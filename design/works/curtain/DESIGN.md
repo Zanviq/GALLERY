@@ -28,6 +28,14 @@ not say what the page was or why to pull. REVISION.md also noted that the CG vel
 6. **A second, readable face** for the information (see Typography); Grandiflora One is kept for
    everything poster-like.
 
+**Fourth review (later the same day): motion.** The page had gone still on the owner's machine
+(reduced motion is on there). The design stays as it is; the motion comes back in the materials
+themselves, never over the type: the velvet moves in the house air and answers a passing hand, a
+line of light shows under the hem, the bulb flickers like tungsten, and the stage light spreads
+out from the bulb when the curtain opens. All of it runs under reduced motion, calmer
+(INTERACTION.md). The light is laid over the photographs as soft radial gradients in the bulb's
+own cold white (#F6FAF8 to #DCE8E4), so no new colour enters the palette.
+
 Names checked by web search with no collision found: 백열극장, 빈터시, 쪽문길, 극단 백열,
 극단 낮은지붕, 몸짓모임 아홉걸음. None are in BRIEF §5's taken list.
 
@@ -100,5 +108,6 @@ Letter-spacing 0; no capitals labels, no italics, no eyebrow labels.
 ## Imagery
 
 Photographs only (IMAGES.md): the velvet (used as the cloth texture), the empty stage with the
-ghost light, a close-up of the bulb. Code draws only type, layout, and the cloth's motion. The
+ghost light, a close-up of the bulb. Code draws only type, layout, the cloth's motion and light
+laid over the photographs (the bulb's glow, the dark that lifts, the line under the hem). The
 favicon is a square of the velvet photograph with a slit of light at the seam.
