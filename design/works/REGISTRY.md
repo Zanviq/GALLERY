@@ -54,6 +54,21 @@ Revisions done: curtain (theatre reopening, photographic velvet), sand (photogra
 Fourth review (BRIEF §000): futsal deleted; keyboard keycaps + switch sound back ("쳐 보세요"); perfume liquid pool back (WebGL2); curtain ambient air + tungsten flicker; stamp back to the old continuous rules, tension = tray speed 1.0→2.4배속; festival, cinema, quiet-floors, observatory, sand, ticketing keep motion under reduce; nighttrain, ramen, sculpture, marathon, ticketing, perfume images now object-only.
 Not revised after the third review (owner liked or did not flag them): startup, quiet-floors, optician, observatory, festival.
 
+## Fifth batch (2026-11-10, after BRIEF §000): five pages in the feel of 01 keyboard, 02 festival, 03 perfume
+
+What those three share: one strong colour field from the subject, huge type, generated object photography graded
+to the page, the information reading first, and one lively sensory touch tied to the product (keycaps that click
+and sound, a lineup that answers the pointer and the music, a liquid that ripples) that sits in its own section or
+as an ambient layer and never covers the information. Fonts and Latin faces below are reserved per work.
+
+| slug | category · platform | concept | signature (moderate, beside the info) | palette (reason) | fonts | status |
+|---|---|---|---|---|---|---|
+| camera | 제품 소개 · desktop+mobile | invented instant camera (brand name by agent) | 셔터를 누르면 플래시·모터 소리, 인화지가 나와 사물 사진으로 현상됨 | camera-body lemon #FFE14D field (clean lemon, never mustard), black, white print borders | Do Hyeon, Sunflower (+ Bricolage Grotesque if needed) | building |
+| lamp | 제품 소개 · desktop+mobile | invented desk lamp from a small design studio | 디머 다이얼·색온도: 같은 책상 장면 사진(2700K/4000K/5600K, 밝기 단계)이 교차되고 스위치 소리 | room black #0B0C0E, white, steel grey (the page is the room; the photos carry the light) | MaruBuri (subset renamed) (+ Hanken Grotesk if needed) | building |
+| record | 홍보 · desktop+mobile | an invented band's first LP release | 회전하는 판에 바늘을 내리면 면마다 합성 음악 일부, 트랙 목록이 따라 켜짐 | pressed turquoise vinyl #00A3A1, black, white | Moirai One, Nanum Barun Gothic (subset renamed) (+ Darker Grotesque if needed) | building |
+| kite | 홍보 · desktop+mobile | invented winter kite festival on a river field (정월 연날리기) | 포인터가 바람이 되어 연 꼬리·연줄이 흔들림 (연 사진 컷아웃 + 코드 꼬리), 평소에도 잔바람 | open-sky blue #59B7F0 field, black, white, kite red accent | Jua, Freesentation (+ Rubik if needed) | building |
+| coffee | 홈페이지 · desktop+mobile | invented neighbourhood coffee roastery | 추출 방식을 고르고 분쇄 다이얼을 돌리면 그라인더 소리와 입자 크기, 레시피(원두·물·시간) | dried coffee-cherry maroon #5E1224, white, black | RIDIBatang (check OFL; else Eulyoo1945) (+ Libre Caslon Text if needed) | building |
+
 ## Heavy works (the owner's real programs and internal tools; built last)
 
 | # | slug | category | source | notes |
