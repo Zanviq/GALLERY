@@ -387,46 +387,6 @@ export function initSim() {
     idleMeter(rn.info, totalPeak(rn.info));
   }
 
-  function renderStatic(rn) {
-    // the peak frame as a still diagram: no motion at all
-    const info = rn.info;
-    const e0 = rn.ev[0];
-    const Ds = (j, x) => {
-      const dist = Math.abs(j - e0.slab);
-      if (dist > 4) return 0;
-      const dx = x - e0.x0;
-      return e0.amp * TR[dist] * Math.cos(dx / 15) * Math.exp(-Math.abs(dx) / 120);
-    };
-    const Ss = (band, k) => {
-      let v = 0;
-      for (const w of rn.wallEv.slice(0, 2)) {
-        const dist = Math.abs(band - w.band);
-        if (dist <= 3) v += w.amp * TW[dist] * (w.k === k ? 0.7 : 0.2);
-      }
-      return v;
-    };
-    drawFrame(refs, Ds, Ss);
-    const seen = new Set();
-    for (const it of rn.items) {
-      const key = it.kind + it.clip + (it.kind === 'ring' ? it.rMax : '');
-      if (seen.has(key)) continue;
-      seen.add(key);
-      const ps = it.kind === 'arc' ? [0.2, 0.5, 0.8] : [0.18, 0.42, 0.66];
-      ps.forEach((p, i) => {
-        const copy = { ...it };
-        if (!showItem(copy)) return;
-        rn.active.push(copy);
-        paintItem(copy, p);
-        copy.el.style.opacity = (it.kind === 'arc' ? it.s * (1 - i * 0.22) : 0.95 * it.s * (1 - i * 0.25)).toFixed(3);
-      });
-    }
-    const peak = totalPeak(info);
-    meterDigits.set(peak.toFixed(1));
-    meterBar.set(peak, peak, info.bg);
-    $('[data-max]').textContent = String(Math.round(peak));
-    setMini(info, peak);
-  }
-
   function stopRun() {
     if (run) {
       cancelAnimationFrame(run.raf);
@@ -446,11 +406,8 @@ export function initSim() {
     if (announce) $('#live').textContent = sentence(info);
     const rn = buildRun(info);
     if (soundBox.checked) sound.playScene(info.act, info.meter.L, info.bg, info.day);
-    if (reducedMQ.matches) {
-      renderStatic(rn);
-      run = null;
-      return;
-    }
+    // reduced motion plays the same scene (BRIEF §000: calmer, not still); only the jump to the
+    // drawing in trigger() skips smooth scrolling
     run = rn;
     rn.raf = requestAnimationFrame(tick);
   }
@@ -469,23 +426,19 @@ export function initSim() {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { if (run) finish(); sound.stopAll(); }
   });
-  reducedMQ.addEventListener?.('change', () => { stopRun(); idleMeter(compute(state)); });
-
   // first paint
   const info0 = compute(state);
   applyScene(info0);
   $('#readout-text').textContent = '방을 누르거나 소리를 고르면 아래층 소음계가 반응해요. 그다음 무엇을 바꿔 보고 다시 들어 보세요.';
 
-  // one demonstration thump, normal motion only, not announced
-  if (!reducedMQ.matches) {
-    const once = new IntersectionObserver((ents) => {
-      if (!ents[0].isIntersecting) return;
-      once.disconnect();
-      const go = () => setTimeout(() => { if (!state.played && !document.hidden) play({ announce: false }); }, 700);
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(go); else go();
-    }, { threshold: 0.5 });
-    once.observe(stage);
-  }
+  // one demonstration thump (about 3 s), also under reduced motion, not announced
+  const once = new IntersectionObserver((ents) => {
+    if (!ents[0].isIntersecting) return;
+    once.disconnect();
+    const go = () => setTimeout(() => { if (!state.played && !document.hidden) play({ announce: false }); }, 700);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(go); else go();
+  }, { threshold: 0.5 });
+  once.observe(stage);
 
   // used by the other sections
   return {

@@ -38,8 +38,8 @@ slab barely moves and the meter drops. The ending is the pledge, which stays on 
 - Fix chips (native checkboxes): toggle, the readout updates at once and the scene replays.
 - "다시 듣기" button: replay the current setup.
 - Links in the "아랫집에서는" section: set the activity, scroll the drawing into view, play.
-- No autoplay in reduced motion. In normal motion one demonstration thump plays once, the first time
-  the drawing is on screen, without announcing anything to screen readers.
+- One demonstration thump (about 3 s) plays once, the first time the drawing is on screen, without
+  announcing anything to screen readers. It plays under reduced motion too (see below).
 
 ### Feedback
 - Impact: the slab under the source bends (a decaying travelling wave, exaggerated, max ~8 px), the
@@ -62,9 +62,14 @@ slab barely moves and the meter drops. The ending is the pledge, which stays on 
 - Activities: one radio group (arrows inside). Fixes: five checkboxes. Then 다시 듣기, then sound.
 - Focus ring: 3px ink, 3px offset; white on the dark meter.
 
-### Reduced motion
-- No shaking, no expanding rings, no auto demo. A play renders the peak frame as a still diagram
-  (bent slab, three fixed arcs per affected room, rings at fixed radii) and sets the digits to the peak.
+### Reduced motion (revised 2026-11-10, BRIEF §000 "calmer, not still")
+- The owner's Windows has animation effects off, so the browser reports `reduce`, and the still
+  peak-frame diagram this page used to show there looked dead. Under `reduce` the page now behaves as
+  with motion on: the slab bends, arcs and rings spread, the meter digits and bar follow the level, and
+  the demonstration thump plays once. Sound is unchanged (opt-in checkbox).
+- Dropped under `reduce`: only the smooth scroll when a link in "아랫집에서는" jumps to the drawing
+  (instant, and the play starts at once instead of after 450 ms). The blanket CSS rule that killed every
+  transition and animation is gone; the page had no CSS motion besides a 1px button press.
 
 ### Sound
 - Off by default. A checkbox "아랫집에서 들리는 소리도 듣기" sits after the controls. Checking it creates

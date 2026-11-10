@@ -404,9 +404,8 @@ h1 { font-size: var(--fs-display); line-height: 1.15; }
 
 .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; }
-}
+/* Reduced motion keeps the planisphere's turn and play (BRIEF §000, calmer not still); the only
+   motion it drops is smooth scrolling, which is set above for no-preference only. */
 @media print { [data-gallery-back] { display: none; } }
 
 /* capture helpers for thumbnails (set by design/works/observatory scripts only) */

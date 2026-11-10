@@ -298,7 +298,9 @@ button { font: inherit; color: inherit; }
 .card--og .title { font-size: 120px; padding: 0; }
 .card--og .lead { margin-top: 24px; font-size: 34px; line-height: 1.4; }
 
+/* Reduced motion keeps the pour, the tilt, the jar and the fades to the windowsill
+   (BRIEF §000, calmer not still); only the cork's drop becomes a short fade in place. */
 @media (prefers-reduced-motion: reduce) {
-  .jar__pic { transition: none; }
-  .bottle, .held, .finish, .is-finished .finish { transition: none; }
+  .bottle__cork { transform: none; }
+  .bottle__cork.is-dropping { transition: opacity 240ms ease-out; }
 }

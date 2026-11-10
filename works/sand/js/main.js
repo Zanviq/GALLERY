@@ -204,10 +204,10 @@ function frame(t) {
 
   if (demo) busy = runDemo(t) || busy;
 
-  // tilt: eased on screen unless reduced motion; the sensor path is already smoothed
+  // tilt: eased on screen (reduced motion too); the sensor path is already smoothed
   if (!state.sensor) {
     const d = state.tilt - state.shown;
-    if (Math.abs(d) < 0.05 || reduced) state.shown = state.tilt;
+    if (Math.abs(d) < 0.05) state.shown = state.tilt;
     else { state.shown += d * (1 - Math.exp(-f / 4)); busy = true; }
   }
   sim.setTilt(state.shown);
@@ -217,7 +217,7 @@ function frame(t) {
   const pouring = (pourSources.size > 0 || (demo && demo.pouring)) && state.phase === 'filling';
   const target = pouring ? 1 : 0;
   if (jarT !== target) {
-    jarT = reduced ? target : target ? Math.min(1, jarT + 0.075 * f) : Math.max(0, jarT - 0.06 * f);
+    jarT = target ? Math.min(1, jarT + 0.075 * f) : Math.max(0, jarT - 0.06 * f);
     busy = true;
   }
   flowT = pouring && jarT > 0.86 ? Math.min(1, flowT + 0.05 * f) : 0;
@@ -247,10 +247,10 @@ function frame(t) {
   for (let n = 0; n < steps; n++) moving += sim.step();
   if (sim.active > 0) busy = true;
 
-  if (!reduced && Math.abs(state.shown - lastGlint) > 0.12) {
+  if (Math.abs(state.shown - lastGlint) > 0.12) {
     sim.glint(state.shown, true);
     lastGlint = state.shown;
-  } else if (reduced && sim.glintN) sim.glint(0, false);
+  }
 
   const d = sim.takeDirty();
   if (d) {
@@ -441,9 +441,9 @@ function shake() {
   const now = performance.now();
   if (now - lastShake < 450) return;
   lastShake = now;
-  sim.shake(34, !reduced);
+  sim.shake(34, true);
   state.mixed = true;
-  if (!reduced) jiggle = { t0: now };
+  jiggle = { t0: now };
   sound.shake();
   say('위층을 흔들어 섞었어요.');
   kick();
@@ -535,13 +535,12 @@ async function corkIt() {
   panelDone.inert = false;
   stage.classList.add('is-corked');
   corkImg.hidden = false;
-  if (!reduced) {
-    corkImg.classList.remove('is-in');
-    void corkImg.offsetWidth;
-    corkImg.classList.add('is-dropping');
-    requestAnimationFrame(() => corkImg.classList.add('is-in'));
-  } else corkImg.classList.add('is-in');
-  setTimeout(() => sound.cork(), reduced ? 0 : 420);
+  // the cork drops into the neck; under reduced motion it fades in where it sits instead (css)
+  corkImg.classList.remove('is-in');
+  void corkImg.offsetWidth;
+  corkImg.classList.add('is-dropping');
+  requestAnimationFrame(() => corkImg.classList.add('is-in'));
+  setTimeout(() => sound.cork(), reduced ? 240 : 420);
   say('코르크로 막았어요. 창가에 세워 둘게요.');
   $('[data-save]').focus({ preventScroll: true });
   updateLabel();
@@ -549,7 +548,7 @@ async function corkIt() {
   try {
     await renderFinish(sim, finishCanvas, Math.ceil(CORK_SEAT));
     if (ticket !== finishing || state.phase !== 'corked') return;
-    await new Promise((r) => setTimeout(r, reduced ? 0 : 650));
+    await new Promise((r) => setTimeout(r, 650));
     if (ticket !== finishing || state.phase !== 'corked') return;
     stage.classList.add('is-finished');
     say('햇빛 드는 창가에 세워 뒀어요. 사진으로 저장할 수 있어요.');
@@ -804,19 +803,19 @@ if ('IntersectionObserver' in window) {
 new ResizeObserver(() => { layout(); }).observe(stage);
 
 // ── start: a bottle already part-filled with swept layers, so the first screen shows what it does.
-// The layers were poured once at build time (start.js); under reduced motion the bottle is fuller
-// and nothing moves on its own.
+// The layers were poured once at build time (start.js). The opening pour plays under reduced
+// motion too (BRIEF §000: calmer, not still); it lasts under 5 s and stops at the first touch.
 panelDone.inert = true;
 if (capture) window.__sand = { sim, state };
 const soundPref = store.get('sand.sound');
 setSound(soundPref !== 'off', false);
-sim.loadRuns(reduced && !capture ? STILL : START);
-state.layers = (reduced && !capture ? STILL_LAYERS : START_LAYERS).slice();
+sim.loadRuns(START);
+state.layers = START_LAYERS.slice();
 blitAll();
 layout();
 updateLabel();
 
-if (!reduced && !capture) {
+if (!capture) {
   say('모래가 흐르는 걸 보여 드릴게요. 화면을 누르면 바로 멈춰요.');
   demo = { t0: performance.now() + 500, pouring: false };
   kick();

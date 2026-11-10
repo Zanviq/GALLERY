@@ -90,7 +90,7 @@ function starRadius(mag, k) {
 
 const norm180 = (d) => ((((d + 180) % 360) + 360) % 360) - 180;
 
-export function createPlanisphere({ canvas, wrap, reduced, onChange, onSelect }) {
+export function createPlanisphere({ canvas, wrap, onChange, onSelect }) {
   const ctx = canvas.getContext('2d');
   let ms = Date.now();
   let shown = ms;            // the instant actually drawn (differs from ms during a tween)
@@ -657,7 +657,7 @@ export function createPlanisphere({ canvas, wrap, reduced, onChange, onSelect })
     stopPlay();
     const from = shown;
     ms = t;
-    if (animate && !reduced() && Math.abs(t - from) < 86400000 * 40) {
+    if (animate && Math.abs(t - from) < 86400000 * 40) {
       tween = { from, to: t, start: performance.now(), dur: typeof animate === 'number' ? animate : 280 };
     } else {
       tween = null;
@@ -668,7 +668,6 @@ export function createPlanisphere({ canvas, wrap, reduced, onChange, onSelect })
   }
 
   function play(until) {
-    if (reduced()) return;
     tween = null;
     shown = ms;
     playing = { until };

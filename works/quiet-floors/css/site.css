@@ -541,10 +541,9 @@ rect.room.is-meter { fill: var(--paint-sky); }
 .foot__fine { font-size: 14px; max-width: 40rem; }
 .foot__credit { font-size: 14px; }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
-  .btn:active { transform: none; }
-}
+/* Reduced motion: the section drawing, its meter and the demonstration thump keep moving
+   (BRIEF §000, calmer not still). The page has no smooth scrolling, parallax or slides in CSS;
+   the jump to the drawing scrolls instantly under reduce (js/sim.js). */
 
 /* numbers that sit in columns line up */
 .units__table, .compare__v, .meter__side, .meter__scale, .fix__gain, .sound__lv, .dates__w { font-variant-numeric: tabular-nums; }

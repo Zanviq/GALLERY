@@ -29,7 +29,8 @@ REVISION.md: the bottle, cork and jars were line drawings made in code. So:
   `js/finish.js`). The shadow, the cork and the glass are the photograph's own.
 - **The first screen already shows it.** The bottle opens a quarter full of rocked wave layers
   (poured once at build time, `js/start.js`), and a short pour plays while the bottle rocks, until
-  the visitor touches anything. Reduced motion: a still bottle about two thirds full.
+  the visitor touches anything. Reduced motion shows the same opening pour (BRIEF §000; see
+  INTERACTION.md "Reduced motion"); the still two-thirds bottle is kept only for the capture cards.
 - **Sound.** The pour has a sound made in the page (grain clicks, filtered), after the first touch;
   a 소리 toggle beside the tools.
 - Removed: the drawn bottle, cork, cup and jar canvases (`render.js`), the drawn shelf and striped

@@ -62,7 +62,7 @@ document.body.append(announce);
 const say = (text) => { announce.textContent = ''; requestAnimationFrame(() => { announce.textContent = text; }); };
 
 let ready = false;
-const ps = createPlanisphere({ canvas, wrap: disc, reduced, onChange, onSelect });
+const ps = createPlanisphere({ canvas, wrap: disc, onChange, onSelect });
 
 function defaultTime() {
   const at = params.get('at');
@@ -78,7 +78,9 @@ function defaultTime() {
   return A.kstInstant(p.y, p.m, p.d, sessionsFor(p.m)[1]);
 }
 ps.set(defaultTime());
-if (!reduced() && !params.has('capture')) {
+// the first-view turn, the button tweens and the night play run under reduced motion too
+// (BRIEF §000: calmer, not still); only scrolling to the disc drops its smooth scroll
+if (!params.has('capture')) {
   ps.on('firstview', () => {
     const target = ps.ms;
     ps.set(target - 2 * 3600000);
@@ -150,9 +152,6 @@ disc.addEventListener('keydown', (e) => {
 });
 
 const playBtn = $('#play');
-function syncPlayAvailability() { playBtn.hidden = reduced(); if (reduced()) ps.stop(); }
-syncPlayAvailability();
-mq.addEventListener('change', syncPlayAvailability);
 ps.on('play', (on) => {
   playBtn.setAttribute('aria-pressed', String(on));
   playBtn.textContent = on ? '멈추기' : '밤새 돌려 보기';

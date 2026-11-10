@@ -134,10 +134,12 @@ if (mode !== 'quick') {
     console.log('[keyboard /works/sand/]', problems.length ? 'PROBLEMS: ' + problems.join(' | ') : 'ok', '\n  tab:', order.join(' > '), '\n  ', JSON.stringify(out));
     await page.close();
   }
-  // reduced motion: fill instantly, shake, cork: the end state shows at once
+  // reduced motion (BRIEF §000): the opening pour still plays; then fill, shake, cork (a fade) and
+  // the windowsill
   {
     const { page, problems } = await open(browser, { url: BASE + '/sand/', w: 390, h: 844, mobile: true, reduced: true });
-    await page.click('[data-sensor-off]');
+    await sleep(5000);
+    if (await page.$eval('[data-sensor]', (e) => !e.hidden)) await page.click('[data-sensor-off]');
     for (let n = 0; n < 20; n++) {
       if (!(await page.$eval('[data-cork]', (e) => e.hidden))) break;
       await page.click('[data-jar="' + ((n % 5) + 1) + '"]');
@@ -152,7 +154,7 @@ if (mode !== 'quick') {
     }
     const corkHidden = await page.$eval('[data-cork]', (e) => e.hidden);
     if (!corkHidden) await page.click('[data-cork]');
-    await sleep(80);
+    await sleep(2000);
     await page.screenshot({ path: path.join(outDir, 'chk-reduced-corked.png') });
     const before = await page.evaluate(() => window.__raf);
     await sleep(1200);

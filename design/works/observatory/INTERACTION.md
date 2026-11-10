@@ -49,8 +49,12 @@ finger leaves the disc. Two-finger gestures are ignored.
   earlier to the set time over 1.2 s, ease-out. Buttons tween the disc over 280 ms.
   "밤새 돌려 보기" plays the night from the set time to sunrise at 1 hour per second; any
   pointer or key input stops it. Nothing else moves on the page.
-- Reduced motion: no intro turn, no tweens, no play button. The disc changes only when the
-  visitor changes it.
+- Reduced motion (revised 2026-11-10, BRIEF §000 "calmer, not still"): the same as normal motion.
+  The first-view turn, the 280 ms button tweens and "밤새 돌려 보기" (1 hour per second) all run, at
+  the speed the owner called "적당". The owner's Windows has animation effects off, and the page
+  without them read as dead. Dropped under `reduce`: only smooth scrolling (nav jumps and the scroll
+  back to the disc from the list). The blanket CSS rule against transitions and animations is gone;
+  the page had none to stop.
 - One rAF loop, alive only while a tween or play runs, the canvas is on screen
   (IntersectionObserver) and the tab is visible (visibilitychange). Otherwise the canvas is
   redrawn once per state change.

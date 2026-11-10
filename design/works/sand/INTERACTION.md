@@ -24,7 +24,7 @@ The owner found the effect weak on first try. The payoff now has to land without
 | inciting | the visitor touches: the demo stops at once; holding 붓기 tips their jar and the stream starts within 5 frames | the stream thickens over a third of a second as the jar tips |
 | rising | change jar, drag the bottle sideways (or tilt the phone): the stream leans, the cone grows on one side, grains run down its flanks | tilt is live while pouring, so cause and effect is one gesture |
 | crisis | the neck fills | pour stops by itself; 코르크 막기 replaces 붓기 |
-| climax | the cork drops into the neck (420 ms, a knock), then the bottle appears on a sunlit windowsill with its shadow | the one choreographed moment; instant under reduced motion |
+| climax | the cork drops into the neck (420 ms, a knock), then the bottle appears on a sunlit windowsill with its shadow | the one choreographed moment; under reduced motion the cork fades in (240 ms) instead of dropping |
 | end | 사진으로 저장 gives a 1080 × 1341 JPEG made on the phone; 새 병 starts over with an empty bottle | the status says the photo never left the device |
 
 ## State machine
@@ -76,7 +76,7 @@ The loop also stops while the tab is hidden or the stage is off-screen.
   phone): 3.8–5.2 ms of sand work per frame while pouring and dragging, worst frame 23 ms, 2 late
   frames in 700. Unthrottled desktop: 0.7 ms average.
 - **Glints**: quartz specks each glint at their own angle; while the tilt changes, the few whose
-  angle is within 0.45° of it flash white. Not under reduced motion.
+  angle is within 0.45° of it flash white.
 - **Shake** mixes the top 34 cells of each column (grains swap, never blend), some hop and fall back,
   and the band slumps.
 - **Full**: when the sand in the neck stands within 3 rows of the mouth on average; it reopens only if
@@ -85,8 +85,7 @@ The loop also stops while the tab is hidden or the stage is off-screen.
 ## Sensor permission
 
 - Offered once, only on touch devices with `DeviceOrientationEvent`: when the opening pour ends by
-  itself or after the visitor's first pour (never in the middle of one), or at once
-  under reduced motion; a compact card over the top of the stage: what it does, what is read, that nothing
+  itself or after the visitor's first pour (never in the middle of one); a compact card over the top of the stage: what it does, what is read, that nothing
   is sent; 센서 켜기 / 버튼으로 할게요. iOS permission is asked inside the tap.
 - Granted with readings within 1.5 s: sensor mode (the tilt buttons become 센서 끄기). Otherwise the
   card closes and the status explains the buttons. Remembered for the session (try/catch).
@@ -106,12 +105,16 @@ idle seconds, and 소리 켬/끔 turns it off (remembered for the session).
 - The sand canvas (and the finish photo) carry a text alternative refreshed 0.8 s after the sand
   moves and when it rests: how full, and the colours from the bottom up.
 
-## Reduced motion
+## Reduced motion (revised 2026-11-10, BRIEF §000 "calmer, not still")
 
-- No opening pour and nothing moves on its own: the bottle opens about two thirds full, still.
-- The jar tips at once, the bottle turns at once, no glints, no hop or jiggle on shake, the cork and
-  the windowsill appear at once. Grains still fall while the visitor pours (they are the content).
-- 바로 쌓기 builds a layer without watching it fall.
+- The owner's Windows has animation effects off, so the browser reports `reduce`, and the still
+  bottle this page showed there looked dead. Under `reduce` the page now behaves as with motion on:
+  the same quarter-full bottle and opening pour (4.5 s, stops at the first touch), the jar lifts and
+  tips, the bottle eases to its tilt, glints, hop and jiggle on shake, grains settle, and the bottle
+  fades onto the windowsill photo.
+- Dropped under `reduce`: only the cork's 420 ms drop, which becomes a 240 ms fade in place (the
+  knock sounds when it ends). The page has no smooth scrolling, parallax or scroll-linked motion.
+- 바로 쌓기 still builds a layer without watching it fall, for anyone who prefers that.
 
 ## Failure paths
 
