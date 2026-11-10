@@ -4,6 +4,30 @@ Every work in `works/<slug>/` is built by one agent working alone, in parallel w
 This file holds the rules that apply to all of them. `design/works/REGISTRY.md` holds each work's
 concept, palette and fonts, and lists what is already taken.
 
+## 000. The owner's fourth review (2026-11-10, later). Read this first; it refines §00 and §0.
+
+- **The right amount of interaction.** The owner liked the earlier 키보드 (keycaps that click and
+  sound), 너울 2027 ("화면의 생동감"), 향수 (a gently moving background), 사뿐 and 부엉재 천문대
+  (sound and animation "적당해서"), and 점멸's single blink of a lit window ("깜박거림 하나만으로도
+  주는 느낌이 강했다"). Earlier interactions failed because they **hid the information and became
+  the main thing**. Aim for: the information reads first, and a moderate, lively touch (motion,
+  sound, a hover or click that answers) lets the visitor feel it. Do not strip a page to stills.
+- **Reduced motion means calmer, not still.** The owner's Windows has animation effects off, so
+  every browser on that machine reports `prefers-reduced-motion: reduce`, and pages that stop all
+  motion under it looked dead to the owner (너울's liveliness, 칼퇴 결재's step mode "뚝뚝 끊기는",
+  남겨 둔 불's curtain, 색모래 병's still bottle). Under `reduce` keep the signature and ambient
+  motion (slow loops, a flicker under 3 per second, a conveyor's continuous movement, sound after
+  a user gesture), at the same or a slower speed. Drop only smooth scrolling, parallax,
+  scroll-linked motion and large slides or zooms (use a fade instead). Never default a game to a
+  step mode; offer it as a setting. Check every capture with motion both on and off.
+- **Game tension = speed that rises gradually and smoothly**, with continuous movement. Not extra
+  rules, piles or jolts. The previous 칼퇴 결재 flow felt continuous; the revision felt choppy.
+- **Generate as few people as possible; centre images on objects.** Small groups and full-body
+  shots came out awkward, so 늦깎이 FS was deleted. Show the thing, the tool, the place, the trace
+  a person left (an empty chair, a bib on a table, a cup), not the person. No crowds, no groups, no
+  full bodies, no faces; avoid hands unless one close-up is essential and checked at full size.
+  Exceptions the owner approved: 정면사진관's ID portraits and 점멸's film stills.
+
 ## 00. The owner's third review (2026-11-10). Read this first; it adds to §0.
 
 The generated-image direction works: "대체로 이미지와 디자인이 매우 잘 뽑혔다". What the owner liked

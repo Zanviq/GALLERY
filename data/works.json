@@ -54,15 +54,6 @@
     "year": 2026
   },
   {
-    "slug": "futsal",
-    "title": "늦깎이 FS",
-    "type": "internal",
-    "url": "futsal/",
-    "tags": ["landing", "typography", "brand"],
-    "thumbnail": "thumbnails/futsal.webp",
-    "year": 2026
-  },
-  {
     "slug": "stamp",
     "title": "칼퇴 결재",
     "type": "internal",
