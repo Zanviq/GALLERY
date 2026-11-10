@@ -76,4 +76,4 @@ true colour, straight-down for everything that sits on a field.
   `scripts/cutout.py`: the paper becomes transparent and its shadow becomes black at the right alpha,
   so they lie on the exact CSS field with a real shadow and no visible rectangle.
 - The same stainless-steel two-handled pot in all four flavours and the hero (`--ref`).
-- Cooking and people photos stay rectangular, on white, cropped hard.
+- Cooking and test-kitchen photos stay rectangular, on white, cropped hard. No people in any photo (BRIEF §000): the 만든 사람 section shows their kitchen, not them.

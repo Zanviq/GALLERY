@@ -1,8 +1,10 @@
 # 제맛: images
 
-All photographs are Gemini generations (`gemini-3-pro-image`, 2K) made with `<scratchpad>/tools/gen_image.py`:
-13 generations, none thrown away. Raw files stay in the scratch folder (`<scratchpad>/ramen/gen/`); only the webp
-exports are in `works/ramen/img/`. The people are invented.
+All photographs are Gemini generations (`gemini-3-pro-image`, 2K) made with `<scratchpad>/tools/gen_image.py`.
+First round: 13 generations (`<scratchpad>/ramen/gen/`). People pass, 2026-11-10 (BRIEF §000, "사물 중심으로"): the
+founders shot and the two cooking shots with a hand in them were replaced by object-only photographs, 3 generations
+plus 2 edit passes (`<scratchpad>/people-b/gen/`). No person, face or hand appears in any image now. Only the webp
+exports are in `works/ramen/img/`.
 
 ## Look
 
@@ -19,9 +21,10 @@ down on paper of roughly that field colour. The same stainless-steel two-handled
   exact CSS field and no rectangle shows. Pots are cropped square around the pot with the same margin, so the four
   come out at one scale.
 - **Rectangles** (`<scratchpad>/tools/img_prep.py`): cropped only; no grade, no grain.
-- **Inspected at full size**: the lifting hand (five fingers, Korean grip), the egg-cracking hand, all six hands in
-  the founders shot, the chopsticks resting on the hero pot. The founders shot had a sticker with pseudo-text on an
-  appliance at the left edge and a digital timer display on the worktop: both cropped out.
+- **Inspected at full size** (every image, people pass): no people, faces or hands anywhere; the chopsticks on the
+  hero pot and on cook-off; the egg and the two shell halves on cook-egg-in. Two faults were fixed with an edit pass
+  and re-checked: the chopsticks on cook-off had faint pseudo-lettering engraved near the top, and the kitchen had
+  four aprons (the company is three people) and a kitchen scale with pseudo-text on its display and buttons.
 
 ## Prompts
 
@@ -71,21 +74,34 @@ used: still-huchu-1920/960 (후추 poster foot). ref: -. aspect 16:9. finish: cu
 > Still life of whole black peppercorns, a few hundred of them, poured in a loose drift with a small heap of coarsely cracked black pepper at one end, on a seamless flat sheet of matte black paper (close to #141516) that fills the whole frame, lit so the wrinkled peppercorns catch small highlights. Shot straight down from above on a digital medium-format camera, 80mm lens, f/11, everything sharp, true colour. Bright even daylight from a large window on the left, small soft natural shadows to the right, no vignette, the paper evenly lit from edge to edge. The ingredients lie in a loose, unforced band across the middle of the frame, with wide empty paper above and below and on both sides. A clean, honest still life for a food brand, like a page in a good food magazine. No text, no logo, no packaging, no bowls, no props, no hands.
 
 ### cook-boil.jpg
-used: cook-boil-1400/700 (끓이는 법, 550ml). ref: pot-gochu.jpg. aspect 3:2. finish: img_prep.py --aspect 3:2, q78.
+used: cook-boil-1400/700 (끓이는 법, 550ml); reference for cook-egg-in, cook-off and kitchen. ref: pot-gochu.jpg. aspect 3:2. finish: img_prep.py --aspect 3:2, q78.
 
 > The same stainless-steel two-handled pot (as in the reference) now sits on the black cast-iron grate of a gas burner on a clean white home cooktop, seen from above at a steep angle. Inside, clear water at a full rolling boil with big bubbles, a little steam rising and catching the light. Bright morning daylight in a small kitchen with white tiles, crisp digital photograph, true colour, sharp focus on the bubbles, the pot slightly off-centre with clean empty cooktop around it. Honest everyday food photography, not moody. No text, no logo, no packaging, no hands, no noodles yet.
 
-### cook-lift.jpg
-used: cook-lift-1400/700 (끓이는 법, 4:30); reference for cook-egg. ref: pot-gochu.jpg. aspect 3:2. finish: img_prep.py --aspect 3:2, q78.
+### cook-egg.jpg (people pass)
+used: cook-egg-in-1400/700 (끓이는 법, 2:00; replaces the egg-cracking hand). ref: cook-boil.jpg, pot-gochu.jpg. aspect 3:2. finish: img_prep.py --aspect 3:2, q78.
 
-> Close food photograph of the same stainless-steel pot of red chilli ramen (as in the reference) on a gas burner, a hand holding flat Korean stainless-steel chopsticks lifts a tangle of wavy noodles high out of the broth, broth dripping, steam rising in the bright daylight. Camera at a three-quarter angle slightly above the pot, 80mm lens, f/5.6, background a softly out-of-focus white-tiled kitchen. Crisp digital colour, appetising and honest, not moody. The hand is an adult's right hand seen from the side, holding the chopsticks correctly (Korean grip: upper chopstick between thumb, index and middle finger, lower one resting on the ring finger), five fingers, natural skin. No text, no logo, no packaging.
+> Same kitchen, same stainless-steel two-handled pot on the same black cast-iron grate of the same white gas cooktop as in the first reference, same bright morning daylight and the same steep angle from above, a little closer. The pot now holds Korean instant ramen boiling in a deep red chilli broth, like the second reference: thick wavy noodles, red chilli flakes, a few thin rings of fresh red chilli. An egg has just gone in: one whole raw egg with an unbroken glossy yolk rests on the noodles near the middle, its white just turning opaque at the edges in the small bubbles of the broth. On the white enamel of the cooktop beside the pot lie the two empty halves of the light-brown eggshell, on their sides. Crisp digital photograph, true colour, sharp focus on the egg, appetising and honest, not moody. Nobody in the frame: no people, no hands, no fingers, no arms. No chopsticks, no spoon, no text, no logo, no packaging.
 
-### cook-egg.jpg
-used: cook-egg-1400/700 (끓이는 법, 2:00). ref: cook-lift.jpg. aspect 3:2. finish: img_prep.py --aspect 3:2, q78.
+### cook-off.jpg (people pass)
+used: base for cook-off-2 only. ref: cook-boil.jpg, pot-gochu.jpg. aspect 3:2. finish: -.
 
-> Same kitchen, same stainless-steel pot of red chilli ramen on the same gas burner, same bright daylight and the same camera, but closer and from a little higher. The noodles are boiling in the red broth. An egg has just been cracked: the raw egg, white and whole yolk, is dropping from the two halves of the shell into the bubbling broth, caught mid-air a few centimetres above the surface. Only the fingertips of one hand holding the two shell halves enter from the top edge of the frame. Crisp digital colour, fast shutter so the egg is sharp, appetising and honest, not moody. No text, no logo, no packaging, no chopsticks.
+> Same kitchen, same stainless-steel two-handled pot on the same black cast-iron grate of the same white gas cooktop as in the first reference, same bright morning daylight, seen at a three-quarter angle slightly above the pot. The burner is switched off: no flame. The ramen inside is done: thick wavy noodles in a deep red chilli broth with a glossy film of chilli oil and a few thin rings of red chilli, like the second reference, and a soft wisp of steam rising from it and catching the light. A pair of flat Korean stainless-steel chopsticks rests across the rim of the pot, ready to eat straight from the pot. Clean empty cooktop around it. Crisp digital photograph, true colour, sharp, appetising and honest, not moody. Nobody in the frame: no people, no hands, no fingers, no arms. No text, no logo, no packaging, no bowl.
 
-### people.jpg
-used: people-1600/800 (만든 사람들). ref: -. aspect 3:2. finish: img_prep.py --crop 200,110,2528,1420 (removes an appliance sticker with pseudo-text at the left edge and a digital kitchen-timer display at the bottom), q78.
+### cook-off-2.jpg (edit pass)
+used: cook-off-1400/700 (끓이는 법, 4:30; replaces the hand lifting noodles). ref: cook-off.jpg. aspect 3:2. finish: img_prep.py --aspect 3:2, q78.
 
-> Candid documentary photograph inside a small, bright test kitchen of a three-person Korean food startup. Three invented Korean founders in their thirties, a woman with short hair and rolled-up shirt sleeves, a tall man in a plain grey t-shirt, and a woman with her hair tied back wearing a plain dark apron, stand around a stainless-steel worktop tasting broth from small white ceramic bowls with spoons, one of them frowning thoughtfully, one laughing, one about to sip. On the worktop: four identical small stainless-steel two-handled pots of ramen, a kitchen scale and a timer, nothing printed. Behind them white square tiles and a gas range with steam rising. Bright midday daylight from a window on the left, crisp digital colour, 35mm lens at eye level, natural expressions, nobody looking at the camera. Real people with natural skin texture, hands with five fingers each holding the spoons naturally. No text, no labels, no logos, no papers or notebooks, no packaging.
+> Edit this photograph and keep everything else exactly as it is (same pot, same ramen, same steam, same light, same framing). Only change: the two stainless-steel chopsticks must be completely plain brushed steel from end to end, with no engraving, no pattern, no lettering and no marks of any kind on them.
+
+### kitchen.jpg (people pass)
+used: base for kitchen-2 only. ref: cook-boil.jpg. aspect 16:9. finish: -.
+
+> Documentary interior photograph of an empty small test kitchen of a three-person Korean instant-noodle company, at eye level, 35mm lens, everything in focus. A long stainless-steel worktop runs across the frame in front of a wall of plain white square tiles. On the worktop: four identical small stainless-steel two-handled pots (the same pot as in the reference) stand in a straight row, each with a little red or pale broth left in it; in front of them, three small plain white ceramic tasting bowls and a row of stainless-steel tasting spoons laid side by side on a folded white cotton cloth; a plain white kitchen scale with its display switched off; a short stack of three closed plain black notebooks with a pencil lying on top. On the tiled wall behind the worktop, three plain aprons hang from three steel hooks in a row: one black, one grey, one undyed natural canvas. At the right edge a white gas cooktop with one pot still steaming softly. Bright midday daylight from a window on the left, crisp digital colour, true colour, clean and honest, like a page in a good food magazine. Nobody in the room: no people, no hands, no faces, no reflections of people. No text, no labels, no logos, no writing on anything, no posters, no screens, no packaging.
+
+### kitchen-2.jpg (edit pass)
+used: kitchen-1600/800 (만든 사람들; replaces the three founders). ref: kitchen.jpg. aspect 16:9. finish: img_prep.py --aspect 16:9, q78.
+
+> Edit this photograph and keep everything else exactly as it is (same room, same light, same pots, bowls, spoons, cloth, notebooks, pencil, cooktop and framing). Two changes only. 1: exactly three aprons hang on the wall, on three hooks: the black one, one grey one and the natural canvas one; remove the second grey apron and its hook and leave plain white tiles there, with the three remaining aprons spaced evenly. 2: the kitchen scale is a completely plain white block with a blank smooth front: no display, no buttons, no printing, no marks.
+
+Retired in the people pass (exports deleted): cook-lift-1400/700 (a hand lifting noodles with chopsticks),
+cook-egg-1400/700 (fingertips cracking an egg over the pot) and people-1600/800 (three founders tasting broth).

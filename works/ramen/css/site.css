@@ -376,7 +376,7 @@ small { font-size: inherit; }
 
 /* ---------- people ---------- */
 .people { padding-bottom: var(--sec); }
-.people__img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 55% 40%; }
+.people__img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 50%; }
 .people__in { padding: 72px var(--m) 0; row-gap: 40px; align-items: start; }
 .people__title { grid-column: 1 / -1; font: 400 clamp(40px, 5.6vw, 92px) / 1.02 var(--display); letter-spacing: -0.02em; }
 .people__text { grid-column: 1 / -1; max-width: 28em; }
