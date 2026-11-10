@@ -95,6 +95,8 @@ no blur, no gradients. The stub is the only object with depth: notched corners a
 
 ## Imagery
 
-Three generated concert photographs (Gemini), crisp digital concert photography, no faces, no
-text, lit in pink and white so they sit on the pink field without a frame. Used once each: the
-hero photo and the event section. See IMAGES.md.
+Three generated photographs of the empty venues before doors open (Gemini; the owner's fourth
+review asked for objects, not people): the small hall with a microphone stand in the spotlight,
+the arena floor with a light stick on every folding chair, the stadium seen from behind the drum
+riser. Crisp digital concert photography, no people, no text, lit in pink and white so they sit on
+the pink field without a frame. Used once each: the hero photo and the event section. See IMAGES.md.

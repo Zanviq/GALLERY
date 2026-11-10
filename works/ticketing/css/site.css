@@ -617,15 +617,21 @@ b, strong { font-weight: 600; }
   .stub__mini { text-align: left; }
 }
 
+/* Reduced motion: calmer, not still. The game keeps running and keeps every cue (the lock bar, the
+   pending pulse, seats shrinking as they sell, the payment bar). Jolts get smaller and slower, slides
+   become fades, the pulses slow down, and nothing scrolls smoothly (see game.js). */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
-  .book.is-locked .book__lock { animation: none; transform: scaleX(1); }
-  .q-refresh.is-tempting { animation: none; box-shadow: 0 0 0 4px var(--black); }
-  .seat.is-pending::before { animation: none; box-shadow: inset 0 0 0 8px var(--black); }
-  .busybar span { animation: none; transform: scaleX(1); }
-  .pen.is-in { animation: none; }
-  .toast.is-in { animation: none; }
+  .is-shake { animation: shake-calm 0.4s ease-in-out 1; }
+  .stage.is-blank .ph--queue { animation: blank-calm 0.6s ease-out 1; }
+  .q-refresh.is-tempting { animation-duration: 1.4s; }
+  .seat.is-pending::before { animation-duration: 0.5s; }
+  .toast.is-in { animation: toast-calm 0.24s ease-out; }
+  .pen.is-in { animation: pen-calm 1.1s ease-out 1 forwards; }
 }
+@keyframes shake-calm { 25% { transform: translateX(-3px); } 75% { transform: translateX(2px); } }
+@keyframes blank-calm { from { opacity: 0.15; } }
+@keyframes toast-calm { from { opacity: 0; } }
+@keyframes pen-calm { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
 
 /* very narrow phones: the block of seats goes edge to edge so eight seats keep a 45px target */
 @media (max-width: 383px) {

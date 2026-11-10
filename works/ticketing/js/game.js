@@ -211,7 +211,7 @@ export class Game {
   }
 
   shake(el) {
-    if (reducedMQ.matches) return;
+    // under reduced motion the CSS swaps in a smaller, slower nudge
     el.classList.remove('is-shake');
     void el.offsetWidth;
     el.classList.add('is-shake');
@@ -381,7 +381,7 @@ export class Game {
     d.qRefresh.textContent = '새로고침';
     d.qStatus.textContent = `새로고침해서 대기열 뒤로 갔습니다. ${int(now)}번이 ${int(next)}번이 됐습니다.`;
     this.el.classList.remove('is-blank');
-    if (!reducedMQ.matches) { void this.el.offsetWidth; this.el.classList.add('is-blank'); }
+    void this.el.offsetWidth; this.el.classList.add('is-blank'); // a soft fade under reduced motion (CSS)
     this.toast('대기 순번이 초기화됐습니다', `${int(now)}번 → ${int(next)}번`, 1.8);
     this.updateQueue();
   }
@@ -654,7 +654,7 @@ export class Game {
     if (left <= 0) return this.fail('seattime');
     if (v.free === 0 && this.r.picks.length === 0 && !this.pending) return this.fail('soldout');
     // draw
-    this.ov.draw({ now: this.t, sel: this.sel, pending: this.pending ? this.pending.i : -1, reduced: reducedMQ.matches });
+    this.ov.draw({ now: this.t, sel: this.sel, pending: this.pending ? this.pending.i : -1, fresh: reducedMQ.matches ? 0.5 : 0.35 });
     this.updateGrid();
     if (this.t - this.uiT > 0.15) {
       this.uiT = this.t;

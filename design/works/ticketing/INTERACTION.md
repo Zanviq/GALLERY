@@ -53,7 +53,11 @@ S/A 나란히 → 어디든 나란히; two apart → 따로 또 같이; one seat
   transition); pending seat = black ring; lost seat = ✕ for 0.9 s; last 10 s = timer inverts; toasts
   top centre (bottom-left on the desktop pay screen, away from the timer), mirrored to an
   `aria-live` region.
-- Reduced motion: no shakes, no blank-on-refresh, no shrink or pulse; the same colour states stay.
+- Reduced motion (BRIEF §000, calmer, not still): the game runs exactly as with motion on. Every
+  cue stays, gentler: the shake becomes a 3 px nudge over 0.4 s, the refresh blank becomes a 0.6 s
+  fade, toasts and the penalty figure fade without sliding, the pending ring and the refresh glow
+  pulse more slowly (0.5 s, 1.4 s), sold seats still shrink away (0.5 s on the canvas). Only smooth
+  scrolling to the chosen block is dropped.
 
 ## Phones
 
