@@ -151,5 +151,50 @@
     "tags": ["game", "canvas", "audio", "interaction", "typography"],
     "thumbnail": "thumbnails/ticketing.webp",
     "year": 2026
+  },
+  {
+    "slug": "camera",
+    "title": "방금 1",
+    "type": "internal",
+    "url": "camera/",
+    "tags": ["landing", "brand", "interaction", "audio", "animation"],
+    "thumbnail": "thumbnails/camera.webp",
+    "year": 2026
+  },
+  {
+    "slug": "lamp",
+    "title": "이슥",
+    "type": "internal",
+    "url": "lamp/",
+    "tags": ["landing", "brand", "interaction", "canvas", "audio"],
+    "thumbnail": "thumbnails/lamp.webp",
+    "year": 2026
+  },
+  {
+    "slug": "record",
+    "title": "깊은쪽 《물 빼는 날》",
+    "type": "internal",
+    "url": "record/",
+    "tags": ["promo", "audio", "interaction", "brand", "typography"],
+    "thumbnail": "thumbnails/record.webp",
+    "year": 2026
+  },
+  {
+    "slug": "kite",
+    "title": "훨훨 2027",
+    "type": "internal",
+    "url": "kite/",
+    "tags": ["promo", "canvas", "interaction", "animation", "audio", "typography"],
+    "thumbnail": "thumbnails/kite.webp",
+    "year": 2026
+  },
+  {
+    "slug": "coffee",
+    "title": "사흘 커피 로스터스",
+    "type": "internal",
+    "url": "coffee/",
+    "tags": ["landing", "brand", "interaction", "audio", "canvas"],
+    "thumbnail": "thumbnails/coffee.webp",
+    "year": 2026
   }
 ]
