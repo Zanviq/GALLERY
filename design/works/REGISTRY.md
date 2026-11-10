@@ -67,7 +67,7 @@ as an ambient layer and never covers the information. Fonts and Latin faces belo
 | lamp | 제품 소개 · desktop+mobile | invented desk lamp from a small design studio | 디머 다이얼·색온도: 같은 책상 장면 사진(2700K/4000K/5600K, 밝기 단계)이 교차되고 스위치 소리 | room black #0B0C0E, white, steel grey (the page is the room; the photos carry the light) | MaruBuri (subset renamed) (+ Hanken Grotesk if needed) | building |
 | record | 홍보 · desktop+mobile | 깊은쪽 《물 빼는 날》 첫 LP (소리골 레코드, 2027-03-12), 물 뺀 시립 수영장에서 녹음 | 회전하는 판에 바늘을 내리면 면마다 합성 음악 일부, 트랙 목록이 따라 켜짐 | pressed turquoise vinyl / pool tile #00A3A1, black #000000, white; grey #3E4545 on white, #A3ADAD on black | Moirai One, Nanum Barun Gothic (subset renamed Gipeun Sans) | registered |
 | kite | 홍보 · desktop+mobile | invented winter kite festival on a river field (정월 연날리기) | 포인터가 바람이 되어 연 꼬리·연줄이 흔들림 (연 사진 컷아웃 + 코드 꼬리), 평소에도 잔바람 | open-sky blue #59B7F0 field, black, white, kite red accent | Jua, Freesentation (+ Rubik if needed) | building |
-| coffee | 홈페이지 · desktop+mobile | invented neighbourhood coffee roastery | 추출 방식을 고르고 분쇄 다이얼을 돌리면 그라인더 소리와 입자 크기, 레시피(원두·물·시간) | dried coffee-cherry maroon #5E1224, white, black | RIDIBatang (check OFL; else Eulyoo1945) (+ Libre Caslon Text if needed) | building |
+| coffee | 홈페이지 · desktop+mobile | 사흘 커피 로스터스: 월·목에 볶고 사흘 쉬게 한 뒤 파는 동네 로스터리와 열 자리 카페 (뭉근시 불땀길 7) | 추출 방식을 고르고 분쇄 다이얼을 돌리면 그라인더 소리와 입자 크기, 레시피(원두·물·시간) | dried coffee-cherry (cascara) #5E1224 field, white #FFFFFF, black #0B0B0C | RIDIBatang (subset renamed Saheul Batang) + Libre Caslon Text (numbers) | registered |
 
 ## Heavy works (the owner's real programs and internal tools; built last)
 
@@ -87,5 +87,5 @@ as an ambient layer and never covers the information. Fonts and Latin faces belo
 ## Fonts in use (one work each)
 
 Galmuri11 (home) · Wanted Sans, Archivo (keyboard) · Anybody, Hahmlet, IBM Plex Sans KR (festival,
-perfume, startup) · Newsreader (perfume) · Spoqa Han Sans Neo (marathon) · SUIT (curtain) · Moirai One, Nanum Barun Gothic (record) · and every Korean family assigned in the tables above.
+perfume, startup) · Newsreader (perfume) · Spoqa Han Sans Neo (marathon) · SUIT (curtain) · Moirai One, Nanum Barun Gothic (record) · RIDIBatang, Libre Caslon Text (coffee) · and every Korean family assigned in the tables above.
 Latin faces added by works (record here): Schibsted Grotesk (sculpture), Big Shoulders Display (ticketing)

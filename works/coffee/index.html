@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>사흘 커피 로스터스 — 볶고 사흘 쉬게 한 원두 | 뭉근시 불땀길</title>
+<meta name="description" content="뭉근시 불땀길의 작은 로스터리와 열 자리 카페. 월요일과 목요일에 볶고, 사흘을 쉬게 한 원두만 팝니다. 11월의 원두 네 가지, 볶는 날, 카페 메뉴, 정기 배송과 납품 안내.">
+<meta name="theme-color" content="#5E1224">
+<meta property="og:type" content="website">
+<meta property="og:title" content="사흘 커피 로스터스 — 볶고 사흘 쉬게 한 원두">
+<meta property="og:description" content="월요일과 목요일에 볶고, 사흘째 아침에 진열합니다. 뭉근시 불땀길 7의 로스터리와 열 자리 카페.">
+<meta property="og:image" content="https://gallery.zanviq.dev/og/coffee.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://gallery.zanviq.dev/coffee/">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
+<link rel="preload" href="./fonts/saheul-batang.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/caslon-text.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/site.css">
+<script type="module" src="./js/main.js"></script>
+<script src="/shared/back.js" data-position="bottom-right" data-theme="light" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+
+<header class="hero" id="top">
+  <div class="bar">
+    <a class="brand" href="#top" aria-label="사흘 커피 로스터스, 맨 위로">사흘 커피 로스터스</a>
+    <nav class="nav" aria-label="페이지 안 이동">
+      <ul class="nav__list nav__list--wide">
+          <li><a href="#beans">원두</a></li>
+          <li><a href="#days">볶는 날</a></li>
+          <li><a href="#grind">갈아 보기</a></li>
+          <li><a href="#cafe">카페</a></li>
+          <li><a href="#subscribe">정기 배송</a></li>
+          <li><a href="#wholesale">납품</a></li>
+          <li><a href="#visit">오시는 길</a></li>
+      </ul>
+      <details class="nav__menu">
+        <summary>메뉴</summary>
+        <ul class="nav__list">
+          <li><a href="#beans">원두</a></li>
+          <li><a href="#days">볶는 날</a></li>
+          <li><a href="#grind">갈아 보기</a></li>
+          <li><a href="#cafe">카페</a></li>
+          <li><a href="#subscribe">정기 배송</a></li>
+          <li><a href="#wholesale">납품</a></li>
+          <li><a href="#visit">오시는 길</a></li>
+        </ul>
+      </details>
+    </nav>
+  </div>
+
+  <h1 class="hero__title"><span class="hero__name">사흘</span> <span class="hero__kind">커피 로스터스</span></h1>
+  <p class="hero__lede">뭉근시 불땀길의 작은 로스터리와 열 자리 카페입니다. 월요일과 목요일에 볶고, 볶은 원두는 사흘을 쉬게 한 뒤에 팝니다.</p>
+
+  <figure class="hero__photo">
+    <picture>
+      <source media="(max-width: 899px)" srcset="./img/hero-m-560.webp 560w, ./img/hero-m-900.webp 900w" sizes="100vw" width="900" height="778">
+      <img src="./img/hero-1200.webp" srcset="./img/hero-720.webp 720w, ./img/hero-1200.webp 1200w" sizes="40vw" width="1200" height="1490" alt="갓 볶은 원두가 로스터의 둥근 냉각판 위에서 저어지며 김을 올리는 모습" fetchpriority="high">
+    </picture>
+  </figure>
+
+  <dl class="facts">
+    <div><dt>이번 주 원두</dt><dd><span class="num">11</span>월 <span class="num">9</span>일 볶음,<br><span class="num">12</span>일 목요일부터</dd></div>
+    <div><dt>원두 <span class="num">200</span>g</dt><dd><span class="num">14,000–21,000</span>원</dd></div>
+    <div><dt>카페</dt><dd>화–일 <span class="num">8:00–18:00</span><br>월요일은 볶는 날이라 쉽니다</dd></div>
+    <div><dt>뭉근시 불땀길 <span class="num">7</span></dt><dd class="fict">가상 서비스입니다.<br>실제 주소가 아닙니다.</dd></div>
+  </dl>
+  <p class="hero__cta"><a class="btn btn--light" href="#beans">11월의 원두 보기</a> <a class="link" href="#grind">집에서 얼마나 곱게 갈까요</a></p>
+</header>
+
+<main id="main">
+
+<section class="sec sec--white" id="beans" aria-labelledby="beans-h">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="beans-h">11월의 원두</h2>
+      <p class="head__lede">네 가지를 볶습니다. 밝게 볶는 두 가지는 월요일에, 진하게 볶는 두 가지는 목요일에 볶습니다. 볶은 날로부터 사흘째 아침에 진열하고, 그 주 안에 다 팝니다.</p>
+    </div>
+
+    <ol class="beans">
+      <li class="bean">
+        <img class="bean__img" src="./img/heap-1-400.webp" srcset="./img/heap-1-400.webp 400w, ./img/heap-1-640.webp 640w" sizes="(min-width: 900px) 22vw, 60vw" width="640" height="640" loading="lazy" alt="아주 밝게 볶은 구지 원두 한 줌">
+        <h3 class="bean__name">구지</h3>
+        <p class="bean__from">에티오피아 구지, 소농 <span class="num">120</span>가구가 모은 열매</p>
+        <dl class="bean__rows">
+          <div><dt>가공</dt><dd>내추럴</dd></div>
+          <div><dt>볶음</dt><dd>아주 밝게</dd></div>
+          <div><dt>볶은 날</dt><dd><span class="num">11</span>월 <span class="num">9</span>일 월요일</dd></div>
+          <div><dt>맛</dt><dd>블루베리, 홍차, 말린 자두</dd></div>
+        </dl>
+        <p class="bean__price"><span class="num">200</span>g <b class="num">19,000</b>원</p>
+        <p class="bean__when"><span class="num">12</span>일 목요일부터</p>
+      </li>
+      <li class="bean">
+        <img class="bean__img" src="./img/heap-2-400.webp" srcset="./img/heap-2-400.webp 400w, ./img/heap-2-640.webp 640w" sizes="(min-width: 900px) 22vw, 60vw" width="640" height="640" loading="lazy" alt="밝게 볶은 니에리 원두 한 줌">
+        <h3 class="bean__name">니에리</h3>
+        <p class="bean__from">케냐 니에리, 해발 <span class="num">1,800</span>m 협동조합</p>
+        <dl class="bean__rows">
+          <div><dt>가공</dt><dd>워시드</dd></div>
+          <div><dt>볶음</dt><dd>밝게</dd></div>
+          <div><dt>볶은 날</dt><dd><span class="num">11</span>월 <span class="num">9</span>일 월요일</dd></div>
+          <div><dt>맛</dt><dd>자몽, 블랙커런트, 잘 익은 토마토</dd></div>
+        </dl>
+        <p class="bean__price"><span class="num">200</span>g <b class="num">21,000</b>원</p>
+        <p class="bean__when"><span class="num">12</span>일 목요일부터</p>
+      </li>
+      <li class="bean">
+        <img class="bean__img" src="./img/heap-3-400.webp" srcset="./img/heap-3-400.webp 400w, ./img/heap-3-640.webp 640w" sizes="(min-width: 900px) 22vw, 60vw" width="640" height="640" loading="lazy" alt="중간으로 볶은 우일라 원두 한 줌">
+        <h3 class="bean__name">우일라</h3>
+        <p class="bean__from">콜롬비아 우일라, 산비탈 작은 농가들</p>
+        <dl class="bean__rows">
+          <div><dt>가공</dt><dd>워시드</dd></div>
+          <div><dt>볶음</dt><dd>중간</dd></div>
+          <div><dt>볶은 날</dt><dd><span class="num">11</span>월 <span class="num">5</span>일 목요일</dd></div>
+          <div><dt>맛</dt><dd>귤, 캐러멜, 밀크초콜릿</dd></div>
+        </dl>
+        <p class="bean__price"><span class="num">200</span>g <b class="num">16,000</b>원</p>
+        <p class="bean__when is-now">지금 있습니다</p>
+      </li>
+      <li class="bean">
+        <img class="bean__img" src="./img/heap-4-400.webp" srcset="./img/heap-4-400.webp 400w, ./img/heap-4-640.webp 640w" sizes="(min-width: 900px) 22vw, 60vw" width="640" height="640" loading="lazy" alt="진하게 볶은 사흘 블렌드 원두 한 줌">
+        <h3 class="bean__name">사흘 블렌드</h3>
+        <p class="bean__from">브라질 세하두 <span class="num">70</span>, 콜롬비아 우일라 <span class="num">30</span></p>
+        <dl class="bean__rows">
+          <div><dt>가공</dt><dd>내추럴과 워시드</dd></div>
+          <div><dt>볶음</dt><dd>중간보다 진하게</dd></div>
+          <div><dt>볶은 날</dt><dd><span class="num">11</span>월 <span class="num">5</span>일 목요일</dd></div>
+          <div><dt>맛</dt><dd>다크초콜릿, 구운 땅콩, 흑설탕</dd></div>
+        </dl>
+        <p class="bean__price"><span class="num">200</span>g <b class="num">14,000</b>원</p>
+        <p class="bean__when is-now">지금 있습니다</p>
+      </li>
+    </ol>
+    <p class="beans__note">원두는 통째로 팝니다. 갈아 가실 때는 아래 ‘얼마나 곱게 갈까요’의 눈금 숫자로 말씀해 주세요. 한 가지를 한 분께 <span class="num">400</span>g까지 팝니다.</p>
+  </div>
+</section>
+
+<section class="sec sec--cherry" id="days" aria-labelledby="days-h">
+  <div class="wrap">
+    <div class="head head--on-cherry">
+      <h2 id="days-h">월요일과 목요일에 볶습니다</h2>
+      <div class="head__lede">
+        <p>갓 볶은 원두는 속에 탄산가스를 품고 있어 물이 고르게 스미지 않습니다. 사흘을 쉬게 하면 가스가 빠지고 맛이 자리를 잡습니다.</p>
+        <p>그래서 볶은 날에는 팔지 않습니다. 월요일에 볶은 원두는 목요일 아침에, 목요일에 볶은 원두는 일요일 아침에 진열합니다.</p>
+      </div>
+    </div>
+
+    <div class="days">
+      <figure class="cal" aria-labelledby="cal-cap">
+        <figcaption id="cal-cap" class="cal__cap"><span class="num">2026</span>년 <span class="num">11</span>월</figcaption>
+        <ol class="cal__head" aria-hidden="true"><li>월</li><li>화</li><li>수</li><li>목</li><li>금</li><li>토</li><li>일</li></ol>
+        <ol class="cal__grid" id="cal-grid">
+          <li class="d d--pad" aria-hidden="true"></li>
+          <li class="d d--pad" aria-hidden="true"></li>
+          <li class="d d--pad" aria-hidden="true"></li>
+          <li class="d d--pad" aria-hidden="true"></li>
+          <li class="d d--pad" aria-hidden="true"></li>
+          <li class="d d--pad" aria-hidden="true"></li>
+          <li class="d d--sale" data-day="1"><span class="num">1</span><small>진열</small></li>
+          <li class="d d--roast" data-day="2"><span class="num">2</span><small>볶음</small></li>
+          <li class="d d--rest" data-day="3"><span class="num">3</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--rest" data-day="4"><span class="num">4</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--roast d--sale" data-day="5"><span class="num">5</span><small>볶음<br>진열</small></li>
+          <li class="d d--rest" data-day="6"><span class="num">6</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--rest" data-day="7"><span class="num">7</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--sale" data-day="8"><span class="num">8</span><small>진열</small></li>
+          <li class="d d--roast" data-day="9"><span class="num">9</span><small>볶음</small></li>
+          <li class="d d--rest" data-day="10"><span class="num">10</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--rest" data-day="11"><span class="num">11</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--roast d--sale" data-day="12"><span class="num">12</span><small>볶음<br>진열</small></li>
+          <li class="d d--rest" data-day="13"><span class="num">13</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--rest" data-day="14"><span class="num">14</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--sale" data-day="15"><span class="num">15</span><small>진열</small></li>
+          <li class="d d--roast" data-day="16"><span class="num">16</span><small>볶음</small></li>
+          <li class="d d--rest" data-day="17"><span class="num">17</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--rest" data-day="18"><span class="num">18</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--roast d--sale" data-day="19"><span class="num">19</span><small>볶음<br>진열</small></li>
+          <li class="d d--rest" data-day="20"><span class="num">20</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--rest" data-day="21"><span class="num">21</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--sale" data-day="22"><span class="num">22</span><small>진열</small></li>
+          <li class="d d--roast" data-day="23"><span class="num">23</span><small>볶음</small></li>
+          <li class="d d--rest" data-day="24"><span class="num">24</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--rest" data-day="25"><span class="num">25</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--roast d--sale" data-day="26"><span class="num">26</span><small>볶음<br>진열</small></li>
+          <li class="d d--rest" data-day="27"><span class="num">27</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--rest" data-day="28"><span class="num">28</span><small class="sr">쉬는 날</small></li>
+          <li class="d d--sale" data-day="29"><span class="num">29</span><small>진열</small></li>
+          <li class="d d--roast" data-day="30"><span class="num">30</span><small>볶음</small></li>
+        </ol>
+        <ul class="cal__key">
+          <li><i class="k k--roast" aria-hidden="true"></i>볶는 날</li>
+          <li><i class="k k--sale" aria-hidden="true"></i>진열하는 날, 볶고 사흘째</li>
+          <li><i class="k k--rest" aria-hidden="true"></i>원두가 쉬는 날</li>
+        </ul>
+        <p class="cal__note">목요일은 볶는 날이자 월요일에 볶은 원두를 내놓는 날입니다. 카페는 월요일에 쉽니다.</p>
+      </figure>
+      <figure class="days__photo">
+        <img src="./img/roaster-800.webp" srcset="./img/roaster-800.webp 800w, ./img/roaster-1600.webp 1600w" sizes="(min-width: 900px) 40vw, 100vw" width="1600" height="1073" loading="lazy" alt="흰 벽돌 벽 앞의 검은 드럼 로스터와 생두 자루 두 개">
+        <figcaption>로스터는 <span class="num">5</span>kg짜리 한 대입니다. 한 번에 <span class="num">3</span>kg씩, 하루에 여섯 번 볶습니다.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--white" id="grind" aria-labelledby="grind-h">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="grind-h">얼마나 곱게 갈까요</h2>
+      <div class="head__lede">
+        <p>원두는 통째로 사 가서 내리기 직전에 가는 것이 가장 좋습니다. 내리는 도구를 고르고 다이얼을 돌려 보세요. 매장 그라인더와 같은 <span class="num">40</span>칸 눈금입니다.</p>
+      </div>
+    </div>
+
+    <div class="grinder" id="grinder">
+      <fieldset class="methods">
+        <legend class="sr">내리는 도구</legend>
+        <label class="method"><input type="radio" name="method" value="espresso"><span class="method__name">에스프레소</span><span class="method__range num">3–8</span></label>
+        <label class="method"><input type="radio" name="method" value="moka"><span class="method__name">모카포트</span><span class="method__range num">9–14</span></label>
+        <label class="method"><input type="radio" name="method" value="drip" checked><span class="method__name">핸드드립</span><span class="method__range num">16–24</span></label>
+        <label class="method"><input type="radio" name="method" value="press"><span class="method__name">프렌치프레스</span><span class="method__range num">27–33</span></label>
+        <label class="method"><input type="radio" name="method" value="cold"><span class="method__name">콜드브루</span><span class="method__range num">34–40</span></label>
+      </fieldset>
+
+      <div class="dial-wrap">
+        <div class="dial" id="dial" role="slider" tabindex="0" aria-label="분쇄 눈금" aria-valuemin="1" aria-valuemax="40" aria-valuenow="20" aria-valuetext="20, 중간, 핸드드립에 맞습니다" aria-describedby="dial-help">
+          <svg class="dial__svg" viewBox="-200 -200 400 400" aria-hidden="true" focusable="false">
+            <g class="dial__arcs" id="dial-arcs"></g>
+            <g class="dial__ticks" id="dial-ticks"></g>
+            <g class="dial__knob" id="dial-knob">
+              <circle r="118" class="dial__disc"/>
+              <line x1="0" y1="-112" x2="0" y2="-76" class="dial__pointer"/>
+            </g>
+            <text class="dial__value" id="dial-value" x="0" y="20" text-anchor="middle">20</text>
+            <text class="dial__unit" x="0" y="54" text-anchor="middle">눈금</text>
+          </svg>
+        </div>
+        <p class="dial__help" id="dial-help">끌어서 돌리거나, 휠이나 화살표 키로 한 칸씩 돌립니다. 왼쪽이 곱고 오른쪽이 굵습니다.</p>
+        <button class="sound" id="sound" type="button" aria-pressed="false"><span class="sound__icon" aria-hidden="true"></span>소리 <span class="sound__state" id="sound-state">꺼짐</span></button>
+        <p class="sound__note" id="sound-note">다이얼을 처음 잡으면 그라인더 소리가 켜집니다.</p>
+      </div>
+
+      <div class="pile-wrap">
+        <div class="pile" id="pile">
+          <div class="pile__imgs" id="pile-imgs">
+            <img class="pile__img" data-g="espresso" src="./img/grind-espresso-560.webp" srcset="./img/grind-espresso-560.webp 560w, ./img/grind-espresso-900.webp 900w" sizes="(min-width: 1100px) 36vw, 92vw" width="900" height="900" alt="" loading="lazy">
+            <img class="pile__img" data-g="moka" src="./img/grind-moka-560.webp" srcset="./img/grind-moka-560.webp 560w, ./img/grind-moka-900.webp 900w" sizes="(min-width: 1100px) 36vw, 92vw" width="900" height="900" alt="" loading="lazy">
+            <img class="pile__img is-on" data-g="drip" src="./img/grind-drip-560.webp" srcset="./img/grind-drip-560.webp 560w, ./img/grind-drip-900.webp 900w" sizes="(min-width: 1100px) 36vw, 92vw" width="900" height="900" alt="" loading="lazy">
+            <img class="pile__img" data-g="press" src="./img/grind-press-560.webp" srcset="./img/grind-press-560.webp 560w, ./img/grind-press-900.webp 900w" sizes="(min-width: 1100px) 36vw, 92vw" width="900" height="900" alt="" loading="lazy">
+            <img class="pile__img" data-g="cold" src="./img/grind-cold-560.webp" srcset="./img/grind-cold-560.webp 560w, ./img/grind-cold-900.webp 900w" sizes="(min-width: 1100px) 36vw, 92vw" width="900" height="900" alt="" loading="lazy">
+          </div>
+          <canvas class="pile__specks" id="specks" aria-hidden="true"></canvas>
+        </div>
+        <p class="pile__read" aria-hidden="true"><span>저울</span> <b class="num" id="scale">15.0</b><span class="num">g</span></p>
+        <p class="pile__size" id="pile-size">중간, 약 <span class="num">790</span>μm</p>
+      </div>
+
+      <div class="recipe" id="recipe">
+        <h3 class="recipe__title" id="recipe-title">핸드드립 한 잔</h3>
+        <dl class="recipe__rows">
+          <div><dt>원두</dt><dd class="num" id="r-dose">15 g</dd></div>
+          <div><dt>물</dt><dd class="num" id="r-water">240 g</dd></div>
+          <div><dt>물 온도</dt><dd class="num" id="r-temp">92 °C</dd></div>
+          <div><dt>시간</dt><dd class="num" id="r-time">2:45</dd></div>
+        </dl>
+        <p class="recipe__fit" id="r-fit">핸드드립에 맞는 굵기입니다.</p>
+        <p class="recipe__how" id="r-how">뜸을 <span class="num">30</span>초 들이고, 세 번에 나눠 붓습니다.</p>
+        <p class="sr" id="r-live" aria-live="polite"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--black" id="cafe" aria-labelledby="cafe-h">
+  <div class="wrap">
+    <div class="head head--on-black">
+      <h2 id="cafe-h">열 자리 카페</h2>
+      <div class="head__lede">
+        <p>로스터 앞에 바 여섯 자리, 창가에 네 자리가 있습니다. 이번 주에 진열한 원두로만 내립니다.</p>
+      </div>
+    </div>
+
+    <div class="cafe">
+      <figure class="cafe__counter">
+        <img src="./img/counter-800.webp" srcset="./img/counter-800.webp 800w, ./img/counter-1600.webp 1600w" sizes="(min-width: 900px) 58vw, 100vw" width="1600" height="1073" loading="lazy" alt="아침의 바: 흰 상판 위 에스프레소 머신, 쌓인 잔, 원두 유리병, 드리퍼">
+      </figure>
+
+      <div class="hours">
+        <h3 class="sub">여는 시간</h3>
+        <dl class="hours__rows">
+          <div><dt>화–일</dt><dd class="num">8:00–18:00</dd></div>
+          <div><dt>주문 마감</dt><dd class="num">17:30</dd></div>
+          <div><dt>월요일</dt><dd>쉽니다. 하루 종일 볶습니다</dd></div>
+        </dl>
+        <p class="hours__note">빵은 팔지 않습니다. 가져와 드셔도 됩니다. 콘센트는 바 쪽에 두 개뿐입니다.</p>
+      </div>
+
+      <div class="menu">
+        <h3 class="sub">마실 것</h3>
+        <ul class="menu__list">
+          <li><span class="menu__item">에스프레소</span><span class="menu__price num">4,000</span><span class="menu__desc">사흘 블렌드, <span class="num">18</span>g에서 <span class="num">36</span>g</span></li>
+          <li><span class="menu__item">아메리카노</span><span class="menu__price num">4,500</span><span class="menu__desc">뜨겁게 또는 차갑게</span></li>
+          <li><span class="menu__item">플랫 화이트</span><span class="menu__price num">5,500</span><span class="menu__desc">작은 잔, 우유 거품 얇게</span></li>
+          <li><span class="menu__item">카페 라테</span><span class="menu__price num">5,500</span><span class="menu__desc">큰 잔</span></li>
+          <li><span class="menu__item">핸드드립</span><span class="menu__price num">6,000–7,500</span><span class="menu__desc">이번 주 원두 네 가지 중에서</span></li>
+          <li><span class="menu__item">콜드브루</span><span class="menu__price num">5,500</span><span class="menu__desc">전날 밤부터 열네 시간 우립니다</span></li>
+          <li><span class="menu__item">카스카라 차</span><span class="menu__price num">5,000</span><span class="menu__desc">커피 열매의 말린 껍질을 우린 붉은 차</span></li>
+        </ul>
+        <p class="menu__note">우유는 귀리 우유로 바꿀 수 있습니다 (<span class="num">+500</span>원). 가격은 모두 원입니다.</p>
+      </div>
+
+      <figure class="cafe__drinks">
+        <img src="./img/drinks-800.webp" srcset="./img/drinks-800.webp 800w, ./img/drinks-1600.webp 1600w" sizes="(min-width: 900px) 50vw, 100vw" width="1600" height="1073" loading="lazy" alt="검은 돌 상판 위의 에스프레소, 플랫 화이트, 콜드브루, 드립 서버, 붉은 카스카라 차">
+      </figure>
+      <figure class="cafe__cascara">
+        <img src="./img/cascara-800.webp" srcset="./img/cascara-800.webp 800w, ./img/cascara-1400.webp 1400w" sizes="(min-width: 900px) 30vw, 100vw" width="1400" height="1008" loading="lazy" alt="말린 커피 열매 껍질 한 무더기, 짙은 적갈색">
+        <figcaption>커피는 붉은 열매의 씨앗입니다. 씨앗을 빼고 말린 껍질이 카스카라이고, 이 집 셔터와 이 페이지의 색도 여기서 왔습니다.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--white" id="subscribe" aria-labelledby="sub-h">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="sub-h">정기 배송</h2>
+      <div class="head__lede">
+        <p>두 주에 한 번, 또는 네 주에 한 번 원두를 부칩니다. 목요일에 볶아 사흘을 쉬게 한 원두를 월요일에 부치니, 받는 날이 마시기 좋은 날입니다.</p>
+      </div>
+    </div>
+
+    <div class="subs">
+      <figure class="subs__photo">
+        <img src="./img/bags-640.webp" srcset="./img/bags-640.webp 640w, ./img/bags-1100.webp 1100w" sizes="(min-width: 900px) 34vw, 100vw" width="1100" height="1366" loading="lazy" alt="인쇄 없는 흰 종이봉투 세 개, 앞의 봉투에 원두가 담겨 있다">
+      </figure>
+      <div class="subs__body">
+        <ol class="plans">
+          <li class="plan">
+            <h3 class="plan__name">로스터에게 맡기기</h3>
+            <p class="plan__desc">그 주에 가장 맛이 좋은 원두 한 가지를 고르고, 봉투에 왜 골랐는지 적어 보냅니다.</p>
+            <p class="plan__price"><span class="num">200</span>g 한 번에 <b class="num">16,000</b>원</p>
+          </li>
+          <li class="plan">
+            <h3 class="plan__name">고른 원두로</h3>
+            <p class="plan__desc">이달의 네 가지 중 하나를 정해 두고 받습니다. 달이 바뀌면 비슷한 원두로 이어 드립니다.</p>
+            <p class="plan__price">원두값 그대로, <span class="num">200</span>g 또는 <span class="num">400</span>g</p>
+          </li>
+        </ol>
+        <dl class="subs__rows">
+          <div><dt>배송비</dt><dd>받지 않습니다</dd></div>
+          <div><dt>주기</dt><dd>두 주 또는 네 주. 한 번 건너뛰기, 그만두기는 언제든</dd></div>
+          <div><dt>갈아서 받기</dt><dd>눈금 숫자를 적어 주세요. <span class="subs__grind" id="subs-grind">지금 고른 눈금은 <b class="num">20</b>, 핸드드립입니다.</span></dd></div>
+        </dl>
+        <p class="fict">가상 서비스입니다. 이 페이지에서는 신청을 받지 않습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--black" id="wholesale" aria-labelledby="whole-h">
+  <div class="wrap">
+    <div class="head head--on-black">
+      <h2 id="whole-h">가게에 원두를 댑니다</h2>
+      <div class="head__lede">
+        <p>뭉근시의 카페와 빵집, 사무실에 원두를 보냅니다. 불땀길에서 걸어서 이십 분 안이면 로스터가 직접 들고 갑니다.</p>
+      </div>
+    </div>
+    <dl class="whole">
+      <div><dt>최소 주문</dt><dd>한 주에 <span class="num">2</span>kg</dd></div>
+      <div><dt>사흘 블렌드</dt><dd><span class="num">1</span>kg <span class="num">58,000</span>원</dd></div>
+      <div><dt>싱글 오리진</dt><dd><span class="num">1</span>kg <span class="num">70,000</span>원부터</dd></div>
+      <div><dt>첫 달</dt><dd>그라인더 눈금과 레시피를 맞추러 두 번 찾아갑니다</dd></div>
+      <div><dt>문의</dt><dd>화–금 오후 <span class="num">2–4</span>시, 매장에서 로스터에게. 전화번호는 따로 두지 않습니다</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="sec sec--cherry" id="visit" aria-labelledby="visit-h">
+  <div class="wrap">
+    <div class="visit">
+      <div class="visit__text">
+        <h2 id="visit-h">불땀길 <span class="num">7</span></h2>
+        <address class="visit__addr">뭉근시 불땀길 <span class="num">7</span>, <span class="num">1</span>층<br><span class="fict">가상 서비스입니다. 실제 주소가 아닙니다.</span></address>
+        <ol class="visit__way">
+          <li><b>뭉근시장 정류장</b>에서 내려 시장 북문 쪽으로 걷습니다.</li>
+          <li>북문 맞은편 골목이 <b>불땀길</b>입니다. 오른쪽 세 번째 집입니다.</li>
+          <li>붉은 셔터가 반쯤 올라가 있으면 연 것입니다. 걸어서 <span class="num">4</span>분.</li>
+        </ol>
+        <dl class="visit__rows">
+          <div><dt>카페</dt><dd>화–일 <span class="num">8:00–18:00</span></dd></div>
+          <div><dt>원두만 사러</dt><dd>같은 시간, 월요일에는 문 앞 상자에서</dd></div>
+        </dl>
+      </div>
+      <figure class="visit__map" aria-labelledby="map-cap">
+        <svg viewBox="0 0 400 300" role="img" aria-labelledby="map-cap">
+          <g class="map__roads">
+            <path d="M0 244 H400"/>
+            <path d="M110 0 V300"/>
+            <path d="M110 128 H400"/>
+            <path d="M250 128 V0"/>
+          </g>
+          <rect class="map__market" x="150" y="148" width="200" height="72"/>
+          <path class="map__gate" d="M238 148 h24"/>
+          <text class="map__small" x="250" y="170" text-anchor="middle">북문</text>
+          <text class="map__label" x="250" y="200" text-anchor="middle">뭉근시장</text>
+          <path class="map__walk" d="M64 244 H110 V128 H250 V58 H262"/>
+          <circle class="map__stop" cx="64" cy="244" r="7"/>
+          <text class="map__small" x="64" y="272" text-anchor="middle">정류장</text>
+          <text class="map__small" x="372" y="272" text-anchor="end">큰길</text>
+          <text class="map__label" x="238" y="70" text-anchor="end">불땀길</text>
+          <rect class="map__shop" x="262" y="43" width="30" height="30"/>
+          <text class="map__shoplabel" x="277" y="64" text-anchor="middle">7</text>
+        </svg>
+        <figcaption id="map-cap">정류장에서 시장 북문을 지나 불땀길 <span class="num">7</span>까지 걷는 길. 가상 지도입니다.</figcaption>
+      </figure>
+      <figure class="visit__photo">
+        <img src="./img/shopfront-640.webp" srcset="./img/shopfront-640.webp 640w, ./img/shopfront-1100.webp 1100w" sizes="(min-width: 900px) 34vw, 100vw" width="1100" height="1082" loading="lazy" alt="이른 아침의 가게 앞: 흰 벽, 반쯤 올라간 붉은 셔터, 문 옆 나무 의자 하나, 불 켜진 창 안의 바">
+        <figcaption>아침 <span class="num">7</span>시 반, 셔터를 반쯤 올리고 기계를 데웁니다.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p class="foot__name">사흘</p>
+    <div class="foot__cols">
+      <p>사흘 커피 로스터스<br>뭉근시 불땀길 <span class="num">7</span> <span class="fict">(가상 서비스입니다. 실제 주소가 아닙니다.)</span></p>
+      <p>가상 로스터리입니다. zanviq gallery 작품.<br>이 페이지에는 리디주식회사에서 제공한 리디바탕 글꼴과 Libre Caslon Text 글꼴이 쓰였습니다.</p>
+      <p><a class="link" href="#top">맨 위로</a></p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
