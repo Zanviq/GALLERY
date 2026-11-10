@@ -114,3 +114,25 @@
 - Model gemini-3-pro-image, 3:2, 2K; refs: desk-a
 
 > Edit this photograph. Add one plain white USB cable plugged into the middle of the back edge of the pink keyboard, running back across the desk in a loose natural curve and disappearing behind the monitor stand. Change nothing else: same framing, same keyboard, same mug, notebook, pencil and crumbs, same light and film grain.
+
+## 3차 (2026-11-10, 넷째 검토 뒤): 쳐 보기 키캡
+
+'쳐 보기' 칸의 키캡 아홉 개와 스페이스바. 한 장을 생성해 잘라 썼다(생성 1회).
+
+- 배경지를 회색으로 찍게 했다. 분홍 키캡을 분홍 종이에서 떼어 내기는 어렵지만 회색에서는 채도(R − (G+B)/2)로 갈린다:
+  종이 약 2, 키캡 29–65. 종이에 진 그림자는 분홍 반사로 11–26 이라 '채도 > 31 또는 (밝고 채도 > 20)'으로 키캡만
+  잡고, 그 볼록 껍질을 안티에일리어싱으로 그린 뒤 부드러운 채도 알파와 겹쳤다(윗면의 오목한 뒤 가장자리가 회색으로
+  메워지지 않게). 가장자리에서 회색을 빼냈다. 스크립트: `scripts/caps_cut.py`.
+- 회색 조명 아래라 옆면이 갈색으로 나와서, 밝기를 히어로 키캡 윗면(#EEA6C6 부근)에 맞춘 뒤 히어로 사진의 키캡 영역에서
+  만든 '밝기 → 색' 표로 다시 칠했다. 윗면은 연분홍, 옆면은 히어로처럼 진분홍이 된다. 필름 입자는 35% 남겼다.
+- 사진 속 돌기는 넷째와 여섯째 키캡에 있어, 잘라 낸 뒤 순서를 바꿔 F 와 J 자리에 오게 했다.
+- 키캡 아홉 장은 같은 232×213 캔버스에 바닥을 맞춰 넣었다(페이지가 한 숫자로 크기를 정한다). 스페이스바 1420×200.
+  webp(알파) 4–5 KB씩, 모두 합쳐 약 50 KB. 그림자는 사진에서 버리고 페이지가 그린다(누르면 바뀌어야 해서).
+- 사람과 손: 기존 사진 9컷과 새 키캡 사진 모두 사람·손이 없다(넷째 검토 확인).
+
+### caps-a
+
+- Use: try-block keycaps -> img/cap-{a,s,d,f,g,h,j,k,l,space}.webp (cut to alpha, regraded)
+- Model gemini-3-pro-image, 16:9, 2K; refs: macro-a, corner-b
+
+> Image 1 is a macro photograph of this keyboard's keycaps; image 2 shows the whole keyboard, its pink colour and the studio light. New studio photograph for a cut-out: loose keycaps taken off this same keyboard, standing upright on a plain neutral mid-grey seamless paper backdrop. Exactly nine identical 1u keycaps in one straight horizontal row, evenly spaced with a clear gap of about a third of a key between neighbours, every keycap fully separate, none touching or overlapping. The fourth and the seventh keycap each have one small raised homing bar near the front edge of the top; all others are plain. Centred below the row, with a clear gap, one long spacebar keycap about six keys long. Same material as image 1: matte sandy light-pink PBT, dyed through, with a gentle cylindrical scoop on top and slightly rounded edges, completely blank, no letters or symbols. Camera in front and above, about 35 degrees above the table, a long telephoto lens from far away so there is almost no perspective and every keycap has exactly the same shape. Soft large light from the upper left, gentle shading on the front skirts, very soft small shadows. The grey backdrop is perfectly even and plain. Colour negative film look as in image 2, fine grain, true colours. No text, no logo, no hands, no other objects.

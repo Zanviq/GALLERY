@@ -34,11 +34,24 @@ def page_text():
     return text
 
 
+def line_syllables():
+    """Every syllable js/hangul.js can build from the nine home-row jamo on the page's keycaps."""
+    cho = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ'
+    jung = 'ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ'
+    jong = ' ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ'
+    out = set()
+    for a in 'ㅁㄴㅇㄹㅎ':
+        for b in 'ㅗㅓㅏㅣㅘㅚ':
+            for c in ' ㅁㄴㅇㄹㅎㄻㅀㄶ':
+                out.add(chr(0xAC00 + (cho.index(a) * 21 + jung.index(b)) * 28 + jong.index(c)))
+    return out
+
+
 text = page_text()
 ascii_set = ''.join(chr(c) for c in range(0x20, 0x7F))
 jamo = ''.join(chr(c) for c in range(0x3131, 0x3164))  # compatibility jamo
 extra = '₩×°–—‘’“”…·←↑→↓■□○●'
-hangul = sorted({ch for ch in text if '가' <= ch <= '힣'})
+hangul = sorted({ch for ch in text if '가' <= ch <= '힣'} | line_syllables())
 chars = ''.join(sorted(set(ascii_set + jamo + extra + ''.join(hangul))))
 print('hangul syllables:', len(hangul), 'total chars:', len(chars))
 

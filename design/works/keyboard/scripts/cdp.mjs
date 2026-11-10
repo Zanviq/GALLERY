@@ -1,7 +1,8 @@
 // Dependency-free capture and check runner over the Chrome DevTools Protocol (dev tool, not deployed).
-// Needs a headless Chrome started with --remote-debugging-port=9333 (or set CDP_PORT). Every run gets a fresh
+// Needs a headless Chrome started with --remote-debugging-port=9361 (or set CDP_PORT). Every run gets a fresh
 // browser context (empty localStorage).
-//   node cdp.mjs <url> <W>x<H>[@dpr] [mobile] [reduced] [nostore] op op ...
+//   node cdp.mjs <url> <W>x<H>[@dpr] [mobile] [reduced|motion] [nostore] op op ...
+// This machine reports prefers-reduced-motion: reduce by default, so pass 'motion' to check with motion on.
 // ops: wait=ms | shot=f.png | webp=f.webp | full=f.png | click=sel | focus=sel | key=Key | type=text
 //      eval=js | log=js | store=json (sets jamo.v1 and reloads) | reload=ms
 //      drag=x1,y1,x2,y2 | dragsel=from>to[@top|@bottom] | tap=x,y | tapsel=sel[@top|@bottom]
@@ -12,11 +13,11 @@ const [, , url, size, ...rest] = process.argv;
 const m = /^(\d+)x(\d+)(?:@([\d.]+))?$/.exec(size);
 let [W, H, DPR] = [Number(m[1]), Number(m[2]), Number(m[3] || 1)];
 const flags = new Set();
-while (rest.length && /^(mobile|reduced|nostore)$/.test(rest[0])) flags.add(rest.shift());
+while (rest.length && /^(mobile|reduced|motion|nostore)$/.test(rest[0])) flags.add(rest.shift());
 const mobile = flags.has('mobile');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const ver = await (await fetch(`http://127.0.0.1:${process.env.CDP_PORT || 9333}/json/version`)).json();
+const ver = await (await fetch(`http://127.0.0.1:${process.env.CDP_PORT || 9361}/json/version`)).json();
 const ws = new WebSocket(ver.webSocketDebuggerUrl);
 await new Promise((r, j) => { ws.onopen = r; ws.onerror = j; });
 let nextId = 1;
@@ -64,7 +65,7 @@ async function metrics() {
   await cmd('Emulation.setTouchEmulationEnabled', mobile ? { enabled: true, maxTouchPoints: 5 } : { enabled: false });
 }
 await metrics();
-if (flags.has('reduced')) await cmd('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+if (flags.has('reduced') || flags.has('motion')) await cmd('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: flags.has('motion') ? 'no-preference' : 'reduce' }] });
 if (flags.has('nostore')) {
   await cmd('Page.addScriptToEvaluateOnNewDocument', { source: `(() => { const deny = () => { throw new DOMException('denied', 'SecurityError'); };
     Object.defineProperty(window, 'localStorage', { get: deny }); Object.defineProperty(window, 'sessionStorage', { get: deny }); })();` });
@@ -145,6 +146,19 @@ for (const op of rest) {
   else if (k === 'click') { const p = await center(v); if (p) await click(p[0], p[1]); else console.log('[click] missing', v); }
   else if (k === 'focus') await evaluate(`document.querySelector(${JSON.stringify(v)})?.focus()`);
   else if (k === 'key') await key(v);
+  else if (k === 'keydown' || k === 'keyup') {
+    const C = v.toUpperCase();
+    await cmd('Input.dispatchKeyEvent', { type: k === 'keydown' ? 'keyDown' : 'keyUp', key: v, code: v === ' ' ? 'Space' : 'Key' + C,
+      windowsVirtualKeyCode: v === ' ' ? 32 : C.charCodeAt(0), text: k === 'keydown' ? v : undefined });
+  }
+  else if (k === 'scroll') await evaluate('document.querySelector(' + JSON.stringify(v) + ').scrollIntoView({block: "start"})');
+  else if (k === 'mdown' || k === 'mup') {
+    const p = await target(v);
+    if (p) {
+      await cmd('Input.dispatchMouseEvent', { type: 'mouseMoved', x: p[0], y: p[1], button: 'none', buttons: 0 });
+      await mouse(k === 'mdown' ? 'mousePressed' : 'mouseReleased', p[0], p[1]);
+    }
+  }
   else if (k === 'type') await cmd('Input.insertText', { text: v });
   else if (k === 'eval') { const r = await evaluate(v); if (r && r.error) console.log('[eval error]', r.error); }
   else if (k === 'log') console.log('[log]', JSON.stringify(await evaluate(v)));
