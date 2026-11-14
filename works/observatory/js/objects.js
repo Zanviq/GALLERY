@@ -6,7 +6,7 @@
 
 export const TELESCOPES = {
   big: { name: '큰눈', spec: '800mm 반사망원경', room: '1관측실' },
-  twin: { name: '쌍둥이', spec: '150mm 굴절망원경 두 대', room: '2관측실' },
+  twin: { name: '쌍둥이', spec: '150mm 굴절망원경 두\u00A0대', room: '2관측실' },
   deck: { name: '옥상 데크', spec: '15×70 쌍안경과 맨눈 해설', room: '옥상' },
 };
 
@@ -41,8 +41,8 @@ export const OBJECTS = [
   { id: 'M44', name: '프레세페(벌집성단)', kind: 'oc', ra: h(8, 40.1), dec: 19.98, mag: 3.7, tel: 'deck', pri: 2,
     note: '쌍안경 한 시야를 가득 채우는 벌집 같은 무리.' },
   { id: 'M67', name: 'M67 산개성단', kind: 'oc', ra: h(8, 51.3), dec: 11.81, mag: 6.1, tel: 'twin', pri: 1,
-    note: '나이가 40억 년 넘는, 아주 오래된 무리.' },
-  { id: 'M81', name: '보데은하(M81·M82)', kind: 'gx', ra: h(9, 55.6), dec: 69.07, mag: 6.9, tel: 'big', pri: 2,
+    note: '나이가 40억\u00A0년 넘는, 아주 오래된 무리.' },
+  { id: 'M81', name: '보데은하(M81\u2060·\u2060M82)', kind: 'gx', ra: h(9, 55.6), dec: 69.07, mag: 6.9, tel: 'big', pri: 2,
     note: '나선은하와 시가 모양 은하가 한 시야에 들어옵니다.' },
   { id: 'M97', name: '올빼미성운', kind: 'pn', ra: h(11, 14.8), dec: 55.02, mag: 9.9, tel: 'big', pri: 2,
     note: '어두운 두 눈이 보이는 둥근 성운. 부엉재천문대가 봄마다 보여 드리는 대상입니다.' },

@@ -1,8 +1,25 @@
-Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'
+Jeongmyeon Sans (jeongmyeon-sans-400.woff2, jeongmyeon-sans-500.woff2, jeongmyeon-sans-700.woff2)
+A modified version of NanumSquare Neo (나눔스퀘어 네오) by NAVER Corp.
+
+Copyright line in the font files (name ID 0):
+Copyright © 2022 NAVER Corp. All rights reserved. Font Designed by Sandoll Inc.
+Trademark line in the font files (name ID 7):
+NanumSquare Neo variable is a registered trademark of NAVER Corp.
+
+NAVER releases its Nanum fonts, NanumSquare Neo among them, under the SIL Open Font License 1.1,
+with this copyright and Reserved Font Name statement:
+Copyright (c) 2010, NHN Corporation (http://www.nhncorp.com), with Reserved Font Name Nanum, Naver Nanum, NanumGothic, Naver NanumGothic, NanumMyeongjo, Naver NanumMyeongjo, NanumBrush, Naver NanumBrush, NanumPen, Naver NanumPen.
+
+"Nanum" is a Reserved Font Name and NAVER treats every Nanum family name as reserved, so these files
+are renamed "Jeongmyeon Sans" in the name table and in every CSS reference. What was changed: the
+variable font (NanumSquareNeo-Variable.ttf, NAVER's 나눔스퀘어 네오 package) was cut down to the
+characters this page uses, pinned at three weights (wght 300, 400, 500 for CSS 400, 500, 700), given a
+no-break space and a zero-width word joiner, and given tabular figures (a 'tnum' feature built from
+the font's own digits). Made by design/works/idphoto/scripts/fonts.py.
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
-https://scripts.sil.org/OFL
+http://scripts.sil.org/OFL
 
 
 -----------------------------------------------------------

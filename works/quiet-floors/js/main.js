@@ -47,7 +47,7 @@ function soundLevels() {
     const at = (no) => info.list.find((u) => u.no === no).L;
     const p = document.createElement('p');
     p.className = 'sound__lv';
-    p.textContent = `401호에서 내면 바로 아래 ${at('301')} dB, 옆집 ${at('402')} dB, 바로 위 ${at('501')} dB (예시)`;
+    p.textContent = `401호에서 내면 바로 아래 ${at('301')}\u00A0dB, 옆집 ${at('402')}\u00A0dB, 바로 위 ${at('501')}\u00A0dB (예시)`;
     li.querySelector('.sound__body').appendChild(p);
   }
 }

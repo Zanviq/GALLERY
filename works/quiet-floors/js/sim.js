@@ -149,9 +149,9 @@ export function initSim() {
     $('[data-now]').textContent = String(info.now);
     $('[data-before-bar]').style.width = w(info.before);
     $('[data-now-bar]').style.width = w(info.now);
-    $('#meter-compare-sr').textContent = `고치기 전 ${info.before} dB, 지금 ${info.now} dB.`;
+    $('#meter-compare-sr').textContent = `고치기 전 ${info.before}\u00A0dB, 지금 ${info.now}\u00A0dB.`;
     // table
-    const rows = [...info.list].sort((a, b) => b.L - a.L).map((u) => `<tr${u.meter ? ' class="is-meter"' : ''}><th scope="row">${u.no}호${u.meter ? ' <span class="units__m">소음계</span>' : ''}</th><td>${u.rel}</td><td>${u.L} dB</td><td>${u.margin > 0 ? `+${u.margin}` : '묻힘'}</td></tr>`).join('');
+    const rows = [...info.list].sort((a, b) => b.L - a.L).map((u) => `<tr${u.meter ? ' class="is-meter"' : ''}><th scope="row">${u.no}호${u.meter ? ' <span class="units__m">소음계</span>' : ''}</th><td>${u.rel}</td><td>${u.L}\u00A0dB</td><td>${u.margin > 0 ? `+${u.margin}` : '묻힘'}</td></tr>`).join('');
     $('#units-body').innerHTML = rows;
     if (!run) idleMeter(info);
   }
@@ -174,16 +174,16 @@ export function initSim() {
     let out = `${unitNo(src.f, src.c)}호에서 ${info.day && state.activity === 'washer' ? '낮에 ' : ''}${info.act.past}. `;
     if (src.f === 2) out += `아래는 필로티라 사는 집이 없어서 옆집 ${m.no}호에 소음계를 두었어요. `;
     const total = totalPeak(info);
-    out += `${src.f === 2 ? '' : '바로 아래 '}${m.no}호 소음계는 최대 ${total} dB(예시)를 가리켜요. `;
+    out += `${src.f === 2 ? '' : '바로 아래 '}${m.no}호 소음계는 최대 ${total}\u00A0dB(예시)\u2060를 가리켜요. `;
     const clock = info.day ? '낮' : '밤';
-    const only = total !== m.L ? `이 소리만 따지면 ${m.L} dB라 ` : '';
-    out += m.margin > 0 ? `${only}${clock} 배경 소음 ${info.bg} dB보다 ${m.margin} dB 커요.` : `${only}${clock} 배경 소음 ${info.bg} dB에 묻혀요.`;
+    const only = total !== m.L ? `이 소리만 따지면 ${m.L}\u00A0dB라 ` : '';
+    out += m.margin > 0 ? `${only}${clock} 배경 소음 ${info.bg}\u00A0dB보다 ${m.margin}\u00A0dB 커요.` : `${only}${clock} 배경 소음 ${info.bg}\u00A0dB에 묻혀요.`;
     const rel = info.fixes.filter((f) => info.act.fix[f]);
     const other = info.fixes.filter((f) => !info.act.fix[f] && f !== 'time');
-    if (rel.length) out += ` ${rel.map((f) => FIXES[f].label).join(', ')}를 했더니 고치기 전보다 ${info.red} dB 작아졌어요.`;
+    if (rel.length) out += ` ${rel.map((f) => FIXES[f].label).join(', ')}를 했더니 고치기 전보다 ${info.red}\u00A0dB 작아졌어요.`;
     if (info.day) out += ' 시간을 낮으로 바꿔서, 같은 소리도 생활 소음에 더 묻혀요.';
     if (!rel.length && other.length) out += ` ${other.map((f) => FIXES[f].label).join(', ')}는 이 소리에는 효과가 거의 없어요.`;
-    if (!info.fixes.length) out += ' 무엇을 바꿔 볼지 골라 다시 들어 보세요.';
+    if (!info.fixes.length) out += ' 무엇을 바꿔 볼지 골라 다시 들어\u00A0보세요.';
     return out;
   }
 
@@ -429,7 +429,7 @@ export function initSim() {
   // first paint
   const info0 = compute(state);
   applyScene(info0);
-  $('#readout-text').textContent = '방을 누르거나 소리를 고르면 아래층 소음계가 반응해요. 그다음 무엇을 바꿔 보고 다시 들어 보세요.';
+  $('#readout-text').textContent = '방을 누르거나 소리를 고르면 아래층 소음계가 반응해요. 그다음 무엇을 바꿔 보고 다시 들어\u00A0보세요.';
 
   // one demonstration thump (about 3 s), also under reduced motion, not announced
   const once = new IntersectionObserver((ents) => {

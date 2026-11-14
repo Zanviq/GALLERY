@@ -50,7 +50,7 @@ export function relName(df, same) {
   const n = Math.abs(df);
   const dir = df > 0 ? '아래' : '위';
   if (n === 1) return same ? `바로 ${dir}` : `${dir}층 옆집`;
-  return same ? `${NUM[n - 1]} 층 ${dir}` : `${NUM[n - 1]} 층 ${dir} 옆집`;
+  return same ? `${NUM[n - 1]}\u00A0층 ${dir}` : `${NUM[n - 1]}\u00A0층 ${dir} 옆집`;
 }
 
 export function offset(act, df, same) {

@@ -43,7 +43,7 @@ unmet one an empty box, and the words say which.
 
 - **Song Myung** 400 (SIL OFL 1.1): display only, 28 px and up. The name (clamp 3.5–17.5 rem), section
   titles, format names, tip titles, store names, prices.
-- **Noto Sans KR** 400/500/700 (SIL OFL 1.1): body, tables, numbers (tabular).
+- **Jeongmyeon Sans** 400/500/700: NanumSquare Neo (NAVER, SIL OFL 1.1) subset and renamed (Nanum names are reserved), with tabular figures added; body, tables, numbers. Replaced Noto Sans KR on 2026-11-14 (BRIEF §0000).
 - Both subset by `scripts/fonts.py` to the characters on the page. No Latin face.
 
 ## Layout

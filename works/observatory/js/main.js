@@ -192,7 +192,7 @@ function selectionText(sel, t) {
   const d = ps.describe(sel, t);
   if (!d) return null;
   const where = d.alt > 0
-    ? `지금 ${A.compass(d.az, true)}쪽 하늘, 고도 ${Math.round(d.alt)}°입니다.`
+    ? `지금 ${A.compass(d.az, true)}쪽 하늘, 고도 ${Math.round(d.alt)}도입니다.`
     : '이 시각에는 지평선 아래에 있습니다.';
   if (sel.type === 'star') {
     const name = ps.starName(sel.i);
@@ -286,8 +286,8 @@ function renderLists() {
   const st = sunTimes(night);
   const sIdx = sess.indexOf(p.min);
   whenEl.textContent = sIdx >= 0
-    ? `${fmtDate(p)} ${hhmm(p.min)} ${['첫', '둘째', '셋째'][sIdx]} 회차에 지평선 위 20°보다 높이 뜬 대상입니다.`
-    : `${fmtDate(p)} ${hhmm(p.min)}에 지평선 위 20°보다 높이 뜬 대상입니다.`;
+    ? `${fmtDate(p)} ${hhmm(p.min)} ${['첫', '둘째', '셋째'][sIdx]} 회차에 지평선 위 20도보다 높이 뜬 대상입니다.`
+    : `${fmtDate(p)} ${hhmm(p.min)}에 지평선 위 20도보다 높이 뜬 대상입니다.`;
   if (isClosed(night)) {
     whenEl.textContent += ` ${night.m}월 ${night.d}일은 쉬는 날이라 망원경을 열지 않지만, 하늘은 이렇게 떠 있습니다.`;
   }
@@ -296,7 +296,7 @@ function renderLists() {
   const moonBright = moonUp && moon.illum > 0.55;
   let skyLine = moon.illum < 0.04
     ? '달: 삭 무렵이라 달빛이 없습니다.'
-    : `달: ${moonPhase(moon)}, 밝기 ${Math.round(moon.illum * 100)}%. ${moonUp ? `${A.compass(moon.az)}쪽 하늘 고도 ${Math.round(moon.alt)}°.` : '지평선 아래에 있습니다.'}`;
+    : `달: ${moonPhase(moon)}, 밝기 ${Math.round(moon.illum * 100)}%. ${moonUp ? `${A.compass(moon.az)}쪽 하늘 고도 ${Math.round(moon.alt)}도.` : '지평선 아래에 있습니다.'}`;
   if (moonBright) skyLine += ' 달빛이 밝아 은하와 성운은 흐리게 보입니다.';
   if (sunAlt > -18 && sunAlt <= -0.833) {
     skyLine = `아직 하늘이 조금 밝습니다. 완전히 어두워지는 시각은 ${clock(st.dark)}입니다. ` + skyLine;
@@ -351,14 +351,14 @@ function renderLists() {
       const objs = rows[key].slice(0, key === 'deck' ? 2 : 3);
       for (const { o, h } of objs) {
         targets.push(o.id);
-        items.push(item({ type: 'obj', id: o.id }, o.name, `${A.compass(h.az)} ${Math.round(h.alt)}°`,
+        items.push(item({ type: 'obj', id: o.id }, o.name, `${A.compass(h.az)} ${Math.round(h.alt)}도`,
           `${KIND[o.kind]}. ${o.note}`));
       }
       if (key === 'deck') {
         for (const { f, alt } of figs.slice(0, 2)) {
           const sel = { type: 'fig', abbr: f.abbr };
           const d = ps.describe(sel, t);
-          items.push(item(sel, f.ko, `${A.compass(d.az)} ${Math.round(alt)}°`, `별자리. ${FIGURE_NOTES[f.abbr] || ''}`));
+          items.push(item(sel, f.ko, `${A.compass(d.az)} ${Math.round(alt)}도`, `별자리. ${FIGURE_NOTES[f.abbr] || ''}`));
         }
       }
       if (items.length) {
@@ -370,8 +370,8 @@ function renderLists() {
         const n = document.createElement('p');
         n.className = 'scope-group__note';
         n.textContent = key === 'deck'
-          ? '20°보다 높이 뜬 밝은 별자리가 없어 해설사가 지평선 가까운 별을 짚어 드립니다.'
-          : '이 시각에는 20°보다 높이 뜬 대상이 없어 다음 대상이 뜰 때까지 돔을 돌려 둡니다.';
+          ? '20도보다 높이 뜬 밝은 별자리가 없어 해설사가 지평선 가까운 별을 짚어 드립니다.'
+          : '이 시각에는 20도보다 높이 뜬 대상이 없어 다음 대상이 뜰 때까지 돔을 돌려 둡니다.';
         g.append(n);
       }
       if (key === 'big' && moonBright) {
@@ -514,7 +514,7 @@ function renderEvening() {
     const alt = Math.round(A.sunAlt(A.kstInstant(sat.y, sat.m, sat.d, Number(t.dataset.min))));
     const s = t.parentElement.querySelector('.eve__sun') || document.createElement('span');
     s.className = 'eve__sun';
-    s.textContent = `해 고도 ${alt > 0 ? '+' : alt < 0 ? '-' : ''}${Math.abs(alt)}°`;
+    s.textContent = `해 고도 ${alt > 0 ? '+' : alt < 0 ? '-' : ''}${Math.abs(alt)}도`;
     t.parentElement.append(s);
   });
 }
