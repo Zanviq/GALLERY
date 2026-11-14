@@ -23,7 +23,7 @@ document.addEventListener('keydown', (e) => {
 /* ---------- timetable ---------- */
 const unit = (cabin) => (cabin.id === 'couchette' ? '자리' : '실');
 const leftText = (n, cabin) => (n === 0 ? '매진' : `${n}${unit(cabin)}`);
-const durWords = (dur) => { const [h, m] = dur.split(':').map(Number); return m ? `${h}시간 ${m}분` : `${h}시간`; };
+const durWords = (dur) => { const [h, m] = dur.split(':').map(Number); return m ? `${h}시간 ${m}분` : `${h}시간`; };
 
 function renderDates() {
   const list = $('[data-date-list]');
@@ -121,8 +121,8 @@ function updateBooking() {
   $('[data-sum-dep]').textContent = t.dep;
   $('[data-sum-to]').textContent = t.to;
   $('[data-sum-arr]').textContent = t.arr;
-  $('[data-sum-what]').textContent = c.id === 'couchette' ? `${c.name} ${pax}자리, ${pax}명, ${next.getMonth() + 1}월 ${next.getDate()}일 아침 도착`
-    : `${c.name} 한 칸, ${pax}명, ${next.getMonth() + 1}월 ${next.getDate()}일 아침 도착`;
+  $('[data-sum-what]').textContent = c.id === 'couchette' ? `${c.name} ${pax}자리, ${pax}명, ${next.getMonth() + 1}월 ${next.getDate()}일 아침 도착`
+    : `${c.name} 한 칸, ${pax}명, ${next.getMonth() + 1}월 ${next.getDate()}일 아침 도착`;
   $('[data-sum-total]').textContent = won(each * count);
   const sold = n === 0 || (c.id === 'couchette' && n < pax);
   $('[data-sum-left]').textContent = n === 0 ? '이 날은 매진입니다. 다른 날이나 객실을 골라 주세요.' : `이 날 남은 자리 ${leftText(n, c)} (예시)`;

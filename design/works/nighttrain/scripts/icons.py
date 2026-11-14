@@ -1,4 +1,4 @@
-"""Favicon set for 밤차: the syllable 밤 in Gowun Batang Bold, white on the night blue.
+"""Favicon set for 밤차: the syllable 밤 in 이롭게 바탕체 Medium (the page serif), white on the night blue.
 
     <scratchpad>/fontenv/Scripts/python.exe -I design/works/nighttrain/scripts/icons.py <font source dir>
 
@@ -16,7 +16,7 @@ from fontTools.ttLib import TTFont
 
 ROOT = pathlib.Path(__file__).resolve().parents[4]
 OUT = ROOT / 'works' / 'nighttrain' / 'img'
-SRC = pathlib.Path(sys.argv[1]) / 'gowunbatang_GowunBatang-Bold.ttf'
+SRC = pathlib.Path(sys.argv[1]) / 'IropkeBatangM.otf'  # the same source dir as fonts.py
 
 font = TTFont(SRC)
 gs = font.getGlyphSet()

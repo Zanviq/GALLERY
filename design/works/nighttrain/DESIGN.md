@@ -51,23 +51,29 @@
 
 ## 글꼴
 
-- **Gowun Batang** 400·700 (Google Fonts, OFL 1.1, Copyright 2021 The Gowun Batang Project Authors,
-  Reserved Font Name 없음): 제목, 본문, 역 이름, 객실 이름. 시각표 옆에서 사람 목소리를 맡는다.
+- **이롭게 바탕체 Medium**, 페이지 안에서는 **Bamcha Batang** (2026-11-14 Gowun Batang 에서 바꿈.
+  Gowun 은 BRIEF §0000 의 "AI 기본값" 목록에 있다). github.com/iropke/font-iropke-batang (font.iropke.com/batang
+  이 가리키는 공식 저장소), SIL OFL 1.1, Copyright (c) 2016, 이롭게(iropke), Reserved Font Name
+  '이롭게 바탕체', 'iropke batang'. 부분 집합은 수정본이라 이름표(name table)와 CSS 에서 이름을
+  Bamcha Batang 으로 바꿨다. 라이선스 전문은 `fonts/OFL-BamchaBatang.txt`.
+  굵기는 Medium 하나뿐이다. @font-face 가 400–700 을 모두 이 한 벌로 받게 해서 가짜 볼드가 생기지 않고
+  (`font-synthesis: none` 도 걸었다), 위계는 크기와 Orbit 와의 대비가 맡는다. 비교 막대의 '밤차' 줄은
+  굵기 대신 밤 파랑으로 구분한다. 제목, 본문, 역 이름, 객실 이름. 시각표 옆에서 사람 목소리를 맡는다.
 - **Orbit** 400 (Google Fonts, OFL 1.1, Copyright 2022 The Orbit Project Authors, RFN 없음):
   모든 숫자와 라벨, 버튼, 메뉴. 고정폭이라 `23:05` 와 `07:05` 가 표에서 저절로 줄을 맞춘다(출발판 글자).
-  Orbit 에 없는 화살표(→ ↑ ↓)는 글꼴 목록의 다음 순서인 Gowun Batang 에서 나온다.
+  Orbit 에 없는 화살표(→ ↑ ↓)는 글꼴 목록의 다음 순서인 Bamcha Batang 에서 나온다.
 - 라틴 글꼴은 추가하지 않았다. 둘 다 `scripts/fonts.py` 로 페이지에 쓰인 글자만 잘라 `fonts/` 에 자체 호스팅
   (woff2, `font-display: swap`). 문구를 바꾸면 다시 실행한다.
 
 | 토큰 | 크기 / 행간 | 쓰임 |
 |---|---|---|
 | `--t-mega` | clamp(68px, 11.2vw, 164px) / .84, Orbit | 첫 화면 두 시각 |
-| `--t-display` | clamp(44px, 6vw, 88px) / 1.08, Gowun 700 | h1 하나 |
-| `--t-h2` | clamp(34px, 4.4vw, 64px) / 1.16, Gowun 700 | 섹션 제목 |
+| `--t-display` | clamp(44px, 6vw, 88px) / 1.12, Bamcha, -0.04em | h1 하나 |
+| `--t-h2` | clamp(34px, 4.4vw, 64px) / 1.22, Bamcha, -0.035em | 섹션 제목 |
 | `--t-time` | clamp(46px, 6vw, 92px) / .9, Orbit | 하룻밤 각 단계의 시각 |
-| `--t-h3` | clamp(21px, 1.8vw, 26px) / 1.35, Gowun 700 | 단계·비교 제목 |
+| `--t-h3` | clamp(21px, 1.8vw, 26px) / 1.35, Bamcha, -0.025em | 단계·비교 제목 |
 | `--t-lead` | clamp(18px, 1.4vw, 21px) / 1.7 | 섹션 설명, 첫 화면 문단 |
-| `--t-body` | 17px / 1.8 (휴대폰 16px) | 본문 |
+| `--t-body` | 17px / 1.75, -0.01em (휴대폰 16px) | 본문 |
 | `--t-small` | 15px / 1.6 | 주석 |
 | `--t-label` | 13px, Orbit | 표 머리, 범례, 입력 라벨 |
 
@@ -101,7 +107,7 @@
 - 사진 말투: 중형 디지털, 맑은 노출, 부드러운 그림자, 필름 입자 없음. 호텔 객실을 찍는 건축 사진가처럼.
 - 보정: `scripts/grade.py` — 주황·노랑 채도 줄이기, 아주 약한 차가운 화이트밸런스, 가장 어두운 그림자를
   `#1B2F6E` 쪽으로. 3:2 는 1600/800, 4:5 는 1200/720 webp(q78). 첫 화면 사진만 `fetchpriority=high`, 나머지 `loading=lazy`.
-- 아이콘: 파비콘 하나. Gowun Batang Bold 의 "밤" 글리프 윤곽을 밤 파랑 칸에 (`scripts/icons.py`).
+- 아이콘: 파비콘 하나. 이롭게 바탕체 Medium 의 "밤" 글리프 윤곽을 밤 파랑 칸에 (`scripts/icons.py`).
 
 ## 움직임
 

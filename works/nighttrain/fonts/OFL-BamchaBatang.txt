@@ -1,5 +1,10 @@
-Copyright 2021 The Gowun Batang Project Authors (https://github.com/yangheeryu/Gowun-Batang)
+Copyright (c) 2016, 이롭게(iropke) (www.iropke.com | hello@iropke.com),
+with Reserved Font Name '이롭게 바탕체', 'iropke batang'.
 
+bamcha-batang-500.woff2 is a Modified Version of 이롭게 바탕체 OTF Medium (IropkeBatangM.otf from
+github.com/iropke/font-iropke-batang, linked from font.iropke.com/batang): subset to the characters
+this page uses and renamed "Bamcha Batang" because the names above are reserved. The licence is
+the SIL OFL 1.1 below, the same text the repository's EULA_iropke_batang.pdf reproduces.
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:

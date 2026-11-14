@@ -19,6 +19,7 @@
   --drop: 90px;
   --stamp-r: 3.34; /* height / width of the seal photograph */
   --scan: url(../img/paper-1200.webp);
+  --ease: cubic-bezier(.16, 1, .3, 1);
   color-scheme: light;
 }
 
@@ -35,6 +36,8 @@ body {
   overflow-x: hidden;
 }
 h1, h2, h3, p, ol, dl, dd, figure { margin: 0; }
+h1, h2, h3 { text-wrap: balance; }
+p, li { text-wrap: pretty; }
 ol { padding: 0; list-style: none; }
 button { font: inherit; color: inherit; }
 kbd {
@@ -54,7 +57,7 @@ kbd {
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 .defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-:focus-visible { outline: 3px solid var(--carbon); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--carbon); outline-offset: 2px; }
 
 /* ---------------------------------------------------------------- buttons */
 .btn {
@@ -73,7 +76,7 @@ kbd {
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color .12s ease-out, color .12s ease-out;
+  transition: background-color .15s var(--ease), color .15s var(--ease);
 }
 .btn:hover { background: var(--carbon); color: var(--paper); }
 .btn:active { transform: translateY(1px); }
@@ -234,7 +237,8 @@ kbd {
 .timebar { flex: 1 1 auto; height: 16px; background: rgb(31 58 147 / .22); overflow: hidden; }
 .timebar span { display: block; height: 100%; background: var(--carbon); transform-origin: 0 50%; transform: scaleX(0); will-change: transform; }
 .pace-now { flex: none; font-size: 15px; line-height: 1; color: var(--carbon-soft); white-space: nowrap; }
-.pace-now b { font-weight: 400; font-size: 21px; color: var(--carbon); font-variant-numeric: tabular-nums; margin-right: 1px; }
+/* the speed reading changes every frame; a fixed slot keeps "배속" still (the face has no tabular figures) */
+.pace-now b { display: inline-block; min-width: 1.45em; text-align: right; font-weight: 400; font-size: 21px; color: var(--carbon); margin-right: 1px; }
 .app[data-state="lesson"] .pace { visibility: hidden; }
 
 /* a slip: one quick carbon flash over the tray (opacity only; the tray never moves) */

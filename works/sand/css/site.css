@@ -33,11 +33,12 @@ body {
   overflow-wrap: break-word;
 }
 h1, h2, p, dl, dd { margin: 0; }
-h1, h2 { font-weight: 400; }
+h1, h2 { font-weight: 400; text-wrap: balance; }
+p, dd { text-wrap: pretty; }
 button { font: inherit; color: inherit; }
 [hidden] { display: none !important; }
 
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
 
 /* ── page: the phone column, and beside it on wide screens the note with the QR ── */
 .page { min-height: 100vh; min-height: 100dvh; }

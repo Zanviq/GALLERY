@@ -28,7 +28,7 @@ export function nights(count, start = new Date()) {
 export const dateKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 export const shortDate = (d) => `${d.getMonth() + 1}.${d.getDate()}`;
 export const dow = (d) => DOW[d.getDay()];
-export const longDate = (d) => `${d.getMonth() + 1}월 ${d.getDate()}일 ${DOW[d.getDay()]}요일`;
+export const longDate = (d) => `${d.getMonth() + 1}월 ${d.getDate()}일 ${DOW[d.getDay()]}요일`;
 export const won = (n) => n.toLocaleString('ko-KR');
 
 // 남은 자리는 날짜·열차·객실로 정해지는 예시 값이다 (매번 같은 값이 나온다).
