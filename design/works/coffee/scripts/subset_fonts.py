@@ -28,7 +28,7 @@ def page_text():
     text = ''
     for name in ('index.html', 'css/site.css', 'js/main.js', 'js/grinder.js', 'js/sound.js'):
         text += open(os.path.join(SITE, name), encoding='utf-8').read()
-    for ent, ch in (('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&nbsp;', ' ')):
+    for ent, ch in (('&amp;', '&'), ('&lt;', '<'), ('&gt;', '>'), ('&nbsp;', '\u00a0')):  # keep U+00A0 (number + unit)
         text = text.replace(ent, ch)
     return text
 
@@ -38,7 +38,7 @@ chars = {c for c in text if ord(c) >= 32}
 chars |= {chr(c) for c in range(32, 127)}
 chars |= set('–—·…‘’“”°μ×')
 batang_text = ''.join(sorted(chars))
-caslon_text = ''.join(sorted(set(chr(c) for c in range(32, 127)) | set('–—·°μ×’')))
+caslon_text = ''.join(sorted(set(chr(c) for c in range(32, 127)) | set('–—·°μ×’\u00a0')))
 
 
 def make(src, dst, keep, family=None, pin=None):

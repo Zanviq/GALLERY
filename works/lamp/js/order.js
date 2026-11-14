@@ -27,7 +27,7 @@ if (form) {
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const no = 'GB-' + String(Math.floor(1000 + Math.random() * 9000));
-    done.textContent = `주문을 받았습니다. 주문 번호 ${no}, ${qty}대, ${won(PRICE * qty)}원. 12월 7일부터 주문 순서대로 보냅니다. 가상 주문이라 실제로 보내는 것은 없습니다.`;
+    done.textContent = `주문을 받았습니다. 주문 번호 ${no}, ${qty}대, ${won(PRICE * qty)}원. 12월 7일부터 주문 순서대로 보냅니다. 가상 주문이라 실제로 보내는 것은 없습니다.`;
   });
   show();
 }

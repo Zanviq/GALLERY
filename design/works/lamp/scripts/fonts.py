@@ -33,7 +33,7 @@ def page_text():
 
 
 ASCII = ''.join(chr(c) for c in range(32, 127))
-EXTRA = '–—−×°·…‘’“”'
+EXTRA = '–—−×°·…‘’“” '  # U+00A0: the no-break space between numbers and units (&nbsp;,   in JS)
 text = page_text()
 korean_all = ''.join(sorted(set(ch for ch in text if ord(ch) > 126) | set(ASCII) | set(EXTRA)))
 display = ''.join(sorted(set('이슥곁방 ')))

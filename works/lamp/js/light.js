@@ -194,7 +194,7 @@ function init() {
 
   // ---- changing state ----
   function words() {
-    return level === 0 ? '꺼짐' : `${level}단계, ${LM[level]} lm`;
+    return level === 0 ? '꺼짐' : `${level}단계, ${LM[level]} lm`;
   }
   let liveTimer = 0;
   function announce() {
@@ -212,11 +212,11 @@ function init() {
     ticks.forEach((li, i) => li.classList.toggle('is-on', i === level));
     sceneEl.setAttribute('aria-label', level === 0
       ? '밤의 책상. 이슥은 꺼져 있고 방이 어둡습니다.'
-      : `밤의 책상. 이슥이 ${level}단계, ${k} K 빛으로 노트와 색연필, 책 두 권, 흰 컵을 비춥니다.`);
+      : `밤의 책상. 이슥이 ${level}단계, ${k} K 빛으로 노트와 색연필, 책 두 권, 흰 컵을 비춥니다.`);
     if (luxNow) {
       luxNow.textContent = level === 0
         ? '지금 다이얼은 꺼짐입니다.'
-        : `지금 다이얼은 ${level}단계, 가운데 ${Math.round(LUX_MAX * LM[level] / 650).toLocaleString('ko-KR')} lx입니다.`;
+        : `지금 다이얼은 ${level}단계, 가운데 ${Math.round(LUX_MAX * LM[level] / 650).toLocaleString('ko-KR')} lx입니다.`;
     }
   }
 

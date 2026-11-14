@@ -36,27 +36,27 @@ function init() {
   const METHODS = {
     espresso: {
       name: '에스프레소', lo: 3, hi: 8, best: 5, dose: 18, immersion: false,
-      title: '에스프레소 한 잔', water: '36 g', temp: '93 °C', how: '바스켓에 고르게 담아 평평하게 누르고, 잔에 36 g이 모이면 멈춥니다.',
+      title: '에스프레소 한 잔', water: '36 g', temp: '93 °C', how: '바스켓에 고르게 담아 평평하게 누르고, 잔에 36 g이 모이면 멈춥니다.',
       time: (g) => `${Math.round(clamp(28 + (5 - g) * 2.5, 10, 45))}초`,
     },
     moka: {
       name: '모카포트', lo: 9, hi: 14, best: 11, dose: 15, immersion: false,
-      title: '모카포트 한 주전자', water: '150 ml', temp: '끓인 물', how: '아래 칸에 끓인 물을 밸브 아래까지 붓고, 약불에 올려 꿀렁이는 소리가 나면 불을 끕니다.',
+      title: '모카포트 한 주전자', water: '150 ml', temp: '끓인 물', how: '아래 칸에 끓인 물을 밸브 아래까지 붓고, 약불에 올려 꿀렁이는 소리가 나면 불을 끕니다.',
       time: (g) => mmss(clamp(270 + (11 - g) * 10, 150, 360)),
     },
     drip: {
       name: '핸드드립', lo: 16, hi: 24, best: 20, dose: 15, immersion: false,
-      title: '핸드드립 한 잔', water: '240 g', temp: '92 °C', how: '뜸을 30초 들이고, 세 번에 나눠 붓습니다.',
+      title: '핸드드립 한 잔', water: '240 g', temp: '92 °C', how: '뜸을 30초 들이고, 세 번에 나눠 붓습니다.',
       time: (g) => mmss(clamp(165 + (20 - g) * 8, 90, 270)),
     },
     press: {
       name: '프렌치프레스', lo: 27, hi: 33, best: 30, dose: 18, immersion: true,
-      title: '프렌치프레스 두 잔', water: '300 g', temp: '94 °C', how: '물을 다 붓고 기다린 뒤, 위에 뜬 거품을 걷어 내고 천천히 누릅니다.',
+      title: '프렌치프레스 두 잔', water: '300 g', temp: '94 °C', how: '물을 다 붓고 기다린 뒤, 위에 뜬 거품을 걷어 내고 천천히 누릅니다.',
       time: (g) => mmss(clamp(240 + (g - 30) * 12, 150, 330)),
     },
     cold: {
       name: '콜드브루', lo: 34, hi: 40, best: 37, dose: 60, immersion: true,
-      title: '콜드브루 한 병', water: '600 g', temp: '찬물, 냉장', how: '찬물에 담가 냉장고에서 우리고, 종이 필터에 한 번 거릅니다.',
+      title: '콜드브루 한 병', water: '600 g', temp: '찬물, 냉장', how: '찬물에 담가 냉장고에서 우리고, 종이 필터에 한 번 거릅니다.',
       time: (g) => `${clamp(Math.round((14 + (g - 37) * 0.75) * 2) / 2, 8, 18)}시간`,
     },
   };
@@ -198,9 +198,9 @@ function init() {
     dial.setAttribute('aria-valuenow', String(g));
     const fitsAt = methodAt(g);
     dial.setAttribute('aria-valuetext', `${g}, ${sizeLabel(g)}, ${fitsAt ? `${METHODS[fitsAt].name}에 맞습니다` : `${grindName(g)} 굵기`}`);
-    sizeOut.innerHTML = `${sizeLabel(g)}, 약 <span class="num">${microns(g)}</span>μm`;
+    sizeOut.innerHTML = `${sizeLabel(g)}, 약 <span class="num">${microns(g)}</span> μm`;
     out.title.textContent = m.title;
-    out.dose.textContent = `${m.dose} g`;
+    out.dose.textContent = `${m.dose} g`;
     out.water.textContent = m.water;
     out.temp.textContent = m.temp;
     out.time.textContent = m.time(g);
@@ -264,7 +264,7 @@ function init() {
     setValue(m.best, { tween: dur });
     runMotor(Math.max(dur + 300, 1700));
     if (fromUser) {
-      out.live.textContent = `${m.title}: 원두 ${m.dose} g, 물 ${m.water}, ${m.temp}, 눈금 ${m.best}.`;
+      out.live.textContent = `${m.title}: 원두 ${m.dose} g, 물 ${m.water}, ${m.temp}, 눈금 ${m.best}.`;
     }
     drawPile();
   }
