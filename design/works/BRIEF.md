@@ -4,6 +4,47 @@ Every work in `works/<slug>/` is built by one agent working alone, in parallel w
 This file holds the rules that apply to all of them. `design/works/REGISTRY.md` holds each work's
 concept, palette and fonts, and lists what is already taken.
 
+## 0000. Detail sense (owner, 2026-11-14). Read this first; it adds to §000.
+
+The owner pointed at https://ax.sungblab.com (a friend's site, made with Linear, Stripe, 토스페이먼츠,
+flex, Attio, Resend, Notion, 채널톡 and glassmorphism as references) and said: do not copy its colours,
+glass or animation — copy its **care for detail**, and the way its **fonts were chosen like a designer
+would, not the way an AI picks them**. Measured on that site and turned into rules:
+
+**Type**
+- **Fonts a Korean designer would choose.** It uses SUIT and Gmarket Sans. The families an AI reaches
+  for are the Google Fonts Korean list: Noto Sans/Serif KR, Nanum Gothic/Myeongjo, Gothic A1, Gowun
+  Dodum/Batang, Black Han Sans, Do Hyeon, Jua, Sunflower, Song Myung, Gaegu, Dongle and the like.
+  Do not use those as a new work's main faces. Prefer typefaces Korean designers actually ship with
+  (SUIT, Wanted Sans, Spoqa Han Sans Neo, Paperlogy, Freesentation, LINE Seed, Kakao Big/Small Sans,
+  MaruBuri, RIDIBatang, Nanum Square Neo, Cafe24, 이롭게 바탕, 부크크 ...), each one licence-checked
+  (OFL or a licence that allows web embedding and subsetting; rename on a Reserved Font Name).
+- **Tracking scales with size** (Korean sets loose by default): about -0.045em at display sizes,
+  -0.035em for section heads, -0.025em for small heads, -0.01em for body. Line height about 1.15
+  display, 1.3 heads, 1.65 body. Few sizes, used consistently; small text only for metadata.
+- **Line breaks are designed.** `word-break: keep-all` everywhere; `text-wrap: balance` on headings,
+  `text-wrap: pretty` on paragraphs. A no-break space between a number and its unit or counter
+  (14건, 189,000원, 50 ml, 3분), and U+2060 word joiners around middots (발주⁠·⁠송장) so a list never
+  breaks at the dot. Check every heading at 360, 390, 768, 1024 and 1440: no one-syllable last line,
+  no particle or unit alone on a line.
+- **Figures line up**: `font-variant-numeric: tabular-nums` (or `"tnum"`) in prices, tables, timers,
+  counters and dates.
+
+**Copy**
+- Lived-in and concrete: real-feeling quantities, times, names of things, the small exception
+  ("일요일은 17:30까지"), plain spoken Korean ("옆에서 봐야 보이거든요"). No slogan-speak.
+- A claim earns a number or an example. A chart gets a text or table alternative ("표로 보기").
+
+**UI craft**
+- Tokens: one radius scale, one shadow scale, one easing (an expo-out such as
+  `cubic-bezier(.16,1,.3,1)`), short transitions (150-250 ms) on colour, opacity and transform only.
+- Every control has hover, pressed, `:focus-visible` (2 px outline, 2 px offset, visible on its
+  ground) and disabled states; buttons of one kind share one size; icons share one stroke and size.
+- Anything drawn as UI (a chat, a mail, a ticket, a receipt, a form) is faithful: status bar, times,
+  realistic states, believable data — never placeholder text.
+- Responsive is tuned at several widths, not one breakpoint. Fixed headers get `scroll-margin-top`
+  on anchors; long pages get a quiet way back to the top; `theme-color`, favicon and OG are set.
+
 ## 000. The owner's fourth review (2026-11-10, later). Read this first; it refines §00 and §0.
 
 - **The right amount of interaction.** The owner liked the earlier 키보드 (keycaps that click and
