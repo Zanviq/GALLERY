@@ -44,14 +44,14 @@
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__field">
       <h1 class="hero__title" id="hero-title">광클</h1>
-      <p class="hero__lead">8시 정각에 예매하기를 누르고, 대기열을 버티고, 친구와 나란히 앉을 두 자리를 잡으세요. 가상 예매처 앞줄티켓에서 하는 티켓팅 게임입니다.</p>
+      <p class="hero__lead">8시 정각에 예매하기를 누르고, 대기열을 버티고, 친구와 나란히 앉을 두&nbsp;자리를 잡으세요. 가상 예매처 앞줄티켓에서 하는 티켓팅 게임입니다.</p>
       <p class="hero__clock"><span class="num" aria-hidden="true"><i>2</i><i>0</i><b>:</b><i>0</i><i>0</i><b>:</b><i>0</i><i>0</i></span><span class="hero__cap">서버 시간 20시 정각, 예매하기 버튼이 열립니다</span></p>
       <fieldset class="pick">
         <legend class="pick__legend">공연 고르기</legend>
         <div class="pick__opts">
-          <label class="pick__opt"><input type="radio" name="show" value="ballad"><span class="pick__lvl">쉬움</span><span class="pick__name">도해솔 〈열두 번째 겨울〉</span><span class="pick__meta">소극장, 예상 접속 9,400명</span></label>
-          <label class="pick__opt"><input type="radio" name="show" value="idol" checked><span class="pick__lvl">보통</span><span class="pick__name">ORBEAT 〈FIRST ORBIT〉</span><span class="pick__meta">아레나, 예상 접속 128,000명</span></label>
-          <label class="pick__opt"><input type="radio" name="show" value="reunion"><span class="pick__lvl">어려움</span><span class="pick__name">청동거울 〈다시, 한 번〉</span><span class="pick__meta">주경기장, 예상 접속 640,000명</span></label>
+          <label class="pick__opt"><input type="radio" name="show" value="ballad"><span class="pick__lvl">쉬움</span><span class="pick__name">도해솔 〈열두&nbsp;번째&nbsp;겨울〉</span><span class="pick__meta">소극장, 예상 접속 9,400명</span></label>
+          <label class="pick__opt"><input type="radio" name="show" value="idol" checked><span class="pick__lvl">보통</span><span class="pick__name">ORBEAT 〈FIRST&nbsp;ORBIT〉</span><span class="pick__meta">아레나, 예상 접속 128,000명</span></label>
+          <label class="pick__opt"><input type="radio" name="show" value="reunion"><span class="pick__lvl">어려움</span><span class="pick__name">청동거울 〈다시,&nbsp;한&nbsp;번〉</span><span class="pick__meta">주경기장, 예상 접속 640,000명</span></label>
         </div>
       </fieldset>
       <div class="hero__go">
@@ -78,7 +78,8 @@
           <div><dt>구분</dt><dd id="ev-kind"></dd></div>
           <div><dt>관람 시간</dt><dd id="ev-run"></dd></div>
           <div><dt>관람 등급</dt><dd id="ev-age"></dd></div>
-          <div><dt>예매 오픈</dt><dd>2026년 11월 20일 금요일 오후 8시, 1인 2매</dd></div>
+          <div><dt>예매 오픈</dt><dd>2026년&nbsp;11월&nbsp;20일 금요일 오후&nbsp;8시, 1인 2매</dd></div>
+          <div><dt>티켓 수령</dt><dd>모바일 티켓. 공연 3시간 전부터 입장 QR이 열립니다.</dd></div>
         </dl>
       </div>
     </div>
@@ -161,7 +162,7 @@
         <button class="book" id="book" type="button"><span class="book__t">예매하기</span><span class="book__s" id="book-lbl">오픈 전</span><span class="book__lock" aria-hidden="true"></span></button>
         <div class="open__side">
           <p class="open__left num-ko" id="open-left"></p>
-          <p class="open__hint">20:00:00이 되는 순간 누르세요. 먼저 누르면 0.6초 동안 눌리지 않습니다. Enter나 Space로도 누를 수 있습니다.</p>
+          <p class="open__hint">20:00:00이 되는 순간 누르세요. 먼저 누르면 0.6초 동안 눌리지 않습니다. Enter나&nbsp;Space로도 누를 수 있습니다.</p>
         </div>
       </div>
       <p class="sr-only" id="open-sr" aria-live="polite"></p>
@@ -244,13 +245,17 @@
         <div><dt>예매수수료</dt><dd id="p-fee"></dd></div>
         <div class="total"><dt>결제 금액</dt><dd id="p-total"></dd></div>
       </dl>
+      <dl class="pay__info">
+        <div><dt>수령 방법</dt><dd>모바일 티켓 <span>공연 3시간 전부터 입장 QR</span></dd></div>
+        <div><dt>취소 마감</dt><dd><span id="p-cancel"></span> <span>예매 당일 밤 12시까지는 수수료 없음</span></dd></div>
+      </dl>
     </div>
     <form class="pay__form" id="p-form" novalidate>
       <div class="timer timer--pay" id="p-timerbox"><span class="timer__lab"><span class="lg">결제 </span>남은 시간</span><b class="timer__num num" id="p-timer"></b><span class="pen num" id="p-pen" aria-hidden="true"></span></div>
       <p class="pay__me">예매자는 만 27세 직장인입니다. 지갑에는 앞줄카드와 다른 신용카드가 있습니다.</p>
       <fieldset class="opts-set"><legend>할인</legend><div class="opts" id="p-discounts"></div></fieldset>
       <fieldset class="opts-set"><legend>결제 수단</legend><div class="opts" id="p-methods"></div></fieldset>
-      <label class="agree"><input type="checkbox" id="p-agree"><span>취소 수수료와 취소 기한을 확인했고 동의합니다 (필수)</span></label>
+      <label class="agree"><input type="checkbox" id="p-agree"><span><b class="agree__req">[필수]</b> 취소 수수료와 취소 기한을 확인했고 동의합니다</span></label>
       <p class="pay__err" id="p-err" role="alert"></p>
       <button class="btn btn--black btn--xl btn--wide" type="submit">결제하기</button>
       <p class="pay__busy" id="p-busy" hidden>결제하고 있습니다. 창을 닫지 마세요.<span class="busybar" aria-hidden="true"><span></span></span></p>

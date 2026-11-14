@@ -78,7 +78,7 @@ paper/vinyl 3.1 은 큰 글자(24px 이상 굵게)에만. 청록 글자를 흰 �
 
 - 주 버튼: ink 면 + paper 글자, 높이 52px, hover 시 paper 면 + ink 글자 + 2px ink 테두리. 검은 칸에서는 vinyl 면 + ink 글자.
 - 보조 버튼: 2px 테두리. 토글(소리, 바늘, 면)은 `aria-pressed`, 켜진 것은 면을 채운다.
-- 포커스: 3px 실선 outline, offset 3px. 밝은 면에서는 ink, 검은 칸에서는 vinyl.
+- 포커스: 2px 실선 outline, offset 2px (2026-11-14 상세 점검, DETAIL.md). 밝은 면에서는 ink, 검은 칸에서는 vinyl.
 - 수록곡 줄: 번호 · 제목 · 길이. 켜지면 vinyl 면 + ink 글자, 길이 자리에 흐른 시간 "1:12 / 3:48".
 - 표(사양, 예약처): 3px 위 괘선, 1px 줄 괘선, 숫자는 오른쪽 정렬.
 

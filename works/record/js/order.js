@@ -1,10 +1,11 @@
 // Pre-order (fictional): nothing is sent anywhere. The confirmation is kept in this browser only.
 const PRICE = 39000, SHIP = 3000, KEY = 'gipeunjjok:preorder';
+const NB = String.fromCharCode(160); // 3월 10일 stays on one line
 const PLACES = {
-  ship: '택배로 3월 10일부터 차례로 보냅니다.',
-  hole: '3월 10일부터 판가게 가운뎃구멍(서울)에서 찾으실 수 있습니다.',
-  needle: '3월 10일부터 레코드 바늘집(잔물시)에서 찾으실 수 있습니다.',
-  grout: '3월 10일부터 음반가게 흰줄눈(대전)에서 찾으실 수 있습니다.',
+  ship: `택배로 3월${NB}10일부터 차례로 보냅니다.`,
+  hole: `3월${NB}10일부터 판가게 가운뎃구멍(서울)에서 찾으실 수 있습니다.`,
+  needle: `3월${NB}10일부터 레코드 바늘집(잔물시)에서 찾으실 수 있습니다.`,
+  grout: `3월${NB}10일부터 음반가게 흰줄눈(대전)에서 찾으실 수 있습니다.`,
 };
 const won = (n) => `${n.toLocaleString('ko-KR')}원`;
 

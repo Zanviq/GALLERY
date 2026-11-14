@@ -25,9 +25,10 @@ if (root) {
   const mmss = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
   // 을/를 after a number word: 4분을, 4분 30초를
   const eul = (w) => { const c = w.charCodeAt(w.length - 1); return (c - 0xac00) % 28 ? `${w}을` : `${w}를`; };
+  const NBSP = String.fromCharCode(160); // keeps 4분 30초 on one line
   const spoken = (s) => {
     const m = Math.floor(s / 60), r = s % 60;
-    return m && r ? `${m}분 ${r}초` : m ? `${m}분` : `${r}초`;
+    return m && r ? `${m}분${NBSP}${r}초` : m ? `${m}분` : `${r}초`;
   };
 
   function settings() {

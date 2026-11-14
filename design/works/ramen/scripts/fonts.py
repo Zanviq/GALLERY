@@ -1,76 +1,117 @@
 """Subset the two faces to the characters the page uses and self-host them (dev tool, not deployed).
 
-    python -I design/works/ramen/scripts/fonts.py
+    <scratchpad>/fontenv/Scripts/python.exe -I design/works/ramen/scripts/fonts.py <src-dir>
 
-Scans works/ramen/index.html and js/*.js, asks the Google Fonts css2 API for a `text=` subset of
-each face (woff2), writes works/ramen/fonts/*.woff2 and works/ramen/css/fonts.css.
-Both families are SIL OFL 1.1 without a Reserved Font Name, so the subsets keep their names.
+<src-dir> holds the official Cafe24 TTFs, unzipped from https://fonts.cafe24.com
+(Cafe24Ohsquare-v2.0.zip and Cafe24OhsquareAir-v2.0.zip, both SIL OFL 1.1 with no Reserved Font Name,
+so the subsets keep their names). Scans works/ramen/index.html and js/*.js, writes
+works/ramen/fonts/cafe24-ohsquare*.woff2 and works/ramen/css/fonts.css, then checks coverage.
+
+The faces have proportional digits only and no `tnum` feature, so the subset gains ten tabular digit
+glyphs (each digit centred on the widest digit's advance) and a `tnum` lookup: with
+`font-variant-numeric: tabular-nums` the timer, prices and spec figures stop shifting.
 Re-run whenever copy changes.
 """
 import html
 import pathlib
 import re
 import sys
-import urllib.parse
-import urllib.request
 
+from fontTools import subset
+from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
+from fontTools.pens.transformPen import TransformPen
+from fontTools.pens.ttGlyphPen import TTGlyphPen
+from fontTools.ttLib import TTFont
+
+sys.stdout.reconfigure(encoding='utf-8')
 ROOT = pathlib.Path(__file__).resolve().parents[4]
 SITE = ROOT / 'works' / 'ramen'
 OUT = SITE / 'fonts'
-UA = ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-      '(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36')
 
 FACES = [
-    # (file stem, css family, google family query, weight)
-    ('black-han-sans', 'Black Han Sans', 'Black Han Sans', '400'),
-    ('gowun-dodum', 'Gowun Dodum', 'Gowun Dodum', '400'),
+    # (source ttf, output stem, css family)
+    ('Cafe24Ohsquare-v2.0.ttf', 'cafe24-ohsquare', 'Cafe24 Ohsquare'),
+    ('Cafe24OhsquareAir-v2.0.ttf', 'cafe24-ohsquare-air', 'Cafe24 Ohsquare Air'),
 ]
+DIGITS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 
 
 def used_chars():
-    text = (SITE / 'index.html').read_text(encoding='utf-8')
-    text = html.unescape(re.sub(r'<(script|style)[^>]*>.*?</\1>', ' ', text, flags=re.S) + text)
+    raw = (SITE / 'index.html').read_text(encoding='utf-8')
+    text = html.unescape(re.sub(r'<[^>]+>', ' ', re.sub(r'<(script|style)[^>]*>.*?</\1>', ' ', raw, flags=re.S)))
+    text += html.unescape(' '.join(re.findall(r'(?:alt|aria-label|content)="([^"]*)"', raw)))
     for js in sorted((SITE / 'js').rglob('*.js')):
-        text += js.read_text(encoding='utf-8')
-    chars = set(ch for ch in text if ord(ch) >= 32)
-    chars |= set(chr(c) for c in range(32, 127))
-    chars |= set('·–—‘’“”…×−→%')
-    chars.discard('﻿')
-    return ''.join(sorted(chars))
+        text += ''.join(re.findall(r"[`'\"]([^`'\"]*)[`'\"]", js.read_text(encoding='utf-8')))
+    chars = {c for c in text if ord(c) >= 32}
+    chars |= {chr(c) for c in range(32, 127)} | {' ', '‘', '’', '“', '”', '…'}
+    return chars
 
 
-def fetch(url, binary=False):
-    req = urllib.request.Request(url, headers={'User-Agent': UA})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        data = r.read()
-    return data if binary else data.decode('utf-8')
+def add_tabular_digits(font):
+    glyf, hmtx = font['glyf'], font['hmtx']
+    width = max(hmtx[n][0] for n in DIGITS)
+    order = font.getGlyphOrder()
+    for n in DIGITS:
+        adv, _ = hmtx[n]
+        dx = round((width - adv) / 2)
+        pen = TTGlyphPen(glyf)
+        glyf[n].draw(TransformPen(pen, (1, 0, 0, 1, dx, 0)), glyf)
+        g = pen.glyph()
+        g.recalcBounds(glyf)
+        name = n + '.tnum'
+        glyf[name] = g
+        hmtx[name] = (width, getattr(g, 'xMin', 0))
+        if name not in order:
+            order.append(name)
+    font.setGlyphOrder(order)
+    if 'post' in font and font['post'].formatType == 2.0:
+        font['post'].extraNames = []
+        font['post'].mapping = {}
+    fea = ('languagesystem DFLT dflt;\nlanguagesystem hang dflt;\nlanguagesystem latn dflt;\n'
+           'feature tnum {\n' + ''.join(f'  sub {n} by {n}.tnum;\n' for n in DIGITS) + '} tnum;\n')
+    addOpenTypeFeaturesFromString(font, fea, tables=['GSUB'])
+    return width
 
 
 def main():
+    if len(sys.argv) != 2:
+        sys.exit(__doc__)
+    src = pathlib.Path(sys.argv[1])
     chars = used_chars()
     print(len(chars), 'unique characters')
     OUT.mkdir(exist_ok=True)
     rules = []
-    for stem, family, query, weight in FACES:
-        url = ('https://fonts.googleapis.com/css2?family=' + urllib.parse.quote(query)
-               + '&display=swap&text=' + urllib.parse.quote(chars, safe=''))
-        css = fetch(url)
-        srcs = re.findall(r'src:\s*url\(([^)]+)\)\s*format\([\'"]?woff2', css)
-        if len(srcs) != 1:
-            sys.exit(f'{stem}: expected one woff2, got {len(srcs)}\n{css[:400]}')
-        data = fetch(srcs[0], binary=True)
-        (OUT / f'{stem}.woff2').write_bytes(data)
-        print(f'{stem}.woff2  {len(data) / 1024:.1f} KB')
+    for ttf, stem, family in FACES:
+        path = next(src.rglob(ttf))
+        font = TTFont(path)
+        opts = subset.Options()
+        opts.layout_features = ['kern']          # the faces carry kern only (plus aalt/fwid we do not use)
+        opts.name_IDs = ['*']
+        opts.name_languages = ['*']
+        opts.notdef_outline = True
+        opts.drop_tables += ['DSIG']
+        sub = subset.Subsetter(opts)
+        sub.populate(unicodes=[ord(c) for c in chars])
+        sub.subset(font)
+        width = add_tabular_digits(font)
+        font.flavor = 'woff2'
+        out = OUT / f'{stem}.woff2'
+        font.save(out)
+        cmap = font.getBestCmap()
+        missing = sorted(c for c in chars if ord(c) not in cmap and not c.isspace() and c != '⁠')
+        print(f'{out.name}  {out.stat().st_size / 1024:.1f} KB  {len(cmap)} chars  tnum width {width}  '
+              f'missing: {" ".join(f"U+{ord(c):04X}({c})" for c in missing) or "none"}')
         rules.append(
             '@font-face {\n'
             f"  font-family: '{family}';\n"
             f"  src: url('../fonts/{stem}.woff2') format('woff2');\n"
-            f'  font-weight: {weight};\n'
+            '  font-weight: 400;\n'
             '  font-style: normal;\n'
             '  font-display: swap;\n'
             '}\n')
-    header = ('/* Generated by design/works/ramen/scripts/fonts.py: subsets of Black Han Sans and\n'
-              '   Gowun Dodum (both SIL OFL 1.1, see ../fonts/OFL-*.txt) holding only the characters this page uses. */\n')
+    header = ('/* Generated by design/works/ramen/scripts/fonts.py: subsets of Cafe24 Ohsquare and\n'
+              '   Cafe24 Ohsquare Air (Cafe24 Corp., SIL OFL 1.1, see ../fonts/OFL-cafe24-ohsquare.txt) holding only the\n'
+              '   characters this page uses, plus tabular digits for font-variant-numeric: tabular-nums. */\n')
     (SITE / 'css' / 'fonts.css').write_text(header + '\n'.join(rules), encoding='utf-8')
     print('wrote css/fonts.css')
 

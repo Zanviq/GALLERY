@@ -26,10 +26,11 @@ const fmt = (s) => {
   s = Math.max(0, Math.floor(s));
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 };
+const NB = String.fromCharCode(160); // 4분 12초 and 1:12 / 3:48 stay on one line
 const sayTime = (s) => {
   s = Math.max(0, Math.floor(s));
   const m = Math.floor(s / 60), x = s % 60;
-  return m ? `${m}분 ${x}초` : `${x}초`;
+  return m ? `${m}분${NB}${x}초` : `${x}초`;
 };
 const easeInOut = (t) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
 
@@ -171,7 +172,7 @@ export function initTurntable(root) {
     if (sec === st.shownSec) return;
     st.shownSec = sec;
     const row = rows.find((r) => r.dataset.side === st.side && Number(r.dataset.i) === st.cur);
-    if (row) row.querySelector('.track__time').textContent = `${fmt(sec)} / ${fmt(it.tr.len)}`;
+    if (row) row.querySelector('.track__time').textContent = `${fmt(sec)}${NB}/${NB}${fmt(it.tr.len)}`;
   }
 
   function say(text) {

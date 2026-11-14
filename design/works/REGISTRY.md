@@ -45,7 +45,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 | slug | category · platform | concept | signature | palette | fonts | status |
 |---|---|---|---|---|---|---|
 | nighttrain | 홈페이지 · desktop+mobile | 밤차: 야간 침대열차 스타트업 (높바람 23:05 → 마파람 07:05) | 출발 시각표를 타이포그래피로, 선 노선도, 생성 사진 | train/blanket blue #1B2F6E, timetable white #FFFFFF, dawn frost #E4EAF1, ink #0F1626 | Iropke Batang (subset renamed Bamcha Batang), Orbit | registered |
-| ramen | 홈페이지 · desktop+mobile | 제맛: 국물은 재료 하나로 (멸치·고추·대파·후추 봉지라면) | 맛마다 재료 색 면, 포장 앞면을 평면 타이포로, 생성 음식 사진(알파 컷아웃), 면 타이머 | 고추 crimson #B3112E (hero), 멸치 #A8BCCB, 대파 #2A7536, 후추 #141516, white | Black Han Sans, Gowun Dodum | registered |
+| ramen | 홈페이지 · desktop+mobile | 제맛: 국물은 재료 하나로 (멸치·고추·대파·후추 봉지라면) | 맛마다 재료 색 면, 포장 앞면을 평면 타이포로, 생성 음식 사진(알파 컷아웃), 면 타이머 | 고추 crimson #B3112E (hero), 멸치 #A8BCCB, 대파 #2A7536, 후추 #141516, white | Cafe24 Ohsquare + Cafe24 Ohsquare Air (OFL, tnum digits added) | registered |
 | sculpture | 홍보 · desktop+mobile | 《닳다》 탁은결 개인전, 모롱시립미술관 (worn places cast as terrazzo) | 전시 포스터 + 도록식 작품 목록, 생성 전시 사진 | bottle-glass green #1E9A47, black #0A0A0A, white | Noto Serif KR 200/400/900 + Schibsted Grotesk | registered |
 | marathon | (row 15 above, re-planned) | | | | | registered |
 | ticketing | 게임 · desktop+mobile | 광클: 콘서트 티켓팅 (가상 예매처 앞줄티켓, 공연 3개 = 난이도 3단계) | 20:00:00 오픈 → 대기열 → 사라지는 좌석 지도(canvas) → 결제 타이머 → 티켓 | wristband pink #FF4F9A (+ #FF97C2, #FFCFE3 by grade), black, white, ash #E4E4E7 | Pretendard subset renamed Apjul Sans (deliberate exception to the §2 ban: it imitates a real booking UI) + Big Shoulders Display | registered |
@@ -87,5 +87,5 @@ as an ambient layer and never covers the information. Fonts and Latin faces belo
 ## Fonts in use (one work each)
 
 Galmuri11 (home) · Wanted Sans, Archivo (keyboard) · Anybody, Hahmlet, IBM Plex Sans KR (festival,
-perfume, startup) · Newsreader (perfume) · Spoqa Han Sans Neo (marathon) · SUIT (curtain) · Moirai One, Nanum Barun Gothic (record) · RIDIBatang, Libre Caslon Text (coffee) · MaruBuri, Hanken Grotesk (lamp) · Do Hyeon, Sunflower (camera) · Jua, Freesentation (kite) · Iropke Batang (nighttrain) · Kakao Big Sans, Kakao Small Sans (optician) · and every Korean family assigned in the tables above.
+perfume, startup) · Newsreader (perfume) · Spoqa Han Sans Neo (marathon) · SUIT (curtain) · Moirai One, Nanum Barun Gothic (record) · RIDIBatang, Libre Caslon Text (coffee) · MaruBuri, Hanken Grotesk (lamp) · Do Hyeon, Sunflower (camera) · Jua, Freesentation (kite) · Iropke Batang (nighttrain) · Kakao Big Sans, Kakao Small Sans (optician) · Cafe24 Ohsquare, Cafe24 Ohsquare Air (ramen) · and every Korean family assigned in the tables above.
 Latin faces added by works (record here): Schibsted Grotesk (sculpture), Big Shoulders Display (ticketing)

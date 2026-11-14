@@ -83,7 +83,7 @@ no blur, no gradients. The stub is the only object with depth: notched corners a
 ## Components
 
 - **Primary button**: black fill, white Apjul Sans 600, 56px tall (72px for 예매하기). Hover:
-  pink inset 4px rim. Focus-visible: 3px black outline offset 3px (white outline on black fields).
+  pink inset 4px rim. Pressed: a 7px rim. Focus-visible: 2px black outline offset 2px (white on black fields; the giant 예매하기 keeps 4px). Detail pass notes: DETAIL.md.
   Disabled (rate-limited): ash fill with a draining black line.
 - **Secondary button**: 2px black border, transparent fill.
 - **Concert picker**: radio group as three stacked rows (grade of difficulty, seats, queue size).

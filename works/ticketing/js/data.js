@@ -6,6 +6,14 @@ export const OPEN_AT = 20 * 3600 * 1000; // 20:00:00.000 server time
 export const LEAD = 8; // seconds on the clock before the open
 export const FEE = 2000; // 예매수수료 per ticket
 
+// Line-break glue for names and dates set from data: a title in 〈 〉 never splits, and neither do
+// 2026년 12월 19일 or 오후 7시 30분. Word joiners keep 4·5번 together.
+const NB = String.fromCharCode(160);
+export const WJ = String.fromCharCode(0x2060);
+export const tidy = (s) => s
+  .replace(/〈[^〉]*〉/g, (m) => m.replace(/ /g, NB))
+  .replace(/(\d+[년월]|오전|오후|\d+시) (?=\d)/g, (m, a) => a + NB);
+
 // Layout units: one seat = 1. orient 'up' = rows run left-right, row 1 nearest the stage;
 // 'left' / 'right' = side stands, rows run top-bottom, row 1 nearest the floor.
 function row(prefix, grade, y, rows, xs, cols = 8) {
@@ -63,6 +71,7 @@ export const CONCERTS = [
     short: '도해솔 〈열두 번째 겨울〉',
     blurb: '피아노 한 대와 목소리 하나. 데뷔 열두 해째 겨울을 메아리 소극장에서 보냅니다. 앞줄과 뒷줄의 거리가 열다섯 걸음인 곳입니다.',
     date: '2026년 12월 19일 토요일 오후 7시 30분',
+    cancelBy: '12월 18일(금) 17:00',
     dateShort: '2026.12.19 토 19:30',
     venue: '메아리 소극장',
     address: '메아리시 울림대로 12, 지하 1층',
@@ -93,6 +102,7 @@ export const CONCERTS = [
     short: 'ORBEAT 〈FIRST ORBIT〉',
     blurb: '데뷔 3년 만의 첫 월드투어. 열한 개 도시 가운데 첫 공연이 메아리 아레나에서 열립니다. 서울 공연은 이날 하루뿐입니다.',
     date: '2027년 1월 23일 토요일 오후 6시',
+    cancelBy: '1월 22일(금) 17:00',
     dateShort: '2027.1.23 토 18:00',
     venue: '메아리 아레나',
     address: '메아리시 함성로 200',
@@ -123,6 +133,7 @@ export const CONCERTS = [
     short: '청동거울 〈다시, 한 번〉',
     blurb: '1998년에 데뷔해 2006년에 흩어진 네 사람이 21년 만에 한 무대에 섭니다. 다음 공연은 없다고 미리 말해 두었습니다.',
     date: '2027년 5월 15일 토요일 오후 7시',
+    cancelBy: '5월 14일(금) 17:00',
     dateShort: '2027.5.15 토 19:00',
     venue: '메아리 주경기장',
     address: '메아리시 너른마당길 1',

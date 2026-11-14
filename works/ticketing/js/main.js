@@ -1,5 +1,5 @@
 // Page: concert picker, event details, records, sound switch. The run itself lives in game.js.
-import { CONCERTS, GRADES, ADDRESS_NOTE, RANKS } from './data.js';
+import { CONCERTS, GRADES, ADDRESS_NOTE, RANKS, tidy } from './data.js';
 import { Venue, Overview } from './venue.js';
 import { Game } from './game.js';
 import { setSound, soundOn, unlock } from './sound.js';
@@ -56,9 +56,9 @@ function render(c) {
   heroImg.style.setProperty('--pos-band', c.pos.band);
   evImg.style.transformOrigin = c.pos.event;
   $('#ev-kind').textContent = c.kind;
-  $('#ev-title').textContent = c.name;
+  $('#ev-title').textContent = tidy(c.name);
   $('#ev-blurb').textContent = c.blurb;
-  $('#ev-date').textContent = c.date;
+  $('#ev-date').textContent = tidy(c.date);
   $('#ev-venue').textContent = c.venue;
   $('#ev-addr').textContent = c.address;
   $('#ev-run').textContent = c.runtime;
@@ -107,7 +107,7 @@ function paintRecords() {
     const b = store.best[c.id];
     const cur = c.id === current.id ? ' aria-current="true"' : '';
     return `<tr${cur}>
-      <th scope="row">${c.short}<span class="lvl">${c.levelName}</span></th>
+      <th scope="row">${tidy(c.short)}<span class="lvl">${c.levelName}</span></th>
       <td>${b ? esc(b.title) : '아직 없음'}</td>
       <td>${b && b.seat ? esc(b.seat) : '—'}</td>
       <td class="r">${b && b.score > 0 && Number.isFinite(b.total) ? b.total.toFixed(1) + '초' : '—'}</td>

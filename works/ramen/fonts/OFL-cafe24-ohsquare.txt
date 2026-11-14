@@ -1,5 +1,18 @@
-Copyright 2021 The Gowun Dodum Project Authors (https://github.com/yangheeryu/Gowun-Dodum)
+Cafe24 Ohsquare (카페24 아네모네) and Cafe24 Ohsquare Air (카페24 아네모네 에어)
+Copyright (c) 2020 by Cafe24. All rights reserved.
+Copyright (c) Cafe24 Corp. All Rights Reserved.
+Source: https://fonts.cafe24.com (Cafe24Ohsquare-v2.0.zip, Cafe24OhsquareAir-v2.0.zip, downloaded 2026-11-14)
 
+From the licence notice shipped with the fonts (License-Ohsquare.pdf, License-OhsquareAir.pdf):
+카페24(주)에서 제공하는 "카페24 아네모네"는 SIL OPEN FONT LICENSE(Version 1.1)에 따라 사용이 허가됩니다.
+"카페24 아네모네"는 개인 및 기업 사용자를 포함한 모든 사용자에게 무료로 제공되며 자유롭게 수정하고 재배포할 수 있습니다.
+단, 글꼴 자체를 유료로 판매하는 것은 금지하며 본 저작권 안내와 라이선스 전문을 포함해서 다른 소프트웨어와 번들하거나
+재배포 또는 판매가 가능합니다. "카페24 아네모네"의 지적 재산권은 카페24(주)에 있습니다.
+No Reserved Font Name is declared (neither in the notice nor in the font files).
+
+Modified version: this site ships subsets that hold only the characters it uses, with ten tabular digit
+glyphs and a tnum feature added (design/works/ramen/scripts/fonts.py). They remain under the SIL OFL 1.1.
+이 페이지에는 카페24(주)가 제공한 "카페24 아네모네"와 "카페24 아네모네 에어"가 적용되어 있습니다.
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:

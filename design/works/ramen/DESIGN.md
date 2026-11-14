@@ -30,16 +30,35 @@ broth only appears inside photographs.
 
 ## Typography
 
-- **Black Han Sans** 400 (SIL OFL 1.1, no Reserved Font Name): wordmark, ingredient names, headings,
-  big numbers (550, 4:30), short labels. Display only, 20 px and up.
-- **Gowun Dodum** 400 (SIL OFL 1.1, no Reserved Font Name): body, specs labels, captions, FAQ.
-- No Latin face: both families carry the digits and the few Latin units (ml, mm, kcal) well enough.
-- Subset to the characters on the page by `scripts/fonts.py` (Google Fonts `text=` API).
+Changed in the detail pass of 2026-11-14 (BRIEF §0000): Black Han Sans and Gowun Dodum are on the
+"AI default" list, so the page now uses one Korean family a Korean designer would ship on a packet.
+
+- **Cafe24 Ohsquare** (카페24 아네모네) 400: wordmark, ingredient names, headings, big numbers
+  (550, 4:30), prices, short labels. Square, heavy, cut like packet lettering. Display only, 16 px and up.
+- **Cafe24 Ohsquare Air** (카페24 아네모네 에어) 300, set as 400: body, spec labels, captions, the small
+  type on the packet fronts. Same skeleton as the display weight, so a packet reads as one printed job.
+- Licence: SIL OFL 1.1, no Reserved Font Name (official notice in the font zips from fonts.cafe24.com,
+  and the site's own notice: web fonts, embedding, modification and redistribution allowed; selling the
+  font file is not). Licence text: `works/ramen/fonts/OFL-cafe24-ohsquare.txt`.
+- Considered and rejected: 강원교육모두 (its official terms allow use on the web but say nothing about
+  modifying or redistributing the files, and Sandoll's summary marks the OFL row "비해당"), so a
+  subset could not be shipped; Cafe24 Ssurround (rounded, reads as snack packaging, not soup).
+- Subset by `scripts/fonts.py <dir with the official TTFs>` (fontTools, local; no Google API). The
+  faces have proportional digits and no `tnum`, so the script adds ten tabular digits (centred on the
+  widest digit) and a `tnum` lookup. `font-variant-numeric: tabular-nums` is on the timer, prices,
+  spec values, step times, packet specs and dates. `scripts/glyphs.py` checks coverage.
+- The faces lack × − · – and →. The packet size moved into the packet paragraph ("가로 200mm, 세로
+  150mm"), and the FAQ plus/minus is drawn in CSS in the 3 px rule weight.
+
+Tracking scales with size: `--tr-giant` -0.045em (제맛, flavour names, packet names) · `--tr-head`
+-0.035em (section heads, the claim) · `--tr-sub` -0.025em (lines, step titles, questions, names) ·
+`--tr-body` -0.01em · 0 for text at 15–16 px. Headings `text-wrap: balance`, paragraphs `pretty`,
+`word-break: keep-all`; no-break spaces inside 4분 30초, 12월 1일, 3만 원.
 
 Scale (fluid, clamp): wordmark `min(29vw, 43svh, 560px)` on desktop, 44vw on phones · flavour name `clamp(132px, 21vw, 360px)` ·
 h2 `clamp(40px, 6vw, 96px)` · big number `clamp(64px, 10vw, 168px)` · claim `clamp(32px, 4.4vw, 72px)` ·
-lede 19–21 px / 1.7 · body 17–18 px / 1.75 · small 15 px / 1.6. Black Han Sans is set tight
-(letter-spacing -0.02em, line-height 0.86 for the giants).
+lede 19–21 px / 1.7 · body 17–18 px / 1.75 · small 15 px / 1.6. Ohsquare sits about 0.17em below its
+baseline, so the hero wordmark carries a 0.045em bottom margin to land its ink on the launch line.
 
 ## Grid and spacing
 
@@ -62,8 +81,9 @@ lede 19–21 px / 1.7 · body 17–18 px / 1.75 · small 15 px / 1.6. Black Han 
 - **Cooking steps**: big time (or water amount) in Black Han Sans, two sentences, one photograph.
 - **Timer**: flavour radios, texture radios (꼬들, 30초 덜 · 그대로 · 퍼진, 30초 더), one start/stop button, a huge
   countdown. The only script on the page.
-- Buttons: 3 px ink border, square corners, ink fill when pressed (`aria-pressed`, checked radios).
-  Focus: 3 px outline in the current text colour, 3 px offset.
+- Buttons: 3 px ink border, square corners, ink fill when checked; hover wash `--hover` #ECEDEE,
+  pressed one step darker, 180 ms colour transitions on `cubic-bezier(.16,1,.3,1)`.
+  Focus: 2 px outline in the current text colour, 2 px offset.
 - Links: underlined 2 px, offset 0.2em.
 - No radius anywhere, no shadows in CSS (the pot shadows are photographed).
 

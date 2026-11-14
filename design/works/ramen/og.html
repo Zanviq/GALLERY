@@ -8,14 +8,14 @@
   /* The hero of works/ramen at 1200 x 630, same fonts, colours and pot image. */
   html, body { margin: 0; }
   body { width: 1200px; height: 630px; overflow: hidden; position: relative; background: #B3112E; color: #fff; }
-  .kicker { position: absolute; left: 56px; top: 52px; font: 400 22px/1 'Black Han Sans'; background: #fff; color: #B3112E; padding: 9px 12px 8px; }
-  .claim { position: absolute; left: 56px; top: 108px; font: 400 60px/1.04 'Black Han Sans'; letter-spacing: -0.01em; }
-  .list { position: absolute; left: 56px; top: 252px; font: 400 22px/1 'Black Han Sans'; display: flex; gap: 22px; }
+  .kicker { position: absolute; left: 56px; top: 52px; font: 400 22px/1 'Cafe24 Ohsquare'; background: #fff; color: #B3112E; padding: 9px 12px 8px; }
+  .claim { position: absolute; left: 56px; top: 104px; font: 400 60px/1.08 'Cafe24 Ohsquare'; letter-spacing: -0.035em; }
+  .list { position: absolute; left: 56px; top: 252px; font: 400 22px/1 'Cafe24 Ohsquare'; display: flex; gap: 22px; }
   .list span { display: inline-flex; align-items: center; gap: 9px; }
   .list span::before { content: ""; width: 18px; height: 18px; background: var(--c); box-shadow: 0 0 0 2px #fff; }
-  .mark { position: absolute; left: 50px; bottom: -28px; font: 400 300px/0.82 'Black Han Sans'; letter-spacing: -0.04em; }
+  .mark { position: absolute; left: 50px; bottom: 36px; font: 400 300px/0.82 'Cafe24 Ohsquare'; letter-spacing: -0.045em; }
   .pot { position: absolute; right: -36px; top: -34px; width: 628px; }
-  .launch { position: absolute; right: 48px; bottom: 34px; text-align: right; font: 400 22px/1.35 'Black Han Sans'; }
+  .launch { position: absolute; right: 48px; bottom: 34px; text-align: right; font: 400 22px/1.35 'Cafe24 Ohsquare'; }
 </style>
 </head>
 <body>
@@ -24,7 +24,7 @@
 <div class="list"><span style="--c:#A8BCCB">멸치</span><span style="--c:#B3112E">고추</span><span style="--c:#2A7536">대파</span><span style="--c:#141516">후추</span></div>
 <div class="mark">제맛</div>
 <img class="pot" src="../../../works/ramen/img/pot-hero-1400.webp" alt="">
-<div class="launch">12월 1일 출시<br>한 봉 1,600원</div>
+<div class="launch">12월&nbsp;1일 출시<br>한 봉 1,600원</div>
 <script>
   Promise.all([document.fonts.ready, document.querySelector('.pot').decode()]).then(() => document.body.setAttribute('data-ready', ''));
 </script>

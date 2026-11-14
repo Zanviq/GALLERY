@@ -22,7 +22,8 @@
       return;
     }
     var d = EVENTS[ev.value];
-    out.textContent = d.name + ', 셔츠 ' + size.value + '. 참가비 ' + d.fee + ', 4월 4일 ' + d.start +
+    var nb = String.fromCharCode(160); // 4월 4일 stays on one line
+    out.textContent = d.name + ', 셔츠 ' + size.value + '. 참가비 ' + d.fee + ', 4월' + nb + '4일 ' + d.start +
       ' 출발입니다. 가상 대회라 신청서는 어디에도 보내지 않았습니다.';
   });
 })();

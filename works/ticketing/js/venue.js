@@ -2,6 +2,7 @@
 import { GRADE_HEAT } from './data.js';
 
 export const FREE = 0, TAKEN = 1, MINE = 2;
+const NB = String.fromCharCode(160);
 
 export const COLORS = {
   pink: '#FF4F9A', R: '#FF97C2', S: '#FFCFE3', ash: '#E4E4E7', black: '#000000', white: '#FFFFFF',
@@ -49,7 +50,7 @@ export class Venue {
 
   seatName(i) {
     const b = this.blocks[this.blockOf[i]];
-    return `${b.id}구역 ${this.rowOf[i] + 1}열 ${this.colOf[i] + 1}번`;
+    return `${b.id}구역 ${this.rowOf[i] + 1}열${NB}${this.colOf[i] + 1}번`; // 1열 5번 stays on one line
   }
 
   grade(i) { return this.blocks[this.blockOf[i]].grade; }

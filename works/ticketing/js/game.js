@@ -1,5 +1,5 @@
 // The run: open → queue → seats → pay → result. One rAF loop, paused while the tab is hidden.
-import { OPEN_AT, LEAD, FEE, RANKS, DISCOUNTS, METHODS } from './data.js';
+import { OPEN_AT, LEAD, FEE, RANKS, DISCOUNTS, METHODS, tidy, WJ } from './data.js';
 import { Venue, Overview, FREE, TAKEN, MINE } from './venue.js';
 import { sfx, unlock, suspend } from './sound.js';
 
@@ -73,7 +73,7 @@ export class Game {
       picked: q('picked'), done: q('s-done'), legend: q('legend'), gb: q('gradebars'),
       pTimer: q('p-timer'), pTimerBox: q('p-timerbox'), pPen: q('p-pen'), pForm: q('p-form'), pErr: q('p-err'),
       pSeats: q('p-seats'), pTotal: q('p-total'), pSub: q('p-sub'), pFee: q('p-fee'), pDisc: q('p-disc'),
-      pDiscounts: q('p-discounts'), pMethods: q('p-methods'), pAgree: q('p-agree'), pBusy: q('p-busy'), pShow: q('p-show'),
+      pDiscounts: q('p-discounts'), pMethods: q('p-methods'), pAgree: q('p-agree'), pBusy: q('p-busy'), pShow: q('p-show'), pCancel: q('p-cancel'),
       stub: q('stub'), rBest: q('r-best'), rLab: q('r-lab'), rBig: q('r-big'), again: q('again'), other: q('other'), quit: q('quit'),
     };
     this.bind();
@@ -144,7 +144,7 @@ export class Game {
     this.pending = null;
     this.lostFx = new Map();
     this.sel = -1;
-    this.d.show.textContent = concert.short;
+    this.d.show.textContent = tidy(concert.short);
     this.el.hidden = false;
     this.el.dataset.level = concert.id;
     this.running = true;
@@ -693,7 +693,8 @@ export class Game {
     this.payEnd = this.t + c.payTime;
     this.lastSecP = -1;
     this.busy = false;
-    d.pShow.textContent = c.name;
+    d.pShow.textContent = tidy(c.name);
+    d.pCancel.textContent = tidy(c.cancelBy) + '까지';
     d.pSeats.innerHTML = r.picks.map((i) => `<li><b class="g">${v.grade(i)}</b><span>${v.seatName(i)}</span><span class="pr">${won(c.prices[v.grade(i)])}</span></li>`).join('');
     d.pDiscounts.innerHTML = DISCOUNTS.map((x) => `<label class="opt"><input type="radio" name="disc" value="${x.id}"><span class="opt__t">${x.label}</span><span class="opt__n">${x.note}</span></label>`).join('');
     d.pMethods.innerHTML = METHODS.map((x) => `<label class="opt"><input type="radio" name="method" value="${x.id}"><span class="opt__t">${x.label}</span><span class="opt__n">${x.note}</span></label>`).join('');
@@ -844,7 +845,7 @@ export class Game {
     else {
       const b = v.blocks[v.blockOf[seats[0]]];
       const same = seats.length === 1 || (v.blockOf[seats[0]] === v.blockOf[seats[1]] && v.rowOf[seats[0]] === v.rowOf[seats[1]]);
-      const nums = seats.map((i) => v.colOf[i] + 1).join('·');
+      const nums = seats.map((i) => v.colOf[i] + 1).join(`${WJ}·${WJ}`);
       seatHTML = same
         ? `<p class="stub__grade num">${b.grade}</p><p class="stub__seat"><span class="num">${b.id}</span>구역 <span class="num">${v.rowOf[seats[0]] + 1}</span>열 <span class="num">${nums}</span>번</p>`
         : `<p class="stub__grade num">${o.grade}</p><p class="stub__seat stub__seat--two">${seats.map((i) => `<span>${v.seatName(i)}</span>`).join('')}</p>`;
@@ -861,7 +862,7 @@ export class Game {
     d.stub.innerHTML = `
       <div class="stub__main">
         <div class="stub__top"><span class="stub__brand">앞줄티켓</span><span class="stub__state">${ok ? '예매 완료' : '예매 실패'}</span></div>
-        <p class="stub__show">${c.name}</p>
+        <p class="stub__show">${tidy(c.name)}</p>
         <p class="stub__when">${c.dateShort}, ${c.venue}</p>
         <div class="stub__seatbox">${seatHTML}</div>
         <h2 class="stub__title" id="r-title">${rank.title}</h2>
@@ -874,7 +875,7 @@ export class Game {
         <p class="stub__no num">${bookNo}</p>
         <p class="stub__mini">광클 2026.11.20 20:00</p>
       </div>`;
-    const best = this.h.onResult(c, { key, score: rank.score, total: o.total, title: rank.title, seat: ok ? (seats.length === 2 && v.adjacent(seats[0], seats[1]) ? `${v.seatName(seats[0])}·${v.colOf[seats[1]] + 1}번` : seats.map((i) => v.seatName(i)).join(', ')) : '' });
+    const best = this.h.onResult(c, { key, score: rank.score, total: o.total, title: rank.title, seat: ok ? (seats.length === 2 && v.adjacent(seats[0], seats[1]) ? `${v.seatName(seats[0])}${WJ}·${WJ}${v.colOf[seats[1]] + 1}번` : seats.map((i) => v.seatName(i)).join(', ')) : '' });
     d.rBest.textContent = best;
     if (ok) {
       d.rLab.textContent = '20:00:00부터 결제 완료까지';
