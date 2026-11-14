@@ -36,23 +36,33 @@
 맑은 레몬(G 225, B 77)으로 두고 겨자·금빛 쪽(R−G 차이가 크고 B 가 낮은 값)으로 가지 않게 사진도 같은 값으로 당겼다.
 대비: 검정/레몬 16.1, 레몬/검정 16.1, 검정/흰 21, grey/흰 6.7, mist/검정 10.0, 비활성 셔터(#8A8A8A) 위 검정 6.1.
 
-## 글꼴
+## 글꼴 (2026-11-14 세부 손질에서 바꿈)
 
 | 역할 | 글꼴 | 쓰임 |
 |---|---|---|
-| 디스플레이·숫자 | **Do Hyeon** (OFL, RFN 없음) 400 | '방' '금', 섹션 제목, 값, 모델명, 남은 장수, 주소 |
-| 본문·UI | **Sunflower** (OFL, RFN 없음) 500 / 700 | 본문, 단추, 표, 캡션 |
+| 디스플레이·숫자·이름표·단추 | **카페24 써라운드** (SIL OFL 1.1) — 부분집합 이름 **Bangeum Round** | '방' '금', 섹션 제목, 값, 모델명, 남은 장수, 주소, 단추, 표의 머리, 칩, `b` |
+| 본문 | **카페24 써라운드 에어** (SIL OFL 1.1) — 부분집합 이름 **Bangeum Round Air** | 본문, 캡션, 상태 문장 |
 
-라틴 글꼴은 쓰지 않았다(Bricolage Grotesque 불필요): 숫자와 mm, f/11, USB-C 는 두 글꼴의 라틴으로 충분하다.
-두 OFL 모두 Reserved Font Name 을 선언하지 않아(저작권 줄: "Copyright 2018 The Do Hyeon Project Authors",
-"Copyright 2008 The Sunflower Project Authors") 부분집합의 이름을 바꾸지 않았다. 페이지 글자(HTML + JS 문자열)만
-남긴 woff2: Do Hyeon 34 KB, Sunflower 500 28 KB, 700 30 KB. 두 글꼴에 없는 `·` `–` `—` `↑` 는 쓰지 않는다
-(범위는 `~`). `scripts/fonts.py` 가 부분집합을 만들고 빠진 글자가 있으면 실패한다.
-Do Hyeon 의 쉼표는 큰 크기에서 마침표처럼 보여('189.000원') `site.css` 에서 "Do Hyeon" 가족에
-`unicode-range: U+002C` 인 두 번째 @font-face(Sunflower 700 파일)를 둔다. 값·주소의 쉼표는 Sunflower 에서 온다.
+이전의 Do Hyeon + Sunflower 는 '구글 폰트 한글 목록에서 AI 가 고르는 글꼴'(BRIEF §0000)이라 바꿨다.
+처음 후보(이사만루, 더잠실, 머니그라피)는 모두 파일 수정을 막아서(이사만루 표의 OFL 행 X, 더잠실 '수정·포맷 변형
+금지', 머니그라피 '수정·재배포 불가') 쓰지 않았다. 카페24 글꼴은 공식 zip 의 License-*.pdf 가 SIL OFL 1.1 이고
+"자유롭게 수정하고 재배포할 수 있습니다", 글꼴 자체의 유료 판매만 막는다. Reserved Font Name 은 없지만 이름 표에
+"Cafe24 Ssurround is a trademark of Cafe24" 가 있고, 이 파일들은 수정본(부분집합 + × 추가)이라 이름을 바꿨다.
+저작권 줄 "Copyright © Cafe24 Corp. All Rights Reserved." 와 OFL 전문: `works/camera/fonts/OFL-BangeumRound.txt`.
+바닥글에 '글꼴은 카페24 써라운드와 써라운드 에어'(카페24 권장 출처 표기).
 
-크기: 히어로 음절 clamp(150px, 25.5vw, 420px), 휴대폰 41vw. 섹션 제목 clamp(56px, 8.4vw, 144px).
-값 clamp(30px, 2.8vw, 44px). 본문 16–18px / 1.7, `word-break: keep-all`.
+CSS 에서는 한 가족 "Bangeum Round" 로 묶었다: 500 이상은 써라운드, 400 이하는 써라운드 에어. 둥글고 넓은 써라운드의
+획이 둥근 모서리의 레몬 몸·둥근 렌즈와 같은 말을 하고, 에어는 같은 뼈대의 가는 굵기라 본문이 한 목소리로 읽힌다.
+쉼표가 큰 크기에서도 쉼표로 읽혀('189,000원') 예전의 쉼표 대체(`unicode-range: U+002C`)는 없다.
+
+두 글꼴 모두 × (U+00D7) 가 없어, 크기 표기('76 × 102 mm')가 시스템 글꼴로 떨어지지 않게 부분집합에 각 글꼴의 +
+글리프를 45° 돌려 115 % 로 넣었다(`scripts/fonts.py`, OFL 이 허락하는 수정). 부분집합(페이지 글자만): 써라운드
+33 KB, 에어 28 KB, 빠진 글자가 있으면 스크립트가 실패한다. 숫자는 비례 숫자이고 `tnum` 기능이 없어
+`tabular-nums` 가 듣지 않는다: 값 표는 오른쪽 정렬로 끝자리를 맞춘다. U+2060 은 폭 없는 문자라 검사에서 뺐다.
+
+크기·자간: 히어로 음절 clamp(150px, 25.5vw, 420px) / 휴대폰 40vw, 자간 -0.045em. 섹션 제목 clamp(52px, 8vw, 136px)
+/ 1.0, -0.035em. 작은 제목 clamp(24px, 2vw, 32px) / 1.3, -0.025em. 값 clamp(26px, 2.3vw, 38px). 본문 16–18px / 1.65,
+-0.01em, `word-break: keep-all`, 제목 `text-wrap: balance`, 문단 `text-wrap: pretty`.
 
 ## 격자
 

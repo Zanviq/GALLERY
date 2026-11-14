@@ -249,7 +249,7 @@ function init() {
       el.classList.add('is-dev');
       const start = performance.now();
       hanging = { el, key, start };
-      say('한 장 나오는 중');
+      say('한 장 나오는 중');
       eject(el, ejectMs).then(() => {
         busy = false;
         if (soundOn) sound.charge(0.9);

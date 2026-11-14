@@ -24,7 +24,7 @@ if (order) {
     e.preventDefault();
     const v = values();
     no.textContent = `예약 번호 BG-${String(Math.floor(1000 + Math.random() * 9000))}`;
-    what.textContent = `방금 1 ${v.color} 한 대${v.film ? `, ${FILM[v.film]}` : ''}. 합계 ${won(v.sum)}.`;
+    what.textContent = `방금 1 ${v.color} 한 대${v.film ? `, ${FILM[v.film]}` : ''}. 합계 ${won(v.sum)}.`;
     ticket.hidden = false;
     submit.hidden = true;
     ticket.focus();

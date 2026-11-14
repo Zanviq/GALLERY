@@ -1,6 +1,6 @@
-"""Favicon PNGs (32 px, 180 px apple-touch) from the Do Hyeon glyph for 방 (dev tool).
+"""Favicon PNGs (32 px, 180 px apple-touch) from the 카페24 써라운드 glyph for 방 (dev tool).
 
-    python -I icons.py <DoHyeon-Regular.ttf> <works/camera/img>
+    python -I icons.py <Cafe24Ssurround-v2.0.ttf> <works/camera/img>
 """
 import sys
 from pathlib import Path

@@ -1,9 +1,12 @@
 """Subset the page fonts to the characters the page uses, and check coverage (dev tool, not deployed).
 
-    <scratchpad>/fontenv/Scripts/python.exe -I design/works/kite/scripts/fonts.py <jua.ttf> <freesentation-dir>
+    <scratchpad>/fontenv/Scripts/python.exe -I design/works/kite/scripts/fonts.py <Cafe24Danjunghae-v2.0.ttf> <freesentation-dir>
 
-- Jua (OFL, no Reserved Font Name) only gets what is set in Jua: headings, dates, times, numbers,
-  names, the wind's Beaufort names, plus ASCII digits and punctuation.
+- 카페24 단정해 (Cafe24 Danjunghae v2.0, official zip from fonts.cafe24.com; License-Danjunghae.pdf: SIL OFL 1.1,
+  "자유롭게 수정하고 재배포할 수 있습니다", no Reserved Font Name) is the display face. It only gets what is set
+  in it: headings, dates, times, numbers, names, the wind's Beaufort names, plus ASCII digits and punctuation.
+  Its name table says "Cafe24 Danjunghae is a trademark of cafe24", so the modified (subset) font is renamed
+  "Hanui Display" and the CSS uses only that name. (Until 2026-11-14 this slot was Jua.)
 - Freesentation 4 Regular and 7 Bold (OFL 1.1, no Reserved Font Name) get every character of the HTML
   and the JS strings. Its name table says "Freesentation is a trademark of Lee Juim", so the modified
   (subset) fonts are renamed to "Hanui Text" and the CSS uses only that name.
@@ -11,6 +14,7 @@ Re-run after every copy change. Exits non-zero if any character on the page is m
 """
 import os
 import re
+import html as htmllib
 import sys
 import io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
@@ -22,7 +26,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..',
 SITE = os.path.join(ROOT, 'works', 'kite')
 OUT = os.path.join(SITE, 'fonts')
 
-JUA_CLASSES = [
+DISPLAY_CLASSES = [
     'hero__title', 'hero__day', 'head__title', 'day__date', 'runs__time', 'make__title', 'kite__name',
     'rules', 'akmagi__title', 'steps__time', 'addr', 'bring__title', 'foot__mark', 'mark', 'wind__name',
     'map__label--river', 'match__nums', 'hero__facts',
@@ -41,19 +45,19 @@ def visible(html):
     t = re.sub(r'<(script|style)[^>]*>.*?</\1>', ' ', html, flags=re.S)
     alts = ' '.join(re.findall(r'(?:alt|aria-label|title)="([^"]*)"', t))
     t = re.sub(r'<[^>]+>', ' ', t)
-    return t.replace('&amp;', '&') + ' ' + alts
+    return htmllib.unescape(t) + ' ' + htmllib.unescape(alts)
 
 
-def jua_text(html, js):
+def display_text(html, js):
     parts = []
-    for cls in JUA_CLASSES:
+    for cls in DISPLAY_CLASSES:
         for m in re.finditer(r'<(\w+)[^>]*class="[^"]*\b' + re.escape(cls) + r'\b[^"]*"[^>]*>', html):
             tag = m.group(1)
             # text up to the element's closing tag (good enough: these elements do not nest their own tag)
             end = html.find(f'</{tag}>', m.end())
             if tag in ('ol', 'ul'):
                 end = html.find(f'</{tag}>', m.end())
-            parts.append(re.sub(r'<[^>]+>', ' ', html[m.end():end]))
+            parts.append(htmllib.unescape(re.sub(r'<[^>]+>', ' ', html[m.end():end])))
     # Beaufort names in wind.js
     parts += re.findall(r"'([가-힣]+)'", js)
     parts.append(''.join(chr(c) for c in range(0x20, 0x7f)))
@@ -71,10 +75,11 @@ def all_text(html, js):
 
 
 def clean(chars):
-    return {c for c in chars if c.isprintable() and c not in ' ﻿'}
+    # keep U+00A0 (no-break space between a number and its unit); drop BOM and U+2060 (default-ignorable)
+    return {c for c in chars if (c.isprintable() or c == '\xa0') and c not in '\ufeff\u2060'}
 
 
-def subset_font(src, dst, chars, rename=None, style=None):
+def subset_font(src, dst, chars, rename=None, style=None, origin=''):
     opts = subset.Options()
     opts.flavor = 'woff2'
     opts.layout_features = ['kern', 'liga', 'calt', 'tnum', 'ccmp', 'locl', 'mark', 'mkmk']
@@ -101,9 +106,11 @@ def subset_font(src, dst, chars, rename=None, style=None):
             elif nid == 6:
                 r.string = ps
             elif nid == 3:
-                r.string = f'{ps};subset of Freesentation 2.001'
-            # drop the Korean-language family names, which still say 프리젠테이션
+                r.string = f'{ps};subset of {origin}'
+            # drop the Korean-language and Mac family names, which still carry the original name
             if r.langID != 0x409 and r.platformID == 3 and nid in (1, 4, 16, 17, 18):
+                continue
+            if r.platformID == 1 and nid in (1, 3, 4, 6, 16, 17, 18):
                 continue
             keep.append(r)
         name.names = keep
@@ -117,20 +124,21 @@ def subset_font(src, dst, chars, rename=None, style=None):
 
 
 def main():
-    jua, fs_dir = sys.argv[1], sys.argv[2]
+    display, fs_dir = sys.argv[1], sys.argv[2]
     html, js = page_text()
     os.makedirs(OUT, exist_ok=True)
     every = clean(all_text(html, js))
-    disp = clean(jua_text(html, js))
+    disp = clean(display_text(html, js))
     bad = []
-    m = subset_font(jua, os.path.join(OUT, 'jua.woff2'), disp)
-    # Jua is display only; anything it lacks falls back to Hanui Text, which must have everything
+    m = subset_font(display, os.path.join(OUT, 'hanui-display.woff2'), disp,
+                    rename='Hanui Display', style='Regular', origin='Cafe24 Danjunghae 2.0')
+    # the display face is for display only; anything it lacks falls back to Hanui Text, which has everything
     if m:
-        print('  (Jua lacks these; they fall back to Hanui Text):', ''.join(m))
+        print('  (Hanui Display lacks these; they fall back to Hanui Text):', ''.join(m))
     for w, f, style in ((400, 'Freesentation-4Regular.ttf', 'Regular'), (700, 'Freesentation-7Bold.ttf', 'Bold')):
         bad += subset_font(os.path.join(fs_dir, f), os.path.join(OUT, f'hanui-text-{w}.woff2'), every,
-                           rename='Hanui Text', style=style)
-    print('characters on the page:', len(every), ' set in Jua:', len(disp))
+                           rename='Hanui Text', style=style, origin='Freesentation 2.001')
+    print('characters on the page:', len(every), ' set in Hanui Display:', len(disp))
     if bad:
         print('MISSING in Hanui Text:', ''.join(sorted(set(bad))))
         sys.exit(1)

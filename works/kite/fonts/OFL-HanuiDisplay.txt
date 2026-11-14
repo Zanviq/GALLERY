@@ -1,8 +1,24 @@
-Copyright 2008 The Sunflower Project Authors
+Hanui Display (hanui-display.woff2) is a modified version of Cafe24 Danjunghae v2.0 (카페24 단정해).
+
+Copyright © Cafe24 Corp. All Rights Reserved. Cafe24 Danjunghae is a trademark of cafe24.
+(copyright and trademark lines from the font's name table, kept in the modified file)
+
+Source: https://fonts.cafe24.com, official zip Cafe24Danjunghae-v2.0.zip
+(img.cafe24.com/csdstatic/freefonts/download/kr/). Checked 2026-11-14.
+The zip's License-Danjunghae.pdf says:
+  카페24(주)에서 제공하는 "카페24 단정해"는 SIL OPEN FONT LICENSE(Version 1.1)에 따라 사용이 허가됩니다.
+  … 개인 및 기업 사용자를 포함한 모든 사용자에게 무료로 제공되며 자유롭게 수정하고 재배포할 수 있습니다.
+  단, 글꼴 자체를 유료로 판매하는 것은 금지하며 본 저작권 안내와 라이선스 전문을 포함해서 다른 소프트웨어와
+  번들하거나 재배포 또는 판매가 가능합니다. "카페24 단정해"의 지적 재산권은 카페24(주)에 있습니다.
+  사용범위 표: OFL — 폰트 파일의 수정/ 복제/ 배포 가능. 단, 글꼴 자체를 유료로 판매하는 것은 금지
+
+No Reserved Font Name is declared. Because the name table carries Cafe24's trademark and this file is
+modified (reduced to the characters set in the display face on this page), it is renamed "Hanui Display".
+It is not sold. The page footer credits the original font.
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
-http://scripts.sil.org/OFL
+https://openfontlicense.org
 
 
 -----------------------------------------------------------

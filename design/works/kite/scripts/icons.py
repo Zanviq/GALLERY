@@ -1,6 +1,6 @@
-"""Favicons from the Jua glyph 훨 on the sky colour (dev tool, not deployed).
+"""Favicons from the 카페24 단정해 (Hanui Display) glyph 훨 on the sky colour (dev tool, not deployed).
 
-    python -I design/works/kite/scripts/icons.py <Jua-Regular.ttf>   (needs fontTools and Pillow)
+    python -I design/works/kite/scripts/icons.py <Cafe24Danjunghae-v2.0.ttf>   (needs fontTools and Pillow)
 """
 import os
 import sys
