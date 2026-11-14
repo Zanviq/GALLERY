@@ -17,7 +17,7 @@ Status: planned → building → reviewed → registered (in data/works.json); d
 
 | # | slug | category · platform | concept | signature interaction | palette (reason) | Korean fonts | status |
 |---|---|---|---|---|---|---|---|
-| 1 | optician | 홈페이지 · desktop+mobile | 동네 안경원 + 렌즈 가공실 | 한글 시력표를 렌즈 휠(디옵터)로 맞추면 흐림이 걷힘, 적록 이색 검사, 선 얼굴에 테 폭·다리 길이 맞추기 (SVG/CSS) | 검사실 흰색 #FFFFFF, 검정 #111316, 이색 검사 적 #D0021B · 녹 #00A05A (적록 이색 검사 그대로) | Gothic A1 | registered |
+| 1 | optician | 홈페이지 · desktop+mobile | 동네 안경원 + 렌즈 가공실 | 한글 시력표를 렌즈 휠(디옵터)로 맞추면 흐림이 걷힘, 적록 이색 검사, 선 얼굴에 테 폭·다리 길이 맞추기 (SVG/CSS) | 검사실 흰색 #FFFFFF, 검정 #111316, 이색 검사 적 #D0021B · 녹 #00A05A (적록 이색 검사 그대로) | Kakao Big Sans, Kakao Small Sans (subsets renamed Ttoryeot Display / Text) | registered |
 | 2 | observatory | 홈페이지 · desktop+mobile | 가상 도시의 시립 천문대 | 날짜·시각을 돌려 맞추는 회전 성도판(planisphere), 오늘 밤 볼 대상 목록 (Canvas) | 검정 #000 + 암적응용 적색광 #FF4436 / #A3141B / #3D0709, 다른 색 없음 (천문대의 붉은 손전등) | Nanum Myeongjo, Nanum Gothic Coding (subsets renamed Bueongjae Serif / Mono) | registered |
 | 3 | riso | 홈페이지 · desktop+mobile | 리소그래프 인쇄소 | 잉크 판을 끌어 겹치면 곱하기 혼색·핀트 어긋남·입자, 드럼 순서 바꾸기, 견적 (Canvas/SVG blend) | 흰 종이 #FFFFFF, 형광 핑크 #FF48B0, 블루 #0078BF, 옐로 #FFE800 (실제 리소 드럼 잉크, 2차색은 겹칠 때만) | Black Han Sans, Gowun Dodum | deleted |
 | 4 | laundry | 홈페이지 · mobile-first | 셀프 빨래방 체인 | 지점별 기계 현황판(가상 실시간), 기계 누르면 남은 시간, 빨래가 굴러가는 드럼 (Canvas 2D) | 세탁실 타일 민트 #BEE9DA, 스테인리스 #C5CCD2, 그래파이트 #1F2428, 기계 LED 녹 #12B76A · 적 #F04438 | Jua, Nanum Square Round | deleted |
@@ -87,5 +87,5 @@ as an ambient layer and never covers the information. Fonts and Latin faces belo
 ## Fonts in use (one work each)
 
 Galmuri11 (home) · Wanted Sans, Archivo (keyboard) · Anybody, Hahmlet, IBM Plex Sans KR (festival,
-perfume, startup) · Newsreader (perfume) · Spoqa Han Sans Neo (marathon) · SUIT (curtain) · Moirai One, Nanum Barun Gothic (record) · RIDIBatang, Libre Caslon Text (coffee) · MaruBuri, Hanken Grotesk (lamp) · Do Hyeon, Sunflower (camera) · Jua, Freesentation (kite) · Iropke Batang (nighttrain) · and every Korean family assigned in the tables above.
+perfume, startup) · Newsreader (perfume) · Spoqa Han Sans Neo (marathon) · SUIT (curtain) · Moirai One, Nanum Barun Gothic (record) · RIDIBatang, Libre Caslon Text (coffee) · MaruBuri, Hanken Grotesk (lamp) · Do Hyeon, Sunflower (camera) · Jua, Freesentation (kite) · Iropke Batang (nighttrain) · Kakao Big Sans, Kakao Small Sans (optician) · and every Korean family assigned in the tables above.
 Latin faces added by works (record here): Schibsted Grotesk (sculpture), Big Shoulders Display (ticketing)

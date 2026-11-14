@@ -49,7 +49,7 @@ export class Tickets {
       const fs = document.createElement('fieldset');
       fs.className = 'seg stub__days';
       fs.innerHTML = '<legend class="sr-only">입장할 날</legend>';
-      [['fri', '9.3 금'], ['sat', '9.4 토'], ['sun', '9.5 일']].forEach(([id, label]) => {
+      [['fri', '9.3\u00a0금'], ['sat', '9.4\u00a0토'], ['sun', '9.5\u00a0일']].forEach(([id, label]) => {
         const l = document.createElement('label');
         l.innerHTML = `<input type="radio" name="tix-day" value="${id}"><span>${label}</span>`;
         fs.appendChild(l);

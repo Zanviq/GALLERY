@@ -46,7 +46,7 @@ function openDays(n) {
 const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 const timeLabel = (t) => {
   const [hh, mm] = t.split(':').map(Number);
-  return `${hh === 12 ? '낮 12시' : `오후 ${hh - 12}시`}${mm ? ' 30분' : ''}`;
+  return `${hh === 12 ? '낮\u00a012시' : `오후\u00a0${hh - 12}시`}${mm ? '\u00a030분' : ''}`;
 };
 // a few slots look taken, the same ones on every visit for a given day
 function isFull(dayIso, t) {
@@ -56,7 +56,7 @@ function isFull(dayIso, t) {
 }
 
 const days = openDays(5);
-daysEl.innerHTML = days.map((d) => `<label class="chip"><input type="radio" name="day" value="${iso(d)}"><span>${d.getMonth() + 1}월 ${d.getDate()}일<small>${WD[d.getDay()]}요일</small></span></label>`).join('');
+daysEl.innerHTML = days.map((d) => `<label class="chip"><input type="radio" name="day" value="${iso(d)}"><span>${d.getMonth() + 1}월\u00a0${d.getDate()}일<small>${WD[d.getDay()]}요일</small></span></label>`).join('');
 
 function renderTimes() {
   const day = $('input[name="day"]:checked', book);

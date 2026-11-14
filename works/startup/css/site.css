@@ -86,6 +86,8 @@ body {
 }
 img, svg, canvas { display: block; max-width: 100%; }
 h1, h2, h3, h4, p, ul, ol, dl, dd, figure { margin: 0; }
+h1, h2, h3, h4, .role__title, .mix__cap { text-wrap-style: balance; }
+p, li, dd, figcaption, .parts__desc { text-wrap-style: pretty; }
 ul, ol { padding: 0; list-style: none; }
 button, input, textarea, select { font: inherit; color: inherit; }
 button { cursor: pointer; }
@@ -752,9 +754,11 @@ main { padding-top: var(--header-h); }
 .footer-links a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .site-footer__fine { width: 100%; font-size: 14px; padding-top: 20px; border-top: 1px solid var(--night-rule); }
 
-/* ---------- reduced motion ---------- */
+/* ---------- reduced motion ----------
+   Calmer, not still (BRIEF §000): the short colour and state transitions stay, and the chart keeps
+   drifting at 0.6x (story.js); the camera cuts instead of gliding. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; }
+  .rail ol { transform: none; }
 }
 
 /* fallback image stays out of the way until it has a source */

@@ -186,7 +186,6 @@ export function startChart(root) {
     if (mode.recall) { sim.warpNearHome(0); sim.warpNearHome(1); }
     if (next === 'problem' && prev !== 'problem') sim.beachEvents.length = 0;
     computeTarget();
-    if (reduce) still(next === 'how-2' ? 3.2 : 6);
   }
 
   function setStep(next) {
@@ -240,15 +239,15 @@ export function startChart(root) {
     const set = (k, v) => { if (hud[k] && hud[k].textContent !== v) hud[k].textContent = v; };
     set('clock', sim.clock());
     set('tide', sim.tideLabel());
-    set('wind', `${DIRS[sim.wind.dir]} ${sim.wind.speed} m/s`);
+    set('wind', `${DIRS[sim.wind.dir]} ${sim.wind.speed}\u00a0m/s`);
     set('boats', `${sim.boatsOut()}척`);
-    set('collected', `${Math.round(sim.collectedKg).toLocaleString('ko-KR')} kg`);
+    set('collected', `${Math.round(sim.collectedKg).toLocaleString('ko-KR')}\u00a0kg`);
     set('beached', `시간당 ${sim.beachRate()}개`);
     if (hud.warn) hud.warn.hidden = sim.wind.speed < 10;
     // step 4 readout
     const kg = sim.unloadedKg, total = kg[0] + kg[1] + kg[2] + kg[3];
     if (unloadEls.total && total > 0) {
-      set2(unloadEls.total, `${Math.round(total).toLocaleString('ko-KR')} kg`);
+      set2(unloadEls.total, `${Math.round(total).toLocaleString('ko-KR')}\u00a0kg`);
       const pct = kg.map((v) => Math.round((v / total) * 100));
       pct.forEach((p, q) => {
         if (unloadEls.pct[q]) set2(unloadEls.pct[q], `${p}%`);
@@ -260,10 +259,12 @@ export function startChart(root) {
 
   function frame(ts) {
     raf = 0;
-    if (!visible || document.hidden || reduce) return;
+    if (!visible || document.hidden) return;
     const dt = last ? Math.min(0.05, (ts - last) / 1000) : 1 / 60;
     last = ts;
-    sim.step(dt);
+    // reduced motion: calmer, not still (BRIEF §000). The bay keeps drifting at 0.6x; the camera cuts
+    // instead of gliding and the forecast lines appear instead of drawing (moveCam, easeDisp).
+    sim.step(reduce ? dt * 0.6 : dt);
     easeDisp(dt);
     moveCam(dt);
     draw();
@@ -271,20 +272,8 @@ export function startChart(root) {
     raf = requestAnimationFrame(frame);
   }
   function play() {
-    if (reduce) { stage.dataset.mode = 'still'; return; }
     stage.dataset.mode = 'playing';
     if (!raf) { last = 0; raf = requestAnimationFrame(frame); }
-  }
-  function still(seconds) {
-    stage.dataset.mode = 'still';
-    sim.run(seconds);
-    for (const key of Object.keys(disp)) if (key !== 'reveal') disp[key] = mode[key] || 0;
-    disp.reveal = 1;
-    snapCam = true;
-    computeTarget();
-    moveCam(0);
-    draw();
-    updateHud(true);
   }
 
   // ---------- observers ----------
@@ -306,7 +295,8 @@ export function startChart(root) {
   ro.observe(stage);
   reduceMQ.addEventListener('change', () => {
     reduce = reduceMQ.matches && !CAPTURE;
-    if (reduce) still(2); else play();
+    snapCam = true;
+    play();
   });
 
   // fonts: the static layer uses Plex for soundings
@@ -340,7 +330,6 @@ export function startChart(root) {
     dial.setAttribute('aria-valuetext', `${DIRS[d]}풍`);
     dirOut.textContent = `${DIRS[d]}풍`;
     updateHud(true);
-    if (reduce) still(5);
     if (say) announce(`${DIRS[d]}풍 ${sim.wind.speed} m/s. 수렴선이 ${towardName(d)}쪽으로 옮겨집니다.`);
   }
   if (dial) {
@@ -383,9 +372,8 @@ export function startChart(root) {
     speed.addEventListener('input', () => {
       const v = Number(speed.value);
       sim.setWind(sim.wind.dir, v);
-      speedOut.textContent = `${v} m/s`;
+      speedOut.textContent = `${v}\u00a0m/s`;
       updateHud(true);
-      if (reduce) still(4);
       announce(v >= 10 ? `풍속 ${v} m/s. 보트 운용 한계에 가까운 바람입니다.` : `풍속 ${v} m/s.`, 700);
     });
   }
@@ -394,25 +382,22 @@ export function startChart(root) {
     sw.setAttribute('aria-checked', String(on));
     sw.querySelector('.switch__text').textContent = on ? '켜짐' : '꺼짐';
     if (step === 'try') sim.setBoats(on);
-    if (reduce) still(6);
     if (say) announce(on ? '보트가 다시 나갑니다.' : '보트를 기지로 돌려보냈습니다. 해변 도착 수를 지켜보세요.', 300);
   }
   if (sw) sw.addEventListener('click', () => setBoats(sw.getAttribute('aria-checked') !== 'true'));
   root.querySelector('#spill-btn')?.addEventListener('click', () => {
     const x = 700 + (Math.random() - 0.5) * 260, y = 955;
     sim.spill(x, y, 60, 40);
-    if (reduce) still(3);
     announce('남쪽 바깥 바다에서 쓰레기 한 무리가 흘러들어 옵니다.', 200);
   });
   root.querySelector('#reset-btn')?.addEventListener('click', () => {
-    speed.value = '4'; speedOut.textContent = '4 m/s';
+    speed.value = '4'; speedOut.textContent = '4\u00a0m/s';
     sim.setWind(7, 4);
     setDir(7, false);
     setBoats(true, false);
     for (let i = 0; i < sim.N; i++) if (sim.st[i] === 2) sim.st[i] = 0;
     sim.beachEvents.length = 0;
-    if (reduce) still(4);
-    announce('처음 상태로 돌렸습니다. 북서풍 4 m/s, 보트 운항 중.', 200);
+    announce('처음 상태로 돌렸습니다. 북서풍 4\u00a0m/s, 보트 운항 중.', 200);
   });
 
   // tap the sea to add debris (try step)
@@ -426,8 +411,7 @@ export function startChart(root) {
     const p = toWorld(e);
     if (world.h(p.x, p.y) > -0.1) return;
     sim.spill(p.x, p.y, 40, 30);
-    if (reduce) still(2.5);
-    else draw();
+    draw();
   });
   canvas.addEventListener('pointermove', (e) => {
     if (e.pointerType !== 'mouse') return;
@@ -452,7 +436,7 @@ export function startChart(root) {
   moveCam(0);
   draw();
   updateHud(true);
-  if (reduce) still(0.01); else play();
+  play();
   return { sim, view };
 }
 

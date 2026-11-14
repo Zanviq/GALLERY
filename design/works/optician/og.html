@@ -7,14 +7,14 @@
 <link rel="stylesheet" href="/works/optician/css/fonts.css">
 <style>
   html, body { margin: 0; background: #fff; }
-  .og { position: relative; width: 1200px; height: 630px; overflow: hidden; font-family: 'Gothic A1', sans-serif; color: #111316; }
-  .v { position: absolute; left: 56px; top: 150px; font: 700 15px/1 'Gothic A1'; color: rgb(17 19 22 / .72); }
-  h1 { position: absolute; left: 92px; top: 62px; margin: 0; font: 900 112px/1 'Gothic A1'; letter-spacing: .26em; }
-  .lede { position: absolute; left: 96px; top: 222px; margin: 0; font: 700 27px/1.4 'Gothic A1'; }
+  .og { position: relative; width: 1200px; height: 630px; overflow: hidden; font-family: 'Ttoryeot Text', sans-serif; color: #111316; }
+  .v { position: absolute; left: 56px; top: 150px; font: 700 15px/1 'Ttoryeot Text'; color: rgb(17 19 22 / .72); }
+  h1 { position: absolute; left: 92px; top: 62px; margin: 0; font: 900 112px/1 'Ttoryeot Display'; letter-spacing: .26em; }
+  .lede { position: absolute; left: 96px; top: 222px; margin: 0; font: 700 27px/1.4 'Ttoryeot Text'; }
   .duo { position: absolute; left: 96px; top: 330px; width: 380px; }
   .duo svg { display: block; width: 380px; height: 114px; }
-  .sides { display: flex; justify-content: space-between; margin-top: 8px; font: 700 15px/1 'Gothic A1'; }
-  .credit { position: absolute; left: 96px; bottom: 44px; margin: 0; font: 400 16px/1 'Gothic A1'; color: rgb(17 19 22 / .72); }
+  .sides { display: flex; justify-content: space-between; margin-top: 8px; font: 700 15px/1 'Ttoryeot Text'; }
+  .credit { position: absolute; left: 96px; bottom: 44px; margin: 0; font: 400 16px/1 'Ttoryeot Text'; color: rgb(17 19 22 / .72); }
   .wheel { position: absolute; left: 640px; top: 35px; width: 560px; height: 560px; }
 </style>
 </head>
@@ -57,7 +57,7 @@
   for (let v = -4; v <= 4.001; v += 0.25) {
     const major = Math.abs(v - Math.round(v)) < 1e-9, a = v / 0.25 * 9;
     el('line', { x1: 300, y1: 32, x2: 300, y2: major ? 54 : 44, stroke: v < 0 ? '#D0021B' : '#fff', 'stroke-width': major ? 4 : 2.4, transform: `rotate(${a} 300 300)` }, ring);
-    if (major) { const t = el('text', { x: 300, y: 80, fill: '#fff', 'text-anchor': 'middle', 'font-family': 'Gothic A1', 'font-weight': 700, 'font-size': 22, transform: `rotate(${a} 300 300)` }, ring); t.textContent = v === 0 ? '0' : (v < 0 ? '−' : '+') + Math.abs(v); }
+    if (major) { const t = el('text', { x: 300, y: 80, fill: '#fff', 'text-anchor': 'middle', 'font-family': 'Ttoryeot Text', 'font-weight': 700, 'font-size': 22, transform: `rotate(${a} 300 300)` }, ring); t.textContent = v === 0 ? '0' : (v < 0 ? '−' : '+') + Math.abs(v); }
   }
   const LINES = [['가', .1], ['너타', .2], ['라커다', .3], ['거나터카', .4], ['더가러너', .5], ['타라거커나', .6], ['다너카가터', .8], ['러거타나더', 1]];
   const hs = LINES.map(([, v]) => 10 / v);
@@ -66,7 +66,7 @@
   const chart = document.getElementById('chart');
   LINES.forEach(([t, v], i) => {
     const row = rowPath([...t], 300, y, hs[i]); d += row.d;
-    const lab = el('text', { x: 300 + row.width / 2 + 12, y: y + hs[i] / 2 + 4, 'font-family': 'Gothic A1', 'font-weight': 700, 'font-size': 12, fill: '#111316' }, chart);
+    const lab = el('text', { x: 300 + row.width / 2 + 12, y: y + hs[i] / 2 + 4, 'font-family': 'Ttoryeot Text', 'font-weight': 700, 'font-size': 12, fill: '#111316' }, chart);
     lab.textContent = v === 1 ? '1.0' : String(v);
     y += hs[i] + (i + 1 < hs.length ? 0.6 * hs[i + 1] : 0);
   });

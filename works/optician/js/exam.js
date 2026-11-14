@@ -1,6 +1,6 @@
 // Lens wheel + optotype chart + duochrome. The blur lives only inside the two SVG charts.
 import { rowPath } from './optotype.js';
-import { TARGET, reducedMotion, signed, spoken } from './state.js';
+import { TARGET, signed, spoken } from './state.js';
 
 const NS = 'http://www.w3.org/2000/svg';
 const MIN = -4, MAX = 4, STEP = 0.25, DEG = 9; // 9° per 0.25 D, gap at the bottom of the ring
@@ -104,13 +104,13 @@ export function initExam() {
   let blurRaf = 0, statusTimer = 0;
 
   function setRing(angle, animate) {
-    ring.classList.toggle('is-easing', !!animate && !reducedMotion());
+    ring.classList.toggle('is-easing', !!animate); // a 9° turn stays under reduced motion too (BRIEF §000)
     ring.style.transform = `rotate(${angle}deg)`;
   }
 
   function paintBlur(target) {
     cancelAnimationFrame(blurRaf);
-    if (reducedMotion() || document.hidden) {
+    if (document.hidden) {
       shownSigma = target;
       blur.setAttribute('stdDeviation', target.toFixed(2));
       return;
@@ -134,10 +134,10 @@ export function initExam() {
     else if (now.sigma > lastSaid.sigma + 0.05) lead = '더 흐려졌습니다. 반대쪽으로 돌려 보세요. ';
     else if (value !== 0) lead = '그대로입니다. ';
     let read;
-    if (now.line === null) read = '0.1 줄도 읽기 어렵습니다.';
-    else if (now.line < 1) read = `${fmtV(now.line)} 줄까지 읽힙니다.`;
-    else if (!sharp) read = '1.0 줄까지 읽히지만 글자 테두리가 조금 번집니다.';
-    else read = '또렷합니다. 1.0 줄까지 읽힙니다. 너무 센 렌즈도 또렷해 보이니 아래 적록 검사로 확인합니다.';
+    if (now.line === null) read = '0.1\u00a0줄도 읽기 어렵습니다.';
+    else if (now.line < 1) read = `${fmtV(now.line)}\u00a0줄까지 읽힙니다.`;
+    else if (!sharp) read = '1.0\u00a0줄까지 읽히지만 글자 테두리가 조금 번집니다.';
+    else read = '또렷합니다. 1.0\u00a0줄까지 읽힙니다. 너무 센 렌즈도 또렷해 보이니 아래 적록 검사로 확인합니다.';
     statusSph.textContent = spoken(value) + ". ";
     status.textContent = lead + read;
     lastSaid = now;

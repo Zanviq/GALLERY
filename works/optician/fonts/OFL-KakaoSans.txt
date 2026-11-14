@@ -1,9 +1,22 @@
-(C) Copyright HanYang I&C Co.,Ltd. All rights reserved.
+Kakao Big Sans (카카오 큰글씨) and Kakao Small Sans (카카오 작은글씨)
+Copyright (c) 2021 Kakao Corp. All rights reserved. Font designed by FONTRIX Inc. & Min Bon & Park Min-gyu
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
-http://scripts.sil.org/OFL
+https://openfontlicense.org
 
+Source: Kakao's own download on kakaocorp.com, "카카오 큰글씨 & 작은글씨" (2025-05-29),
+font version 2.002. Kakao's page says: "오픈 폰트 라이선스(OFL)를 적용하여 별도의 라이선스 없이
+개인 및 상업적 용도로 자유롭게 사용할 수 있어요." Name ID 13 of every file states OFL 1.1.
+
+No Reserved Font Name is declared. Name ID 7 says "Kakao Big Sans / Kakao Small Sans is a
+registered trademark of Kakao Corp.", so the modified files in this folder carry other names:
+  ttoryeot-display-800.woff2  "Ttoryeot Display"  from KakaoBigSans-ExtraBold.ttf
+  ttoryeot-text-400.woff2     "Ttoryeot Text"     from KakaoSmallSans-Regular.ttf
+  ttoryeot-text-700.woff2     "Ttoryeot Text"     from KakaoSmallSans-Bold.ttf
+Changes: subset to the characters this page uses; digits 0-9 given one advance width
+(the width of 0) and centred, because the family has no tnum feature.
+Built by design/works/optician/scripts/fonts.py.
 
 -----------------------------------------------------------
 SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007

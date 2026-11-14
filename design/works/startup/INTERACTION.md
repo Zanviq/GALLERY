@@ -20,7 +20,7 @@
 [loading] --chart ready--> [playing]
 [loading] --2d context 없음 / 오류--> [fallback-image]
 [playing] --탭 숨김 or 해도가 화면 밖--> [paused] --다시 보임--> [playing]
-[playing|paused] --reduced motion--> [still]   (단계 바뀔 때마다 정지 장면 한 번 그림)
+[playing|paused] --reduced motion--> [playing, 0.6배속, 카메라는 끊어 옮김]   (2026-11-14, BRIEF §000)
 단계 전환: active step 이 바뀌면 카메라·모드 트윈(1100ms). 트윈 중 다른 단계로 바뀌면 현재 값에서 새 목표로 이어서 트윈 (끊김 없음).
 ```
 
@@ -61,6 +61,6 @@
 - 두 폼 모두 실제로 아무것도 보내지 않는다. 성공 상자에 그 사실을 한 줄로 밝힌다.
 
 ## Reduced motion / 대체
-- reduced motion: 입자를 단계별로 미리 시뮬레이션한 정지 장면. 카메라는 바로 목표 위치. 조작은 그대로 되고 결과도 정지 장면으로.
+- reduced motion (2026-11-14, BRIEF §000 "멈추지 말고 차분하게"): 바다는 0.6배속으로 계속 흐르고 보트도 움직인다. 카메라는 미끄러지지 않고 바로 목표 위치로 끊어 옮기며, 예보선은 그려지지 않고 바로 나타난다. 조작 결과도 움직이는 바다에서 보인다.
 - 캔버스 실패/JS 없음: `img/chart-still.webp` (실제 렌더 캡처) 를 무대에 그대로 둔다. 단계 패널 글은 모두 HTML 이라 내용 손실 없음.
 - `?capture`: 첫 장면을 시뮬레이션이 무르익은 상태로 바로 그린다 (썸네일·OG 촬영용).

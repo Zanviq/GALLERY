@@ -120,6 +120,8 @@ button, input { font: inherit; color: inherit; }
 button { cursor: pointer; }
 a { color: inherit; }
 h1, h2, h3, p, ol, ul, dl, dd, figure { margin: 0; }
+h1, h2, h3, summary { text-wrap-style: balance; }
+p, li, dd, figcaption { text-wrap-style: pretty; }
 ol, ul { padding: 0; list-style: none; }
 b { font-weight: 600; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
@@ -244,7 +246,7 @@ b { font-weight: 600; }
   text-align: left; line-height: 1;
   transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease);
 }
-.days__md { font-family: var(--f-lat); font-weight: 800; font-stretch: 60%; font-size: 2rem; letter-spacing: -.01em; white-space: nowrap; }
+.days__md { font-family: var(--f-lat); font-weight: 800; font-stretch: 60%; font-size: 2rem; letter-spacing: -.01em; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .days__dow { font-size: var(--t-sm); font-weight: 600; white-space: nowrap; }
 .days__dow em { font-style: normal; font-family: var(--f-ko); font-weight: 700; }
 .days__tab:hover .days__dow { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
@@ -426,7 +428,7 @@ b { font-weight: 600; }
 .act.is-dim { display: none; }
 
 .tlist { border-top: 3px solid var(--ink); }
-.tlist__hour { font-family: var(--f-lat); font-weight: 700; font-stretch: 75%; font-size: 1rem; padding: 14px 0 6px; border-bottom: 1px solid var(--rule-soft); color: var(--ink-2); }
+.tlist__hour { font-family: var(--f-lat); font-weight: 700; font-stretch: 75%; font-size: 1rem; font-variant-numeric: tabular-nums; padding: 14px 0 6px; border-bottom: 1px solid var(--rule-soft); color: var(--ink-2); }
 .tlist .act {
   display: grid; grid-template-columns: 58px minmax(0, 1fr) 24px; column-gap: 12px; align-items: center;
   width: 100%; margin: 0; padding: 12px 8px 12px 8px; border: 0; border-bottom: 1px solid var(--rule-soft);

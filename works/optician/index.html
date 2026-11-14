@@ -20,8 +20,8 @@
 <link rel="icon" href="./img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="./img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="./img/apple-touch-icon.png">
-<link rel="preload" href="./fonts/gothic-a1-900.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="./fonts/gothic-a1-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/ttoryeot-display-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./fonts/ttoryeot-text-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="./css/fonts.css">
 <link rel="stylesheet" href="./css/site.css">
 <script type="module" src="./js/main.js"></script>
@@ -52,9 +52,9 @@
     </ol>
   </nav>
   <dl class="rail__hours">
-    <div><dt>월–금</dt><dd>10:00–20:00</dd></div>
-    <div><dt>토</dt><dd>10:00–18:00</dd></div>
-    <div><dt>일·공휴일</dt><dd>쉽니다</dd></div>
+    <div><dt>월~금</dt><dd>10:00~20:00</dd></div>
+    <div><dt>토</dt><dd>10:00~18:00</dd></div>
+    <div><dt>일⁠·⁠공휴일</dt><dd>쉽니다</dd></div>
   </dl>
 </header>
 
@@ -111,7 +111,7 @@
             <button type="button" class="btn btn--line" id="step-plus" aria-label="플러스 쪽으로 한 칸, 0.25">+0.25</button>
           </div>
         </div>
-        <p class="status" id="status" aria-live="polite"><span class="sr-only" id="status-sph"></span><span id="status-text">휠을 돌려 보세요. 지금은 맨 위 0.1 줄만 겨우 읽힙니다.</span></p>
+        <p class="status" id="status" aria-live="polite"><span class="sr-only" id="status-sph"></span><span id="status-text">휠을 돌려 보세요. 지금은 맨 위 0.1&nbsp;줄만 겨우 읽힙니다.</span></p>
 
         <div class="duo" role="group" aria-labelledby="h-duo">
           <h3 class="duo__title" id="h-duo">적록 이색 검사</h3>
@@ -134,7 +134,7 @@
           </div>
           <p class="duo__reply" id="duo-reply" aria-live="polite"></p>
           <p class="duo__record" id="duo-record" hidden>
-            <span class="duo__rx">처방 <strong>오른눈 S −2.25</strong>, 교정 시력 1.0</span>
+            <span class="duo__rx">처방 <strong>오른눈 S&nbsp;−2.25</strong>, 교정 시력 1.0</span>
             <a href="#fit">이 도수로 테 고르기</a>
           </p>
           <p class="duo__why">빨간빛은 초록빛보다 눈 안쪽 깊은 곳에 맺힙니다. 그래서 도수가 모자라면 빨강 쪽이, 넘치면 초록 쪽이 또렷합니다. 색 이름 대신 왼쪽과 오른쪽으로 묻기 때문에 색약이 있어도 할 수 있습니다.</p>
@@ -161,7 +161,7 @@
         </li>
         <li style="--start:5;--min:8">
           <h3 class="steps__name">시력표 검사</h3><p class="steps__min">8분</p>
-          <p class="steps__text">검안기 렌즈를 한 칸씩 바꾸며 시력표를 읽으십니다. 또렷해지는 첫 칸에서 멈춥니다. 더 센 렌즈도 또렷해 보이지만 눈을 지치게 합니다. <a href="#wheel">맨 위 휠</a>이 이 단계입니다.</p>
+          <p class="steps__text">검안기 렌즈를 한 칸씩 바꾸며 시력표를 읽으십니다. 또렷해지는 첫 칸에서 멈춥니다. 더&nbsp;센 렌즈도 또렷해 보이지만 눈을 지치게 합니다. <a href="#wheel">맨 위 휠</a>이 이 단계입니다.</p>
         </li>
         <li style="--start:13;--min:2">
           <h3 class="steps__name">적록 이색 검사</h3><p class="steps__min">2분</p>
@@ -251,7 +251,7 @@
         </div>
         <div class="bench__side">
           <dl class="bench__nums">
-            <div><dt>테와 도수</dt><dd id="b-input">52□18, 오른눈 S −2.25</dd></div>
+            <div><dt>테와 도수</dt><dd id="b-input">52□18, 오른눈 S&nbsp;−2.25</dd></div>
             <div><dt>렌즈 원판</dt><dd id="b-blank">지름 65mm</dd></div>
             <div><dt>귀 쪽 가장자리</dt><dd id="b-edge-t">2.8mm</dd></div>
             <div><dt>코 쪽 가장자리</dt><dd id="b-edge-n">2.2mm</dd></div>
@@ -279,7 +279,7 @@
         <li style="--start:8;--min:8"><h3 class="steps__name">깎기</h3><p class="steps__min">8분</p><p class="steps__text">숫돌이 테 모양을 따라 돌며 깎고, 테 홈에 들어갈 V자 산을 냅니다.</p></li>
         <li style="--start:16;--min:15"><h3 class="steps__name">끼우고 맞추기</h3><p class="steps__min">15분</p><p class="steps__text">렌즈를 끼운 뒤 코받침과 다리를 얼굴에 맞게 구부립니다.</p></li>
       </ol>
-      <p class="line__aside">누진다초점 렌즈와 1.74 렌즈는 주문해서 받은 뒤 깎기 때문에 2–3일 걸립니다. 가져오신 테에도 깎아 끼웁니다.</p>
+      <p class="line__aside">누진다초점 렌즈와 1.74 렌즈는 주문해서 받은 뒤 깎기 때문에 2~3일 걸립니다. 가져오신 테에도 깎아 끼웁니다.</p>
     </div>
   </section>
 
@@ -312,15 +312,15 @@
             <tr><th scope="row">1.56 단초점</th><td>40,000원</td></tr>
             <tr><th scope="row">1.60 단초점</th><td>60,000원</td></tr>
             <tr><th scope="row">1.67 단초점</th><td>90,000원</td></tr>
-            <tr><th scope="row">1.74 단초점 <small>주문, 2–3일</small></th><td>150,000원</td></tr>
+            <tr><th scope="row">1.74 단초점 <small>주문, 2~3일</small></th><td>150,000원</td></tr>
             <tr><th scope="row">누진다초점 1.60 <small>주문, 3일</small></th><td>220,000원부터</td></tr>
           </tbody>
         </table>
         <table class="price">
           <caption>테와 그 밖의 것</caption>
           <tbody>
-            <tr><th scope="row">가게에서 고른 국산 테</th><td>49,000–98,000원</td></tr>
-            <tr><th scope="row">그 밖의 테</th><td>120,000–280,000원</td></tr>
+            <tr><th scope="row">가게에서 고른 국산&nbsp;테</th><td>49,000~98,000원</td></tr>
+            <tr><th scope="row">그 밖의 테</th><td>120,000~280,000원</td></tr>
             <tr><th scope="row">가져오신 테에 렌즈 끼우기</th><td>렌즈 값 + 10,000원</td></tr>
             <tr><th scope="row">색 넣기(착색)</th><td>렌즈 값 + 30,000원</td></tr>
             <tr><th scope="row">검안</th><td>무료</td></tr>
@@ -342,11 +342,11 @@
           <p>초롱골시장 정류장에서 내려 길을 건너고, 시장 옆 골목으로 올라가 돋보기길에서 오른쪽으로 꺾으시면 됩니다. 걸어서 2분, 세탁소와 빵집 사이의 흰 간판입니다.</p>
           <p>주차장은 없습니다. 시장 공영주차장에 세우시면 1시간 주차 확인을 해 드립니다.</p>
           <dl class="hours">
-            <div><dt>월–금</dt><dd>10:00–20:00</dd></div>
-            <div><dt>토</dt><dd>10:00–18:00</dd></div>
-            <div><dt>일·공휴일</dt><dd>쉽니다</dd></div>
+            <div><dt>월~금</dt><dd>10:00~20:00</dd></div>
+            <div><dt>토</dt><dd>10:00~18:00</dd></div>
+            <div><dt>일⁠·⁠공휴일</dt><dd>쉽니다</dd></div>
           </dl>
-          <p class="line__aside">검안 접수는 문 닫기 40분 전까지 받습니다.</p>
+          <p class="line__aside">검안 접수는 문 닫기 40분 전까지 받습니다. 토요일에는 오후 4시 반까지 맡기신 안경만 그날 찾아가실 수 있습니다.</p>
         </div>
         <figure class="visit__map">
           <svg viewBox="0 0 360 240" role="img" aria-labelledby="map-cap">
@@ -386,7 +386,7 @@
   <p class="line__v" aria-hidden="true">1.0</p>
   <div class="line__body">
     <p class="foot__line">이 줄까지 또렷하게 읽히면 1.0입니다.</p>
-    <p class="foot__small">가상 안경원입니다. zanviq gallery 작품.<br>글꼴 Gothic A1 (SIL Open Font License 1.1)</p>
+    <p class="foot__small">가상 안경원입니다. zanviq gallery 작품.<br>글꼴 카카오 큰글씨⁠·⁠작은글씨 (SIL Open Font License 1.1)</p>
   </div>
 </footer>
 </body>

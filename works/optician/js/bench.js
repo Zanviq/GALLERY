@@ -103,7 +103,7 @@ export function initBench() {
       t.textContent = `${fx(v)}`;
     }
 
-    out.input.textContent = `${s.a}□${s.dbl}, 오른눈 S −2.25`;
+    out.input.textContent = `${s.a}□${s.dbl}, 오른눈 S\u00a0−2.25`;
     out.blank.textContent = need > 75
       ? `75mm로도 모자랍니다 (최소 ${need}mm)`
       : `지름 ${size}mm (최소 ${need}mm 필요)`;
@@ -131,7 +131,7 @@ export function initBench() {
 
   function frame(now) {
     if (!visible || document.hidden) { finish(); return; }
-    const k = Math.min(1, (now - t0) / 1600);
+    const k = Math.min(1, (now - t0) / (reducedMotion() ? 2400 : 1600)); // calmer, not still (BRIEF §000)
     const len = pathLen * k;
     const p = cutLine.getPointAtLength(len);
     cutter.setAttribute('cx', fx(p.x, 2));
@@ -144,7 +144,6 @@ export function initBench() {
   cutBtn.addEventListener('click', () => {
     if (cut === 'cutting') { finish(); return; }
     if (cut === 'done') { draw(state); return; }
-    if (reducedMotion()) { finish(); return; }
     cut = 'cutting';
     cutBtn.textContent = '건너뛰기';
     cutter.setAttribute('visibility', 'visible');

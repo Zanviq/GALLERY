@@ -27,14 +27,21 @@ slide, frame size stamps (52□18-140) and lens-edging work sheets.
 
 ## Typography
 
-Gothic A1 only (SIL OFL 1.1), self-hosted, subset to the glyphs the page uses. Its Latin and
-digits are good enough; no Latin face is added.
+Since 2026-11-14 (detail pass, BRIEF §0000): Kakao's two digital faces, chosen for a page about
+reading letters at different sizes. Kakao Big Sans (카카오 큰글씨) draws the chart lines, Kakao
+Small Sans (카카오 작은글씨) the small print. SIL OFL 1.1, from Kakao's own download; subsets
+renamed "Ttoryeot Display" / "Ttoryeot Text" (name ID 7 marks the names as Kakao trademarks),
+digits set to one width because the family has no `tnum`. Build: `scripts/fonts.py`; licence:
+`works/optician/fonts/OFL-KakaoSans.txt`. (Gothic A1 before.) No Latin face is added.
 
-| weight | use |
-|---|---|
-| 400 | body copy, table cells |
-| 700 | labels, buttons, numbers in the readout, step names |
-| 900 | chart lines (h1/h2), the size stamp 52□18-140 |
+| face | weight | use |
+|---|---|---|
+| Text (Small Sans Regular) | 400 | body copy, table cells |
+| Text (Small Sans Bold) | 700 | labels, buttons, step names, the readout's S and D |
+| Display (Big Sans ExtraBold) | 800, asked as 900 | chart lines (h1/h2, index, footer line), the readout number, the size stamp 52□18-140, small heads (도수 찾기, 적록 이색 검사, table captions) |
+
+Ranges use the Korean tilde (10:00~20:00, 2~3일): Kakao's en dash is nearly an em wide.
+Tracking: chart lines keep the optotype spacing below; small heads −0.025em; body −0.01em.
 
 Chart scale: `font-size = min(--line-1 / acuity, available width / measured width in em)`.
 `--line-1` (the 1.0 line) is 22 px from 1024 px, 18 px on tablets, 15 px on phones, so the lines
@@ -52,7 +59,7 @@ word space pulled in by 0.12em.
 | 0.8 | 찾아오는 길 | 27.5 | 18.75 |
 | 1.0 | footer line | 22 | 15 |
 
-Body 17 px / 1.75 (16 px on phones), measure 34em. Headings left-aligned; nothing centred
+Body 17 px / 1.72 (16 px on phones), measure 34em. Headings left-aligned; nothing centred
 except glyphs inside the chart.
 
 ## Spacing

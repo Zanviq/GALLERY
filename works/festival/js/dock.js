@@ -146,7 +146,7 @@ export class Dock {
 
   renderGrid() {
     const day = this.getDay();
-    const d = { fri: '9.3 들물', sat: '9.4 만조', sun: '9.5 썰물' }[day];
+    const d = { fri: '9.3\u00a0들물', sat: '9.4\u00a0만조', sun: '9.5\u00a0썰물' }[day];
     this.dayEl.textContent = d;
     const rows = this.band.rows[day];
     this.grid.textContent = '';

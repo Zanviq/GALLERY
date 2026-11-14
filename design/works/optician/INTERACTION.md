@@ -15,7 +15,7 @@ bench. Everything after the hero uses the result of the step before it.
   accommodation up to 1.75 D, so the chart stays sharp but shrinks ~2 %/D; past that it blurs.
   Readable line VA = 1 / (1 + 1.8|e| + 0.6e²). Blur σ (chart units) = 1.1 × (1/VA − 0.85), ≥ 0.
 - Feedback: feGaussianBlur on the chart group only (never on page text), wheel rotates with a
-  120 ms ease (none under reduced motion), readout "S −1.75" (red when minus, sign always
+  180 ms expo-out ease (kept under reduced motion: a 9° turn), readout "S −1.75" (red when minus, sign always
   printed), live status in words: better / worse than the previous step and the smallest line
   that can be read. At e = 0 and in the hidden over-minus zone the words are identical, on
   purpose: acuity alone cannot tell them apart — the duochrome can.
@@ -50,10 +50,10 @@ bench. Everything after the hero uses the result of the step before it.
   t(x) = 1.2 + x²·2.25 / (2000(n − 1)) along the horizontal meridian.
 - Feedback: blank circle, frame outline offset by d, cross-section drawn ×4 in height with the
   edge thicknesses. "깎아 보기": a wheel dot runs round the outline (1.6 s), the off-cut fades;
-  reduced motion jumps to the cut state. Pressing again resets.
+  under reduced motion the dot runs slower (2.4 s) instead of skipping. Pressing again resets.
 
 ## Motion and loops
 
 No autoplay anywhere. The only timed motion is the user-started cut (requestAnimationFrame,
-cancelled when off-screen or hidden). Blur transitions ease 150 ms; reduced motion sets them
-instantly. No storage is used.
+cancelled when off-screen or hidden). Blur transitions ease 150 ms in both motion settings
+(BRIEF §000: calmer, not still). No storage is used.
